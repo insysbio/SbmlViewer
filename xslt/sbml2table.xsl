@@ -79,7 +79,7 @@ Limitations: element are not shown
     <xsl:template match="*[local-name()='listOfFunctionDefinitions']" mode="table">
       <h3>listOfFunctionDefinitions:</h3>
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:90%;">
-      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th style="min-width:400px;">math</th></tr>
+      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>math</th></tr>
       <xsl:apply-templates select="*[local-name()='functionDefinition']" mode="table"/>
       </table>
     </xsl:template>
@@ -97,7 +97,7 @@ Limitations: element are not shown
     <xsl:template match="*[local-name()='listOfUnitDefinitions']" mode="table">
       <h3>listOfUnitDefinitions:</h3>
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:90%;">
-      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th style="min-width:400px;">listOfUnits</th></tr>
+      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>listOfUnits</th></tr>
       <xsl:apply-templates select="*[local-name()='unitDefinition']" mode="table"/>
       </table>
     </xsl:template>
@@ -149,7 +149,7 @@ Limitations: element are not shown
     <xsl:template match="*[local-name()='listOfCompartments']" mode="table">
       <h3>listOfCompartments:</h3>
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:90%;">
-      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>units</th><th style="min-width:400px;">size</th></tr>
+      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>units</th><th>size</th></tr>
       <xsl:apply-templates select="*[local-name()='compartment']" mode="table"/>
       </table>
     </xsl:template>
@@ -191,7 +191,7 @@ Limitations: element are not shown
   <xsl:template match="*[local-name()='listOfParameters']" mode="table">
       <h3>listOfParameters:</h3>
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto; max-width:90%;">
-      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>units</th><th style="width:600px;">value</th></tr>
+      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>units</th><th>value</th></tr>
         <xsl:apply-templates select="*[local-name()='parameter']" mode="table"/>
       </table>
   </xsl:template>
@@ -212,7 +212,7 @@ Limitations: element are not shown
   <!-- listOfInitialAssignments annotation -->
   <xsl:template match="*[local-name()='listOfInitialAssignments']" mode="table">
       <h3>listOfInitialAssignments:</h3>
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:80%;">
+      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:90%;">
       <tr class="w3-blue-grey"><th>symbol</th><th>metaid</th><th>math:</th></tr>
         <xsl:apply-templates select="*[local-name()='initialAssignment']" mode="table"/>
       </table>
@@ -229,7 +229,7 @@ Limitations: element are not shown
   <!-- listOfConstraints annotation -->
   <xsl:template match="*[local-name()='listOfConstraints']" mode="table">
       <h3>listOfConstraints:</h3>
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:80%;">
+      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:90%;">
       <tr class="w3-blue-grey"><th>metaid</th><th>message</th><th>math:</th></tr>
         <xsl:apply-templates select="*[local-name()='constraint']" mode="table"/>
       </table>
@@ -246,7 +246,7 @@ Limitations: element are not shown
   <!-- listOfRules annotation -->
   <xsl:template match="*[local-name()='listOfRules']" mode="table">
       <h3>listOfRules:</h3>
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:80%;">
+      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:90%;">
       <tr class="w3-blue-grey"><th>variable</th><th>metaid</th><th>math:</th></tr>
         <xsl:apply-templates select="*[local-name()='assignmentRule']" mode="table"/>
       </table>
@@ -263,7 +263,7 @@ Limitations: element are not shown
   <!-- listOfReactions annotation -->
   <xsl:template match="*[local-name()='listOfReactions']" mode="table">
       <h3>listOfReactions:</h3>
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="max-width:90%;">
+      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto; max-width:90%;">
       <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>reaction formula:</th><th>math:</th></tr>
         <xsl:apply-templates select="*[local-name()='reaction']" mode="table"/>
       </table>
@@ -282,7 +282,7 @@ Limitations: element are not shown
   <!-- listOfEvents annotation -->
   <xsl:template match="*[local-name()='listOfEvents']" mode="table">
       <h3>listOfEvents:</h3>
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:80%;">
+      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:90%;">
       <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>useValuesFrom<br/>TriggerTime</th><th>trigger</th><th>delay</th><th>listOfEvent<br/>Assignments</th></tr>
         <xsl:apply-templates select="*[local-name()='event']" mode="table"/>
       </table>
