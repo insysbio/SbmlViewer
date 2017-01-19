@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level2/version5" level="2" version="5">
+  <model id="superexample" name="Example which includes different equations">
+<!-- listOfRules -->
+    <listOfRules metaid="metaexample">
+    <assignmentRule variable="someFun2" metaid="metaexample">
+    <notes><body xmlns="http://www.w3.org/1999/xhtml">csymbol time</body></notes>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> x </ci>
+            <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/time">
+              t
+            </csymbol> 
+           </apply>
+        </math>
+      </assignmentRule>
+  <assignmentRule variable="someFun3" metaid="metaexample">
+    <notes><body xmlns="http://www.w3.org/1999/xhtml">csymbol delay</body></notes>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> k </ci>
+            <apply>
+            <csymbol encoding="text" definitionURL="http://www.sbml.org/sbml/symbols/delay">
+              delay
+            </csymbol>
+            <ci> x </ci>
+            <cn> 0.1 </cn>
+            </apply>
+         </apply>
+        </math>
+      </assignmentRule>
+    <assignmentRule variable="someFun" metaid="metaexample">
+    <notes><body xmlns="http://www.w3.org/1999/xhtml">divide element and e-notation</body></notes>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <ci> A </ci>
+            <apply>
+              <divide/>
+              <ci> B </ci>
+              <cn type="e-notation"> 2 <sep/> -2 </cn>
+            </apply>
+            <ci> D </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <rateRule metaid="rule1" variable="S1">
+    <notes><body xmlns="http://www.w3.org/1999/xhtml">times</body></notes>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k1 </ci>
+            <ci> S2 </ci>
+          </apply>
+        </math>
+      </rateRule>
+      <algebraicRule metaid="rule2">
+    <notes><body xmlns="http://www.w3.org/1999/xhtml">times and negative integer</body></notes>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <apply>
+              <times/>
+              <cn type="integer"> -1 </cn>
+              <ci> k2 </ci>
+            </apply>
+            <ci> S1 </ci>
+            <ci> S2 </ci>
+          </apply>
+        </math>
+      </algebraicRule>
+   <assignmentRule variable="fff">
+    <notes><body xmlns="http://www.w3.org/1999/xhtml">trigonometry</body></notes>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <sin/>
+            <ci> phi </ci>
+          </apply>
+        </math>
+    </assignmentRule>
+   <assignmentRule variable="fff">
+    <notes><body xmlns="http://www.w3.org/1999/xhtml">cn rational and integer</body></notes>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> A </ci>
+            <ci> B </ci>
+            <cn type="rational"> 1 <sep/> 50 </cn>
+            <cn type="rational"> 5 <sep/> 200 </cn>
+            <cn type="integer"> 5 </cn>
+            <cn type="integer"> -15 </cn>
+          </apply>
+        </math>
+    </assignmentRule>
+   <assignmentRule variable="f">
+    <notes><body xmlns="http://www.w3.org/1999/xhtml">sqrt, squarem, exp, power</body></notes>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <divide/>
+              <cn>1</cn>
+              <apply>
+                <root/>
+                <apply>
+                
+                  <times/>
+                  <cn>2</cn>
+                  <pi/>
+                  <apply>
+                    <power/>
+                    <ci>sigma</ci>
+                    <cn type="integer">2</cn>
+                  </apply>
+                </apply>
+              </apply>
+            </apply>
+            <apply>
+            <exp/>
+            <ci>x</ci>
+            </apply>
+          </apply>
+        </math>
+    </assignmentRule>
+   <assignmentRule variable="f">
+    <notes><body xmlns="http://www.w3.org/1999/xhtml">absolute((sss+12.4)*x)</body></notes>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <abs/>
+            <apply>
+            <times/>
+              <apply>
+                <plus/>
+                  <ci>sss</ci>
+              <cn>12.4</cn>
+              </apply>
+              <ci>x</ci>
+            </apply>
+          </apply>
+        </math>
+    </assignmentRule>
+      
+      
+    </listOfRules>
+    
+    <!-- listOfContraints -->
+   <listOfConstraints metaid="metaexample">
+     <constraint metaid="metaexample" >
+     <math xmlns="http://www.w3.org/1998/Math/MathML">
+     <apply>
+     <and/>
+     <apply> <lt/> <cn> 1 </cn> <ci> S1 </ci> </apply>
+     <apply> <gt/> <ci> S1 </ci> <cn> 100 </cn> </apply>
+     </apply>
+     </math>
+     <message metaid="metaexample" sboTerm="SBO:001">
+     <p xmlns="http://www.w3.org/1999/xhtml"> Species S1 is out of range. </p>
+     </message>
+     </constraint>
+     
+     <constraint metaid="metaexample">
+     <math xmlns="http://www.w3.org/1998/Math/MathML">
+     <apply>
+     <or/>
+     <apply> <lt/> <cn> 1 </cn> <ci> S1 </ci> </apply>
+     <apply> <gt/> <ci> S1 </ci> <cn> 100 </cn> </apply>
+     </apply>
+     </math>
+     <message metaid="metaexample">
+     <p xmlns="http://www.w3.org/1999/xhtml"> Species S1 is out of range. </p>
+     </message>
+     </constraint>
+     
+     <constraint metaid="metaexample">
+     <math xmlns="http://www.w3.org/1998/Math/MathML">
+     <apply>
+     <eq/>
+     <apply> <geq/> <cn> 1 </cn> <ci> S1 </ci> </apply>
+     <apply> <leq/> <ci> S1 </ci> <cn> 100 </cn> </apply>
+     </apply>
+     </math>
+     <message metaid="metaexample">
+     <p xmlns="http://www.w3.org/1999/xhtml"> Species S1 is out of range. </p>
+     </message>
+     </constraint>
+     
+     <constraint metaid="metaexample">
+     <math xmlns="http://www.w3.org/1998/Math/MathML">
+     <apply>
+     <neq/>
+     <apply> <geq/> <cn> 1 </cn> <ci> S1 </ci> </apply>
+     <apply> <leq/> <ci> S1 </ci> <cn> 100 </cn> </apply>
+     </apply>
+     </math>
+     <message metaid="metaexample">
+     <p xmlns="http://www.w3.org/1999/xhtml"> Species S1 is out of range. </p>
+     </message>
+     </constraint>
+   </listOfConstraints>
+  </model>
+</sbml>
