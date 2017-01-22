@@ -30,6 +30,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
 -->
 <xsl:stylesheet version="1.0" 
   xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:l2v1="http://www.sbml.org/sbml/level2/version1"
   xmlns:l2v2="http://www.sbml.org/sbml/level2/version2"
   xmlns:l2v3="http://www.sbml.org/sbml/level2/version3"
@@ -64,12 +65,49 @@ Project-page: http://sbmlviewer.insilicobio.ru
          " class="w3-text">
            <xsl:apply-templates select="*[local-name()='notes']" mode="table"/>
       </div></h1>
+      
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='model']" mode="table"/>
   </xsl:template>
   
   <!-- model -->
   <xsl:template match="*[local-name()='model']" mode="table">
-      <xsl:apply-templates mode="table"/>
+    <h2>model</h2>
+    <xsl:apply-templates select="@*" mode="element"/>
+    <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+    <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+    <xsl:apply-templates select="*[contains(local-name(), 'listOf')]" mode="table"/>
+  </xsl:template>
+  
+  <xsl:template match="*[local-name()='annotation']" mode="element">
+   <p>annotation: <span style="color: red;">= not shown =</span></p>
+  </xsl:template>
+  
+  <!-- Notes -->
+  <xsl:template match="*[local-name()='notes']" mode="element">
+   <p>notes:</p>
+   <div class="w3-container w3-light-grey" style="width:auto;max-width:90%;">
+    <xsl:copy-of select="node()"/>
+   </div>
+  </xsl:template>
+  
+  <xsl:template match="*[local-name()='notes' and xhtml:body]" mode="element">
+   <p>notes:</p>
+   <div class="w3-container w3-light-grey" style="width:auto;max-width:90%;">
+    <xsl:copy-of select="xhtml:body/node()"/>
+   </div>
+  </xsl:template>
+  
+  <xsl:template match="*[local-name()='notes' and xhtml:html[xhtml:body]]" mode="element">
+   <p>notes:</p>
+   <div class="w3-container w3-light-grey" style="width:auto;max-width:90%;">
+    <xsl:copy-of select="xhtml:html/xhtml:body/node()"/>
+   </div>
+  </xsl:template>
+  
+  <xsl:template match="@*" mode="element">
+    <p><xsl:value-of select="local-name()"/>: <xsl:value-of select="."/></p>
   </xsl:template>
   
   <!-- id with notes -->
@@ -88,6 +126,9 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <!-- listOfFunctionDefinitions -->
     <xsl:template match="*[local-name()='listOfFunctionDefinitions']" mode="table">
       <h3>listOfFunctionDefinitions:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:90%;">
       <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>math</th></tr>
       <xsl:apply-templates select="*[local-name()='functionDefinition']" mode="table"/>
@@ -106,6 +147,9 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <!-- listOfUnitDefinitions -->
     <xsl:template match="*[local-name()='listOfUnitDefinitions']" mode="table">
       <h3>listOfUnitDefinitions:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:90%;">
       <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>listOfUnits</th></tr>
       <xsl:apply-templates select="*[local-name()='unitDefinition']" mode="table"/>
@@ -124,6 +168,9 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <!-- listOfCompartmentTypes -->
     <xsl:template match="*[local-name()='listOfCompartmentTypes']" mode="table">
       <h3>listOfCompartmentTypes:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:90%;">
       <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th></tr>
       <xsl:apply-templates select="*[local-name()='compartmentType']" mode="table"/>
@@ -141,6 +188,9 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <!-- listOfSpeciesTypes -->
     <xsl:template match="*[local-name()='listOfSpeciesTypes']" mode="table">
       <h3>listOfSpeciesTypes:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:90%;">
       <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th></tr>
       <xsl:apply-templates select="*[local-name()='speciesType']" mode="table"/>
@@ -158,8 +208,20 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <!-- listOfCompartments -->
     <xsl:template match="*[local-name()='listOfCompartments']" mode="table">
       <h3>listOfCompartments:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+    
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:90%;">
-      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>units</th><th>size</th></tr>
+      <tr class="w3-blue-grey">
+      <th>id</th>
+      <th><xsl:if test="*/@name">name</xsl:if></th>
+      <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+      <th><xsl:if test="*/@compartmentType">compartment<br/>Type</xsl:if></th>
+      <th><xsl:if test="*/@outside">outside</xsl:if></th>
+      <th><xsl:if test="*/@units">units</xsl:if></th>
+      <th><xsl:if test="*/@size">size</xsl:if></th>
+      </tr>
       <xsl:apply-templates select="*[local-name()='compartment']" mode="table"/>
       </table>
     </xsl:template>
@@ -169,6 +231,8 @@ Project-page: http://sbmlviewer.insilicobio.ru
           <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="table"/></td>
           <td><xsl:value-of select="@name"/></td>
           <td><xsl:value-of select="@metaid"/></td>
+          <td><xsl:value-of select="@compartmentType"/></td>
+          <td><xsl:value-of select="@outside"/></td>
           <td><xsl:apply-templates select="@units" mode="table"/></td>
           <td><xsl:if test="not(key('variableKey', @id))"><xsl:value-of select="@size"/></xsl:if>
           <xsl:apply-templates select="key('variableKey', @id)/mml:math"/></td>
@@ -178,8 +242,24 @@ Project-page: http://sbmlviewer.insilicobio.ru
   <!-- listOfSpecies -->
   <xsl:template match="*[local-name()='listOfSpecies']" mode="table">
       <h3>listOfSpecies:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+    
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:90%;">
-      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>substance<br/>Units</th><th>initial<br/>Concentration</th><th>initial<br/>Amount</th><th>boundary<br/>Condition</th><th>compartment</th></tr>
+      <tr class="w3-blue-grey">
+      <th>id</th>
+      <th><xsl:if test="*/@name">name</xsl:if></th>
+      <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+      <th><xsl:if test="*/@speciesType">speciesType</xsl:if></th>
+      <th><xsl:if test="*/@substanceUnits">substance<br/>Units</xsl:if></th>
+      <th><xsl:if test="*/@hasOnlySubstanceUnits">hasOnly<br/>Substance<br/>Units</xsl:if></th>
+      <th><xsl:if test="*/@initialConcentration">initial<br/>Concentration</xsl:if></th>
+      <th><xsl:if test="*/@initialAmount">initial<br/>Amount</xsl:if></th>
+      <th><xsl:if test="*/@boundaryCondition">boundary<br/>Condition</xsl:if></th>
+      <th><xsl:if test="*/@compartment">compartment</xsl:if></th>
+      <th><xsl:if test="*/@charge">charge</xsl:if></th>
+      </tr>
         <xsl:apply-templates select="*[local-name()='species']" mode="table"/>
       </table>
   </xsl:template>
@@ -189,19 +269,32 @@ Project-page: http://sbmlviewer.insilicobio.ru
           <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="table"/></td>
           <td><xsl:value-of select="@name"/></td>
           <td><xsl:value-of select="@metaid"/></td>
+          <td><xsl:value-of select="@speciesType"/></td>
           <td><xsl:apply-templates select="@substanceUnits" mode="table"/></td>
+          <td><xsl:value-of select="@hasOnlySubstanceUnits"/></td>
           <td><xsl:value-of select="@initialConcentration"/></td>
           <td><xsl:value-of select="@initialAmount"/></td>
           <td><xsl:value-of select="@boundaryCondition"/></td>
           <td><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></td>
+          <td><xsl:value-of select="@charge"/></td>
         </tr>
     </xsl:template>
     
   <!-- listOfParameters -->
   <xsl:template match="*[local-name()='listOfParameters']" mode="table">
       <h3>listOfParameters:</h3>
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto; max-width:90%;">
-      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>units</th><th>value</th></tr>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+    
+      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width:auto; max-width:90%;">
+      <tr class="w3-blue-grey">
+      <th>id</th>
+      <th><xsl:if test="*/@name">name</xsl:if></th>
+      <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+      <th><xsl:if test="*/@units">units</xsl:if></th>
+      <th><xsl:if test="*/@value">value</xsl:if></th>
+      </tr>
         <xsl:apply-templates select="*[local-name()='parameter']" mode="table"/>
       </table>
   </xsl:template>
@@ -214,7 +307,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
           <td><xsl:value-of select="@units"/></td>
           <td>
           <xsl:if test="not(key('variableKey', @id))"><xsl:value-of select="@value"/></xsl:if>
-          <xsl:apply-templates select="key('variableKey', @id)/mml:math"/>
+          <!--<xsl:apply-templates select="key('variableKey', @id)/mml:math"/>-->
           </td>
         </tr>
   </xsl:template>
@@ -222,8 +315,16 @@ Project-page: http://sbmlviewer.insilicobio.ru
   <!-- listOfInitialAssignments annotation -->
   <xsl:template match="*[local-name()='listOfInitialAssignments']" mode="table">
       <h3>listOfInitialAssignments:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+      
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:90%;">
-      <tr class="w3-blue-grey"><th>symbol</th><th>metaid</th><th>math:</th></tr>
+      <tr class="w3-blue-grey">
+      <th>symbol</th>
+      <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+      <th>math:</th>
+      </tr>
         <xsl:apply-templates select="*[local-name()='initialAssignment']" mode="table"/>
       </table>
   </xsl:template>
@@ -239,8 +340,16 @@ Project-page: http://sbmlviewer.insilicobio.ru
   <!-- listOfConstraints annotation -->
   <xsl:template match="*[local-name()='listOfConstraints']" mode="table">
       <h3>listOfConstraints:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+      
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:90%;">
-      <tr class="w3-blue-grey"><th>metaid</th><th>message</th><th>math:</th></tr>
+      <tr class="w3-blue-grey">
+      <th>metaid</th>
+      <th>message</th>
+      <th>math:</th>
+      </tr>
         <xsl:apply-templates select="*[local-name()='constraint']" mode="table"/>
       </table>
   </xsl:template>
@@ -256,14 +365,23 @@ Project-page: http://sbmlviewer.insilicobio.ru
   <!-- listOfRules annotation -->
   <xsl:template match="*[local-name()='listOfRules']" mode="table">
       <h3>listOfRules:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+      
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:90%;">
-      <tr class="w3-blue-grey"><th>variable</th><th>metaid</th><th>math:</th></tr>
-        <xsl:apply-templates select="*[local-name()='assignmentRule']" mode="table"/>
+      <tr class="w3-blue-grey"><th>type</th><th>variable</th><th>metaid</th><th>math:</th></tr>
+        <xsl:apply-templates select="*[local-name()='assignmentRule'] | *[local-name()='algebraicRule'] | *[local-name()='rateRule']" mode="table"/>
       </table>
   </xsl:template>
   
-  <xsl:template match="*[local-name()='assignmentRule']" mode="table">
+  <xsl:template match="
+    *[local-name()='assignmentRule'] |
+    *[local-name()='algebraicRule'] |
+    *[local-name()='rateRule']
+    " mode="table">
         <tr>
+          <td><xsl:value-of select="local-name()"/></td>
           <td class="w3-tooltip"><xsl:apply-templates select="@variable" mode="table"/></td>
           <td><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
@@ -273,6 +391,10 @@ Project-page: http://sbmlviewer.insilicobio.ru
   <!-- listOfReactions annotation -->
   <xsl:template match="*[local-name()='listOfReactions']" mode="table">
       <h3>listOfReactions:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+      
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto; max-width:90%;">
       <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>reaction formula:</th><th>math:</th></tr>
         <xsl:apply-templates select="*[local-name()='reaction']" mode="table"/>
@@ -292,6 +414,10 @@ Project-page: http://sbmlviewer.insilicobio.ru
   <!-- listOfEvents annotation -->
   <xsl:template match="*[local-name()='listOfEvents']" mode="table">
       <h3>listOfEvents:</h3>
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+      
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:90%;">
       <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th><th>useValuesFrom<br/>TriggerTime</th><th>trigger</th><th>delay</th><th>listOfEvent<br/>Assignments</th></tr>
         <xsl:apply-templates select="*[local-name()='event']" mode="table"/>
@@ -307,7 +433,6 @@ Project-page: http://sbmlviewer.insilicobio.ru
           <td><xsl:apply-templates select="*[local-name()='trigger']" mode="table"/></td>
           <td><xsl:apply-templates select="*[local-name()='delay']" mode="table"/></td>
           <td><xsl:apply-templates select="*[local-name()='listOfEventAssignments']" mode="table"/></td>
-          <td><xsl:apply-templates select="mml:math"/></td>
         </tr>
   </xsl:template>
   
@@ -319,25 +444,48 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <xsl:apply-templates select="mml:math"/>
   </xsl:template>
   
+  <!-- listOfEventAssignments annotation -->
+  <xsl:template match="*[local-name()='listOfEventAssignments']" mode="table">
+    <b><xsl:value-of select="@metaid"/></b>
+      <table class="w3-table w3-striped w3-border"  style="width: auto; max-width:90%;">
+      <tr>
+      <th>variable</th>
+      <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+      <th>math:</th>
+      </tr>
+        <xsl:apply-templates select="*[local-name()='eventAssignment']" mode="table"/>
+      </table>
+  </xsl:template>
+  
+  <xsl:template match="*[local-name()='eventAssignment']" mode="table">
+        <tr>
+          <td class="w3-tooltip"><xsl:apply-templates select="@variable" mode="table"/></td>
+          <td><xsl:value-of select="@metaid"/></td>
+          <td><xsl:apply-templates select="mml:math"/></td>
+        </tr>
+  </xsl:template>
+  
   <xsl:template match="@units" mode="table">
     <!--<i><xsl:apply-templates select="key('idKey',.)/@name" mode="table"/></i>-->
     <i><xsl:value-of select="."/></i>
   </xsl:template>
   
   <xsl:template match="@substanceUnits" mode="table">
-    <!--<i><xsl:apply-templates select="key('idKey',.)/@name" mode="table"/>/<xsl:apply-templates select="key('idKey', key('idKey',../@compartment)/@units)/@name" mode="table"/></i>-->
-    <i><xsl:value-of select="."/>/<xsl:value-of select="key('idKey',../@compartment)/@units"/></i>
+    <!--<i><xsl:apply-templates select="key('idKey',.)/@name" mode="table"/>/<xsl:apply-templates select="key('idKey', key('idKey',../@compartment)/@units)/@name" mode="table"/></i>
+    <i><xsl:value-of select="."/>/<xsl:value-of select="key('idKey',../@compartment)/@units"/></i>-->
+    <i><xsl:value-of select="."/></i>
   </xsl:template>
   
   <xsl:template match="*[local-name()='unitDefinition']/@name" mode="table">
     <xsl:value-of select="."/>
   </xsl:template>
   
-  <!-- Notes type: just copy -->
-  <xsl:template match="
-    *[local-name()='notes'] |
-    *[local-name()='message']
-    " mode="table">
+  <xsl:template match="*[local-name()='notes']" mode="table">
+    <xsl:copy-of select="node()"/>
+  </xsl:template>
+  
+  <!-- message type: just copy -->
+  <xsl:template match="*[local-name()='message']" mode="table">
     <xsl:copy-of select="node()"/>
   </xsl:template>
   
@@ -528,6 +676,13 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <xsl:element name="cn" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:copy-of select="normalize-space(text()[1])"/><xsl:if test="normalize-space(text()[2])!='0'">e<xsl:copy-of select="normalize-space(text()[2])"/>
       </xsl:if>
+    </xsl:element>
+  </xsl:template>
+  
+  <!-- adaptation of integer for MathJax -->
+  <xsl:template match="mml:cn[@type='integer']">
+    <xsl:element name="cn" namespace="http://www.w3.org/1998/Math/MathML">
+      <xsl:copy-of select="normalize-space(text())"/>
     </xsl:element>
   </xsl:template>
   
