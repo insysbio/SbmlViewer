@@ -1,2 +1,9 @@
 examples/161127_IL5_13_model_final_notes.xml
 examples/for translation.xml
+drafts/
+lib/*/
+tmp/
+._*
+.db
+.tmp
+.log

@@ -1,0 +1,21 @@
+/
+  docs/ (description and future site)
+  test/ (sbml files for testing)
+  lib/ (foreign code) не синхронизуются
+    mathjax/
+    w3css/
+  tmp/ (промежуточные версии при сборке) не синхронизуются
+  draft/ (тестирование кусков кода без включения в структуру проекта)
+  src/ (исходники с которыми непосредственно работаю)
+    xslt/
+    manuals/
+    js/
+    viewer.html
+    STARTME
+  dist/ (здесь лежат версии-сборки для распространения, production code)
+    online/ версия для демонстрации
+    google_extension/ версия для расшиения
+  README.md - описание проекта
+  LICENSE - здесь лицензия для всего проекта (если внутри папок нет дополнительной)
+  STRUCTURE
+  
