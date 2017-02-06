@@ -1,6 +1,7 @@
 /
   docs/ (description and future site)
-  test/ (sbml files for testing)
+  cases/ (sbml files for testing)
+  test/ (code to test code)
   lib/ (foreign code) не синхронизуются
     mathjax/
     w3css/
@@ -17,5 +18,6 @@
     google_extension/ версия для расшиения
   README.md - описание проекта
   LICENSE - здесь лицензия для всего проекта (если внутри папок нет дополнительной)
-  STRUCTURE
+  STRUCTURE - этот файл
+  
   
