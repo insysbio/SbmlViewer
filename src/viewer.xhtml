@@ -33,7 +33,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
   var options={
     transform: "sbml2table",
     transform2: "sbml2element",
-    filepath: "examples/00001-sbml-l2v1.xml",
+    filepath: "../cases/00001-sbml-l2v1.xml",
     useNames: "false",
     correctMathml: "false",
     equationsOff: "false"
@@ -86,8 +86,6 @@ Project-page: http://sbmlviewer.insilicobio.ru
       resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
       document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
       
-
-      
       //update equations
       MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
       
@@ -130,7 +128,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
     });
     </script>
 
-    <script type="text/javascript" src="./MathJax/MathJax.js"> </script> <!----> <!-- external -->
+    <script type="text/javascript" src="../lib/mathjax/MathJax.js"> </script> <!----> <!-- external -->
     
   </head>
   <body class="w3-container" >
