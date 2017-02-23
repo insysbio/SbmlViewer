@@ -1,0 +1,144 @@
+<html xmlns="http://www.w3.org/1999/xhtml" style="overflow-x: auto;">
+<!-- 
+Copyright 2016-2017 Institute for Systems Biology Moscow
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<!-- INFO
+Description: Main file to interact with sbml files and transformations
+
+Author: Evgeny Metelkin
+Copyright: Institute for Systems Biology, Moscow
+Last modification: 2017-01-15
+
+Project-page: <a href="http://sbmlviewer.insilicobio.ru">http://sbmlviewer.insilicobio.ru</a>
+-->
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css"/>
+       
+    <script type="text/javascript">
+<![CDATA[
+  // OPTIONS
+  var options={
+    transform: "sbml2table",
+    transform2: "sbml2element",
+    filepath: "00001-sbml-l2v1.xml",
+    useNames: "false",
+    correctMathml: "false",
+    equationsOff: "false"
+  }
+  /* alternative way to set MathJax options
+    window.MathJax = { // settings for MathJax
+      MathML: {
+        //extensions: ["mml3.js", "content-mathml.js"]//,
+        //jax: ["input/MathML","output/PreviewHTML"]
+      },
+      CommonHTML: { linebreaks: { automatic: true } , width: 'container' },
+      "HTML-CSS": { linebreaks: { automatic: true } },
+      SVG: { linebreaks: { automatic: true } }/*,
+      menuSettings: { zoom: "Click", zscale: "200%" }
+    };
+    */
+    function readXml(x) { // return xml object as readed from file 
+     try {
+       xmlhttp = new XMLHttpRequest();
+       xmlhttp.open("GET", x, false);
+       xmlhttp.send();
+       var y = xmlhttp.responseXML;
+       return y; 
+     } catch(err) {
+       return null;
+     }
+    }
+
+    var xsltProcessor1 = new XSLTProcessor(); //processor for 1st xslt
+    var xsltProcessor2 = new XSLTProcessor(); //processor for 2d xslt
+    var modelDoc=null;
+    
+    window.onload = function(){
+      //read external options
+      var sp=window.location.search.substring(1).split("&");
+      if (sp[0]) options["filepath"]=sp[0]; // parsing first argument
+      // parsing other arguments
+      for(var i = 1; i < sp.length; i ++) {
+            var param = sp[i].split('=');
+            options[param[0]] = param[1];
+      }
+
+      // read and load table
+      var xsl1=readXml("xslt/"+options["transform"]+".xsl");
+      xsltProcessor1.importStylesheet(xsl1);
+      if (options["useNames"]) xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
+      if (options["correctMathml"]) xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
+      if (options["equationsOff"]) xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
+      modelDoc=readXml(options["filepath"]);
+      resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
+      document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
+      
+      //update equations
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+      
+      // read additional stylesheet
+      var xsl2=readXml("xslt/"+options["transform2"]+".xsl");
+      xsltProcessor2.importStylesheet(xsl2);
+      if (options["useNames"]) xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
+      if (options["correctMathml"]) xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
+    }
+    
+    //transform element and open side window
+    function w3_open(event) {
+      // transformation
+      var id=event.target.id;
+      xsltProcessor2.setParameter(null, "elementId", event.target.id);
+      var resultDocument = xsltProcessor2.transformToDocument(modelDoc); 
+      
+      document.getElementById("sideContent").removeChild(document.getElementById("sideContent").childNodes[0]);
+      document.getElementById("sideContent").appendChild(resultDocument.firstElementChild);
+      
+      // show block
+      document.getElementById("sideNav").style.display = "block";
+      
+      //update equations
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
+
+    function w3_close() {
+      document.getElementById("sideNav").style.display = "none";
+    }
+]]>
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX","input/MathML","output/PreviewHTML"],
+      extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js","AssistiveMML.js", "[Contrib]/a11y/accessibility-menu.js", "MathML/mml3.js", "MathML/content-mathml.js"],
+      TeX: {
+        extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+      }
+    });
+    </script>
+
+    <script type="text/javascript" src="http://insilicobio.ru/mathjax/MathJax.js"> </script> <!----> <!-- external -->
+    
+  </head>
+  <body class="w3-container" >
+    <div class="w3-right w3-light-green"><b>SBML Viewer beta by InSysBio:</b> transformation from SBML to human readable page.<br/>Homepage http://sbmlviewer.insilicobio.ru</div> 
+    
+     <div id="sideNav" class="w3-container w3-card-4" style="position:fixed; display: none; top: 50px; right:50px; min-width:800px; max-width:50%; min-height:200px; max-height:90%; overflow-y: auto; overflow-x: auto; background:#ddd; z-index: 10;">
+        <span class="w3-closebtn" onclick="w3_close()">&#215;</span>
+        <div id="sideContent">fff</div>
+     </div>
+     <div id="mainContent"/>
+     
+  </body>
+</html>
