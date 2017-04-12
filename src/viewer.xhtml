@@ -150,7 +150,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
     function validateUploadFile(pathFile,method) {
         document.getElementById("errorMess").innerHTML = "";
         if ((pathFile != "") && (pathFile.match(/(.xml)$/))) {
-            document.getElementById("mainContent").innerHTML = '';
+            document.getElementById("mainContent").innerHTML = "";
             switch(method) {
                 case "URL": 
                     options["filepath"] = pathFile;
