@@ -25,7 +25,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
 -->
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css"/>
     
   <style>
   #filearea{
@@ -45,7 +45,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
   var options={
     transform: "sbml2table",
     transform2: "sbml2element",
-    filepath: "../cases/00001-sbml-l2v1.xml",
+    filepath: "cases/00001-sbml-l2v1.xml",
     useNames: "false",
     correctMathml: "false",
     equationsOff: "false",
@@ -108,7 +108,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
       }
     */
       // read and load table
-      var xsl1=readXml("xslt/"+options["transform"]+".xsl");
+      var xsl1=readXml("src/xslt/"+options["transform"]+".xsl");
       xsltProcessor1.importStylesheet(xsl1);
       if (options["useNames"]) xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
       if (options["correctMathml"]) xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
@@ -141,7 +141,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
       MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
       
       // read additional stylesheet
-      var xsl2=readXml("xslt/"+options["transform2"]+".xsl");
+      var xsl2=readXml("src/xslt/"+options["transform2"]+".xsl");
       xsltProcessor2.importStylesheet(xsl2);
       if (options["useNames"]) xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
       if (options["correctMathml"]) xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
@@ -204,7 +204,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
     });
     </script>
 
-    <script type="text/javascript" src="../lib/mathjax/MathJax.js"> </script> <!----> <!-- external -->
+    <script type="text/javascript" src="lib/mathjax/MathJax.js"> </script> <!----> <!-- external -->
     
   </head>
   <body class="w3-container" >
