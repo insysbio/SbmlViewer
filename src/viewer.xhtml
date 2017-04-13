@@ -51,6 +51,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
     equationsOff: "false",
     method: "URL"
   }
+  
   /* alternative way to set MathJax options
     window.MathJax = { // settings for MathJax
       MathML: {
@@ -79,7 +80,6 @@ Project-page: http://sbmlviewer.insilicobio.ru
     var xsltProcessor2 = new XSLTProcessor(); //processor for 2d xslt
     var modelDoc=null;
     
-        
     window.onload = function() {
         var target = document.getElementById("filearea");
         target.addEventListener("dragover", function(event) {
@@ -92,82 +92,79 @@ Project-page: http://sbmlviewer.insilicobio.ru
             validateUploadFile(files[0].name,"dragNdrop");
         }, false);
         
-        loadModelPage();
+        loadModeToPage(); //Display default model
     };    
     
-    function loadModelPage() {
-    /*
-      //read external options
-      var sp=window.location.search.substring(1).split("&");
-      if (sp[0]) options["filepath"]=sp[0]; // parsing first argument
-    
-      // parsing other arguments
-      for(var i = 1; i < sp.length; i ++) {
-            var param = sp[i].split('=');
-            options[param[0]] = param[1];
-      }
-    */
-      // read and load table
-      var xsl1=readXml("xslt/"+options["transform"]+".xsl");
-      xsltProcessor1.importStylesheet(xsl1);
-      if (options["useNames"]) xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
-      if (options["correctMathml"]) xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
-      if (options["equationsOff"]) xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
-      
+    function loadModeToPage() {      
+      //Generate modelDoc depending on method of upload file
       switch(options["method"]) {
         case "URL":
             modelDoc = readXml(options["filepath"]);
+            modelDocDisplayToPage();
             break;
         case "upload":
-            var reader = new FileReader();
-            reader.readAsText(document.getElementById("file").files[0]);
-            reader.onload = function(){
-                modelDoc = new DOMParser().parseFromString(reader.result, "application/xml");
-            }    
+            readUploadFile(document.getElementById("file").files[0]);
             break;
         case "dragNdrop":
-            var reader = new FileReader();
-            reader.readAsText(files[0]);
-            reader.onload = function(){
-                modelDoc = new DOMParser().parseFromString(reader.result, "application/xml");
-            } 
+            readUploadFile(files[0]);
             break;
-        } 
+      } 
         
-      resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
-      document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
-      
-      //update equations
-      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-      
-      // read additional stylesheet
-      var xsl2=readXml("xslt/"+options["transform2"]+".xsl");
-      xsltProcessor2.importStylesheet(xsl2);
-      if (options["useNames"]) xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
-      if (options["correctMathml"]) xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
-    }
+      function readUploadFile(file) {
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function() {
+          modelDoc = new DOMParser().parseFromString(reader.result, "application/xml");
+          modelDocDisplayToPage();
+        } 
+      }  
+
+      function modelDocDisplayToPage() {
+        // read and load table
+        var xsl1=readXml("xslt/"+options["transform"]+".xsl");
+        xsltProcessor1.importStylesheet(xsl1);
+        if (options["useNames"]) xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
+        if (options["correctMathml"]) xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
+        if (options["equationsOff"]) xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
+          
+        resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
+        document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
+        
+        //update equations
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+            
+        // read additional stylesheet
+        var xsl2=readXml("xslt/"+options["transform2"]+".xsl");
+        xsltProcessor2.importStylesheet(xsl2);
+        if (options["useNames"]) xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
+        if (options["correctMathml"]) xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
+      }  
+    }    
     
     function validateUploadFile(pathFile,method) {
-        document.getElementById("errorMess").innerHTML = "";
-        if ((pathFile != "") && (pathFile.match(/(.xml)$/))) {
-            document.getElementById("mainContent").innerHTML = "";
-            switch(method) {
-                case "URL": 
-                    options["filepath"] = pathFile;
-                    options["method"] = "URL";
-                    break;
-                case "upload":
-                    options["method"] = "upload";
-                    break;
-                case "dragNdrop":
-                    options["method"] = "dragNdrop";
-                    break;                   
-            }
-            loadModelPage(); 
-        }        
-        else {
-            document.getElementById("errorMess").innerHTML = "Документ не был загружен или имеет неверный формат";
+      document.getElementById("errorMess").innerHTML = "";
+        
+      if ((pathFile != "") && (pathFile.match(/(.xml)$/))) {
+        document.getElementById("mainContent").innerHTML = "";
+            
+        switch(method) {
+          case "URL": 
+            options["filepath"] = pathFile;
+            options["method"] = "URL";
+            break;
+          case "upload":
+            options["method"] = "upload";
+            break;
+          case "dragNdrop":
+            options["method"] = "dragNdrop";
+            break;                   
         }
+            
+        loadModeToPage(); 
+      }        
+      else {
+        document.getElementById("errorMess").innerHTML = "Документ не был загружен или имеет неверный формат";
+      }
     }
     
     //transform element and open side window
