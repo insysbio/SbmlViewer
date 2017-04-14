@@ -45,7 +45,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
   var options={
     transform: "sbml2table",
     transform2: "sbml2element",
-    filepath: "../cases/00001-sbml-l2v1.xml",
+    filepath: "",
     useNames: "false",
     correctMathml: "false",
     equationsOff: "false",
@@ -65,22 +65,17 @@ Project-page: http://sbmlviewer.insilicobio.ru
     };
     */
     function readXml(x, callback) { // return xml object as readed from file 
-       var xmlhttp = new XMLHttpRequest();
-       xmlhttp.open("GET", x, false);
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET", x, false);       
+      xmlhttp.onload = function(){
+        callback(this.responseXML);
+      };
        
-       xmlhttp.onerror = function(){
-         alert("Cannot upload the file.");
-       };
+      xmlhttp.onerror = function(){
+        alert("Cannot onload the file.");
+      };
        
-       xmlhttp.onload = function(){
-         callback(this.responseXML);
-       };
-       
-       xmlhttp.onerror = function(){
-         alert("Cannot onload the file.");
-       };
-       
-       xmlhttp.send();
+      xmlhttp.send();
     }
     
     var xsltProcessor1 = new XSLTProcessor(); //processor for 1st xslt
@@ -88,108 +83,87 @@ Project-page: http://sbmlviewer.insilicobio.ru
     var modelDoc=null;
     
     window.onload = function() {
-        var target = document.getElementById("filearea");
-        
-        target.addEventListener("dragover", function(event) {
-            event.preventDefault();
-        }, false);
-        
-        /*target.addEventListener("drop", function(event) {
-            event.preventDefault();
-            files = event.dataTransfer.files,
-            validateUploadFile(files[0].name,"dragNdrop");
-        }, false);*/
-        
         document.getElementById("file").addEventListener("change", function(event) {
           validateUploadFile(document.getElementById('file').files[0].name, 'upload');
         }, false);
-        
-        //loadModeToPage(); //Display default model
     };
     
     function loadModeToPage() {      
       //Generate modelDoc depending on method of upload file
       switch(options["method"]) {
-        case "URL":
-            modelDoc = readXml(options["filepath"]);
-            if (modelDoc) {
-              modelDocDisplayToPage();
-            }
-            else {
-              document.getElementById("errorMess").innerHTML = "Impossible to read the document";
-            }
+        case "URL": //Not work now, we not support get with URL
+            readXml(options["filepath"], function(modelDoc) { // ???Interesting, be value in global modelDoc or not?
+              if (modelDoc) { 
+                modelDocDisplayToPage();
+              }
+              else {
+                document.getElementById("errorMess").innerHTML = "Impossible to read the document";
+              }
+            });
             break;
         case "upload":
-            readUploadFile(document.getElementById("file").files[0]);
-            break;
-        case "dragNdrop":
-            readUploadFile(files[0]);
-            break;
+          var file = document.getElementById("file").files[0];
+          var reader = new FileReader();
+          try {
+            reader.readAsText(file);
+            reader.onload = function() {
+              modelDoc = new DOMParser().parseFromString(reader.result, "application/xml");
+              modelDocDisplayToPage();
+            } 
+          }
+          catch(err) {
+            document.getElementById("errorMess").innerHTML = "Impossible to read the document";
+          }
+          break;
       } 
         
-      function readUploadFile(file) {
-        var reader = new FileReader();
-        try {
-          reader.readAsText(file);
-          reader.onload = function() {
-            modelDoc = new DOMParser().parseFromString(reader.result, "application/xml");
-            modelDocDisplayToPage();
-          } 
-        }
-        catch(err){
-          document.getElementById("errorMess").innerHTML = "Impossible to read the document";
-        }
-      }  
 
       function modelDocDisplayToPage() {
         // read and load table
-        readXml("xslt/"+options["transform"]+".xsl", function(xsl1){
+        readXml("xslt/"+options["transform"]+".xsl", function(xsl1) {
           xsltProcessor1.importStylesheet(xsl1);
+          
           if (options["useNames"]) xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
           if (options["correctMathml"]) xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
           if (options["equationsOff"]) xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
           
-<<<<<<< HEAD
           resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
           document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
         });
-=======
+        
         resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
         if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/)) {
           document.getElementById("errorMess").innerHTML = "Incorrect XML";
         }
         else {
-        document.getElementById("mainContent").innerHTML = "";
-        document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
->>>>>>> origin/VikaEdit
-        
-        //update equations
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-            
-        // read additional stylesheet
-        var xsl2=readXml("xslt/"+options["transform2"]+".xsl");
-        xsltProcessor2.importStylesheet(xsl2);
-        if (options["useNames"]) xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
-        if (options["correctMathml"]) xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
-      }
+          document.getElementById("mainContent").innerHTML = "";
+          document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
+          
+          //update equations
+          MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+              
+          // read additional stylesheet
+        readXml("xslt/"+options["transform2"]+".xsl", function(xsl2) {
+          xsltProcessor2.importStylesheet(xsl2);
+          if (options["useNames"]) xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
+          if (options["correctMathml"]) xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
+        });
+        }
       }  
     }    
     
     function validateUploadFile(pathFile,method) {
-      //document.getElementById("errorMess").innerHTML = "";
+      document.getElementById("errorMess").innerHTML = ""; //Delete message about error, when upload new file 
         
       if ((pathFile != "") && (pathFile.match(/(.xml)$/))) {
         switch(method) {
-          case "URL": 
+          case "URL": //Not work now, because now no URL-support
             options["filepath"] = pathFile;
             options["method"] = "URL";
             break;
           case "upload":
             options["method"] = "upload";
             break;
-          case "dragNdrop":
-            options["method"] = "dragNdrop";
-            break;                   
         }
             
         loadModeToPage(); 
@@ -245,34 +219,24 @@ Project-page: http://sbmlviewer.insilicobio.ru
     </div> -->
    
   <label id="filearea" class="w3-btn w3-block w3-teal">
-    <input id="file" type="file" accept=".xml,.sbml" style="display:block;" onchange=""/>
+    <input id="file" type="file" accept=".xml,.sbml" style="position:absolute; opacity: 0; width:100%; cursor: pointer;" onchange=""/>
     Press to load SBML file or drug'n'drop to the area
-  </label>
-   
-    <!--<div id="filearea" class="w3-container w3-margin">
-      
-        <div hidden="true">
-            <input onchange="validateUploadFile(document.getElementById('file').files[0].name,'upload')" type="file" id="file"/>
-        </div>
-        <label for="file" style="cursor:pointer;">
-            <div class="w3-large w3-center w3-text-grey w3-padding" title="Drag'n'drop or click for add file">   
-              Press to load SBML file or drug'n'drop to the area
-            </div>    
-        </label>
-        <hr/>
-        <div class="w3-center w3-text-grey w3-padding">
-        <span>Or link </span><input type="text" id="urlFile" title="Enter URL"/> <button onclick="validateUploadFile(document.getElementById('urlFile').value,'URL')">Upload</button><span id="erMes"></span>
-        </div>    
-     </div>-->
-     
-    <div id="errorMess" class="w3-panel w3-text-red"/>
-
-   <!--<div class="w3-container w3-grey"/>-->
-     <div id="sideNav" class="w3-container w3-card-4" style="position:fixed; display: none; top: 50px; right:50px; min-width:800px; max-width:50%; min-height:200px; max-height:90%; overflow-y: auto; overflow-x: auto; background:#ddd; z-index: 10;">
-        <span class="w3-closebtn" onclick="w3_close()">&#215;</span>
-        <div id="sideContent">fff</div>
-     </div>
-    <div id="mainContent">Nothing to show</div>
+  </label> 
+  
+  <!-- 
+  <div class="w3-center w3-text-grey w3-padding">
+    <span>Or link </span><input type="text" id="urlFile" title="Enter URL"/> <button onclick="validateUploadFile(document.getElementById('urlFile').value,'URL')">Upload</button><span id="erMes"></span>
+  </div>   -->
+    
+  <div id="errorMess" class="w3-panel w3-text-red"/>
+  
+  <div id="sideNav" class="w3-container w3-card-4" style="position:fixed; display: none; top: 50px; right:50px; min-width:800px; max-width:50%; min-height:200px; max-height:90%; overflow-y: auto; overflow-x: auto; background:#ddd; z-index: 10;">
+    <span class="w3-closebtn" onclick="w3_close()">&#215;</span>
+      <div id="sideContent">fff</div>
+    </div>
+    <div id="mainContent">
+      <div class="w3-container w3-center w3-large w3-text-grey">Nothing to show</div>
+    </div>
      
   </body>
 </html>
