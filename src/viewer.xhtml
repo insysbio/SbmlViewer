@@ -112,7 +112,12 @@ Project-page: http://sbmlviewer.insilicobio.ru
       switch(options["method"]) {
         case "URL":
             modelDoc = readXml(options["filepath"]);
-            modelDocDisplayToPage();
+            if (modelDoc) {
+              modelDocDisplayToPage();
+            }
+            else {
+              document.getElementById("errorMess").innerHTML = "Impossible to read the document";
+            }
             break;
         case "upload":
             readUploadFile(document.getElementById("file").files[0]);
@@ -124,11 +129,16 @@ Project-page: http://sbmlviewer.insilicobio.ru
         
       function readUploadFile(file) {
         var reader = new FileReader();
-        reader.readAsText(file);
-        reader.onload = function() {
-          modelDoc = new DOMParser().parseFromString(reader.result, "application/xml");
-          modelDocDisplayToPage();
-        } 
+        try {
+          reader.readAsText(file);
+          reader.onload = function() {
+            modelDoc = new DOMParser().parseFromString(reader.result, "application/xml");
+            modelDocDisplayToPage();
+          } 
+        }
+        catch(err){
+          document.getElementById("errorMess").innerHTML = "Impossible to read the document";
+        }
       }  
 
       function modelDocDisplayToPage() {
@@ -139,9 +149,19 @@ Project-page: http://sbmlviewer.insilicobio.ru
           if (options["correctMathml"]) xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
           if (options["equationsOff"]) xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
           
+<<<<<<< HEAD
           resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
           document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
         });
+=======
+        resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
+        if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/)) {
+          document.getElementById("errorMess").innerHTML = "Incorrect XML";
+        }
+        else {
+        document.getElementById("mainContent").innerHTML = "";
+        document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
+>>>>>>> origin/VikaEdit
         
         //update equations
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
@@ -151,6 +171,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
         xsltProcessor2.importStylesheet(xsl2);
         if (options["useNames"]) xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
         if (options["correctMathml"]) xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
+      }
       }  
     }    
     
@@ -158,8 +179,6 @@ Project-page: http://sbmlviewer.insilicobio.ru
       //document.getElementById("errorMess").innerHTML = "";
         
       if ((pathFile != "") && (pathFile.match(/(.xml)$/))) {
-        document.getElementById("mainContent").innerHTML = "";
-            
         switch(method) {
           case "URL": 
             options["filepath"] = pathFile;
@@ -176,7 +195,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
         loadModeToPage(); 
       }        
       else {
-        document.getElementById("errorMess").innerHTML = "Документ не был загружен или имеет неверный формат";
+        document.getElementById("errorMess").innerHTML = "The document has not been loaded or has the wrong format";
       }
     }
     
@@ -184,6 +203,8 @@ Project-page: http://sbmlviewer.insilicobio.ru
     function w3_open(event) {
       // transformation
       var id=event.target.id;
+      var xsl2=readXml("xslt/"+options["transform2"]+".xsl");
+      xsltProcessor2.importStylesheet(xsl2);
       xsltProcessor2.setParameter(null, "elementId", event.target.id);
       var resultDocument = xsltProcessor2.transformToDocument(modelDoc); 
       
