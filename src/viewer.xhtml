@@ -29,7 +29,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
     
   <style>
   #filearea{
-    border: 3px dashed grey;
+    border: 3px dashed white;
   }
   hr{
     margin: 0;
@@ -42,15 +42,23 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <script type="text/javascript">
 <![CDATA[
   // OPTIONS
-  var options={
+  var options = {
     transform: "sbml2table",
     transform2: "sbml2element",
     filepath: "",
-    useNames: "false",
-    correctMathml: "false",
-    equationsOff: "false",
     method: "URL"
-  }
+  };
+  
+  var waysDisplayPage = [
+    "sbml2table",
+    "sbml2table2"
+  ];
+  
+  var optionsDisplay = [
+    "useNames",
+    "correctMathml",
+    "equationsOff"
+  ];
   
   /* alternative way to set MathJax options
     window.MathJax = { // settings for MathJax
@@ -71,8 +79,8 @@ Project-page: http://sbmlviewer.insilicobio.ru
         callback(this.responseXML);
       };
        
-      xmlhttp.onerror = function(){
-        alert("Cannot onload the file.");
+      xmlhttp.error = function(){
+        document.getElementById("errorMess").innerHTML = "Cannot onload the file.";
       };
        
       xmlhttp.send();
@@ -86,6 +94,55 @@ Project-page: http://sbmlviewer.insilicobio.ru
         document.getElementById("file").addEventListener("change", function(event) {
           validateUploadFile(document.getElementById('file').files[0].name, 'upload');
         }, false);
+        
+        document.getElementById("refresh").addEventListener("click", function() {
+          if (document.getElementById('file').files[0]) {
+            loadModeToPage()
+          }
+          else {
+            document.getElementById("errorMess").innerHTML = "File don't find";
+          }  
+        });
+        
+        
+        var select = document.getElementsByTagName("select")[0];
+        waysDisplayPage.forEach(function(item) {
+          var option = document.createElement("option");
+          option.innerHTML = item;
+          select.appendChild(option);   
+        });
+        
+        select.addEventListener("change", function() {
+          options["transform"] = this.value;
+        });
+       
+        var listBtn = document.getElementById("listRadioBtn");
+        optionsDisplay.forEach(function(item) {
+          var span = document.createElement("span");
+          
+          options[item] = false;
+          
+          var radioBtn = document.createElement("input");
+          radioBtn.setAttribute("type", "checkbox");
+          radioBtn.setAttribute("id",item);
+          radioBtn.setAttribute("value",item);
+          
+          var label = document.createElement("label");
+          label.setAttribute("for", item);
+          label.innerHTML = item;
+          
+          span.appendChild(radioBtn);
+          span.appendChild(label);
+          span.innerHTML += " ";
+          listBtn.appendChild(span);
+        });
+        
+        var listCheckbox = listBtn.getElementsByTagName("input");
+        for(var i = 0; i < listCheckbox.length; i++) {
+          listCheckbox[i].addEventListener("change", function() {
+            options[this.value] = this.checked;
+          });
+        }    
     };
     
     function loadModeToPage() {      
@@ -136,6 +193,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
           document.getElementById("errorMess").innerHTML = "Incorrect XML";
         }
         else {
+          w3_close();
           document.getElementById("mainContent").innerHTML = "";
           document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
           
@@ -176,14 +234,15 @@ Project-page: http://sbmlviewer.insilicobio.ru
     //transform element and open side window
     function w3_open(event) {
       // transformation
-      var id=event.target.id;
-      var xsl2=readXml("xslt/"+options["transform2"]+".xsl");
-      xsltProcessor2.importStylesheet(xsl2);
-      xsltProcessor2.setParameter(null, "elementId", event.target.id);
-      var resultDocument = xsltProcessor2.transformToDocument(modelDoc); 
+      var id = event.target.id;
+      readXml("xslt/"+options["transform2"]+".xsl", function(xsl2) {
+        xsltProcessor2.importStylesheet(xsl2);
+        xsltProcessor2.setParameter(null, "elementId", event.target.id);
+        var resultDocument = xsltProcessor2.transformToDocument(modelDoc); 
+        document.getElementById("sideContent").removeChild(document.getElementById("sideContent").childNodes[0]);
+        document.getElementById("sideContent").appendChild(resultDocument.firstElementChild);
+      });
       
-      document.getElementById("sideContent").removeChild(document.getElementById("sideContent").childNodes[0]);
-      document.getElementById("sideContent").appendChild(resultDocument.firstElementChild);
       
       // show block
       document.getElementById("sideNav").style.display = "block";
@@ -218,17 +277,32 @@ Project-page: http://sbmlviewer.insilicobio.ru
       <b>SBML Viewer beta by InSysBio:</b> transformation from SBML to human readable page.<br/>Homepage http://sbmlviewer.insilicobio.ru
     </div> -->
    
-  <label id="filearea" class="w3-btn w3-block w3-teal">
+  <label id="filearea" class="w3-btn w3-block w3-teal ">
     <input id="file" type="file" accept=".xml,.sbml" style="position:absolute; opacity: 0; width:100%; cursor: pointer;" onchange=""/>
     Press to load SBML file or drug'n'drop to the area
-  </label> 
+  </label>
+  
+  <div class="w3-container w3-padding w3-teal">
+  <h3 class="w3-center">Options</h3>
+    <div class="w3-half">
+      <h4>Display Type:</h4>
+      <select></select>
+    </div>
+    <div id="listRadioBtn" class="w3-half">  
+    <h4>Options display:</h4>
+    </div>
+    <p class="w3-center"> 
+    <img id="refresh" style="width: 50px; height: 50px; cursor: pointer" src="../img/refresh.png"/>
+    </p>
+  </div>
+  
   
   <!-- 
   <div class="w3-center w3-text-grey w3-padding">
     <span>Or link </span><input type="text" id="urlFile" title="Enter URL"/> <button onclick="validateUploadFile(document.getElementById('urlFile').value,'URL')">Upload</button><span id="erMes"></span>
   </div>   -->
     
-  <div id="errorMess" class="w3-panel w3-text-red"/>
+  <div id="errorMess" class="w3-panel w3-text-red w3-center w3-large"/>
   
   <div id="sideNav" class="w3-container w3-card-4" style="position:fixed; display: none; top: 50px; right:50px; min-width:800px; max-width:50%; min-height:200px; max-height:90%; overflow-y: auto; overflow-x: auto; background:#ddd; z-index: 10;">
     <span class="w3-closebtn" onclick="w3_close()">&#215;</span>
