@@ -118,7 +118,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
        
         var listBtn = document.getElementById("listRadioBtn");
         optionsDisplay.forEach(function(item) {
-          var span = document.createElement("span");
+          var p = document.createElement("p");
           
           options[item] = false;
           
@@ -131,10 +131,10 @@ Project-page: http://sbmlviewer.insilicobio.ru
           label.setAttribute("for", item);
           label.innerHTML = item;
           
-          span.appendChild(radioBtn);
-          span.appendChild(label);
-          span.innerHTML += " ";
-          listBtn.appendChild(span);
+          p.appendChild(radioBtn);
+          p.appendChild(label);
+          p.innerHTML += " ";
+          listBtn.appendChild(p);
         });
         
         var listCheckbox = listBtn.getElementsByTagName("input");
@@ -160,6 +160,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
             break;
         case "upload":
           var file = document.getElementById("file").files[0];
+          document.getElementById("fileName").innerHTML = "Open file: "+file.name;
           var reader = new FileReader();
           try {
             reader.readAsText(file);
@@ -283,20 +284,24 @@ Project-page: http://sbmlviewer.insilicobio.ru
   </label>
   
   <div class="w3-container w3-padding w3-teal">
-  <h3 class="w3-center">Options</h3>
-    <div class="w3-half">
+  <!--
+  <div class="w3-center">
+  <span class="w3-button w3-circle w3-teal w3-padding-small">+</span><h3 class="w3-center">Options</h3>
+  </div> -->
+    <p id="fileName"></p>
+    <div class="w3-cell w3-padding">
       <h4>Display Type:</h4>
       <select></select>
     </div>
-    <div id="listRadioBtn" class="w3-half">  
+    <div id="listRadioBtn" class="w3-cell w3-padding">  
     <h4>Options display:</h4>
     </div>
-    <p class="w3-center"> 
+    <div class="w3-container w3-cell w3-cell-bottom w3-padding"> 
     <img id="refresh" style="width: 50px; height: 50px; cursor: pointer" src="../img/refresh.png"/>
-    </p>
+    </div>
   </div>
   
-  
+ 
   <!-- 
   <div class="w3-center w3-text-grey w3-padding">
     <span>Or link </span><input type="text" id="urlFile" title="Enter URL"/> <button onclick="validateUploadFile(document.getElementById('urlFile').value,'URL')">Upload</button><span id="erMes"></span>
