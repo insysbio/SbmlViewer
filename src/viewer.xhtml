@@ -175,7 +175,12 @@ Project-page: http://sbmlviewer.insilicobio.ru
             reader.readAsText(file);
             reader.onload = function() {
               modelDoc = new DOMParser().parseFromString(reader.result, "application/xml");
-              modelDocDisplayToPage();
+              if(modelDoc.firstElementChild.getAttribute("level") == 2) {
+                modelDocDisplayToPage();
+              }
+              else {
+                document.getElementById("errorMess").innerHTML = "Level "+modelDoc.firstElementChild.getAttribute("level")+" not support" ;
+              }              
             } 
           }
           catch(err) {
