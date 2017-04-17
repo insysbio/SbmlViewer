@@ -30,12 +30,10 @@ Project-page: http://sbmlviewer.insilicobio.ru
   <style>
   #filearea{
     border: 3px dashed white;
+    min-width: 250px;
   }
   hr{
     margin: 0;
-  }
-  #filearea {
-    min-width: 250px;
   }
   </style>
        
@@ -142,7 +140,18 @@ Project-page: http://sbmlviewer.insilicobio.ru
           listCheckbox[i].addEventListener("change", function() {
             options[this.value] = this.checked;
           });
-        }    
+        }
+        
+        document.getElementById("optionsManage").addEventListener("click", function() {
+          if (this.innerHTML == "-") {
+            this.innerHTML = "+";
+            document.getElementById("optionsArea").style.display = "none";
+          }
+          else {
+            this.innerHTML = "-";
+            document.getElementById("optionsArea").style.display = "block";          
+          }
+        });  
     };
     
     function loadModeToPage() {      
@@ -160,7 +169,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
             break;
         case "upload":
           var file = document.getElementById("file").files[0];
-          document.getElementById("fileName").innerHTML = "Open file: "+file.name;
+          document.getElementById("fileName").innerHTML = " (Open file: "+file.name+")";
           var reader = new FileReader();
           try {
             reader.readAsText(file);
@@ -282,13 +291,13 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <input id="file" type="file" accept=".xml,.sbml" style="position:absolute; opacity: 0; width:100%; cursor: pointer;" onchange=""/>
     Press to load SBML file or drug'n'drop to the area
   </label>
-  
-  <div class="w3-container w3-padding w3-teal">
-  <!--
-  <div class="w3-center">
-  <span class="w3-button w3-circle w3-teal w3-padding-small">+</span><h3 class="w3-center">Options</h3>
-  </div> -->
-    <p id="fileName"></p>
+  <br/>
+  <div class="w3-container w3-padding w3-teal w3-cell">
+    <span id="optionsManage" class="w3-btn w3-circle w3-teal w3-padding w3-large w3-cell">-</span>
+    <h3 class="w3-cell">Options</h3>
+    <span id="fileName" class="w3-cell"></span>
+  <hr/>
+  <div id="optionsArea">
     <div class="w3-cell w3-padding">
       <h4>Display Type:</h4>
       <select></select>
@@ -299,6 +308,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <div class="w3-container w3-cell w3-cell-bottom w3-padding"> 
     <img id="refresh" style="width: 50px; height: 50px; cursor: pointer" src="../img/refresh.png"/>
     </div>
+  </div>  
   </div>
   
  
@@ -316,6 +326,5 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <div id="mainContent">
       <div class="w3-container w3-center w3-large w3-text-grey">Nothing to show</div>
     </div>
-     
   </body>
 </html>
