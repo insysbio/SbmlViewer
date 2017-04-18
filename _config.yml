@@ -7,14 +7,13 @@ defaults:
       path: ""
     values:
       author: "Vetedde"
-#Plugins(also we can add whitelist)
-gems:
- - jekyll-mentions
- - jekyll-seo-tag
 #SEO
 title: "SbmlViewer"
 description: "The collection of transformation from SBML files into human readable formats"
 liquid:
   error_mode: warn
+#Plugins(also we can add whitelist)  
 gems:
+  - jekyll-mentions
+  - jekyll-seo-tag
   - jekyll-sitemap
