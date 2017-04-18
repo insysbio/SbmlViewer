@@ -1,1 +1,23 @@
-theme: jekyll-theme-cayman
+#Doc http://jekyllrb.com/docs/configuration/
+#theme: jekyll-theme-time-machine
+theme: ISB-theme
+safe: false
+baseurl: /test/
+defaults:
+  - scope:
+      path: ""
+    values:
+      author: "Vetedde"
+#Plugins(also we can add whitelist)
+gems:
+ - jekyll-mentions
+ - jekyll-seo-tag
+#SEO
+title: "Test"
+description: "This is testing"
+liquid:
+  error_mode: warn
+jekyll-mentions:
+  base_url: https://twitter.com  
+gems:
+  - jekyll-sitemap
