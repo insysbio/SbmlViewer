@@ -1,0 +1,140 @@
+
+<!DOCTYPE HTML>
+<html>
+<head> <!-- Need in other block??? -->
+<title>SbmlViewer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="/test//assets/css/style.css?v=f3939c71b26e3e7df866fceda99b1ea9421095c9">
+</head>
+
+<body>
+
+<header class="w3-container w3-teal">
+<div class="w3-container w3-content">
+<h1>It's for test mentions</h1>
+<p>The collection of transformation from SBML files into human readable formats</p>
+</div>
+</header>
+
+
+<div class="w3-container w3-content">
+<p><a href="/test//dist/170418%20online_0.2.0_beta/viewer.xhtml">Try demo online</a></p>
+<div style="display:none;">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="fb-share-button" data-href="http://sbmlviewer.insilicobio.ru/" data-layout="button_count" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fsbmlviewer.insilicobio.ru%2F&amp;src=sdkpreparse">Share</a></div>
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async="" src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<div class="g-plus" data-action="share" data-annotation="bubble"></div><script src="https://apis.google.com/js/platform.js" async="" defer=""></script>
+
+<div class="share42init"></div>
+<script type="text/javascript" src="/js/share42.js"></script>
+
+</div>
+
+<h1 id="sbml-viewer">SBML Viewer</h1>
+<p><strong>SBML Viewer</strong> is a tool for fast and easy reading models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.</p>
+
+<p>SBML Viewer never uploads your files to server and all transformation are performed locally in your browser, so it is safe. It is free.</p>
+
+<p>When <strong>SBML Viewer</strong> is helpful:</p>
+
+<ul>
+  <li>You have no facilities to install you favorite tool to read and check some SBML file right now.</li>
+  <li>Your software cannot read some specific SBML versions or elements like “event”, “constraint” or “functionDefinition” etc. but the file includes them.</li>
+  <li>You need to share your model in human readable format with someone easily.</li>
+  <li>Your have some errors when reading foreign SBML and are trying to check the structure.</li>
+</ul>
+
+<h2 id="about-sbml">About SBML</h2>
+<p>SBML is a free and open interchange format for computer models of biological processes, see <a href="http://sbml.org/">SBML community portal</a>. It is used in many modeling application and can store model structure, math and annotation of elements. SBML is XML based format and designed basically for machine reading and writing.</p>
+
+<h1 id="quick-start">Quick start</h1>
+<p>Your model is available from web:</p>
+
+<ol>
+  <li>Your model is shared on <code>http://www.example.com/your_sbml_file.xml<code></code></code></li>
+  <li>Write the line in your favorite browser <code>http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://www.example.com/your_sbml_file.xml<code></code></code></li>
+</ol>
+
+<p>Your model is available locally:
+<em>not available yet</em></p>
+
+<h1 id="examples">Examples</h1>
+<p>To look through example just try the links</p>
+
+<ul>
+  <li><a href="http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/00001-sbml-l2v5.xml">test 00001 from SBML Test Suite Database</a></li>
+  <li><a href="http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000512.xml">BIOMD0000000512 from BioModels Database, model of the month in January 2016</a></li>
+  <li><a href="http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000622.xml">BIOMD0000000622 from BioModels Database, model of the month in January 2017</a></li>
+  <li><a href="http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000439.xml">BIOMD0000000439 from BioModels Database, model of the month in October 2016</a></li>
+</ul>
+
+<h1 id="releases">Releases</h1>
+
+<h2 id="current-release">Current release</h2>
+
+<ul>
+  <li>reading SBML Level 2 Version 1-5</li>
+  <li>creating tabular view of model with: <strong>sbml2table</strong> transformation</li>
+  <li>summary generation for chosen element: <strong>sbml2element</strong> transformation</li>
+</ul>
+
+<h2 id="known-restrictions">Known restrictions</h2>
+<ul>
+  <li>wrong view of <code>parameter</code> element inside <code>kineticLaw</code></li>
+  <li>ignore <code>annotation</code> elements</li>
+</ul>
+
+<h2 id="roadmap">Roadmap</h2>
+
+<ul>
+  <li>Chrome extension for sbmlviewer</li>
+  <li>Transformation to Antimony format: <strong>sbml2antimony</strong> transformation</li>
+  <li><strong>sbml2report</strong> transformation</li>
+  <li><strong>sbml2tree</strong> transformation</li>
+</ul>
+
+<h1 id="other-information">Other information</h1>
+
+<h2 id="subscribe-for-updates">Subscribe for updates</h2>
+
+<p><a href="http://eepurl.com/cxCiu5">Subscription</a></p>
+
+<h2 id="authors">Authors</h2>
+
+<ul>
+  <li>Evgeny Metelkin @metelkin</li>
+  <li>Viktoria Tkachenko @vetedde</li>
+</ul>
+
+<h2 id="license">License</h2>
+<p>Apache 2.0</p>
+
+<h2 id="3d-party-software">3d party software</h2>
+
+<ul>
+  <li><a href="https://www.mathjax.org">MathJax</a></li>
+  <li><a href="http://www.w3schools.com/w3css/">W3.CSS</a></li>
+</ul>
+
+</div>
+<footer class="w3-container w3-teal w3-center w3-padding">
+ 
+        <p class="copyright">SbmlViewer maintained by <a href="https://github.com/insysbio">insysbio</a></p>
+        
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+</footer>
+
+</body>
+
+</html>
