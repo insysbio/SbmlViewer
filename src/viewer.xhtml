@@ -25,7 +25,7 @@ Project-page: http://sbmlviewer.insysbio.ru
 -->
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="../lib/w3css/w3.css"/>
+    <link rel="stylesheet" href="http://sbmlviewer.insilicobio.ru/lib/w3css/w3.css"/>
     
   <style>
   #filearea{
@@ -49,7 +49,6 @@ Project-page: http://sbmlviewer.insysbio.ru
   
   var waysDisplayPage = [
     "sbml2table",
-    "sbml2table2"
   ];
   
   var optionsDisplay = [
@@ -89,10 +88,12 @@ Project-page: http://sbmlviewer.insysbio.ru
     var modelDoc=null;
     
     window.onload = function() {
+        var sp=window.location.search.substring(1).split("&");
+        if (sp[0]) validateUploadFile(sp[0],"URL");
+        
         document.getElementById("file").addEventListener("change", function(event) {
           validateUploadFile(document.getElementById('file').files[0].name, 'upload');
         }, false);
-        
 
         document.addEventListener("drop", function() {
           event.preventDefault();
@@ -170,14 +171,13 @@ Project-page: http://sbmlviewer.insysbio.ru
       //Generate modelDoc depending on method of upload file
       switch(options["method"]) {
         case "URL": //Not work now, we not support get with URL
-            readXml(options["filepath"], function(modelDoc) { // ???Interesting, be value in global modelDoc or not?
-              if (modelDoc) { 
+            readXml(options["filepath"], function(Doc) { modelDoc =  Doc });
+            if (modelDoc) { 
                 modelDocDisplayToPage();
               }
               else {
                 document.getElementById("errorMess").innerHTML = "Impossible to read the document";
               }
-            });
             break;
         case "upload":
           var file = document.getElementById("file").files[0];
@@ -238,7 +238,6 @@ Project-page: http://sbmlviewer.insysbio.ru
     }    
     
     function validateUploadFile(pathFile,method) {
-    console.log("step validate",document.getElementById('file').files[0]);
       document.getElementById("errorMess").innerHTML = ""; //Delete message about error, when upload new file 
         
       if ((pathFile != "") && (pathFile.match(/(.xml)$/))) {
@@ -296,7 +295,7 @@ Project-page: http://sbmlviewer.insysbio.ru
     });
     </script>
 
-    <script type="text/javascript" src="../lib/mathjax/MathJax.js"> </script> <!----> <!-- external -->
+    <script type="text/javascript" src="http://sbmlviewer.insilicobio.ru/lib/mathjax/MathJax.js"> </script> <!----> <!-- external -->
     
   </head>
   <body class="w3-container">
@@ -324,7 +323,7 @@ Project-page: http://sbmlviewer.insysbio.ru
     <h4>Options display:</h4>
     </div>
     <div class="w3-container w3-cell w3-cell-bottom w3-padding"> 
-    <img id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple" style="width: 85px; height: 70px; cursor: pointer" src="../img/refresh.png"/>
+    <img id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple" style="width: 85px; height: 70px; cursor: pointer" src="http://sbmlviewer.insilicobio.ru/img/refresh.png"/>
     </div>
   </div>  
   </div>
