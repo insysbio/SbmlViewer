@@ -89,7 +89,13 @@ Apache 2.0
 - [MathJax](https://www.mathjax.org)
 - [W3.CSS](http://www.w3schools.com/w3css/) 
 <script>
-document.getElementById("tryDemo").innerHTML = "[Try demo online]("+dist+"viewer.xhtml)";
-document.getElementById("examples").innerHTML = "[test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml?examples/00001-sbml-l2v5.xml)";
+var link = document.createElement("a");
+link.setAttribute("href","http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml");
+link.innerHTML = "Try demo online";
+document.getElementById("tryDemo").appendChild(link);
 
+link = document.createElement("a");
+link.setAttribute("href","http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml?examples/00001-sbml-l2v5.xml");
+link.innerHTML = "test 00001 from SBML Test Suite Database";
+document.getElementById("examples").appendChild(link);
 </script>
