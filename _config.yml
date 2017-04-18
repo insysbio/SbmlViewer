@@ -12,8 +12,8 @@ gems:
  - jekyll-mentions
  - jekyll-seo-tag
 #SEO
-title: "Test"
-description: "This is testing"
+title: "SbmlViewer"
+description: "The collection of transformation from SBML files into human readable formats"
 liquid:
   error_mode: warn
 gems:
