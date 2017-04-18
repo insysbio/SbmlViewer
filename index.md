@@ -80,7 +80,7 @@ To look through example just try the links
 ## Authors
 
 - Evgeny Metelkin @metelkin
-- Viktoria Tkachenko @vitedde
+- Viktoria Tkachenko @vetedde
 
 ## License
 Apache 2.0
