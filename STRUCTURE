@@ -2,7 +2,7 @@
   docs/ (description and future site)
   cases/ (sbml files for testing)
   test/ (code to test code)
-  lib/ (foreign code) не синхронизуются
+  lib/ (foreign code)
     mathjax/
     w3css/
   tmp/ (промежуточные версии при сборке) не синхронизуются
