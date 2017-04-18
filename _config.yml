@@ -1,7 +1,6 @@
 #Doc http://jekyllrb.com/docs/configuration/
 #theme: jekyll-theme
 safe: false
-baseurl: /test/
 defaults:
   - scope:
       path: ""
