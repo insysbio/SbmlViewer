@@ -16,7 +16,5 @@ title: "Test"
 description: "This is testing"
 liquid:
   error_mode: warn
-jekyll-mentions:
-  base_url: https://twitter.com  
 gems:
   - jekyll-sitemap
