@@ -1,5 +1,4 @@
 #Doc http://jekyllrb.com/docs/configuration/
-#theme: jekyll-theme-time-machine
 theme: ISB-theme
 safe: false
 baseurl: /test/
