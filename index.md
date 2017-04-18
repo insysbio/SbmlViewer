@@ -1,4 +1,4 @@
-* ![Try demo online](dist/170418 online_0.2.0_beta/viewer.xhtml)*
+[Try demo online](dist/170418 online_0.2.0_beta/viewer.xhtml)
 <div style="display:none;">
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
