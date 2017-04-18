@@ -1,5 +1,5 @@
 #Doc http://jekyllrb.com/docs/configuration/
-theme: ISB-theme
+theme: jekyll-theme
 safe: false
 baseurl: /test/
 defaults:
