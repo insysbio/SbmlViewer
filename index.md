@@ -1,4 +1,7 @@
-[Try demo online](dist/170418 online_0.2.0_beta/viewer.xhtml)
+<script>
+var dist = "dist/170418 online_0.2.0_beta/";
+</script>
+<div id="tryDemo"></div>
 <div style="display:none;">
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -46,11 +49,7 @@ Your model is available locally:
 
 # Examples
 To look through example just try the links
-
-* [test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/00001-sbml-l2v5.xml)
-* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000512.xml)
-* [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000622.xml)
-* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000439.xml)
+<div id="examples"></div>
 
 # Releases
 
@@ -89,3 +88,8 @@ Apache 2.0
 
 - [MathJax](https://www.mathjax.org)
 - [W3.CSS](http://www.w3schools.com/w3css/) 
+<script>
+document.getElementById("tryDemo").innerHTML = "[Try demo online]("+dist+"viewer.xhtml)";
+document.getElementById("examples").innerHTML = "[test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml?examples/00001-sbml-l2v5.xml)";
+
+</script>
