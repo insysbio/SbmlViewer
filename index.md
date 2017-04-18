@@ -1,4 +1,4 @@
-*The page is under development*
+* ![Try demo online](dist/170418 online_0.2.0_beta/viewer.xhtml)*
 <div style="display:none;">
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -79,10 +79,11 @@ To look through example just try the links
 
 ## Authors
 
-- Evgeny Metelkin
+- Evgeny Metelkin @metelkin
+- Viktoria Tkachenko @vitedde
 
 ## License
-MIT License
+Apache 2.0
 
 ## 3d party software
 
