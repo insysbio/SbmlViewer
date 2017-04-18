@@ -93,7 +93,6 @@ var link = document.createElement("a");
 link.setAttribute("href","http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml");
 link.innerHTML = "Try demo online";
 document.getElementById("tryDemo").appendChild(link);
-
 link = document.createElement("a");
 link.setAttribute("href","http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml?examples/00001-sbml-l2v5.xml");
 link.innerHTML = "test 00001 from SBML Test Suite Database";
