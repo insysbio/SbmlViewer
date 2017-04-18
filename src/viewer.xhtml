@@ -96,7 +96,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
 
         document.addEventListener("drop", function() {
           event.preventDefault();
-          document.getElementById("file").files[0] = event.dataTransfer.files[0];
+          document.getElementById("file").files = event.dataTransfer.files;
           validateUploadFile(document.getElementById('file').files[0].name, 'upload');
         });
         
@@ -104,7 +104,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
           event.preventDefault();
         });                  
         
-        document.getElementById("refresh").addEventListener("click", function() {
+        document.getElementById("refresh").addEventListener("click", function() {     
           if (document.getElementById('file').files[0]) {
             loadModeToPage()
           }
@@ -166,7 +166,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
         
     };
     
-    function loadModeToPage() {      
+    function loadModeToPage() { 
       //Generate modelDoc depending on method of upload file
       switch(options["method"]) {
         case "URL": //Not work now, we not support get with URL
@@ -238,6 +238,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
     }    
     
     function validateUploadFile(pathFile,method) {
+    console.log("step validate",document.getElementById('file').files[0]);
       document.getElementById("errorMess").innerHTML = ""; //Delete message about error, when upload new file 
         
       if ((pathFile != "") && (pathFile.match(/(.xml)$/))) {
