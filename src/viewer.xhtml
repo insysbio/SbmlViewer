@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" style="overflow-x: auto;">
+<html xmlns="http://www.w3.org/1999/xhtml" style="overflow-x:auto;">
 <!-- 
 Copyright 2016-2017 Institute for Systems Biology Moscow
 
@@ -93,6 +93,17 @@ Project-page: http://sbmlviewer.insilicobio.ru
           validateUploadFile(document.getElementById('file').files[0].name, 'upload');
         }, false);
         
+
+        document.addEventListener("drop", function() {
+          event.preventDefault();
+          document.getElementById("file").files[0] = event.dataTransfer.files[0];
+          validateUploadFile(document.getElementById('file').files[0].name, 'upload');
+        });
+        
+        document.addEventListener("dragover", function() {
+          event.preventDefault();
+        });                  
+        
         document.getElementById("refresh").addEventListener("click", function() {
           if (document.getElementById('file').files[0]) {
             loadModeToPage()
@@ -152,6 +163,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
             document.getElementById("optionsArea").style.display = "block";          
           }
         });  
+        
     };
     
     function loadModeToPage() {      
@@ -169,7 +181,7 @@ Project-page: http://sbmlviewer.insilicobio.ru
             break;
         case "upload":
           var file = document.getElementById("file").files[0];
-          document.getElementById("fileName").innerHTML = " (Open file: "+file.name+")";
+          document.getElementById("fileName").innerHTML = file.name;
           var reader = new FileReader();
           try {
             reader.readAsText(file);
@@ -195,9 +207,9 @@ Project-page: http://sbmlviewer.insilicobio.ru
         readXml("xslt/"+options["transform"]+".xsl", function(xsl1) {
           xsltProcessor1.importStylesheet(xsl1);
           
-          if (options["useNames"]) xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
-          if (options["correctMathml"]) xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
-          if (options["equationsOff"]) xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
+          xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
+          xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
+          xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
           
           resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
           document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
@@ -286,32 +298,32 @@ Project-page: http://sbmlviewer.insilicobio.ru
     <script type="text/javascript" src="../lib/mathjax/MathJax.js"> </script> <!----> <!-- external -->
     
   </head>
-  <body class="w3-container" >
-  
+  <body class="w3-container">
     <!--<div class="w3-right w3-light-green">
       <b>SBML Viewer beta by InSysBio:</b> transformation from SBML to human readable page.<br/>Homepage http://sbmlviewer.insilicobio.ru
     </div> -->
    
-  <label id="filearea" class="w3-btn w3-block w3-teal">
+  <!-- <label id="filearea" class="w3-btn w3-block w3-teal">
     <input id="file" type="file" accept=".xml,.sbml" style="position:absolute; opacity: 0; width:100%; cursor: pointer;" onchange=""/>
     Press to load SBML file or drug'n'drop to the area
-  </label>
+  </label> -->
   <br/>
-  <div class="w3-container w3-card-4 w3-padding w3-teal w3-cell">
-    <span id="optionsManage" class="w3-btn w3-circle w3-teal w3-padding w3-large w3-cell">-</span>
+  <div class="w3-container w3-card-4 w3-padding w3-blue-grey w3-cell">
+    <span id="optionsManage" class="w3-btn w3-circle w3-blue-grey w3-padding w3-large w3-cell">-</span>
     <h3 class="w3-cell">Options</h3>
-    <span id="fileName" class="w3-cell"></span>
   <hr/>
   <div id="optionsArea">
     <div class="w3-cell w3-padding">
+    <input id="file" type="file" accept=".xml,.sbml" style="color:transparent; width:140px;" onchange=""/><span id="fileName">No file choosen</span><br/><br/>
       <h4>Display Type:</h4>
       <select></select>
+      
     </div>
     <div id="listRadioBtn" class="w3-cell w3-padding">  
     <h4>Options display:</h4>
     </div>
     <div class="w3-container w3-cell w3-cell-bottom w3-padding"> 
-    <img id="refresh" style="width: 50px; height: 50px; cursor: pointer" src="../img/refresh.png"/>
+    <img id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple" style="width: 85px; height: 70px; cursor: pointer" src="../img/refresh.png"/>
     </div>
   </div>  
   </div>
