@@ -48,12 +48,17 @@ Your model is available locally:
 1. The following http://sbmlviewer.insilicobio.ru/viewer.xhtml
 1. Click on button "Выберите файл"("Choose file") and choose file
 
-# Options
-- useNames
-- correctMathml
-- equationsOff
-
+## Options
+### useNames
+desciption
+### correctMathml
+desciption
+### equationsOff
 Hidden equations
+
+
+
+
 
 
 
