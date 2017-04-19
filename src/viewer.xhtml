@@ -231,8 +231,8 @@ Project-page: http://sbmlviewer.insysbio.ru
           // read additional stylesheet
         readXml("xslt/"+options["transform2"]+".xsl", function(xsl2) {
           xsltProcessor2.importStylesheet(xsl2);
-          if (options["useNames"]) xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
-          if (options["correctMathml"]) xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
+          xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
+          xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
         });
         }
       }  
