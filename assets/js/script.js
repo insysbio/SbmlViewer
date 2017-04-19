@@ -8,6 +8,6 @@ window.onload = function() {
   for(var i = 0; i < liList.length; i++) {
     var Link = liList[i].getElementsByTagName("a")[0].getAttribute("href");
     var newLink = "http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml"+Link.match(/(\?[\w\:\/\.\-]+)/)[0];
-    liList[i].getElementsByTagName("a")[0].setAttribute("href",);
+    liList[i].getElementsByTagName("a")[0].setAttribute("href",newLink);
   }
 }
