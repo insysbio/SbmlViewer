@@ -100,7 +100,6 @@ To look through example just try the links
 <a style="color:white" href="http://eepurl.com/cxCiu5">Subscription</a>
 </div>
 ## Let people know about us
-
 <ul class="share-buttons">
   <li>
     <a href="https://www.facebook.com/sharer/sharer.php?u=http://sbmlviewer.insilicobio.ru" title="Share on Facebook" target="_blank">
