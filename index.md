@@ -49,9 +49,9 @@ Your model is available locally:
 1. Click on button "Выберите файл"("Choose file") and choose file
 
 # Options
--useNames
--correctMathml
--equationsOff
+- useNames
+- correctMathml
+- equationsOff
 
 
 
