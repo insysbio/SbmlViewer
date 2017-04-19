@@ -104,29 +104,27 @@ To look through example just try the links
 <ul class="share-buttons">
   <li>
     <a href="https://www.facebook.com/sharer/sharer.php?u=http://sbmlviewer.insilicobio.ru" title="Share on Facebook" target="_blank">
-      <img alt="Share on Facebook" src="images/social_flat_rounded_rects_svg/Facebook.svg">
+      <img alt="Share on Facebook" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Facebook.svg">
     </a>
   </li>
   <li>
-    <a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=&url=http://sbmlviewer.insilicobio.ru" target="_blank" title="Tweet">
-      <img alt="Tweet" src="images/social_flat_rounded_rects_svg/Twitter.svg">
+    <a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=The collection of transformation from SBML files into human readable formats&url=http://sbmlviewer.insilicobio.ru" target="_blank" title="Tweet">
+      <img alt="Tweet" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Twitter.svg">
     </a>
   </li>
   <li>
     <a href="https://plus.google.com/share?url=http://sbmlviewer.insilicobio.ru" target="_blank" title="Share on Google+">
-      <img alt="Share on Google+" src="images/social_flat_rounded_rects_svg/Google+.svg">
+      <img alt="Share on Google+" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Google+.svg">
     </a>
   </li>
   <li>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://sbmlviewer.insilicobio.ru&title=Immune%20Response%20Template%20online&summary=annotation%20and%20numerical%20description%20of%20immune%20response%20in%20humans&source=http://irt.insysbio.ru" target="_blank" title="Share on LinkedIn">
-      <img alt="Share on LinkedIn" src="images/social_flat_rounded_rects_svg/LinkedIn.svg">
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://sbmlviewer.insilicobio.ru&title=SbmlViewer&summary=The collection of transformation from SBML files into human readable formats&source=http://sbmlviewer.insilicobio.ru" target="_blank" title="Share on LinkedIn">
+      <img alt="Share on LinkedIn" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Linkedln.svg">
     </a>
   </li>
   <li>
-    <a href="mailto:?subject=Re%3A%20Immune%20Response%20Template&body=For%20your%20attention
-Immune Response Template: annotation%20and%20numerical%20description%20of%20immune%20response%20in%20humans
-http%3A%2F%2Firt.insysbio.ru" target="_blank" title="Send email">
-      <img alt="Send email" src="images/social_flat_rounded_rects_svg/Email.svg">
+    <a href="mailto:?subject=SbmlViewer&body=The collection of transformation from SBML files into human readable formats http://sbmlviewer.insilicobio.ru" target="_blank" title="Send email">
+      <img alt="Send email" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Email.svg">
     </a>
   </li>
 </ul>
