@@ -50,11 +50,8 @@ Your model is available locally:
 
 # Options
 -useNames
-  description
 -correctMathml
-  description
 -equationsOff
-  description
 
 
 
