@@ -40,7 +40,7 @@ SBML is a free and open interchange format for computer models of biological pro
 
 # Quick start 
 
-<div class="w3-btn w3-card-2 w3-green w3-circle"><a href="" id="tryDemoLink" style="color:white">Try demo online</a></div>
+<div class="w3-btn w3-card-2 w3-green w3-circle" style="margin-left: 40px"><a href="" id="tryDemoLink" style="color:white">Try demo online</a></div>
 
 Your model is available from web:
 
