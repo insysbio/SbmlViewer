@@ -52,6 +52,7 @@ Your model is available locally:
 - useNames
 - correctMathml
 - equationsOff
+Hidden equations
 
 
 
