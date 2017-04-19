@@ -49,7 +49,10 @@ Your model is available locally:
 
 # Examples
 To look through example just try the links
-<div id="examplesList"></div>
+* [test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/00001-sbml-l2v5.xml)
+* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000512.xml)
+* [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000622.xml)
+* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000439.xml)
 
 # Releases
 
@@ -93,8 +96,4 @@ var link = document.createElement("a");
 link.setAttribute("href","http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml");
 link.innerHTML = "Try demo online";
 document.getElementById("tryDemo").appendChild(link);
-link = document.createElement("a");
-link.setAttribute("href","http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml?..cases/00001-sbml-l2v5.xml");
-link.innerHTML = "test 00001 from SBML Test Suite Database";
-document.getElementById("examplesList").appendChild(link);
 </script>
