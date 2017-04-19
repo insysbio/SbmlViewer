@@ -102,9 +102,7 @@ To look through example just try the links
 ## Let people know about us
 <ul class="share-buttons">
   <li>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=http://sbmlviewer.insilicobio.ru" title="Share on Facebook" target="_blank">
-      <img alt="Share on Facebook" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Facebook.svg">
-    </a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http://sbmlviewer.insilicobio.ru" title="Share on Facebook" target="_blank"><img alt="Share on Facebook" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Facebook.svg"></a>
   </li>
   <li>
     <a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=The collection of transformation from SBML files into human readable formats&url=http://sbmlviewer.insilicobio.ru" target="_blank" title="Tweet"><img alt="Tweet" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Twitter.svg"></a>
