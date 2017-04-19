@@ -76,9 +76,10 @@ To look through example just try the links
 # Other information
 
 ## Subscribe for updates
-
-[Subscription](http://eepurl.com/cxCiu5)
-
+<div class="w3-button w3-large w3-round w3-green" style="color:white">
+  <img src="http://sbmlviewer.insilicobio.ru/assets/img/subscrip.png">
+<a style="color:white" href="http://eepurl.com/cxCiu5">Subscription</a>
+</div>
 ## Authors
 
 - Evgeny Metelkin @metelkin
