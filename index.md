@@ -45,7 +45,19 @@ Your model is available from web:
 2. Write the line in your favorite browser <code>http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
 
 Your model is available locally:
-*not available yet*
+1. The following http://sbmlviewer.insilicobio.ru/viewer.xhtml
+1. Click on button "Выберите файл"("Choose file") and choose file
+
+# Options
+-useNames
+  description
+-correctMathml
+  description
+-equationsOff
+  description
+
+
+
 
 # Examples
 To look through example just try the links
