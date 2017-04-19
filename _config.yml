@@ -11,6 +11,14 @@ title: "SbmlViewer"
 description: "The collection of transformation from SBML files into human readable formats"
 liquid:
   error_mode: warn
+social:
+  name: InSysBio
+  links:
+    - https://www.facebook.com/insysbio
+    - https://www.linkedin.com/insysbio
+    - https://github.com/insysbio
+    - https://twitter.com/insysbio
+    - https://insysbio.ru/en  
 #Plugins(also we can add whitelist)  
 gems:
   - jekyll-mentions
