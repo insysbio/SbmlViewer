@@ -108,9 +108,7 @@ To look through example just try the links
     </a>
   </li>
   <li>
-    <a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=The collection of transformation from SBML files into human readable formats&url=http://sbmlviewer.insilicobio.ru" target="_blank" title="Tweet">
-      <img alt="Tweet" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Twitter.svg">
-    </a>
+    <a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text=The collection of transformation from SBML files into human readable formats&url=http://sbmlviewer.insilicobio.ru" target="_blank" title="Tweet"><img alt="Tweet" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Twitter.svg"></a>
   </li>
   <li>
     <a href="https://plus.google.com/share?url=http://sbmlviewer.insilicobio.ru" target="_blank" title="Share on Google+">
