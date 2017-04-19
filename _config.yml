@@ -1,11 +1,6 @@
 #Doc http://jekyllrb.com/docs/configuration/
 #theme: jekyll-theme
 safe: false
-defaults:
-  - scope:
-      path: ""
-    values:
-      author: "Vetedde"
 #SEO
 title: "SbmlViewer"
 description: "The collection of transformation from SBML files into human readable formats"
