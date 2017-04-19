@@ -97,7 +97,7 @@ To look through example just try the links
 ## Subscribe for updates
 <div class="w3-button w3-large w3-round w3-green" style="color:white">
   <img src="http://sbmlviewer.insilicobio.ru/assets/img/subscrip.png">
-<a style="color:white; style="margin-left: 40px" href="http://eepurl.com/cxCiu5">Subscription</a>
+<a style="color:white; margin-left: 40px" href="http://eepurl.com/cxCiu5">Subscription</a>
 </div>
 ## Let people know about us
 <ul class="share-buttons">
