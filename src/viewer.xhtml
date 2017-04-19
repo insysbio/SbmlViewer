@@ -106,7 +106,7 @@ Project-page: http://sbmlviewer.insysbio.ru
         });                  
         
         document.getElementById("refresh").addEventListener("click", function() {     
-          if (document.getElementById('file').files[0]) {
+          if ((document.getElementById('file').files[0]) || (options["filepath"])) {
             loadModeToPage()
           }
           else {
@@ -172,7 +172,8 @@ Project-page: http://sbmlviewer.insysbio.ru
       switch(options["method"]) {
         case "URL": //Not work now, we not support get with URL
             readXml(options["filepath"], function(Doc) { modelDoc =  Doc });
-            if (modelDoc) { 
+            if (modelDoc) {
+                document.getElementById("fileName").innerHTML = options["filepath"].match(/[_-\w]+.xml/);
                 modelDocDisplayToPage();
               }
               else {
