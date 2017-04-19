@@ -38,7 +38,7 @@ When **SBML Viewer** is helpful:
 ## About SBML
 SBML is a free and open interchange format for computer models of biological processes, see [SBML community portal](http://sbml.org/). It is used in many modeling application and can store model structure, math and annotation of elements. SBML is XML based format and designed basically for machine reading and writing.
 
-# Quick start <a id="demoLink" href=""><div id="tryDemo" class="w3-btn w3-card-2 w3-green w3-circle w3-display-topmiddle" style="position:absolute;"><img src="http://sbmlviewer.insilicobio.ru/assets/img/click.png">Try demo online</div></a>
+# Quick start <div id="tryDemo" class="w3-btn w3-card-2 w3-green w3-circle w3-display-topmiddle" style="position:absolute;"><img src="http://sbmlviewer.insilicobio.ru/assets/img/click.png">Try demo online</div>
 
 Your model is available from web:
 
