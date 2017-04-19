@@ -49,10 +49,10 @@ Your model is available locally:
 
 # Examples
 To look through example just try the links
-* [test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/00001-sbml-l2v5.xml)
-* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000512.xml)
-* [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000622.xml)
-* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sbmlviewer.insilicobio.ru/viewer.xhtml?examples/BIOMD0000000439.xml)
+* [test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/00001-sbml-l2v5.xml)
+* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000512.xml)
+* [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000622.xml)
+* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000439.xml)
 
 # Releases
 
@@ -96,4 +96,10 @@ var link = document.createElement("a");
 link.setAttribute("href","http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml");
 link.innerHTML = "Try demo online";
 document.getElementById("tryDemo").appendChild(link);
+var liList = document.getElementsByTagName("ul")[1].getElementsByTagName("li");
+for(var i = 0; i <= liList.length; i++) {
+  var Link = liList[i].getElementsByTagName("a")[0].getAttribute("href");
+  var newLink = "http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml"+Link.match(/(\?[\w\:\/\.\-]+)/)[0];
+  liList[i].getElementsByTagName("a")[0].setAttribute("href",);
+}
 </script>
