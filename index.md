@@ -40,7 +40,7 @@ SBML is a free and open interchange format for computer models of biological pro
 
 # Quick start 
 
-<div class="w3-btn w3-card-2 w3-green w3-circle" style="margin-left: 40px"><a href="" id="tryDemoLink" style="color:white">Try demo online</a></div>
+<div class="w3-btn w3-card-2 w3-green w3-circle"><a href="" id="tryDemoLink" style="color:white">Try demo online</a></div>
 
 Your model is available from web:
 
@@ -97,7 +97,7 @@ To look through example just try the links
 ## Subscribe for updates
 <div class="w3-button w3-large w3-round w3-green" style="color:white">
   <img src="http://sbmlviewer.insilicobio.ru/assets/img/subscrip.png">
-<a style="color:white" href="http://eepurl.com/cxCiu5">Subscription</a>
+<a style="color:white; style="margin-left: 40px" href="http://eepurl.com/cxCiu5">Subscription</a>
 </div>
 ## Let people know about us
 <ul class="share-buttons">
