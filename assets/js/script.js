@@ -1,5 +1,7 @@
 window.onload = function() {
   
+  document.getElementById("demoLink").setAttribute("href","http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml");
+  
   var liList = document.getElementsByTagName("ul")[1].getElementsByTagName("li");
   for(var i = 0; i < liList.length; i++) {
     var Link = liList[i].getElementsByTagName("a")[0].getAttribute("href");
