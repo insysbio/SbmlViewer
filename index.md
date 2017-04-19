@@ -1,7 +1,6 @@
 <script>
 var dist = "dist/170418 online_0.2.0_beta/";
 </script>
-<div id="tryDemo"></div>
 <div style="display:none;">
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
