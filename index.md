@@ -119,7 +119,7 @@ To look through example just try the links
   </li>
   <li>
     <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://sbmlviewer.insilicobio.ru&title=SbmlViewer&summary=The collection of transformation from SBML files into human readable formats&source=http://sbmlviewer.insilicobio.ru" target="_blank" title="Share on LinkedIn">
-      <img alt="Share on LinkedIn" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Linkedln.svg">
+      <img alt="Share on LinkedIn" src="http://sbmlviewer.insilicobio.ru/assets/img/social/LinkedIn.svg">
     </a>
   </li>
   <li>
