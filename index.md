@@ -20,6 +20,7 @@ var dist = "dist/170418 online_0.2.0_beta/";
 
 <div class="share42init"></div>
 <script type="text/javascript" src="/js/share42.js"></script>
+<script type="text/javascript" src="http://sbmlviewer.insilicobio.ru/assets/js/script.js"></script>
 
 </div>
 
@@ -91,15 +92,3 @@ Apache 2.0
 
 - [MathJax](https://www.mathjax.org)
 - [W3.CSS](http://www.w3schools.com/w3css/) 
-<script>
-var link = document.createElement("a");
-link.setAttribute("href","http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml");
-link.innerHTML = "Try demo online";
-document.getElementById("tryDemo").appendChild(link);
-var liList = document.getElementsByTagName("ul")[1].getElementsByTagName("li");
-for(var i = 0; i < liList.length; i++) {
-var Link = liList[i].getElementsByTagName("a")[0].getAttribute("href");
-var newLink = "http://sbmlviewer.insilicobio.ru/"+dist+"viewer.xhtml"+Link.match(/(\?[\w\:\/\.\-]+)/)[0];
-liList[i].getElementsByTagName("a")[0].setAttribute("href",);
-}
-</script>
