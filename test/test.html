@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Test page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+  <script>
+    mocha.setup('bdd');
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+  <script>
+    var assert = chai.assert;
+  </script>
+  
+
+  
+  <link rel="stylesheet" href="http://sbmlviewer.insilicobio.ru/lib/w3css/w3.css"/>
+  <style>
+    textarea{
+        height: 250px;
+        width: 400px;
+        overflow: auto;
+    }
+  </style>
+  
+</head>
+
+<body class="w3-container w3-padding w3-margin">
+
+
+<button id="runTest" onclick="mocha.run();" style="opacity:0">Run test</button></br/></br/>
+
+
+<input type="file" id="inputFile"/></br/>
+<span class="w3-opacity">Before run test, don't forget upload file, if you want test choose/dran'n'drop and add file</span>
+
+<div id="mocha"></div>
+
+<iframe id="iframe" src="../dist/170418%20online_0.2.0_beta/viewer.xhtml" style="opacity:1; width: 500px; height:500px; overflow:auto;"></iframe>
+<script>
+var documentMod = null;
+document.getElementById('iframe').onload = function() {
+  documentMod = document.getElementById('iframe').contentWindow.document;
+  document.getElementById("runTest").style.opacity = 1;
+}
+
+</script>
+<script src="test.js"></script>
+</body>
+</html>
