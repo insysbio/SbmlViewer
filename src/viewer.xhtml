@@ -83,7 +83,8 @@ Project-page: http://sbmlviewer.insysbio.ru
       xmlhttp.send();
     }
     
-
+    var xsltProcessor1 = new XSLTProcessor(); //processor for 1st xslt
+    var xsltProcessor2 = new XSLTProcessor(); //processor for 2d xslt
     var modelDoc=null;
     var file = null;
     
@@ -91,6 +92,19 @@ Project-page: http://sbmlviewer.insysbio.ru
         var sp=window.location.search.substring(1).split("&");
         if (sp[0]) validateUploadFile(sp[0],"URL");
         
+        readXml("xslt/"+options["transform"]+".xsl", function(xsl1) {
+          xsltProcessor1.importStylesheet(xsl1);
+          
+          xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
+          xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
+          xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
+        });
+        
+        readXml("xslt/"+options["transform2"]+".xsl", function(xsl2) {
+          xsltProcessor2.importStylesheet(xsl2);
+          xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
+          xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
+        });        
         document.getElementById("file").addEventListener("change", function(event) {
           file = document.getElementById("file").files[0];
           validateUploadFile(file.name, 'upload');
@@ -131,6 +145,13 @@ Project-page: http://sbmlviewer.insysbio.ru
         
         select.addEventListener("change", function() {
           options["transform"] = this.value;
+          readXml("xslt/"+options["transform"]+".xsl", function(xsl1) {
+            xsltProcessor1.importStylesheet(xsl1);
+            
+            xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
+            xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
+            xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
+          });
         }, true);
        
         var listBtn = document.getElementById("listRadioBtn");
@@ -158,6 +179,7 @@ Project-page: http://sbmlviewer.insysbio.ru
         for(var i = 0; i < listCheckbox.length; i++) {
           listCheckbox[i].addEventListener("change", function() {
             options[this.value] = this.checked;
+            xsltProcessor1.setParameter(null, this.value, options[this.value]);
           });
         }
         
@@ -210,20 +232,10 @@ Project-page: http://sbmlviewer.insysbio.ru
         
 
       function modelDocDisplayToPage() {
-        var xsltProcessor1 = new XSLTProcessor(); //processor for 1st xslt
-        var xsltProcessor2 = new XSLTProcessor(); //processor for 2d xslt
+
         // read and load table
-        readXml("xslt/"+options["transform"]+".xsl", function(xsl1) {
-          xsltProcessor1.importStylesheet(xsl1);
-          
-          xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
-          xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
-          xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
-          
-          resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
-          document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
-        });
-        
+
+        resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
         resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
         if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/)) {
           document.getElementById("errorMess").innerHTML = "Incorrect XML";
@@ -237,11 +249,7 @@ Project-page: http://sbmlviewer.insysbio.ru
           MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
               
           // read additional stylesheet
-        readXml("xslt/"+options["transform2"]+".xsl", function(xsl2) {
-          xsltProcessor2.importStylesheet(xsl2);
-          xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
-          xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
-        });
+
         }
       }  
     }    
@@ -272,9 +280,6 @@ Project-page: http://sbmlviewer.insysbio.ru
       // transformation
       var id = event.target.id;
       readXml("xslt/"+options["transform2"]+".xsl", function(xsl2) {
-        console.log(xsl2);
-        var xsltProcessor2 = new XSLTProcessor();
-        xsltProcessor2.importStylesheet(xsl2);
         xsltProcessor2.setParameter(null, "elementId", event.target.id);
         var resultDocument = xsltProcessor2.transformToDocument(modelDoc); 
         document.getElementById("sideContent").removeChild(document.getElementById("sideContent").childNodes[0]);
