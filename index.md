@@ -1,4 +1,3 @@
-{{ site.yandex_metrika }}
 # SBML Viewer
 **SBML Viewer** is a tool for fast and easy reading models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
 
@@ -16,23 +15,23 @@ SBML is a free and open interchange format for computer models of biological pro
 
 # Quick start 
 
-<div class="w3-btn w3-card-2 w3-green w3-circle"><a href="" id="tryDemoLink" style="color:white">Try demo online</a></div>
+<div class="w3-btn w3-card-2 w3-green w3-circle"><a href="http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml" id="tryDemoLink" style="color:white">Try demo online</a></div>
 
 Your model is available from web:
 
 1. Your model is shared on <code>http://www.example.com/your_sbml_file.xml<code>
-2. Write the line in your favorite browser <code>http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
+2. Write the line in your favorite browser <code>http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
 
 Your model is available locally:
-1. The following [http://sbmlviewer.insilicobio.ru/viewer.xhtml](http://sbmlviewer.insilicobio.ru/viewer.xhtml)
+1. The following [http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml)
 2. Click on button "Choose file" and choose file
 
 # Examples
 To look through example just try the links
-* [test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/00001-sbml-l2v5.xml)
-* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000512.xml)
-* [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000622.xml)
-* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000439.xml)
+* [test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/00001-sbml-l2v5.xml)
+* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000512.xml)
+* [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000622.xml)
+* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000439.xml)
 
 # Releases
 
