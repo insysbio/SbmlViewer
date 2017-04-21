@@ -1,3 +1,4 @@
+{{ site.title | default: site.github.repository_name }}
 # SBML Viewer
 **SBML Viewer** is a tool for fast and easy reading models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
 
@@ -24,7 +25,7 @@ Your model is available from web:
 
 Your model is available locally:
 1. The following [http://sbmlviewer.insilicobio.ru/viewer.xhtml](http://sbmlviewer.insilicobio.ru/viewer.xhtml)
-1. Click on button "Выберите файл"("Choose file") and choose file
+2. Click on button "Choose file" and choose file
 
 # Examples
 To look through example just try the links
