@@ -1,18 +1,21 @@
 <!DOCTYPE HTML>
 <html>
-<head> <!-- Need in other block??? -->
+<head>
 <title>{{ site.title | default: site.github.repository_name }}</title>
+
 {% seo %}
- <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript" src="http://sbmlviewer.insilicobio.ru/assets/js/yandexMetrika.js"></script>
+
 </head>
 
 <body>
-<noscript><div><img src="https://mc.yandex.ru/watch/44335438" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-{% include header.html %}
+<!-- Strange block of fb script -->
 <div style="display:none;">
 <div id="fb-root"></div>
 <script>
@@ -31,12 +34,16 @@
 
 <div class="g-plus" data-action="share" data-annotation="bubble"></div><script src="https://apis.google.com/js/platform.js" async defer></script>
 </div>
+<!-- End strange fb block -->
+
+{% include header.html %}
 
 <div id="mainContent" class="w3-container w3-content">
 {{ content }}
 </div>
 
 {% include footer.html %}
-</body>
 
+<noscript><div><img src="https://mc.yandex.ru/watch/{{ site.yandex_metrika }}" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+</body>
 </html>
