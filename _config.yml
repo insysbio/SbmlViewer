@@ -8,6 +8,7 @@ safe: false
 #SEO
 title: "SbmlViewer"
 description: "The collection of transformation from SBML files into human readable formats"
+url: http://sbmlviewer.insilicobio.ru/
 liquid:
   error_mode: warn
 yandex_metrika: 44335438
