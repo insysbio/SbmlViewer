@@ -1,28 +1,3 @@
-<script>
-var dist = "dist/170418 online_0.2.0_beta/";
-</script>
-<div style="display:none;">
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.8";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-<div class="fb-share-button" data-href="http://sbmlviewer.insilicobio.ru/" data-layout="button_count" data-size="large" data-mobile-iframe="false"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fsbmlviewer.insilicobio.ru%2F&amp;src=sdkpreparse">Share</a></div>
-
-<a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<div class="g-plus" data-action="share" data-annotation="bubble"></div><script src="https://apis.google.com/js/platform.js" async defer></script>
-
-<div class="share42init"></div>
-<script type="text/javascript" src="/js/share42.js"></script>
-<script type="text/javascript" src="http://sbmlviewer.insilicobio.ru/assets/js/script.js"></script>
-
-</div>
-
 # SBML Viewer
 **SBML Viewer** is a tool for fast and easy reading models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
 
