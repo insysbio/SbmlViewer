@@ -15,7 +15,7 @@ SBML is a free and open interchange format for computer models of biological pro
 
 # Quick start 
 
-<div class="w3-btn w3-card-2 w3-green w3-circle"><a href="http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml" id="tryDemoLink" style="color:white">Try demo online</a></div>
+<div class="w3-btn w3-card-2 w3-green w3-circle w3-text-white"><a href="http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml" id="tryDemoLink">Try demo online</a></div>
 
 Your model is available from web:
 
@@ -55,9 +55,9 @@ To look through example just try the links
 # Other information
 
 ## Subscribe for updates
-<div class="w3-button w3-large w3-round w3-green" style="margin-left: 40px">
+<div class="w3-button w3-large w3-round w3-green w3-text-white" style="margin-left: 40px">
   <img src="http://sbmlviewer.insilicobio.ru/assets/img/subscrip.png">
-<a style="color:white;" href="http://eepurl.com/cxCiu5">Subscription</a>
+<a href="http://eepurl.com/cxCiu5">Subscription</a>
 </div>
 ## Let people know about us
 <ul class="share-buttons">
