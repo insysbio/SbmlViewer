@@ -1,4 +1,5 @@
 # SBML Viewer
+<hr/>
 **SBML Viewer** is a tool for fast and easy reading models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
 
 SBML Viewer never uploads your files to server and all transformation are performed locally in your browser, so it is safe. It is free. 
@@ -14,7 +15,7 @@ When **SBML Viewer** is helpful:
 SBML is a free and open interchange format for computer models of biological processes, see [SBML community portal](http://sbml.org/). It is used in many modeling application and can store model structure, math and annotation of elements. SBML is XML based format and designed basically for machine reading and writing.
 
 # Quick start 
-
+<hr/>
 <div class="w3-btn w3-card-2 w3-green w3-circle w3-text-white"><a href="http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml" id="tryDemoLink">Try demo online</a></div>
 
 Your model is available from web:
@@ -34,7 +35,7 @@ To look through example just try the links
 * [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000439.xml)
 
 # Releases
-
+<hr/>
 ## Current release
 
 - reading SBML Level 2 Version 1-5
@@ -53,7 +54,7 @@ To look through example just try the links
 - **sbml2tree** transformation
 
 # Other information
-
+<hr/>
 ## Subscribe for updates
 <div class="w3-button w3-large w3-round w3-green w3-text-white" style="margin-left: 40px">
   <img src="http://sbmlviewer.insilicobio.ru/assets/img/subscrip.png">
