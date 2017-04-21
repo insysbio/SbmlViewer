@@ -51,21 +51,6 @@ Your model is available locally:
 1. The following http://sbmlviewer.insilicobio.ru/viewer.xhtml
 1. Click on button "Выберите файл"("Choose file") and choose file
 
-## Options
-### useNames
-desciption
-### correctMathml
-desciption
-### equationsOff
-Hidden equations
-
-
-
-
-
-
-
-
 # Examples
 To look through example just try the links
 * [test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/00001-sbml-l2v5.xml)
