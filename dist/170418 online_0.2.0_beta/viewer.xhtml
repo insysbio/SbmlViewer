@@ -83,30 +83,37 @@ Project-page: http://sbmlviewer.insysbio.ru
       xmlhttp.send();
     }
     
-    var xsltProcessor1 = new XSLTProcessor(); //processor for 1st xslt
-    var xsltProcessor2 = new XSLTProcessor(); //processor for 2d xslt
+
     var modelDoc=null;
+    var file = null;
     
     window.onload = function() {
         var sp=window.location.search.substring(1).split("&");
         if (sp[0]) validateUploadFile(sp[0],"URL");
         
         document.getElementById("file").addEventListener("change", function(event) {
-          validateUploadFile(document.getElementById('file').files[0].name, 'upload');
+          file = document.getElementById("file").files[0];
+          validateUploadFile(file.name, 'upload');
         }, false);
 
-        document.addEventListener("drop", function() {
+
+        document.addEventListener("drop", function(event) {
           event.preventDefault();
-          document.getElementById("file").files = event.dataTransfer.files;
-          validateUploadFile(document.getElementById('file').files[0].name, 'upload');
+          event.stopPropagation();
+          file = event.dataTransfer.files[0];
+          validateUploadFile(file.name, 'upload');
         });
         
-        document.addEventListener("dragover", function() {
+        document.addEventListener("dragstart", function() {
+          event.preventDefault();
+        }); 
+        
+        document.addEventListener("dragover", function(event) {
           event.preventDefault();
         });                  
         
         document.getElementById("refresh").addEventListener("click", function() {     
-          if ((document.getElementById('file').files[0]) || (options["filepath"])) {
+          if ((file) || (options["filepath"])) {
             loadModeToPage()
           }
           else {
@@ -124,7 +131,7 @@ Project-page: http://sbmlviewer.insysbio.ru
         
         select.addEventListener("change", function() {
           options["transform"] = this.value;
-        });
+        }, true);
        
         var listBtn = document.getElementById("listRadioBtn");
         optionsDisplay.forEach(function(item) {
@@ -181,7 +188,6 @@ Project-page: http://sbmlviewer.insysbio.ru
               }
             break;
         case "upload":
-          var file = document.getElementById("file").files[0];
           document.getElementById("fileName").innerHTML = file.name;
           var reader = new FileReader();
           try {
@@ -204,6 +210,8 @@ Project-page: http://sbmlviewer.insysbio.ru
         
 
       function modelDocDisplayToPage() {
+        var xsltProcessor1 = new XSLTProcessor(); //processor for 1st xslt
+        var xsltProcessor2 = new XSLTProcessor(); //processor for 2d xslt
         // read and load table
         readXml("xslt/"+options["transform"]+".xsl", function(xsl1) {
           xsltProcessor1.importStylesheet(xsl1);
@@ -231,8 +239,8 @@ Project-page: http://sbmlviewer.insysbio.ru
           // read additional stylesheet
         readXml("xslt/"+options["transform2"]+".xsl", function(xsl2) {
           xsltProcessor2.importStylesheet(xsl2);
-          if (options["useNames"]) xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
-          if (options["correctMathml"]) xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
+          xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
+          xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
         });
         }
       }  
@@ -264,6 +272,8 @@ Project-page: http://sbmlviewer.insysbio.ru
       // transformation
       var id = event.target.id;
       readXml("xslt/"+options["transform2"]+".xsl", function(xsl2) {
+        console.log(xsl2);
+        var xsltProcessor2 = new XSLTProcessor();
         xsltProcessor2.importStylesheet(xsl2);
         xsltProcessor2.setParameter(null, "elementId", event.target.id);
         var resultDocument = xsltProcessor2.transformToDocument(modelDoc); 
