@@ -1,6 +1,8 @@
-<footer class="w3-container w3-teal w3-center w3-padding">
+<footer class="w3-container w3-teal w3-center w3-padding w3-text-white">
  {% if site.github.is_project_page %}
-        <p class="copyright">{{ site.github.repository_name | default: site.github.repository_name }} maintained by <a style="color:white" href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>
-        {% endif %}
-        <p>Published with <a style="color:white" href="https://pages.github.com">GitHub Pages</a></p>
+        <p class="copyright">
+        {{ site.github.repository_name | default: site.github.repository_name }} maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>
+        </p>
+  {% endif %}
+  <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
 </footer>
