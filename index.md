@@ -1,4 +1,4 @@
-{{ yandex_metrika }}
+{{ site.yandex_metrika }}
 # SBML Viewer
 **SBML Viewer** is a tool for fast and easy reading models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
 
