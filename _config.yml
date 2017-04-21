@@ -1,11 +1,20 @@
 #Doc http://jekyllrb.com/docs/configuration/
 #theme: jekyll-theme
+gems:
+  - jekyll-mentions
+  - jekyll-seo-tag
+  - jekyll-sitemap
 safe: false
 #SEO
 title: "SbmlViewer"
 description: "The collection of transformation from SBML files into human readable formats"
 liquid:
   error_mode: warn
+yandex_metrika: 44335438
+facebook:
+  app_id: 597995060394661
+twitter:
+  username: insysbio
 social:
   name: InSysBio
   links:
@@ -20,7 +29,3 @@ defaults:
     values:
       image: http://sbmlviewer.insilicobio.ru/assets/img/social/default_view.jpg    
 #Plugins(also we can add whitelist)  
-gems:
-  - jekyll-mentions
-  - jekyll-seo-tag
-  - jekyll-sitemap
