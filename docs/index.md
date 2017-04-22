@@ -61,7 +61,7 @@ To look through example just try the links
   <img src="http://sbmlviewer.insilicobio.ru/assets/img/subscrip.png">
 <a href="http://eepurl.com/cxCiu5">Subscription</a>
 </div>
-<a class="w3-btn w3-round w3-teal" href="http://eepurl.com/cxCiu5>Subscribe to SbmlViewer updates <i class="fa fa-envelope w3-xxlarge"></i></a>
+<a class="w3-btn w3-round w3-teal" href="http://eepurl.com/cxCiu5">Subscribe to SbmlViewer updates <i class="fa fa-envelope w3-xxlarge"></i></a>
 
 ## Maintaners
 
