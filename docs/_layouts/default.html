@@ -4,18 +4,16 @@
 <title>{{ site.title | default: site.github.repository_name }}</title>
 
 {% seo %}
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript" src="http://sbmlviewer.insilicobio.ru/assets/js/yandexMetrika.js"></script>
-
 </head>
 
 <body>
+{% include yandex_metrika.html %}
 <!-- {% include social_buttons.html %} -->
 
 {% include header.html %}
@@ -25,10 +23,6 @@
 </div>
 
 {% include footer.html %}
-
-<noscript>
-  <div><img src="https://mc.yandex.ru/watch/{{ site.yandex_metrika }}" style="position:absolute; left:-9999px;" alt="" /></div>
-</noscript>
 
 </body>
 </html>
