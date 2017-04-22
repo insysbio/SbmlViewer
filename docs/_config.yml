@@ -30,6 +30,6 @@ defaults:
     values:
       image: http://sbmlviewer.insilicobio.ru/assets/img/social/default_view.jpg
 #Path for current release
-distPath: dist/170418 online_0.2.0_beta/      
+distPath: online/
       
 #Plugins(also we can add whitelist)  
