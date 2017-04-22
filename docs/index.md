@@ -1,5 +1,4 @@
-# Intro
-<hr/>
+
 **SbmlViewer** is a tool for fast and easy reading biologycal models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
 
 SbmlViewer never uploads your files to the server and all transformations are performed locally in your browser, so it is safe and secure for your code.
@@ -9,7 +8,7 @@ SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlV
 When **SBML Viewer** is helpful:
 
 * You cannot install you favorite tool to read and check some SBML file right now.
-* Your software cannot read some specific SBML versions or elements like "event", "constraint" or "functionDefinition" etc. but the file includes them.
+* Your software cannot read some specific SBML versions or elements like <code>event</code>, <code>constraint</code>" or <code>functionDefinition</code>" etc. but the file includes them.
 * You need to share your model in human readable format with someone easily.
 * Your have some errors when reading foreign SBML and are trying to check the model code.
 
@@ -28,7 +27,7 @@ For models shared on web:
 1. Copy the link of your shared model, for instance <code>http://www.example.com/your_sbml_file.xml<code>
 2. Write the line in your browser like this <code>http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
 
-# Examples
+## Examples
 To look through example just try the links
 * [test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/00001-sbml-l2v5.xml)
 * [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000512.xml)
@@ -45,7 +44,7 @@ To look through example just try the links
 - summary generation for chosen element: **sbml2element** transformation
 
 ## Known restrictions
-- wrong view of <code>parameter</code> element inside <code>kineticLaw</code>
+- wrong representation of <code>parameter</code> element inside <code>kineticLaw</code>
 - ignore <code>annotation</code> elements for presentation
 
 ## Roadmap
