@@ -54,14 +54,8 @@ To look through example just try the links
 - Transformation to Antimony format: **sbml2antimony** transformation
 - Chrome extension for sbmlviewer
 
-# Other
 <hr/>
-## Subscribe for updates
-<div class="w3-button w3-large w3-round w3-green w3-text-white" style="margin-left: 40px">
-  <img src="http://sbmlviewer.insilicobio.ru/assets/img/subscrip.png">
-<a href="http://eepurl.com/cxCiu5">Subscription</a>
-</div>
-<a class="w3-btn w3-round w3-teal" href="http://eepurl.com/cxCiu5">Subscribe to SbmlViewer updates <i class="fa fa-envelope w3-xxlarge"></i></a>
+<a class="w3-btn w3-round w3-block w3-teal" href="http://eepurl.com/cxCiu5">Subscribe to SbmlViewer updates <i class="fa fa-envelope w3-large"></i></a>
 
 ## Maintaners
 
