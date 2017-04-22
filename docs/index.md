@@ -8,7 +8,7 @@ SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlV
 When **SBML Viewer** is helpful:
 
 * You cannot install you favorite tool to read and check some SBML file right now.
-* Your software cannot read some specific SBML versions or elements like <code>event</code>, <code>constraint</code>" or <code>functionDefinition</code>" etc. but the file includes them.
+* Your software cannot read some specific SBML versions or elements like <code>event</code>, <code>constraint</code> or <code>functionDefinition</code> etc. but the file includes them.
 * You need to share your model in human readable format with someone easily.
 * Your have some errors when reading foreign SBML and are trying to check the model code.
 
@@ -44,15 +44,15 @@ To look through example just try the links
 - summary generation for chosen element: **sbml2element** transformation
 
 ## Known restrictions
-- wrong representation of <code>parameter</code> element inside <code>kineticLaw</code>
-- ignore <code>annotation</code> elements for presentation
+- wrong representation of local <code>parameter</code> element inside <code>kineticLaw</code>
+- ignores <code>annotation</code> elements for presentation
 
 ## Roadmap
 
 - **sbml2tree** transformation
 - **sbml2ode** transformation
 - Transformation to Antimony format: **sbml2antimony** transformation
-- Chrome extension for sbmlviewer
+- Chrome extension for SbmlViewer
 
 <hr/>
 <a class="w3-btn w3-round w3-block w3-teal" href="http://eepurl.com/cxCiu5">Subscribe to SbmlViewer updates <i class="fa fa-envelope w3-large"></i></a>

@@ -28,7 +28,7 @@ defaults:
   - scope:
       path: ""
     values:
-      image: http://sbmlviewer.insilicobio.ru/assets/img/social/default_view.jpg
+      image: http://sbmlviewer.insilicobio.ru/img/sbmlviewer_example.png
 #Path for current release
 distPath: online/
       
