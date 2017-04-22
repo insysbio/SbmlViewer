@@ -61,25 +61,6 @@ To look through example just try the links
   <img src="http://sbmlviewer.insilicobio.ru/assets/img/subscrip.png">
 <a href="http://eepurl.com/cxCiu5">Subscription</a>
 </div>
-## Let people know about us
-<ul class="share-buttons">
-  <li>
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}" title="Share on Facebook" target="_blank"><img alt="Share on Facebook" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Facebook.svg"></a>
-  </li>
-  <li>
-    <a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw&text={{ site.description }}&url={{ site.url }}" target="_blank" title="Tweet"><img alt="Tweet" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Twitter.svg"></a>
-  </li>
-  <li>
-    <a href="https://plus.google.com/share?url={{ site.url }}" target="_blank" title="Share on Google+">
-      <img alt="Share on Google+" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Google+.svg">
-    </a>
-  </li>
-  <li>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url={{ site.url }}&title={{ site.title }}&summary={{ site.description }}&source={{ site.url }}" target="_blank" title="Share on LinkedIn">
-      <img alt="Share on LinkedIn" src="http://sbmlviewer.insilicobio.ru/assets/img/social/LinkedIn.svg">
-    </a>
-  </li>
-</ul>
 
 ## Maintaners
 
