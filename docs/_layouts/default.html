@@ -16,32 +16,7 @@
 </head>
 
 <body>
-<!-- fb script -->
-<script>
-/*
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '{{ site.facebook.app_id }}',
-      xfbml      : true,
-      version    : 'v2.9'
-    });
-    FB.AppEvents.logPageView();
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-   */
-</script>
-<!-- end of fb script -->
-<a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-show-count="false">Tweet</a><script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<div class="g-plus" data-action="share" data-annotation="bubble"></div><script src="https://apis.google.com/js/platform.js" async defer></script>
-</div>
+<!-- {% include social_buttons.html %} -->
 
 {% include header.html %}
 
@@ -51,6 +26,9 @@
 
 {% include footer.html %}
 
-<noscript><div><img src="https://mc.yandex.ru/watch/{{ site.yandex_metrika }}" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<noscript>
+  <div><img src="https://mc.yandex.ru/watch/{{ site.yandex_metrika }}" style="position:absolute; left:-9999px;" alt="" /></div>
+</noscript>
+
 </body>
 </html>
