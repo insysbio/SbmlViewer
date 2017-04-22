@@ -1,31 +1,32 @@
-# SBML Viewer
+# Intro
 <hr/>
-**SBML Viewer** is a tool for fast and easy reading models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
+**SbmlViewer** is a tool for fast and easy reading biologycal models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
 
-SBML Viewer never uploads your files to server and all transformation are performed locally in your browser, so it is safe. It is free. 
+SbmlViewer never uploads your files to the server and all transformations are performed locally in your browser, so it is safe and secure for your code.
+
+SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlViewer). Any feedback is welcomed on [Issues page](https://github.com/insysbio/SbmlViewer/issues).
 
 When **SBML Viewer** is helpful:
 
-* You have no facilities to install you favorite tool to read and check some SBML file right now.
+* You cannot install you favorite tool to read and check some SBML file right now.
 * Your software cannot read some specific SBML versions or elements like "event", "constraint" or "functionDefinition" etc. but the file includes them.
 * You need to share your model in human readable format with someone easily.
-* Your have some errors when reading foreign SBML and are trying to check the structure.
-
-## About SBML
-SBML is a free and open interchange format for computer models of biological processes, see [SBML community portal](http://sbml.org/). It is used in many modeling application and can store model structure, math and annotation of elements. SBML is XML based format and designed basically for machine reading and writing.
+* Your have some errors when reading foreign SBML and are trying to check the model code.
 
 # Quick start 
 <hr/>
+
 <div class="w3-btn w3-card-2 w3-green w3-circle w3-text-white"><a href="http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml" id="tryDemoLink">Try demo online</a></div>
 
-Your model is available from web:
+For models from your computer:
 
-1. Your model is shared on <code>http://www.example.com/your_sbml_file.xml<code>
-2. Write the line in your favorite browser <code>http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
+1. Go to the page [http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml)
+2. Click on button "Choose file" and select your sbml model.
 
-Your model is available locally:
-1. The following [http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml)
-2. Click on button "Choose file" and choose file
+For models shared on web:
+
+1. Copy the link of your shared model, for instance <code>http://www.example.com/your_sbml_file.xml<code>
+2. Write the line in your browser like this <code>http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
 
 # Examples
 To look through example just try the links
@@ -34,8 +35,9 @@ To look through example just try the links
 * [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000622.xml)
 * [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000439.xml)
 
-# Releases
+# Features
 <hr/>
+
 ## Current release
 
 - reading SBML Level 2 Version 1-5
@@ -44,16 +46,16 @@ To look through example just try the links
 
 ## Known restrictions
 - wrong view of <code>parameter</code> element inside <code>kineticLaw</code>
-- ignore <code>annotation</code> elements
+- ignore <code>annotation</code> elements for presentation
 
 ## Roadmap
 
-- Chrome extension for sbmlviewer
-- Transformation to Antimony format: **sbml2antimony** transformation
-- **sbml2report** transformation
 - **sbml2tree** transformation
+- **sbml2ode** transformation
+- Transformation to Antimony format: **sbml2antimony** transformation
+- Chrome extension for sbmlviewer
 
-# Other information
+# Other
 <hr/>
 ## Subscribe for updates
 <div class="w3-button w3-large w3-round w3-green w3-text-white" style="margin-left: 40px">
@@ -78,22 +80,21 @@ To look through example just try the links
       <img alt="Share on LinkedIn" src="http://sbmlviewer.insilicobio.ru/assets/img/social/LinkedIn.svg">
     </a>
   </li>
-  <li>
-    <a href="mailto:?subject={{ site.title }}&body={{ site.description }} {{ site.url }}" target="_blank" title="Send email">
-      <img alt="Send email" src="http://sbmlviewer.insilicobio.ru/assets/img/social/Email.svg">
-    </a>
-  </li>
 </ul>
 
-## Authors
+## Maintaners
 
-- Evgeny Metelkin @metelkin
 - Viktoria Tkachenko @vetedde
+- Evgeny Metelkin @metelkin
 
 ## License
 Apache 2.0
 
-## 3d party software
+## 3d party software used
 
 - [MathJax](https://www.mathjax.org)
 - [W3.CSS](http://www.w3schools.com/w3css/) 
+
+## About SBML
+
+SBML is a free and open interchange format for computer models of biological processes maintained by [SBML community](http://sbml.org/). It is used in many modeling application and can store model structure, math and annotation of elements. SBML is XML based format and designed basically for machine reading and writing.
