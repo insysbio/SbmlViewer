@@ -12,14 +12,16 @@ When **SBML Viewer** is helpful:
 * You need to share your model in human readable format with someone easily.
 * Your have some errors when reading foreign SBML and are trying to check the model code.
 
+![sbmlviewer example](/assets/img/sbmlviewer_example.png)
+
 # Quick start 
 <hr/>
 
-<div class="w3-btn w3-card-2 w3-green w3-circle w3-text-white"><a href="http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml" id="tryDemoLink">Try demo online</a></div>
+<div class="w3-btn w3-card-2 w3-green w3-circle w3-text-white"><a href="/{{ site.distPath }}viewer.xhtml" id="tryDemoLink">Try demo online</a></div>
 
 For models from your computer:
 
-1. Go to the page [http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml)
+1. Go to the page [http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml](/{{ site.distPath }}viewer.xhtml)
 2. Click on button "Choose file" and select your sbml model.
 
 For models shared on web:
