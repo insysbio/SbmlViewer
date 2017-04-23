@@ -6,8 +6,8 @@ gems:
 safe: false
 title: "SbmlViewer"
 description: "The collection of transformations from SBML files into human readable formats"
-logo: /img/logo_isb.png
-url: http://sbmlviewer.insilicobio.ru
+logo: /assets/img/logo_isb.png
+url: http://sv.insysbio.ru
 liquid:
   error_mode: warn
 #statistics
@@ -32,6 +32,6 @@ defaults:
   - scope:
       path: ""
     values:
-      image: /img/sbmlviewer_example.png
+      image: /assets/img/sbmlviewer_example.png
 
-#Plugins(also we can add whitelist)  
+
