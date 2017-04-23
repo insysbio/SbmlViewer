@@ -15,24 +15,24 @@ When **SBML Viewer** is helpful:
 # Quick start 
 <hr/>
 
-<div class="w3-btn w3-card-2 w3-green w3-circle w3-text-white"><a href="http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml" id="tryDemoLink">Try demo online</a></div>
+<div class="w3-btn w3-card-2 w3-green w3-circle w3-text-white"><a href="http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml" id="tryDemoLink">Try demo online</a></div>
 
 For models from your computer:
 
-1. Go to the page [http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml)
+1. Go to the page [http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml)
 2. Click on button "Choose file" and select your sbml model.
 
 For models shared on web:
 
 1. Copy the link of your shared model, for instance <code>http://www.example.com/your_sbml_file.xml<code>
-2. Write the line in your browser like this <code>http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
+2. Write the line in your browser like this <code>http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
 
 ## Examples
 To look through example just try the links
-* [test 00001 from SBML Test Suite Database](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/00001-sbml-l2v5.xml)
-* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000512.xml)
-* [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000622.xml)
-* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sbmlviewer.insilicobio.ru/{{ site.distPath }}viewer.xhtml?http://sbmlviewer.insilicobio.ru/cases/BIOMD0000000439.xml)
+* [test 00001 from SBML Test Suite Database](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/00001-sbml-l2v5.xml)
+* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000512.xml)
+* [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000622.xml)
+* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000439.xml)
 
 # Features
 <hr/>
