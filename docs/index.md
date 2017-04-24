@@ -17,7 +17,7 @@ When **SBML Viewer** is helpful:
 # Quick start 
 <hr/>
 
-<div class="w3-btn w3-card-2 w3-green w3-circle w3-text-white"><a href="/{{ site.distPath }}viewer.xhtml" id="tryDemoLink">Try demo online</a></div>
+<div class="w3-btn w3-card-2 w3-green w3-circle w3-text-white"><a href="{{ site.distPath }}viewer.xhtml" id="tryDemoLink">Try demo online</a></div>
 
 For models from your computer:
 
