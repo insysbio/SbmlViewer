@@ -88,10 +88,7 @@ Project-page: http://sv.insysbio.ru
     var modelDoc=null;
     var file = null;
     
-    window.onload = function() {
-        var sp=window.location.search.substring(1).split("&");
-        if (sp[0]) validateUploadFile(sp[0],"URL");
-        
+    window.onload = function() {      
         readXml("xslt/"+options["transform"]+".xsl", function(xsl1) {
           xsltProcessor1.importStylesheet(xsl1);
           
@@ -193,7 +190,9 @@ Project-page: http://sv.insysbio.ru
             document.getElementById("optionsArea").style.display = "block";          
           }
         });  
-        
+       
+        var sp=window.location.search.substring(1).split("&");
+        if (sp[0]) validateUploadFile(sp[0],"URL");        
     };
     
     function loadModeToPage() { 
