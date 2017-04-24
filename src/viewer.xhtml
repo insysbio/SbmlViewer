@@ -77,7 +77,7 @@ Project-page: http://sv.insysbio.ru
       };
        
       xmlhttp.error = function(){
-        document.getElementById("errorMess").innerHTML = "Cannot onload the file.";
+        document.getElementById("errorMess").innerHTML = "Cannot upload the file.";
       };
        
       xmlhttp.send();
@@ -205,7 +205,7 @@ Project-page: http://sv.insysbio.ru
                 modelDocDisplayToPage();
               }
               else {
-                document.getElementById("errorMess").innerHTML = "Impossible to read the document";
+                document.getElementById("errorMess").innerHTML = "Cannot to read the document";
               }
             break;
         case "upload":
@@ -219,12 +219,12 @@ Project-page: http://sv.insysbio.ru
                 modelDocDisplayToPage();
               }
               else {
-                document.getElementById("errorMess").innerHTML = "Level "+modelDoc.firstElementChild.getAttribute("level")+" not support" ;
+                document.getElementById("errorMess").innerHTML = "File format is not supported" ;
               }              
             } 
           }
           catch(err) {
-            document.getElementById("errorMess").innerHTML = "Impossible to read the document";
+            document.getElementById("errorMess").innerHTML = "Cannot read the document";
           }
           break;
       } 
@@ -270,7 +270,7 @@ Project-page: http://sv.insysbio.ru
         loadModeToPage(); 
       }        
       else {
-        document.getElementById("errorMess").innerHTML = "The document has not been loaded or has the wrong format";
+        document.getElementById("errorMess").innerHTML = "Cannot read the document";
       }
     }
     
@@ -330,7 +330,7 @@ Project-page: http://sv.insysbio.ru
   <div id="optionsArea">
     <div class="w3-cell w3-padding">
     <input id="file" type="file" accept=".xml,.sbml" style="color:transparent; width:140px;" onchange=""/><span id="fileName">No file choosen</span><br/><br/>
-      <h4>Display Type:</h4>
+      <h4>Transformation type:</h4>
       <select></select>
       
     </div>
