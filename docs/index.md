@@ -21,20 +21,20 @@ When **SBML Viewer** is helpful:
 
 For models from your computer:
 
-1. Go to the page [http://sv.insysbio.ru//{{ site.distPath }}viewer.xhtml](/{{ site.distPath }}viewer.xhtml)
+1. Go to the page [http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml](/{{ site.distPath }}viewer.xhtml)
 2. Click on button "Choose file" and select your sbml model.
 
 For models shared on web:
 
 1. Copy the link of your shared model, for instance <code>http://www.example.com/your_sbml_file.xml<code>
-2. Write the line in your browser like this <code>http://sv.insysbio.ru//{{ site.distPath }}viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
+2. Write the line in your browser like this <code>http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
 
 ## Examples
 To look through example just try the links
-* [test 00001 from SBML Test Suite Database](http://sv.insysbio.ru//{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru//cases/00001-sbml-l2v5.xml)
-* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sv.insysbio.ru//{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru//cases/BIOMD0000000512.xml)
-* [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sv.insysbio.ru//{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru//cases/BIOMD0000000622.xml)
-* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sv.insysbio.ru//{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru//cases/BIOMD0000000439.xml)
+* [test 00001 from SBML Test Suite Database](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/00001-sbml-l2v5.xml)
+* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000512.xml)
+* [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000622.xml)
+* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000439.xml)
 
 # Features
 <hr/>
