@@ -31,7 +31,7 @@ For models shared on web:
 
 ## Examples
 To look through example just try the links
-* [test 00001 from SBML Test Suite Database](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/00001-sbml-l2v5.xml)
+* [test 00001 from SBML Test Suite Database](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/00001-sbml-l2v1.xml)
 * [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000512.xml)
 * [BIOMD0000000622 from BioModels Database, model of the month in January 2017](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000622.xml)
 * [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000439.xml)
