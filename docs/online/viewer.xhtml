@@ -19,7 +19,7 @@ Description: Web application to interact with sbml files and transformations
 
 Maintainers: Evgeny Metelkin, Viktoria Tkachenko
 Copyright: Institute for Systems Biology, Moscow
-Last modification: 2017-04-18
+Last modification: 2017-04-25
 
 Project-page: http://sv.insysbio.ru/
 -->
@@ -128,7 +128,7 @@ Project-page: http://sv.insysbio.ru/
             loadModeToPage()
           }
           else {
-            document.getElementById("errorMess").innerHTML = "File don't find";
+            document.getElementById("errorMess").innerHTML = "Cannot upload the file.";
           }  
         });
         
@@ -205,7 +205,7 @@ Project-page: http://sv.insysbio.ru/
                 modelDocDisplayToPage();
               }
               else {
-                document.getElementById("errorMess").innerHTML = "Cannot to read the document";
+                document.getElementById("errorMess").innerHTML = "Cannot read the document";
               }
             break;
         case "upload":

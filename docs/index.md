@@ -5,7 +5,7 @@ SbmlViewer never uploads your files to the server and all transformations are pe
 
 SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlViewer). Any feedback is welcomed on [Issues page](https://github.com/insysbio/SbmlViewer/issues).
 
-When **SBML Viewer** is helpful:
+When **SbmlViewer** is helpful:
 
 * You cannot install you favorite tool to read and check some SBML file right now.
 * Your software cannot read some specific SBML versions or elements like <code>event</code>, <code>constraint</code> or <code>functionDefinition</code> etc. but the file includes them.
@@ -26,8 +26,8 @@ For models from your computer:
 
 For models shared on web:
 
-1. Copy the link of your shared model, for instance <code>http://www.example.com/your_sbml_file.xml<code>
-2. Write the line in your browser like this <code>http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://www.example.com/your_sbml_file.xml<code>
+1. Copy the link of your shared model, for instance http://www.example.com/your_sbml_file.xml
+2. Write the line in your browser like this http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://www.example.com/your_sbml_file.xml
 
 ## Examples
 To look through example just try the links
@@ -51,6 +51,7 @@ To look through example just try the links
 
 ## Roadmap
 
+- support for SBML level 3
 - **sbml2tree** transformation
 - **sbml2ode** transformation
 - Transformation to Antimony format: **sbml2antimony** transformation
