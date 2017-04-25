@@ -26,7 +26,7 @@ Author: Evgeny Metelkin
 Copyright: Institute for Systems Biology, Moscow
 Last modification: 2017-01-15
 
-Project-page: http://sbmlviewer.insysbio.ru
+Project-page: http://sv.insysbio.ru
 -->
 <xsl:stylesheet version="1.0" 
   xmlns="http://www.w3.org/1999/xhtml"
