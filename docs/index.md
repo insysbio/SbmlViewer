@@ -62,7 +62,7 @@ To look through example just try the links
 
 ## Maintaners
 
-- Viktoria Tkachenko @vetedde
+- Viktoria Tkachenko @tkachVika
 - Evgeny Metelkin @metelkin
 
 ## License
