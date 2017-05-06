@@ -7,7 +7,7 @@ Just play with transformation on the page http://sv.insysbio.ru/online
 
 ## Contributing
 
-Three options to contribute: 
+Two options to contribute: 
  - Use [Issues page](https://github.com/insysbio/SbmlViewer/issues)
  - Fork and pull requests to us.
 
