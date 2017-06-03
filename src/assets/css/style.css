@@ -1,0 +1,25 @@
+#filearea{
+  border: 3px dashed white;
+  min-width: 250px;
+}
+hr{
+  margin: 0;
+}
+#mainContent {
+  overflow: auto;
+  height: 89vh;
+}
+.closeSideBarBtn {
+  position: fixed;
+  top: 50%;
+  right: 15.8%;
+}
+.content {
+  margin-top: 50px;
+}
+#sideInformBlock {
+  display: none;
+}
+#sideContent {
+  overflow: auto;
+}
