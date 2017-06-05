@@ -1,3 +1,6 @@
+html {
+  overflow: hidden;
+}
 #filearea{
   border: 3px dashed white;
   min-width: 250px;
@@ -7,7 +10,7 @@ hr{
 }
 #mainContent {
   overflow: auto;
-  height: 89vh;
+  padding-bottom: 15px;
 }
 .closeSideBarBtn {
   position: fixed;
@@ -15,11 +18,15 @@ hr{
   right: 15.8%;
 }
 .content {
-  margin-top: 50px;
+  margin-top: 80px;
 }
 #sideInformBlock {
   display: none;
+  overflow: auto;
 }
 #sideContent {
   overflow: auto;
+}
+.optionsArea {
+  height: 88px;
 }
