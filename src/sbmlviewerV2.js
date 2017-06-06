@@ -18,6 +18,12 @@ var optionsDisplay = [
 
 var xsltProcessor1 = new XSLTProcessor(); //processor for 1st xslt
 var xsltProcessor2 = new XSLTProcessor(); //processor for 2d xslt
+var curFile = {
+  "content": null, // model in dom-fromat 
+  "name": null,
+  "file": null, //link to File or path of file
+  "method": null //method, that was uploaded the file
+}
 var curModel = null; // model in dom-fromat 
 var curMethod = null; //method, that was uploaded the file
 
@@ -47,9 +53,13 @@ window.onload = function () {
   /* Check URL for link a model  */
   var sp = window.location.search.substring(1).split("&");
   if (sp[0]) {
-    readFile(sp[0] , "URL", function(modelDoc) {
-      curModel = modelDoc;
-      curMethod = "URL";
+    curFile["file"] = sp[0];
+    curFile["method"] = "URL";
+    
+    readFile(sp[0], "URL", function(modelDoc) {
+      curFile["content"] = modelDoc["content"];
+      curFile["name"] = modelDoc["name"];
+      
       
       displayModel(modelDoc["content"], modelDoc["name"]);
     });
@@ -87,9 +97,13 @@ window.onload = function () {
   function createListener() {
   /** Listen click on button "file", validate, run reading and display  */
     document.getElementById("file").addEventListener("change", function() {
+      
+      curFile["file"] = document.getElementById("file").files[0];
+      curFile["method"] = "upload";
+      
       readFile(document.getElementById("file").files[0], "upload", function(modelDoc) {
-        curModel = modelDoc;
-        curMethod = "upload";
+        curFile["content"] = modelDoc["content"];
+        curFile["name"] = modelDoc["name"];
         
         displayModel(modelDoc["content"], modelDoc["name"]);
       });
@@ -98,23 +112,26 @@ window.onload = function () {
 
   /** Listen click on button "refresh", read file again accroding with current method and update display */  
   document.getElementById("refresh").addEventListener("click", function() {
-    readFile(document.getElementById("file").files[0], curMethod, function(modelDoc) {
-        curModel = modelDoc;
+    readFile(curFile["file"], curFile["method"], function(modelDoc) {
+        curFile["content"] = modelDoc["content"];
         
-        displayModel(modelDoc["content"], modelDoc["name"]);
+        displayModel(modelDoc["content"]);
       });
   });
   
   /** Drag'n'drop */
     
-    /** Stop default drop event and upload file */
+    /** Stop default drop event and run function to read file and run function to display content after read  */
     document.addEventListener("drop", function(event) {
       event.preventDefault();
       event.stopPropagation();
       
+      curFile["file"] = event.dataTransfer.files[0];
+      curFile["method"] = "upload";
+      
       readFile(event.dataTransfer.files[0], "upload", function(modelDoc) {
-        curModel = modelDoc;        
-        curMethod = "upload";
+        curFile["content"] = modelDoc["content"];
+        curFile["name"] = modelDoc["name"];
         
         displayModel(modelDoc["content"], modelDoc["name"]);
       });
@@ -141,7 +158,7 @@ window.onload = function () {
         xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
         xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
         
-        displayModel(curModel["content"]);
+        displayModel(curFile["content"]);
       });
       }, true);
     
@@ -164,7 +181,7 @@ window.onload = function () {
 
 
 /** Read file according with method and with help callback return object data, include name and content
-* @param {string|object} -file. If method is "URL", then file - path file, if - "upload", then object File
+* @param {string|object} - file. If method is "URL", then file - path file, if - "upload", then object File
 */
 function readFile(f, method, callback) {
   var f, data = {
@@ -175,6 +192,7 @@ function readFile(f, method, callback) {
   switch(method) {
     case "URL":
       data["name"] = f.match(/[_-\w]+.xml/);
+      
       readXmlHTTP(f, function(Doc) { 
         data["content"] =  Doc; 
         callback(data); 
@@ -182,6 +200,7 @@ function readFile(f, method, callback) {
       break;
     case "upload":
       data["name"] = f.name;
+      
       readXmlUpload(f, function(Doc) { 
         data["content"] =  Doc; 
         callback(data); 
@@ -191,9 +210,12 @@ function readFile(f, method, callback) {
   
 }
 
-function readXmlHTTP(x, callback) { // return xml object as readed from file 
+/** Get file and return content of file in format XML-DOM
+* @param {string} filepath
+*/
+function readXmlHTTP(filepath, callback) {  
   var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", x, false);       
+  xmlhttp.open("GET", filepath, false);       
   xmlhttp.onload = function(){
     callback(this.responseXML);
   };
@@ -205,6 +227,9 @@ function readXmlHTTP(x, callback) { // return xml object as readed from file
   xmlhttp.send();
 }
 
+/** Read file and return content of file in format XML-DOM
+* @param {object} f - file of model(object File)
+*/
 function readXmlUpload(f, callback) {
   var reader = new FileReader();
   reader.readAsText(f);
@@ -214,9 +239,12 @@ function readXmlUpload(f, callback) {
 };  
 
 
-/**
+/** Display model into screen(div[id="mainContent"]) and name of file. If 
+* @param {object} model - DOM-object of content model
+* @param {string} name - name of file, that content model. Optional variable, transmitted only when the model is first displayed 
 */
 function displayModel(model, name) {
+  //Display name of file into title and beside btn of upload file
   if (name) {
     document.getElementById("fileName").innerHTML = name;
     document.getElementsByTagName("title")[0].innerHTML = name;
@@ -228,9 +256,18 @@ function displayModel(model, name) {
     document.getElementById("errorMess").innerHTML = "Incorrect XML";
   }
   else {
-    /*w3_close();*/
-    document.getElementById("mainContent").innerHTML = "";
-    document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
+    var mainContent = document.getElementById("mainContent");
+    
+    //Close side window with information about element(if it open)
+    w3_close(); 
+    
+    //Clear mainContent(display of model)
+    while (mainContent.childNodes[0]) {
+      mainContent.removeChild(mainContent.childNodes[0]);
+    }
+    
+    //Append new display of content
+    mainContent.appendChild(resultDocument.firstElementChild);
   
     //update equations
     MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
@@ -238,14 +275,20 @@ function displayModel(model, name) {
   }
 }
 
+/** Open side window with information about select element model
+* @param {object} event - event, that caused the function. From it, the element's id gets
+*/
 function w3_open(event) {
   //element, that was clicked
-  var id = event.target.id;
-
-  xsltProcessor2.setParameter(null, "elementId", event.target.id);
-  var resultDocument = xsltProcessor2.transformToDocument(curModel["content"]); 
-  if (document.getElementById("sideContent").childNodes.length > 0) document.getElementById("sideContent").removeChild(document.getElementById("sideContent").childNodes[0]);
-  document.getElementById("sideContent").appendChild(resultDocument.firstElementChild);
+  var id = event.target.id, sideContent = document.getElementById("sideContent");
+  
+  xsltProcessor2.setParameter(null, "elementId", id);
+  var resultDocument = xsltProcessor2.transformToDocument(curFile["content"]); 
+  
+  while (sideContent.childNodes[0]) {
+      sideContent.removeChild(sideContent.childNodes[0]);
+  }
+  sideContent.appendChild(resultDocument.firstElementChild);
       
   // show block
   document.getElementById("sideInformBlock").style.display = "block";
@@ -256,12 +299,16 @@ function w3_open(event) {
   MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
 
+/** Close side window with information about select element model
+*/
 function w3_close() {
   document.getElementById("sideInformBlock").setAttribute("class", "w3-container");
   document.getElementById("mainContent").setAttribute("class", "w3-container w3-col w3-border-right w3-border-color-blue-grey");
   document.getElementById("sideInformBlock").style.display = "none";
 }
 
+/** Resize window with info about model(mainContent) and window with info about select element of model(sideContent). 7px - height of scroll
+*/
 function resizeContent() {
   var newHeight = document.documentElement.clientHeight - document.getElementById("optionsArea").clientHeight - 7 +"px";
   document.getElementById("mainContent").style.height = newHeight;
