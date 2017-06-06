@@ -131,7 +131,7 @@ window.onload = function () {
   function createListener() {
   /** Listen click on button "file", validate, run reading and display  */
     document.getElementById("file").addEventListener("change", function() {
-      console.log("Upload file(btn)");
+      console.log("Upload file with help btn");
       
       startSpin();
       clearErrMess();
