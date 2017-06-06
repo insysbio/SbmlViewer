@@ -28,9 +28,12 @@ var curModel = null; // model in dom-fromat
 var curMethod = null; //method, that was uploaded the file
 
 window.onload = function () {
+  document.addEventListener("DOMContentLoaded", function() {
+    console.log("hello");
+  });
   createInterface();
   createListener();
-  
+
   /*Set size of content*/
   resizeContent();
   
@@ -53,8 +56,6 @@ window.onload = function () {
   /* Check URL for link a model  */
   var sp = window.location.search.substring(1).split("&");
   if (sp[0]) {
-    console.log("Have");
-    startSpin();
     
     curFile["file"] = sp[0];
     curFile["method"] = "URL";
@@ -69,6 +70,9 @@ window.onload = function () {
       
       endSpin();
     });
+  }
+  else {
+    endSpin();
   }
 
   function createInterface() {
