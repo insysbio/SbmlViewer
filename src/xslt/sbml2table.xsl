@@ -56,7 +56,6 @@ Project-page: http://sv.insysbio.ru
     </div>
   </xsl:template>
   
-<!-- BEGIN OF reactionFormula mode -->
   <!-- SBML -->
   <xsl:template match="*[local-name()='sbml']" mode="table">
       <h1 class="w3-tooltip">SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/>
@@ -641,7 +640,9 @@ Project-page: http://sv.insysbio.ru
       <xsl:if test="@stoichiometry!='1'">
         <xsl:value-of select="@stoichiometry"/> &#215;
       </xsl:if>
-      <xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/>
+	  <!-- show species that are not mentioned in species by red -->
+	  <xsl:if test="not(key('idKey',@species))"><span style="color:red;"><xsl:value-of select="@species"/></span></xsl:if>
+	  <xsl:if test="key('idKey',@species)"><xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/></xsl:if>
       <xsl:if test="position()!=last()">+</xsl:if>
     </xsl:for-each>
   </xsl:template>
@@ -652,7 +653,9 @@ Project-page: http://sv.insysbio.ru
     " mode="reactionFormula">
     <xsl:if test="count(*[local-name()='modifierSpeciesReference'])>0"> ~ </xsl:if>
     <xsl:for-each select="*[local-name()='modifierSpeciesReference']">
-      <xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/>
+	  <!-- show species that are not mentioned in species by red -->
+	  <xsl:if test="not(key('idKey',@species))"><span style="color:red;"><xsl:value-of select="@species"/></span></xsl:if>
+	  <xsl:if test="key('idKey',@species)"><xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/></xsl:if>
       <xsl:if test="position()!=last()">, </xsl:if>
     </xsl:for-each>
   </xsl:template>
