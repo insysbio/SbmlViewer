@@ -48,9 +48,9 @@ Project-page: http://sv.insysbio.ru/
   </head>
   <body>
     <div class="w3-top w3-card-4 w3-blue-grey">
-      <div id="optionsArea" class="optionsArea">
+      <div id="optionsArea">
         <div class="w3-cell w3-padding w3-border-right w3-border-color-white">
-          <input id="file" type="file" accept=".xml,.sbml" style="color:transparent; width:140px;" onchange=""/><span id="fileName">No file choosen</span><br/><br/>
+          <input id="file" class="file" type="file" accept=".xml,.sbml"/><span id="fileName" class="w3-padding-bottom">No file choosen</span>
         </div>
         
         <div class="w3-cell w3-border-right w3-border-color-white w3-padding-left w3-padding-right">
@@ -58,7 +58,7 @@ Project-page: http://sv.insysbio.ru/
           <select id="transformationType"></select>
         </div>
         
-        <div id="listRadioBtn" class="w3-cell w3-padding">  
+        <div id="listOptionsCheckbox" class="w3-cell w3-padding">  
           <h4>Options display:</h4>
         </div>
         
@@ -69,7 +69,7 @@ Project-page: http://sv.insysbio.ru/
     </div>
     
    
-    <div id="errorMess" class="w3-panel w3-text-red w3-center w3-large"/>
+    <div id="errorMess" class="w3-panel w3-text-red w3-center w3-large"></div>
     
     <div class="w3-row content">
       <div id="mainContent" class="w3-container w3-col w3-border-right w3-border-color-blue-grey">

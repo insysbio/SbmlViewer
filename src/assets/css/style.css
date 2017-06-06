@@ -1,32 +1,32 @@
 html {
   overflow: hidden;
 }
-#filearea{
-  border: 3px dashed white;
-  min-width: 250px;
+
+/*--- Options area ---*/
+.file {
+  color:transparent;
+  width:140px;
 }
-hr{
-  margin: 0;
-}
-#mainContent {
-  overflow: auto;
-  padding-bottom: 15px;
-}
-.closeSideBarBtn {
-  position: fixed;
-  top: 50%;
-  right: 15.8%;
-}
+
+/*-- Content --*/
 .content {
   margin-top: 80px;
 }
-#sideInformBlock {
-  display: none;
-  overflow: auto;
-}
-#sideContent {
-  overflow: auto;
-}
-.optionsArea {
-  height: 88px;
+  /*-- Main --*/
+  #mainContent {
+    overflow: auto;
+    padding-bottom: 15px;
+  }
+  /*-- Side --*/
+  #sideInformBlock {
+    display: none;
+    overflow: auto;
+  }
+  #sideContent {
+    overflow: auto;
+  }
+  .closeSideBarBtn {
+  position: fixed;
+  top: 50%;
+  right: 23.5%;
 }

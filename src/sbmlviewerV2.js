@@ -18,7 +18,8 @@ var optionsDisplay = [
 
 var xsltProcessor1 = new XSLTProcessor(); //processor for 1st xslt
 var xsltProcessor2 = new XSLTProcessor(); //processor for 2d xslt
-var curModel = null;
+var curModel = null; // model in dom-fromat 
+var curMethod = null; //method, that was uploaded the file
 
 window.onload = function () {
   createInterface();
@@ -38,6 +39,7 @@ window.onload = function () {
 
   readXmlHTTP("xslt/"+options["transform2"]+".xsl", function(xsl2) {
     xsltProcessor2.importStylesheet(xsl2);
+    
     xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
     xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
   });
@@ -45,8 +47,10 @@ window.onload = function () {
   /* Check URL for link a model  */
   var sp = window.location.search.substring(1).split("&");
   if (sp[0]) {
-    readFile(sp[0] ,"URL", function(modelDoc) {
+    readFile(sp[0] , "URL", function(modelDoc) {
       curModel = modelDoc;
+      curMethod = "URL";
+      
       displayModel(modelDoc["content"], modelDoc["name"]);
     });
   }
@@ -60,25 +64,23 @@ window.onload = function () {
     });
     
     /* Generate bar of checkboxes for options display from optionsDisplay*/
-    var listBtn = document.getElementById("listRadioBtn");
     optionsDisplay.forEach(function(item) {
       var div = document.createElement("div");
       div.setAttribute("class", "w3-cell w3-padding-right");
       
       options[item] = false; //Default value
       
-      var radioBtn = document.createElement("input");
-      radioBtn.setAttribute("type", "checkbox");
-      radioBtn.setAttribute("id",item);
-      radioBtn.setAttribute("value",item);
+      var checkboxBtn = document.createElement("input");
+      checkboxBtn.setAttribute("type", "checkbox");
+      checkboxBtn.setAttribute("id", item);
       
       var label = document.createElement("label");
       label.setAttribute("for", item);
       label.appendChild(document.createTextNode(item));
       
-      div.appendChild(radioBtn);
+      div.appendChild(checkboxBtn);
       div.appendChild(label);
-      listBtn.appendChild(div);
+      document.getElementById("listOptionsCheckbox").appendChild(div);
     });  
   }
 
@@ -87,14 +89,21 @@ window.onload = function () {
     document.getElementById("file").addEventListener("change", function() {
       readFile(document.getElementById("file").files[0], "upload", function(modelDoc) {
         curModel = modelDoc;
+        curMethod = "upload";
+        
         displayModel(modelDoc["content"], modelDoc["name"]);
       });
     }, false);
     
 
-  /** Listen click on button "refresh" and update display model */  
+  /** Listen click on button "refresh", read file again accroding with current method and update display */  
   document.getElementById("refresh").addEventListener("click", function() {
-    displayModel(curModel["content"]);
+    readFile(document.getElementById("file").files[0], curMethod, function(modelDoc) {
+        curModel = modelDoc;
+        curMethod = "upload";
+        
+        displayModel(modelDoc["content"], modelDoc["name"]);
+      });
   });
   
   /** Drag'n'drop */
@@ -121,7 +130,7 @@ window.onload = function () {
     
     /** Listen change dropdown lost of Transformation type, update settings of display table and refresh table*/
     document.getElementById("transformationType").addEventListener("change", function() {
-      options["transform"] = this.value;
+      options["transform"] = this.id;
       readXmlHTTP("xslt/"+options["transform"]+".xsl", function(xsl1) {
       
       xsltProcessor1.importStylesheet(xsl1);
@@ -138,11 +147,11 @@ window.onload = function () {
     
     
     /** Listen click on checkbox of Options display and  update settings of display table*/
-    var listCheckbox = document.getElementById("listRadioBtn").getElementsByTagName("input");
+    var listCheckbox = document.getElementById("listOptionsCheckbox").getElementsByTagName("input");
     for(var i = 0; i < listCheckbox.length; i++) {
       listCheckbox[i].addEventListener("change", function() {
-        options[this.value] = this.checked;
-        xsltProcessor1.setParameter(null, this.value, options[this.value]);
+        options[this.id] = this.checked;
+        xsltProcessor1.setParameter(null, this.id, options[this.id]);
       });
     }
     
@@ -230,7 +239,7 @@ function displayModel(model, name) {
 }
 
 function w3_open(event) {
-  // transformation
+  //element, that was clicked
   var id = event.target.id;
 
   xsltProcessor2.setParameter(null, "elementId", event.target.id);
@@ -240,8 +249,8 @@ function w3_open(event) {
       
   // show block
   document.getElementById("sideInformBlock").style.display = "block";
-  document.getElementById("sideInformBlock").setAttribute("class", "w3-container w3-col l2 m2 s2 w3-animate-right");
-  document.getElementById("mainContent").setAttribute("class", "w3-container w3-col l10 m10 s10 w3-border-right w3-border-color-blue-grey");
+  document.getElementById("sideInformBlock").setAttribute("class", "w3-container w3-col l3 m3 s3 w3-animate-right");
+  document.getElementById("mainContent").setAttribute("class", "w3-container w3-col l9 m9 s9 w3-border-right w3-border-color-blue-grey");
   
   //update equations
   MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
@@ -254,7 +263,7 @@ function w3_close() {
 }
 
 function resizeContent() {
-var newHeight = document.documentElement.clientHeight - document.getElementById("optionsArea").clientHeight - 7 +"px";
+  var newHeight = document.documentElement.clientHeight - document.getElementById("optionsArea").clientHeight - 7 +"px";
   document.getElementById("mainContent").style.height = newHeight;
   document.getElementById("sideContent").style.height = newHeight;
 }
