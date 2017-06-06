@@ -53,15 +53,21 @@ window.onload = function () {
   /* Check URL for link a model  */
   var sp = window.location.search.substring(1).split("&");
   if (sp[0]) {
+    console.log("Have");
+    startSpin();
+    
     curFile["file"] = sp[0];
     curFile["method"] = "URL";
     
     readFile(sp[0], "URL", function(modelDoc) {
+      
       curFile["content"] = modelDoc["content"];
       curFile["name"] = modelDoc["name"];
       
-      
+      console.log("display");
       displayModel(modelDoc["content"], modelDoc["name"]);
+      
+      endSpin();
     });
   }
 
@@ -71,6 +77,8 @@ window.onload = function () {
       var option = document.createElement("option");
       option.appendChild(document.createTextNode(item));
       document.getElementById("transformationType").appendChild(option);  //Add generated option to <select></select> with id "transformationType"
+      
+      console.log("end create waysDisplayPage");
     });
     
     /* Generate bar of checkboxes for options display from optionsDisplay*/
@@ -91,12 +99,17 @@ window.onload = function () {
       div.appendChild(checkboxBtn);
       div.appendChild(label);
       document.getElementById("listOptionsCheckbox").appendChild(div);
-    });  
+      
+      console.log("end create oprions display");
+    }); 
+
+      console.log("end create interface");
   }
 
   function createListener() {
   /** Listen click on button "file", validate, run reading and display  */
     document.getElementById("file").addEventListener("change", function() {
+      startSpin();
       
       curFile["file"] = document.getElementById("file").files[0];
       curFile["method"] = "upload";
@@ -106,16 +119,22 @@ window.onload = function () {
         curFile["name"] = modelDoc["name"];
         
         displayModel(modelDoc["content"], modelDoc["name"]);
+        
+        endSpin();
       });
     }, false);
     
 
   /** Listen click on button "refresh", read file again accroding with current method and update display */  
   document.getElementById("refresh").addEventListener("click", function() {
+    startSpin();
+    
     readFile(curFile["file"], curFile["method"], function(modelDoc) {
         curFile["content"] = modelDoc["content"];
         
         displayModel(modelDoc["content"]);
+        
+        endSpin();
       });
   });
   
@@ -126,6 +145,8 @@ window.onload = function () {
       event.preventDefault();
       event.stopPropagation();
       
+      startSpin();
+      
       curFile["file"] = event.dataTransfer.files[0];
       curFile["method"] = "upload";
       
@@ -134,6 +155,8 @@ window.onload = function () {
         curFile["name"] = modelDoc["name"];
         
         displayModel(modelDoc["content"], modelDoc["name"]);
+        
+        endSpin();
       });
     });
 
@@ -149,6 +172,8 @@ window.onload = function () {
     
     /** Listen change dropdown lost of Transformation type, update settings of display table and refresh display*/
     document.getElementById("transformationType").addEventListener("change", function() {
+      startSpin();
+      
       options["transform"] = this.value;
       
       readXmlHTTP("xslt/"+options["transform"]+".xsl", function(xsl1) {
@@ -159,6 +184,8 @@ window.onload = function () {
         xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
         
         displayModel(curFile["content"]);
+        
+        endSpin();
       });
       }, true);
     
@@ -313,4 +340,12 @@ function resizeContent() {
   var newHeight = document.documentElement.clientHeight - document.getElementById("optionsArea").clientHeight - 7 +"px";
   document.getElementById("mainContent").style.height = newHeight;
   document.getElementById("sideContent").style.height = newHeight;
+}
+
+function startSpin() {
+  document.getElementById("spinner").setAttribute("class", "w3-spin fa fa-spinner w3-xxlarge");
+}
+
+function endSpin() {
+  document.getElementById("spinner").setAttribute("class", "fa fa-refresh  w3-xxxlarge");
 }
