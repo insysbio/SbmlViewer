@@ -50,6 +50,7 @@ window.onload = function () {
       console.log(" Success");
     }
     catch(err) {
+      document.getElementById("errorMess").innerHTML = "Cannot display stylesheet";
       console.log(" Err: :", err);
     }
   });
@@ -66,6 +67,7 @@ window.onload = function () {
       console.log(" Success");
     }
     catch(err) {
+      document.getElementById("errorMess").innerHTML = "Cannot display stylesheet";
       console.log(" Err: :", err);
     }
     
@@ -304,7 +306,7 @@ function readXmlHTTP(filepath, callback) {
        
   xmlhttp.error = function(){
     console.log(" Err: ", err);
-    document.getElementById("errorMess").innerHTML = "Cannot upload the file";
+    document.getElementById("errorMess").innerHTML = "Cannot read the file";
   };
        
   xmlhttp.send();
@@ -325,7 +327,7 @@ function readXmlUpload(f, callback) {
     }
     catch(err) {
       console.log(" Err: ", err);
-      document.getElementById("errorMess").innerHTML = "Cannot upload the file";
+      document.getElementById("errorMess").innerHTML = "Cannot read the file";
     }
   }
 };  
