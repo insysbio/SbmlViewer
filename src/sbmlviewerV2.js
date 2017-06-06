@@ -100,7 +100,6 @@ window.onload = function () {
   document.getElementById("refresh").addEventListener("click", function() {
     readFile(document.getElementById("file").files[0], curMethod, function(modelDoc) {
         curModel = modelDoc;
-        curMethod = "upload";
         
         displayModel(modelDoc["content"], modelDoc["name"]);
       });
@@ -112,8 +111,11 @@ window.onload = function () {
     document.addEventListener("drop", function(event) {
       event.preventDefault();
       event.stopPropagation();
+      
       readFile(event.dataTransfer.files[0], "upload", function(modelDoc) {
-        curModel = modelDoc;
+        curModel = modelDoc;        
+        curMethod = "upload";
+        
         displayModel(modelDoc["content"], modelDoc["name"]);
       });
     });
@@ -128,21 +130,19 @@ window.onload = function () {
       event.preventDefault();
     });
     
-    /** Listen change dropdown lost of Transformation type, update settings of display table and refresh table*/
+    /** Listen change dropdown lost of Transformation type, update settings of display table and refresh display*/
     document.getElementById("transformationType").addEventListener("change", function() {
-      options["transform"] = this.id;
+      options["transform"] = this.value;
+      
       readXmlHTTP("xslt/"+options["transform"]+".xsl", function(xsl1) {
-      
-      xsltProcessor1.importStylesheet(xsl1);
-      
-      xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
-      xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
-      xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
-      
-      displayModel(curModel["content"]);
+        xsltProcessor1.importStylesheet(xsl1);
+        
+        xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
+        xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
+        xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
+        
+        displayModel(curModel["content"]);
       });
-      
-      //NEED run update
       }, true);
     
     
