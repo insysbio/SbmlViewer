@@ -391,8 +391,13 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
       
       <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:95%;">
-      <tr class="w3-blue-grey"><th>type</th><th>variable</th><th>metaid</th><th>math:</th></tr>
-        <xsl:apply-templates select="*[local-name()='assignmentRule'] | *[local-name()='algebraicRule'] | *[local-name()='rateRule']" mode="table"/>
+      <tr class="w3-blue-grey">
+	    <th>type</th>
+		<th>variable</th>
+		<th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+		<th>math:</th>
+	  </tr>
+      <xsl:apply-templates select="*[local-name()='assignmentRule'] | *[local-name()='algebraicRule'] | *[local-name()='rateRule']" mode="table"/>
       </table>
   </xsl:template>
   
@@ -428,7 +433,7 @@ Project-page: http://sv.insysbio.ru
         <xsl:apply-templates select="*[local-name()='reaction']" mode="table"/>
       </table>
       
-      <h3>listOfReactions (local parameters):</h3>
+      <!-- <h3>listOfReactions (local parameters):</h3> --> <!-- add later-->
   </xsl:template>
   
   <xsl:template match="*[local-name()='reaction']" mode="table">
