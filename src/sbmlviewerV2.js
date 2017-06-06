@@ -28,9 +28,8 @@ var curModel = null; // model in dom-fromat
 var curMethod = null; //method, that was uploaded the file
 
 window.onload = function () {
-  document.addEventListener("DOMContentLoaded", function() {
-    console.log("hello");
-  });
+  console.log("Window onload");
+  
   createInterface();
   createListener();
 
@@ -39,33 +38,54 @@ window.onload = function () {
   
   /*Read XSLT templetes*/
   readXmlHTTP("xslt/"+options["transform"]+".xsl", function(xsl1) {
-    xsltProcessor1.importStylesheet(xsl1);
-  
-    xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
-    xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
-    xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
+    console.log("Try import stylesheet for main tables and set parameters");
+    
+    try {
+      xsltProcessor1.importStylesheet(xsl1);
+      
+      xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
+      xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
+      xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
+      
+      console.log(" Success");
+    }
+    catch(err) {
+      console.log(" Err: :", err);
+    }
   });
 
   readXmlHTTP("xslt/"+options["transform2"]+".xsl", function(xsl2) {
-    xsltProcessor2.importStylesheet(xsl2);
+    console.log("Try import stylesheet for element's table(side infoblock) and set parameters");
     
-    xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
-    xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
+    try {
+      xsltProcessor2.importStylesheet(xsl2);
+      
+      xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
+      xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
+      
+      console.log(" Success");
+    }
+    catch(err) {
+      console.log(" Err: :", err);
+    }
+    
+
   });
 
   /* Check URL for link a model  */
   var sp = window.location.search.substring(1).split("&");
   if (sp[0]) {
+    console.log("URL has link to file");
     
     curFile["file"] = sp[0];
     curFile["method"] = "URL";
     
     readFile(sp[0], "URL", function(modelDoc) {
+      console.log("File(url) read, content:", modelDoc);
       
       curFile["content"] = modelDoc["content"];
       curFile["name"] = modelDoc["name"];
       
-      console.log("display");
       displayModel(modelDoc["content"], modelDoc["name"]);
       
       endSpin();
@@ -81,8 +101,6 @@ window.onload = function () {
       var option = document.createElement("option");
       option.appendChild(document.createTextNode(item));
       document.getElementById("transformationType").appendChild(option);  //Add generated option to <select></select> with id "transformationType"
-      
-      console.log("end create waysDisplayPage");
     });
     
     /* Generate bar of checkboxes for options display from optionsDisplay*/
@@ -103,22 +121,25 @@ window.onload = function () {
       div.appendChild(checkboxBtn);
       div.appendChild(label);
       document.getElementById("listOptionsCheckbox").appendChild(div);
-      
-      console.log("end create oprions display");
     }); 
-
-      console.log("end create interface");
+    
+    console.log("Interface created");
   }
 
   function createListener() {
   /** Listen click on button "file", validate, run reading and display  */
     document.getElementById("file").addEventListener("change", function() {
+      console.log("Upload file(btn)");
+      
       startSpin();
+      clearErrMess();
       
       curFile["file"] = document.getElementById("file").files[0];
       curFile["method"] = "upload";
       
       readFile(document.getElementById("file").files[0], "upload", function(modelDoc) {
+        console.log("File read(upload), content:", modelDoc);
+        
         curFile["content"] = modelDoc["content"];
         curFile["name"] = modelDoc["name"];
         
@@ -131,9 +152,14 @@ window.onload = function () {
 
   /** Listen click on button "refresh", read file again accroding with current method and update display */  
   document.getElementById("refresh").addEventListener("click", function() {
+    console.log("Run refresh");
+    
     startSpin();
+    clearErrMess();
     
     readFile(curFile["file"], curFile["method"], function(modelDoc) {
+      console.log("File read(refresh), content:", modelDoc);
+      
         curFile["content"] = modelDoc["content"];
         
         displayModel(modelDoc["content"]);
@@ -149,12 +175,17 @@ window.onload = function () {
       event.preventDefault();
       event.stopPropagation();
       
+      console.log("File drop");
+      
       startSpin();
+      clearErrMess();
       
       curFile["file"] = event.dataTransfer.files[0];
       curFile["method"] = "upload";
       
       readFile(event.dataTransfer.files[0], "upload", function(modelDoc) {
+        console.log("File read(drop), content:", modelDoc);
+        
         curFile["content"] = modelDoc["content"];
         curFile["name"] = modelDoc["name"];
         
@@ -176,18 +207,29 @@ window.onload = function () {
     
     /** Listen change dropdown lost of Transformation type, update settings of display table and refresh display*/
     document.getElementById("transformationType").addEventListener("change", function() {
+      console.log("Select Transformation Type", this.value);
+      
       startSpin();
+      clearErrMess();
       
       options["transform"] = this.value;
       
+      console.log("Try import stylesheet for", this.value," and set parameters");
       readXmlHTTP("xslt/"+options["transform"]+".xsl", function(xsl1) {
-        xsltProcessor1.importStylesheet(xsl1);
-        
-        xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
-        xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
-        xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
-        
-        displayModel(curFile["content"]);
+        try {
+          xsltProcessor1.importStylesheet(xsl1);
+          
+          xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
+          xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
+          xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
+          
+          displayModel(curFile["content"]);
+          
+          console.log(" Success");
+        }
+        catch(err) {
+          console.log(" Err: ", err);
+        }
         
         endSpin();
       });
@@ -198,6 +240,8 @@ window.onload = function () {
     var listCheckbox = document.getElementById("listOptionsCheckbox").getElementsByTagName("input");
     for(var i = 0; i < listCheckbox.length; i++) {
       listCheckbox[i].addEventListener("change", function() {
+        console.log("Click on ", this.id);
+        
         options[this.id] = this.checked;
         xsltProcessor1.setParameter(null, this.id, options[this.id]);
       });
@@ -205,6 +249,8 @@ window.onload = function () {
     
     /**Listen change size of window and edit height of */
     window.addEventListener("resize", resizeContent);
+    
+    console.log("Events listen");
     }
         
 }
@@ -215,6 +261,8 @@ window.onload = function () {
 * @param {string|object} - file. If method is "URL", then file - path file, if - "upload", then object File
 */
 function readFile(f, method, callback) {
+  console.log("Run read file");
+  
   var f, data = {
     "name": null,
     "content": null
@@ -244,15 +292,19 @@ function readFile(f, method, callback) {
 /** Get file and return content of file in format XML-DOM
 * @param {string} filepath
 */
-function readXmlHTTP(filepath, callback) {  
+function readXmlHTTP(filepath, callback) {
+  console.log("Try read ",filepath , " with help HTTP");
+  
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", filepath, false);       
   xmlhttp.onload = function(){
+    console.log(" Success");
     callback(this.responseXML);
   };
        
   xmlhttp.error = function(){
-    document.getElementById("errorMess").innerHTML = "Cannot upload the file.";
+    console.log(" Err: ", err);
+    document.getElementById("errorMess").innerHTML = "Cannot upload the file";
   };
        
   xmlhttp.send();
@@ -262,10 +314,19 @@ function readXmlHTTP(filepath, callback) {
 * @param {object} f - file of model(object File)
 */
 function readXmlUpload(f, callback) {
+  console.log("Try read with help FileReader");
+  
   var reader = new FileReader();
   reader.readAsText(f);
   reader.onload = function() {
-    callback(new DOMParser().parseFromString(reader.result, "application/xml"));
+    try {
+      console.log(" Success");
+      callback(new DOMParser().parseFromString(reader.result, "application/xml"));
+    }
+    catch(err) {
+      console.log(" Err: ", err);
+      document.getElementById("errorMess").innerHTML = "Cannot upload the file";
+    }
   }
 };  
 
@@ -276,33 +337,47 @@ function readXmlUpload(f, callback) {
 */
 function displayModel(model, name) {
   //Display name of file into title and beside btn of upload file
+  console.log("Run display");
+  
   if (name) {
     document.getElementById("fileName").innerHTML = name;
     document.getElementsByTagName("title")[0].innerHTML = name;
   }
   
-  var resultDocument = xsltProcessor1.transformToFragment(model, document);
-  
-  if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/)) {
-    document.getElementById("errorMess").innerHTML = "Incorrect XML";
-  }
-  else {
-    var mainContent = document.getElementById("mainContent");
+  console.log("Try transformToFragment");
+  try {
+    var resultDocument = xsltProcessor1.transformToFragment(model, document);
+    console.log(" Success");
     
-    //Close side window with information about element(if it open)
-    w3_close(); 
-    
-    //Clear mainContent(display of model)
-    while (mainContent.childNodes[0]) {
-      mainContent.removeChild(mainContent.childNodes[0]);
+    console.log("Try display model");
+    if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/)) {
+      console.log(" Err: Incorrect XML");
+      document.getElementById("errorMess").innerHTML = "Incorrect XML";
     }
+    else {
+      var mainContent = document.getElementById("mainContent");
+      
+      //Close side window with information about element(if it open)
+      w3_close(); 
+      
+      //Clear mainContent(display of model)
+      while (mainContent.childNodes[0]) {
+        mainContent.removeChild(mainContent.childNodes[0]);
+      }
+      
+      //Append new display of content
+      mainContent.appendChild(resultDocument.firstElementChild);
     
-    //Append new display of content
-    mainContent.appendChild(resultDocument.firstElementChild);
-  
-    //update equations
-    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+      //update equations
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+      
+      console.log(" Success display")
 
+    }
+  }
+  catch(err) {
+    document.getElementById("errorMess").innerHTML = "Incorrect XML";
+    console.log(" Err: ", err);
   }
 }
 
@@ -313,13 +388,25 @@ function w3_open(event) {
   //element, that was clicked
   var id = event.target.id, sideContent = document.getElementById("sideContent");
   
-  xsltProcessor2.setParameter(null, "elementId", id);
-  var resultDocument = xsltProcessor2.transformToDocument(curFile["content"]); 
-  
   while (sideContent.childNodes[0]) {
-      sideContent.removeChild(sideContent.childNodes[0]);
+    sideContent.removeChild(sideContent.childNodes[0]);
   }
-  sideContent.appendChild(resultDocument.firstElementChild);
+  
+  xsltProcessor2.setParameter(null, "elementId", id);
+  try {
+    var resultDocument = xsltProcessor2.transformToDocument(curFile["content"]);
+    sideContent.appendChild(resultDocument.firstElementChild);
+  }  
+  catch(err) {
+    console.log(err);
+    var p = document.createElement("p");
+    p.setAttribute("class", "w3-text-red w3-center w3-large w3-padding");
+    p.appendChild(document.createTextNode("Cannot display element"));
+    sideContent.appendChild(p);
+  }
+  
+
+  
       
   // show block
   document.getElementById("sideInformBlock").style.display = "block";
@@ -344,6 +431,13 @@ function resizeContent() {
   var newHeight = document.documentElement.clientHeight - document.getElementById("optionsArea").clientHeight - 7 +"px";
   document.getElementById("mainContent").style.height = newHeight;
   document.getElementById("sideContent").style.height = newHeight;
+}
+
+function clearErrMess() {
+  var errMess = document.getElementById("errorMess");
+    while (errMess.childNodes[0]) {
+      errMess.removeChild(errMess.childNodes[0]);
+  }
 }
 
 function startSpin() {
