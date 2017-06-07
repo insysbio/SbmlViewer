@@ -24,8 +24,12 @@ var curFile = {
   "file": null, //link to File or path of file
   "method": null //method, that was uploaded the file
 }
-var curModel = null; // model in dom-fromat 
-var curMethod = null; //method, that was uploaded the file
+var useFile =  {
+  "content": null, // model in dom-fromat 
+  "name": null,
+  "file": null, //link to File or path of file
+  "method": null //method, that was uploaded the file
+}
 
 window.onload = function () {
   console.log("Window onload");
@@ -38,7 +42,7 @@ window.onload = function () {
   
   /*Read XSLT templetes*/
   readXmlHTTP("xslt/"+options["transform"]+".xsl", function(xsl1) {
-    console.log("Try import stylesheet for main tables and set parameters");
+    console.log("Import stylesheet for main tables and set parameters...");
     
     try {
       xsltProcessor1.importStylesheet(xsl1);
@@ -50,13 +54,13 @@ window.onload = function () {
       console.log(" Success");
     }
     catch(err) {
-      document.getElementById("errorMess").innerHTML = "Cannot display stylesheet";
-      console.log(" Err: :", err);
+      showErrMess("Cannot display stylesheet");
+      console.error(" Err: :", err);
     }
   });
 
   readXmlHTTP("xslt/"+options["transform2"]+".xsl", function(xsl2) {
-    console.log("Try import stylesheet for element's table(side infoblock) and set parameters");
+    console.log("Import stylesheet for element's table(side infoblock) and set parameters...");
     
     try {
       xsltProcessor2.importStylesheet(xsl2);
@@ -67,8 +71,8 @@ window.onload = function () {
       console.log(" Success");
     }
     catch(err) {
-      document.getElementById("errorMess").innerHTML = "Cannot display stylesheet";
-      console.log(" Err: :", err);
+      showErrMess("Cannot display stylesheet");
+      console.error(" Err: :", err);
     }
     
 
@@ -77,16 +81,16 @@ window.onload = function () {
   /* Check URL for link a model  */
   var sp = window.location.search.substring(1).split("&");
   if (sp[0]) {
-    console.log("URL has link to file");
+    console.log("Add file(URL)");
     
-    curFile["file"] = sp[0];
-    curFile["method"] = "URL";
+    useFile["file"] = sp[0];
+    useFile["method"] = "URL";
     
     readFile(sp[0], "URL", function(modelDoc) {
-      console.log("File(url) read, content:", modelDoc);
+      console.log("File(URL) read, content:", modelDoc);
       
-      curFile["content"] = modelDoc["content"];
-      curFile["name"] = modelDoc["name"];
+      useFile["content"] = modelDoc["content"];
+      useFile["name"] = modelDoc["name"];
       
       displayModel(modelDoc["content"], modelDoc["name"]);
       
@@ -131,19 +135,19 @@ window.onload = function () {
   function createListener() {
   /** Listen click on button "file", validate, run reading and display  */
     document.getElementById("file").addEventListener("change", function() {
-      console.log("Upload file with help btn");
+      console.log("Add file(on click btn)");
       
       startSpin();
       clearErrMess();
       
-      curFile["file"] = document.getElementById("file").files[0];
-      curFile["method"] = "upload";
+      useFile["file"] = document.getElementById("file").files[0];
+      useFile["method"] = "upload";
       
       readFile(document.getElementById("file").files[0], "upload", function(modelDoc) {
         console.log("File read(upload), content:", modelDoc);
         
-        curFile["content"] = modelDoc["content"];
-        curFile["name"] = modelDoc["name"];
+        useFile["content"] = modelDoc["content"];
+        useFile["name"] = modelDoc["name"];
         
         displayModel(modelDoc["content"], modelDoc["name"]);
         
@@ -154,15 +158,15 @@ window.onload = function () {
 
   /** Listen click on button "refresh", read file again accroding with current method and update display */  
   document.getElementById("refresh").addEventListener("click", function() {
-    console.log("Run refresh");
+    console.log("Run refresh. File:", curFile["file"], "method: ", curFile["method"]);
     
     startSpin();
     clearErrMess();
     
     readFile(curFile["file"], curFile["method"], function(modelDoc) {
-      console.log("File read(refresh), content:", modelDoc);
+      console.log("File read(refresh", curFile["method"],"), content:", modelDoc);
       
-        curFile["content"] = modelDoc["content"];
+        useFile["content"] = modelDoc["content"];
         
         displayModel(modelDoc["content"]);
         
@@ -177,19 +181,19 @@ window.onload = function () {
       event.preventDefault();
       event.stopPropagation();
       
-      console.log("File drop");
+      console.log("Add file(drop)");
       
       startSpin();
       clearErrMess();
       
-      curFile["file"] = event.dataTransfer.files[0];
-      curFile["method"] = "upload";
+      useFile["file"] = event.dataTransfer.files[0];
+      useFile["method"] = "upload";
       
       readFile(event.dataTransfer.files[0], "upload", function(modelDoc) {
         console.log("File read(drop), content:", modelDoc);
         
-        curFile["content"] = modelDoc["content"];
-        curFile["name"] = modelDoc["name"];
+        useFile["content"] = modelDoc["content"];
+        useFile["name"] = modelDoc["name"];
         
         displayModel(modelDoc["content"], modelDoc["name"]);
         
@@ -216,7 +220,7 @@ window.onload = function () {
       
       options["transform"] = this.value;
       
-      console.log("Try import stylesheet for", this.value," and set parameters");
+      console.log("Import stylesheet for", this.value," and set parameters...");
       readXmlHTTP("xslt/"+options["transform"]+".xsl", function(xsl1) {
         try {
           xsltProcessor1.importStylesheet(xsl1);
@@ -230,7 +234,7 @@ window.onload = function () {
           console.log(" Success");
         }
         catch(err) {
-          console.log(" Err: ", err);
+          console.error(" Err: ", err);
         }
         
         endSpin();
@@ -295,7 +299,7 @@ function readFile(f, method, callback) {
 * @param {string} filepath
 */
 function readXmlHTTP(filepath, callback) {
-  console.log("Try read ",filepath , " with help HTTP");
+  console.log("Read ", filepath, " with help HTTP...");
   
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", filepath, false);       
@@ -304,19 +308,25 @@ function readXmlHTTP(filepath, callback) {
     callback(this.responseXML);
   };
        
-  xmlhttp.error = function(){
-    console.log(" Err: ", err);
-    document.getElementById("errorMess").innerHTML = "Cannot read the file";
-  };
+  /*xmlhttp.error = function(){
+    console.error(" Err: ", err);
+    showErrMess("Cannot read the file");
+  };*/
        
-  xmlhttp.send();
+  try {
+    xmlhttp.send();
+  }
+  catch(err) {
+    console.error(" Err: ", err);
+    showErrMess("Cannot read the file");    
+  }
 }
 
 /** Read file and return content of file in format XML-DOM
 * @param {object} f - file of model(object File)
 */
 function readXmlUpload(f, callback) {
-  console.log("Try read with help FileReader");
+  console.log("Read with help FileReader...");
   
   var reader = new FileReader();
   reader.readAsText(f);
@@ -326,8 +336,8 @@ function readXmlUpload(f, callback) {
       callback(new DOMParser().parseFromString(reader.result, "application/xml"));
     }
     catch(err) {
-      console.log(" Err: ", err);
-      document.getElementById("errorMess").innerHTML = "Cannot read the file";
+      console.error(" Err: ", err);
+      showErrMess("Cannot read the file");
     }
   }
 };  
@@ -341,20 +351,15 @@ function displayModel(model, name) {
   //Display name of file into title and beside btn of upload file
   console.log("Run display");
   
-  if (name) {
-    document.getElementById("fileName").innerHTML = name;
-    document.getElementsByTagName("title")[0].innerHTML = name;
-  }
-  
-  console.log("Try transformToFragment");
+  console.log("Transform to fragment...");
   try {
     var resultDocument = xsltProcessor1.transformToFragment(model, document);
     console.log(" Success");
     
-    console.log("Try display model");
-    if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/)) {
-      console.log(" Err: Incorrect XML");
-      document.getElementById("errorMess").innerHTML = "Incorrect XML";
+    console.log("Display model...");
+    if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/) || resultDocument.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
+      console.error(" Err: Incorrect XML");
+      showErrMess("Incorrect XML");
     }
     else {
       var mainContent = document.getElementById("mainContent");
@@ -369,38 +374,59 @@ function displayModel(model, name) {
       
       //Append new display of content
       mainContent.appendChild(resultDocument.firstElementChild);
-    
+      
+      if (name) {
+        document.getElementById("fileName").innerHTML = name;
+        document.getElementsByTagName("title")[0].innerHTML = name;
+      }
+
+      console.log(" Save file to curFile...");
+      var item;
+      for (item in useFile) 
+          curFile[item] = useFile[item] || curFile[item];          
+     
+      console.log("   Save");
+      
       //update equations
       MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
       
-      console.log(" Success display")
-
+      console.log(" Success");
     }
   }
   catch(err) {
-    document.getElementById("errorMess").innerHTML = "Incorrect XML";
-    console.log(" Err: ", err);
+    showErrMess("Incorrect XML");
+    console.error(" Err: ", err);
   }
+  
+  for (item in useFile)
+    useFile[item] = null;
 }
 
 /** Open side window with information about select element model
 * @param {object} event - event, that caused the function. From it, the element's id gets
 */
 function w3_open(event) {
+  clearErrMess();
+  
+  console.log("Display information about element...");
   //element, that was clicked
   var id = event.target.id, sideContent = document.getElementById("sideContent");
   
+  console.log(" Clear display...");
   while (sideContent.childNodes[0]) {
     sideContent.removeChild(sideContent.childNodes[0]);
   }
+  console.log("   Success");
   
+  console.log(" Transform data to document...");
   xsltProcessor2.setParameter(null, "elementId", id);
   try {
     var resultDocument = xsltProcessor2.transformToDocument(curFile["content"]);
     sideContent.appendChild(resultDocument.firstElementChild);
+    console.log("   Success\n Success display");//Transform
   }  
   catch(err) {
-    console.log(err);
+    console.error(" Err:", err);
     var p = document.createElement("p");
     p.setAttribute("class", "w3-text-red w3-center w3-large w3-padding");
     p.appendChild(document.createTextNode("Cannot display element"));
@@ -436,10 +462,16 @@ function resizeContent() {
 }
 
 function clearErrMess() {
+  document.getElementById("errorContainer").style.display = "none";
   var errMess = document.getElementById("errorMess");
     while (errMess.childNodes[0]) {
       errMess.removeChild(errMess.childNodes[0]);
   }
+}
+
+function showErrMess(mess) {
+  document.getElementById("errorContainer").style.display = "block";
+  document.getElementById("errorMess").appendChild(document.createTextNode(mess));
 }
 
 function startSpin() {

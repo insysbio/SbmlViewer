@@ -12,10 +12,14 @@ html {
 .content {
   margin-top: 80px;
 }
+  /*-- Error message --*/
+  #errorContainer {
+    display: none;
+  }
   /*-- Main --*/
   #mainContent {
     overflow: auto;
-    padding-bottom: 15px;
+    padding-bottom: 30px;
   }
   /*-- Side --*/
   #sideInformBlock {
