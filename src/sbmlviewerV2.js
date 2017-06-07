@@ -350,53 +350,61 @@ function readXmlUpload(f, callback) {
 function displayModel(model, name) {
   //Display name of file into title and beside btn of upload file
   console.log("Run display");
-  
-  console.log("Transform to fragment...");
-  try {
-    var resultDocument = xsltProcessor1.transformToFragment(model, document);
-    console.log(" Success");
-    
-    console.log("Display model...");
-    if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/) || resultDocument.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
-      console.error(" Err: Incorrect XML");
-      showErrMess("Incorrect XML");
-    }
-    else {
-      var mainContent = document.getElementById("mainContent");
-      
-      //Close side window with information about element(if it open)
-      w3_close(); 
-      
-      //Clear mainContent(display of model)
-      while (mainContent.childNodes[0]) {
-        mainContent.removeChild(mainContent.childNodes[0]);
-      }
-      
-      //Append new display of content
-      mainContent.appendChild(resultDocument.firstElementChild);
-      
-      if (name) {
-        document.getElementById("fileName").innerHTML = name;
-        document.getElementsByTagName("title")[0].innerHTML = name;
-      }
-
-      console.log(" Save file to curFile...");
-      var item;
-      for (item in useFile) 
-          curFile[item] = useFile[item] || curFile[item];          
-     
-      console.log("   Save");
-      
-      //update equations
-      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-      
+  console.log("Check level of SBML...");
+  if (model.firstElementChild.getAttribute("level") == 2) {
+    console.log("Ok/n Transform to fragment...");
+    try {
+      var resultDocument = xsltProcessor1.transformToFragment(model, document);
       console.log(" Success");
+      
+      console.log("Display model...");
+      if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/) || resultDocument.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
+        console.error(" Err: Incorrect XML");
+        showErrMess("Incorrect XML");
+      }
+      else {
+        var mainContent = document.getElementById("mainContent");
+        
+        //Close side window with information about element(if it open)
+        w3_close(); 
+        
+        //Clear mainContent(display of model)
+        while (mainContent.childNodes[0]) {
+          mainContent.removeChild(mainContent.childNodes[0]);
+        }
+        
+        //Append new display of content
+        mainContent.appendChild(resultDocument.firstElementChild);
+        
+        //Display name of file into title and page(beside btn "Choose file")
+        if (name) {
+          document.getElementById("fileName").innerHTML = name;
+          document.getElementsByTagName("title")[0].innerHTML = name;
+        }
+
+        //Save data of file for reuse
+        console.log(" Save file to curFile...");
+        var item;
+        for (item in useFile) 
+            curFile[item] = useFile[item] || curFile[item];          
+       
+        console.log("   Save");
+        
+        //update equations
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+        
+        console.log(" Success");
+      }
     }
-  }
-  catch(err) {
-    showErrMess("Incorrect XML");
-    console.error(" Err: ", err);
-  }
+    catch(err) { //if transfrom not success
+      showErrMess("Incorrect XML");
+      console.error(" Err: ", err);
+    }
+  }  
+  else { //if level of file is not 2
+    showErrMess("File format is not supported");
+    console.error(" File format is not supported");  
+  }  
   
   for (item in useFile)
     useFile[item] = null;
