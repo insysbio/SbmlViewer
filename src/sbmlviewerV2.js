@@ -94,12 +94,10 @@ window.onload = function () {
       
       displayModel(modelDoc["content"], modelDoc["name"]);
       
-      endSpin();
     });
   }
-  else {
-    endSpin();
-  }
+  endSpin();
+
 
   function createInterface() {
   /* Generate Transformation type dropdown list*/
@@ -135,24 +133,26 @@ window.onload = function () {
   function createListener() {
   /** Listen click on button "file", validate, run reading and display  */
     document.getElementById("file").addEventListener("change", function() {
-      console.log("Add file(on click btn)");
-      
-      startSpin();
-      clearErrMess();
-      
-      useFile["file"] = document.getElementById("file").files[0];
-      useFile["method"] = "upload";
-      
-      readFile(document.getElementById("file").files[0], "upload", function(modelDoc) {
-        console.log("File read(upload), content:", modelDoc);
+      if (document.getElementById("file").files[0]) {
+        console.log("Add file(on click btn)");
         
-        useFile["content"] = modelDoc["content"];
-        useFile["name"] = modelDoc["name"];
+        startSpin();
+        clearErrMess();
         
-        displayModel(modelDoc["content"], modelDoc["name"]);
+        useFile["file"] = document.getElementById("file").files[0];
+        useFile["method"] = "upload";
         
-        endSpin();
-      });
+        readFile(document.getElementById("file").files[0], "upload", function(modelDoc) {
+          console.log("File read(upload), content:", modelDoc);
+          
+          useFile["content"] = modelDoc["content"];
+          useFile["name"] = modelDoc["name"];
+          
+          displayModel(modelDoc["content"], modelDoc["name"]);
+          
+          endSpin();
+        });
+      }
     }, false);
     
 
