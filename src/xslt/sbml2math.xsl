@@ -171,8 +171,8 @@ Project-page: http://sv.insysbio.ru
   </xsl:template>
   
   <xsl:template match="*[local-name()='assignmentRule']">
-    <xsl:if test="key(idKey,@variable)"><xsl:apply-templates select="key(idKey,@variable)/@id" mode="idOrName"/></xsl:if>
-    <xsl:if test="not(key(idKey,@variable))"><span style="color:red;"><xsl:value-of select="@variable"/></span></xsl:if>
+    <xsl:if test="key('idKey',@variable)"><xsl:apply-templates select="key('idKey',@variable)/@id" mode="idOrName"/></xsl:if>
+    <xsl:if test="not(key('idKey',@variable))"><span style="color:red;"><xsl:value-of select="@variable"/></span></xsl:if>
     = <xsl:apply-templates select="mml:math"/><br/>
   </xsl:template>
   
