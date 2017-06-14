@@ -605,9 +605,7 @@
       </example>
     </annotation>
         </parameter>
-            <parameter id="k4" units="uM_per_s" constant="false"/>
             <parameter id="k4r" value="0.001" constant="false"/>
-            <parameter id="v0_0" constant="true"/>
             <parameter id="local_par" value="0" constant="false"/>
           </listOfParameters>
         </kineticLaw>

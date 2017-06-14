@@ -72,7 +72,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:call-template name="constants"/>
     </xsl:if>
     <xsl:if test="count(
-      //*[local-name()='assignmentRule'] |
+      //*[local-name()='assignmentRule' and (key('idKey',@variable)/@boundaryCondition='true' or key('idKey',@variable)[local-name()!='species'])] |
       //*[local-name()='reaction']
       )">
       <xsl:call-template name="exp-rules"/>
@@ -134,18 +134,22 @@ Project-page: http://sv.insysbio.ru
   <xsl:template name="constants">
     <h2>Constants:</h2>
     <p>
-      <xsl:apply-templates select="//*[local-name()='model']/*/*[local-name()='parameter'][not(key('variableKey',@id))]" mode="const"/>
-      <xsl:apply-templates select="//*[local-name()='compartment'][not(key('variableKey',@id))]" mode="const"/>
-      <xsl:apply-templates select="//*[local-name()='species' and @boundaryCondition='true'][not(key('variableKey',@id))]" mode="const"/>
+      <xsl:apply-templates select="//*[local-name()='model']/*/*[local-name()='parameter' and not(key('variableKey',@id))]" mode="const"/>
+      <xsl:apply-templates select="//*[local-name()='compartment' and not(key('variableKey',@id))]" mode="const"/>
+      <xsl:apply-templates select="//*[local-name()='species' and @boundaryCondition='true' and not(key('variableKey',@id))]" mode="const"/>
     </p>
   </xsl:template>
   
   <xsl:template match="*[local-name()='parameter']" mode="const">
-    <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@value"/><br/>
+    <xsl:apply-templates select="@id" mode="idOrName"/> 
+    = <xsl:value-of select="@value"/><xsl:if test="not(@value)">?</xsl:if>
+    <br/>
   </xsl:template>
   
   <xsl:template match="*[local-name()='compartment']" mode="const">
-    <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@size"/><br/>
+    <xsl:apply-templates select="@id" mode="idOrName"/> 
+    = <xsl:value-of select="@size"/><xsl:if test="not(@size)">?</xsl:if>
+    <br/>
   </xsl:template>
   
   <xsl:template match="*[local-name()='species' and @initialAmount]" mode="const">
@@ -160,12 +164,7 @@ Project-page: http://sv.insysbio.ru
   <xsl:template name="exp-rules">
     <h2>Explicit rules:</h2>
     <p>
-      <xsl:apply-templates select="//*[local-name()='assignmentRule']"/><!-- ???  -->
-      <!--
-      <xsl:apply-templates select="//*[local-name()='model']/*/*[local-name()='parameter'][key('variableKey',@id)]" mode="explicit"/>
-      <xsl:apply-templates select="//*[local-name()='compartment'][key('variableKey',@id)]" mode="explicit"/>
-      <xsl:apply-templates select="//*[local-name()='species' and @boundaryCondition='true'][key('variableKey',@id)]" mode="explicit"/>
-      -->
+      <xsl:apply-templates select="//*[local-name()='assignmentRule' and (key('idKey',@variable)/@boundaryCondition or key('idKey',@variable)[local-name()!='species'])]"/><!-- ???  -->
       <xsl:apply-templates select="//*[local-name()='reaction']"/>
     </p>
   </xsl:template>
@@ -176,12 +175,13 @@ Project-page: http://sv.insysbio.ru
     = <xsl:apply-templates select="mml:math"/><br/>
   </xsl:template>
   
-  <!--<xsl:template match="*[local-name()='parameter']" mode="explicit">
-    <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:apply-templates select="key('variableKey',@id)/mml:math"/><br/>
-  </xsl:template>-->
-  
   <xsl:template match="*[local-name()='reaction']">
-    <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/><br/>
+    <p><xsl:apply-templates select="@id" mode="idOrName"/> 
+    = <xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/>
+    <xsl:if test="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']/*[local-name()='parameter']">
+    <br/><i>where<br/>
+    <xsl:apply-templates select="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']/*[local-name()='parameter']" mode="const"/></i>
+    </xsl:if></p>
   </xsl:template>
   
   <!-- implicit rules -->
@@ -343,7 +343,7 @@ Project-page: http://sv.insysbio.ru
   <xsl:template match="*[local-name()='event']">
     <p>
       <strong>When </strong> <xsl:apply-templates select="*[local-name()='trigger']/mml:math"/> 
-      <strong> after delay </strong> <xsl:apply-templates select="*[local-name()='delay']/mml:math"/>
+      <xsl:if test="*[local-name()='delay']"><strong> after delay </strong> <xsl:apply-templates select="*[local-name()='delay']/mml:math"/></xsl:if>
       <br/><xsl:apply-templates select="*[local-name()='listOfEventAssignments']/*[local-name()='eventAssignment']"/>
     </p>
   </xsl:template>
