@@ -75,7 +75,7 @@ Project-page: http://sv.insysbio.ru
   </xsl:template>
   
   <xsl:template match="*[local-name()='annotation']" mode="element">
-   <p><strong>annotation:</strong> <span style="color: red;"> = presented =</span></p>
+   <p><strong>annotation:</strong> =presented=</p>
   </xsl:template>
   
   <!-- Notes -->
@@ -118,7 +118,7 @@ Project-page: http://sv.insysbio.ru
          </div>
     </xsl:template>
     
-    <xsl:template match="@id|@symbol|@variable" mode="no-link">
+    <xsl:template match="@id" mode="no-link">
       <span style="color: blue;">
       <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
       <xsl:value-of select="."/>
@@ -129,6 +129,34 @@ Project-page: http://sv.insysbio.ru
            <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
            <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
          </div>
+    </xsl:template>
+    
+    <xsl:template match="@symbol|@variable" mode="no-link">
+	  <xsl:if test="not(key('idKey',.))">
+	    <span style="color:red;">
+		<xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
+		<xsl:value-of select="."/>
+		</span>
+      </xsl:if>
+	  <xsl:if test="key('idKey',.)">
+	    <span style="color: blue;">
+        <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
+	    <xsl:apply-templates select="key('idKey',.)/@id" mode="idOrName"/>
+        </span>
+	  </xsl:if>
+	
+       <div 
+         style="position:absolute; left:50%; bottom:95%; border-radius:6px; padding:8px; width:300px;"
+         class="w3-text w3-pale-blue">
+           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+         </div>
+    </xsl:template>
+	
+	<!-- SId object: internal ref -->
+    <xsl:template match="@species|@substanceUnits|@units|@compartment|@speciesType|@compartmentType|@outside">
+	  <xsl:if test="not(key('idKey',.))"><span style="color:red;"><xsl:value-of select="."/></span></xsl:if>
+	  <xsl:if test="key('idKey',.)"><xsl:apply-templates select="key('idKey',.)/@id" mode="idOrName"/></xsl:if>
     </xsl:template>
     
     <!-- listOfFunctionDefinitions -->
@@ -167,7 +195,7 @@ Project-page: http://sv.insysbio.ru
       <tr class="w3-blue-grey">
         <th>id</th>
         <th><xsl:if test="*/@name">name</xsl:if></th>
-        <th><xsl:if test="*/@name">metaid</xsl:if></th>
+        <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
         <th>listOfUnits</th>
       </tr>
       <xsl:apply-templates select="*[local-name()='unitDefinition']" mode="table"/>
@@ -249,11 +277,10 @@ Project-page: http://sv.insysbio.ru
           <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
           <td><xsl:value-of select="@name"/></td>
           <td  class="w3-tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:value-of select="@compartmentType"/></td>
-          <td><xsl:value-of select="@outside"/></td>
-          <td><xsl:apply-templates select="@units" mode="table"/></td>
-          <td><xsl:if test="not(key('variableKey', @id))"><xsl:value-of select="@size"/></xsl:if>
-          <xsl:apply-templates select="key('variableKey', @id)/mml:math"/></td>
+          <td><xsl:apply-templates select="@compartmentType"/></td>
+          <td><xsl:apply-templates select="@outside"/></td>
+          <td><xsl:apply-templates select="@units"/></td>
+          <td><xsl:value-of select="@size"/></td>
         </tr>
     </xsl:template>
     
@@ -287,13 +314,13 @@ Project-page: http://sv.insysbio.ru
           <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
           <td><xsl:value-of select="@name"/></td>
           <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:value-of select="@speciesType"/></td>
-          <td><xsl:apply-templates select="@substanceUnits" mode="table"/></td>
+          <td><xsl:apply-templates select="@speciesType"/></td>
+          <td><xsl:apply-templates select="@substanceUnits"/></td>
           <td><xsl:value-of select="@hasOnlySubstanceUnits"/></td>
           <td><xsl:value-of select="@initialConcentration"/></td>
           <td><xsl:value-of select="@initialAmount"/></td>
           <td><xsl:value-of select="@boundaryCondition"/></td>
-          <td><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></td>
+          <td><xsl:apply-templates select="@compartment"/></td>
           <td><xsl:value-of select="@charge"/></td>
         </tr>
     </xsl:template>
@@ -322,7 +349,7 @@ Project-page: http://sv.insysbio.ru
           <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
           <td><xsl:value-of select="@name"/></td>
           <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:value-of select="@units"/></td>
+          <td><xsl:apply-templates select="@units"/></td>
           <td>
           <xsl:if test="not(key('variableKey', @id))"><xsl:value-of select="@value"/></xsl:if>
           <!--<xsl:apply-templates select="key('variableKey', @id)/mml:math"/>-->
@@ -436,8 +463,8 @@ Project-page: http://sv.insysbio.ru
   <xsl:template match="*[local-name()='reaction']" mode="table">
         <tr>
           <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
-          <td><xsl:if test="*/@name">name</xsl:if></td>
-          <td class="w3-tiny"><xsl:if test="*/@metaid">metaid</xsl:if></td>
+          <td><xsl:value-of select="@name"/></td>
+          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="." mode="reactionFormula"/></td>
           <td><xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/></td>
         </tr>
@@ -505,21 +532,10 @@ Project-page: http://sv.insysbio.ru
   
   <xsl:template match="*[local-name()='eventAssignment']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@variable" mode="table"/></td>
+          <td class="w3-tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
           <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
         </tr>
-  </xsl:template>
-  
-  <xsl:template match="@units" mode="table">
-    <!--<i><xsl:apply-templates select="key('idKey',.)/@name" mode="table"/></i>-->
-    <i><xsl:value-of select="."/></i>
-  </xsl:template>
-  
-  <xsl:template match="@substanceUnits" mode="table">
-    <!--<i><xsl:apply-templates select="key('idKey',.)/@name" mode="table"/>/<xsl:apply-templates select="key('idKey', key('idKey',../@compartment)/@units)/@name" mode="table"/></i>
-    <i><xsl:value-of select="."/>/<xsl:value-of select="key('idKey',../@compartment)/@units"/></i>-->
-    <i><xsl:value-of select="."/></i>
   </xsl:template>
   
   <xsl:template match="*[local-name()='unitDefinition']/@name" mode="table">
@@ -533,11 +549,6 @@ Project-page: http://sv.insysbio.ru
   <!-- message type: just copy -->
   <xsl:template match="*[local-name()='message']" mode="table">
     <xsl:copy-of select="node()"/>
-  </xsl:template>
-  
-  <!-- SId object: internal ref -->
-  <xsl:template match="@variable|@species|@substanceUnits|@units|@compartment|@speciesType|@compartmentType|@outside">
-      <xsl:value-of select="."/>
   </xsl:template>
   
   <!-- do nothing if nothing to output-->
@@ -607,27 +618,12 @@ Project-page: http://sv.insysbio.ru
     </xsl:template>
 <!-- END OF unitFormula/unitFormulaScale mode -->
     
-<!-- BEGIN OF idOrName/idOrNamePlus mode 
-  <xsl:template match="@id|@variable" mode="idOrName">
-      <xsl:if test="$useNames='true'"><xsl:value-of select="./../@name"/></xsl:if>
-      <xsl:if test="not($useNames='true')"><xsl:value-of select="."/></xsl:if>
-    </xsl:template>-->
-    
+<!-- BEGIN OF idOrName/idOrNamePlus mode -->
   <xsl:template match="@id" mode="idOrName">
       <xsl:if test="$useNames='true' and count(./../@name)>0">'<xsl:value-of select="./../@name"/>'</xsl:if>  <!-- for simbio only-->
-      <xsl:if test="$useNames='true' and count(./../@name)=0">'?'</xsl:if>
+      <xsl:if test="$useNames='true' and count(./../@name)=0">'=unnamed='</xsl:if>
       <xsl:if test="not($useNames='true')"><xsl:value-of select="."/></xsl:if>
   </xsl:template>
-    
-    <xsl:template match="@id|@variable" mode="idOrNamePlus">
-      <xsl:if test="$useNames='true'"><xsl:value-of select="./../@name"/></xsl:if>  <!-- for simbio only-->
-      <xsl:if test="not($useNames='true')"><xsl:value-of select="."/></xsl:if>
-       <div style="
-         position:absolute; left:50%; bottom:95%; border-radius:6px; padding:8px; width:300px;
-         " class="w3-text w3-pale-blue">
-           <xsl:apply-templates select="../*[local-name()='notes']" />
-         </div>
-    </xsl:template>
 <!-- END OF idOrName/idOrNamePlus mode -->
   
 <!-- BEGIN OF reactionFormula mode -->
@@ -654,9 +650,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:if test="@stoichiometry!='1'">
         <xsl:value-of select="@stoichiometry"/> &#215;
       </xsl:if>
-	  <!-- show species that are not mentioned in species by red -->
-	  <xsl:if test="not(key('idKey',@species))"><span style="color:red;"><xsl:value-of select="@species"/></span></xsl:if>
-	  <xsl:if test="key('idKey',@species)"><xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/></xsl:if>
+	  <xsl:apply-templates select="@species"/>
       <xsl:if test="position()!=last()">+</xsl:if>
     </xsl:for-each>
   </xsl:template>
@@ -667,9 +661,7 @@ Project-page: http://sv.insysbio.ru
     " mode="reactionFormula">
     <xsl:if test="count(*[local-name()='modifierSpeciesReference'])>0"> ~ </xsl:if>
     <xsl:for-each select="*[local-name()='modifierSpeciesReference']">
-	  <!-- show species that are not mentioned in species by red -->
-	  <xsl:if test="not(key('idKey',@species))"><span style="color:red;"><xsl:value-of select="@species"/></span></xsl:if>
-	  <xsl:if test="key('idKey',@species)"><xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/></xsl:if>
+	  <xsl:apply-templates select="@species"/>
       <xsl:if test="position()!=last()">, </xsl:if>
     </xsl:for-each>
   </xsl:template>
@@ -716,7 +708,7 @@ Project-page: http://sv.insysbio.ru
   <xsl:template match="mml:ci">
     <xsl:element name="ci" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:if test="$useNames='true' and key('idKey',normalize-space(text()))/@name">'<xsl:value-of select="key('idKey',normalize-space(text()))/@name"/>'</xsl:if>
-      <xsl:if test="$useNames='true' and not(key('idKey',normalize-space(text()))/@name)">'?'</xsl:if>
+      <xsl:if test="$useNames='true' and not(key('idKey',normalize-space(text()))/@name)">'=unnamed='</xsl:if>
       <xsl:if test="not($useNames='true')"><xsl:value-of select="normalize-space(text())"/></xsl:if>
     </xsl:element>
   </xsl:template>  
