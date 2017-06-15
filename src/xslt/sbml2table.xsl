@@ -19,12 +19,14 @@ Description: Creating representation of whole sbml in table format
 modes:
   - table
   - reactionFormula
-  - idOrName/idOrNamePlus
+  - idOrName
   - unitFormula/unitFormulaScale
+  - link/no-link
+  - element
 
 Author: Evgeny Metelkin
-Copyright: Institute for Systems Biology, Moscow
-Last modification: 2017-01-15
+Copyright: InSysBio LLC, 2016-2017
+Last modification: 2017-06-15
 
 Project-page: http://sv.insysbio.ru
 -->
@@ -402,7 +404,7 @@ Project-page: http://sv.insysbio.ru
   <xsl:template match="*[local-name()='constraint']" mode="table">
         <tr>
           <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:apply-templates select="*[local-name()='message']"  mode="table"/></td>
+          <td><xsl:apply-templates select="*[local-name()='message']" mode="table"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
         </tr>
   </xsl:template>

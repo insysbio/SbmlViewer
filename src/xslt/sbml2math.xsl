@@ -16,10 +16,14 @@ Copyright 2016-2017 Institute for Systems Biology Moscow
 -->
 <!-- INFO
 Description: Creating representation of whole sbml as systems of equations:
-
+modes:
+  - idOrName
+  - math
+  - const/diff-init/diff-eq
+  
 Author: Evgeny Metelkin
-Copyright: Institute for Systems Biology, Moscow
-Last modification: 2017-06-03
+Copyright: InSysBio LLC, 2016-2017
+Last modification: 2017-06-15
 
 Project-page: http://sv.insysbio.ru
 -->
@@ -42,6 +46,7 @@ Project-page: http://sv.insysbio.ru
   <!-- PARAMETERS -->
   <xsl:param name="useNames">false</xsl:param> <!-- use names instead of id in equations -->
   <xsl:param name="correctMathml">false</xsl:param> <!-- use correction in MathML (for simbio) always on currently-->
+  <xsl:param name="equationsOff">false</xsl:param> <!-- do not show equations -->
 
   <!-- top -->
   <xsl:template match="/">
