@@ -35,15 +35,15 @@ Project-page: http://sv.insysbio.ru/
 
     <!-- MathJax settings -->
     <script type="text/x-mathjax-config">
-    MathJax.Hub.Config(
-      {menuSettings: { zoom: "Click" },
+    MathJax.Hub.Config({
+      jax: ["input/MathML", "output/PreviewHTML"],
+      extensions: ["mml2jax.js", "MathML/content-mathml.js"],
+      menuSettings: { zoom: "Click" },
       "HTML-CSS": { linebreaks: { automatic: true } },
       SVG: { linebreaks: { automatic: true } },
-      CommonHTML: { linebreaks: { automatic: true }},
-      extensions: ["MathML/content-mathml.js"]
-    });
+});
     </script>
-    <script type="text/javascript" src="http://insilicobio.ru/mathjax/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script type="text/javascript" src="http://insilicobio.ru/mathjax/MathJax.js"> </script>
     
   </head>
   <body>

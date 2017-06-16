@@ -24,12 +24,6 @@ var curFile = {
   "file": null, //link to File or path of file
   "method": null //method, that was uploaded the file
 }
-var useFile =  {
-  "content": null, // model in dom-fromat 
-  "name": null,
-  "file": null, //link to File or path of file
-  "method": null //method, that was uploaded the file
-}
 
 window.onload = function () {
   console.log("Window onload");
@@ -82,17 +76,20 @@ window.onload = function () {
   var sp = window.location.search.substring(1).split("&");
   if (sp[0]) {
     console.log("Add file(URL)");
+    clearContent();
     
-    useFile["file"] = sp[0];
-    useFile["method"] = "URL";
+    curFile["file"] = sp[0]; //for URL is path(str)
+    curFile["method"] = "URL";
+    curFile["name"] = curFile["file"].match(/[_-\w]+.xml/)[0];
+    
+    displayName(curFile["name"]);
     
     readFile(sp[0], "URL", function(modelDoc) {
       console.log("File(URL) read, content:", modelDoc);
       
-      useFile["content"] = modelDoc["content"];
-      useFile["name"] = modelDoc["name"];
+      curFile["content"] = modelDoc;
       
-      displayModel(modelDoc["content"], modelDoc["name"]);
+      displayModel(curFile["content"]);
       
     });
   }
@@ -131,7 +128,7 @@ window.onload = function () {
       
       var note = document.createElement("p");
       note.appendChild(document.createTextNode(optionsDisplay[item]["notes"]));
-      note.classList.add("w3-text", "w3-tag","w3-tiny", "w3-animate-opacity","noteOptions");
+      note.classList.add("w3-text", "w3-tag","w3-tiny", "w3-animate-opacity", "noteOptions");
       
       div.appendChild(p);
       div.appendChild(note);
@@ -143,22 +140,26 @@ window.onload = function () {
   function createListener() {
   /** Listen click on button "file", validate, run reading and display  */
     document.getElementById("file").addEventListener("change", function() {
+      startSpin();
+      
       if (document.getElementById("file").files[0]) {
-        console.log("Add file(on click btn)");
+        console.log("Add file(on click btn)");       
         
-        startSpin();
+        clearContent();
         clearErrMess();
         
-        useFile["file"] = document.getElementById("file").files[0];
-        useFile["method"] = "upload";
+        curFile["file"] = document.getElementById("file").files[0];
+        curFile["method"] = "upload";
+        curFile["name"] = curFile["file"].name;
         
-        readFile(document.getElementById("file").files[0], "upload", function(modelDoc) {
+        displayName(curFile["name"]);
+        
+        readFile(curFile["file"], curFile["method"], function(modelDoc) {
           console.log("File read(upload), content:", modelDoc);
           
-          useFile["content"] = modelDoc["content"];
-          useFile["name"] = modelDoc["name"];
-          
-          displayModel(modelDoc["content"], modelDoc["name"]);
+          curFile["content"] = modelDoc;
+                    
+          displayModel(curFile["content"]);
           
           endSpin();
         });
@@ -171,14 +172,15 @@ window.onload = function () {
     console.log("Run refresh. File:", curFile["file"], "method: ", curFile["method"]);
     
     startSpin();
+    clearContent();
     clearErrMess();
     
     readFile(curFile["file"], curFile["method"], function(modelDoc) {
       console.log("File read(refresh", curFile["method"],"), content:", modelDoc);
       
-        useFile["content"] = modelDoc["content"];
+        curFile["content"] = modelDoc;
         
-        displayModel(modelDoc["content"]);
+        displayModel(curFile["content"]);
         
         endSpin();
       });
@@ -194,18 +196,21 @@ window.onload = function () {
       console.log("Add file(drop)");
       
       startSpin();
+      clearContent();
       clearErrMess();
       
-      useFile["file"] = event.dataTransfer.files[0];
-      useFile["method"] = "upload";
+      curFile["file"] = event.dataTransfer.files[0];
+      curFile["method"] = "upload";      
+      curFile["name"] = curFile["file"].name;
       
-      readFile(event.dataTransfer.files[0], "upload", function(modelDoc) {
+      displayName(curFile["name"]);
+      
+      readFile(curFile["file"], curFile["method"], function(modelDoc) {
         console.log("File read(drop), content:", modelDoc);
         
-        useFile["content"] = modelDoc["content"];
-        useFile["name"] = modelDoc["name"];
+        curFile["content"] = modelDoc;
         
-        displayModel(modelDoc["content"], modelDoc["name"]);
+        displayModel(curFile["content"]);
         
         endSpin();
       });
@@ -279,26 +284,15 @@ window.onload = function () {
 function readFile(f, method, callback) {
   console.log("Run read file");
   
-  var f, data = {
-    "name": null,
-    "content": null
-  };
-  
   switch(method) {
     case "URL":
-      data["name"] = f.match(/[_-\w]+.xml/);
-      
       readXmlHTTP(f, function(Doc) { 
-        data["content"] =  Doc; 
-        callback(data); 
+        callback(Doc); 
       });
       break;
-    case "upload":
-      data["name"] = f.name;
-      
+    case "upload":      
       readXmlUpload(f, function(Doc) { 
-        data["content"] =  Doc; 
-        callback(data); 
+        callback(Doc); 
       });
       break;
   }
@@ -357,7 +351,7 @@ function readXmlUpload(f, callback) {
 * @param {object} model - DOM-object of content model
 * @param {string} name - name of file, that content model. Optional variable, transmitted only when the model is first displayed 
 */
-function displayModel(model, name) {
+function displayModel(model) {
   //Display name of file into title and beside btn of upload file
   console.log("Run display");
   console.log("Check level of SBML...");
@@ -368,7 +362,7 @@ function displayModel(model, name) {
       console.log(" Success");
       
       console.log("Display model...");
-      if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/) || resultDocument.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
+      if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\?/) || resultDocument.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
         console.error(" Err: Incorrect XML");
         showErrMess("Incorrect XML");
       }
@@ -376,30 +370,11 @@ function displayModel(model, name) {
         var mainContent = document.getElementById("mainContent");
         
         //Close side window with information about element(if it open)
-        w3_close(); 
-        
-        //Clear mainContent(display of model)
-        while (mainContent.childNodes[0]) {
-          mainContent.removeChild(mainContent.childNodes[0]);
-        }
-        
+        //w3_close(); 
+               
         //Append new display of content
-        mainContent.appendChild(resultDocument.firstElementChild);
-        
-        //Display name of file into title and page(beside btn "Choose file")
-        if (name) {
-          document.getElementById("fileName").innerHTML = name;
-          document.getElementsByTagName("title")[0].innerHTML = name;
-        }
-
-        //Save data of file for reuse
-        console.log(" Save file to curFile...");
-        var item;
-        for (item in useFile) 
-            curFile[item] = useFile[item] || curFile[item];          
-       
-        console.log("   Save");
-        
+        document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
+                      
         //update equations
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         
@@ -414,10 +389,13 @@ function displayModel(model, name) {
   else { //if level of file is not 2
     showErrMess("File format is not supported");
     console.error(" File format is not supported");  
-  }  
+  }    
   
-  for (item in useFile)
-    useFile[item] = null;
+}
+
+function displayName(name) {
+  document.getElementById("fileName").innerHTML = name;
+  document.getElementsByTagName("title")[0].innerHTML = name;
 }
 
 /** Open side window with information about select element model
@@ -446,7 +424,7 @@ function w3_open(event) {
   catch(err) {
     console.error(" Err:", err);
     var p = document.createElement("p");
-    p.setAttribute("class", "w3-text-red w3-center w3-large w3-padding");
+    p.classList.add("class", "w3-text-red", "w3-center", "w3-large", "w3-padding");
     p.appendChild(document.createTextNode("Cannot display element"));
     sideContent.appendChild(p);
   }
@@ -456,8 +434,8 @@ function w3_open(event) {
       
   // show block
   document.getElementById("sideInformBlock").style.display = "block";
-  document.getElementById("sideInformBlock").setAttribute("class", "w3-container w3-col l3 m3 s3 w3-animate-right");
-  document.getElementById("mainContent").setAttribute("class", "w3-container w3-col l9 m9 s9 w3-border-right w3-border-color-blue-grey");
+  document.getElementById("sideInformBlock").classList.add( "w3-col", "l3", "m3", "s3", "w3-animate-right");
+  document.getElementById("mainContent").classList.add("l9", "m9", "s9");
   
   //update equations
   MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
@@ -466,9 +444,21 @@ function w3_open(event) {
 /** Close side window with information about select element model
 */
 function w3_close() {
-  document.getElementById("sideInformBlock").setAttribute("class", "w3-container");
-  document.getElementById("mainContent").setAttribute("class", "w3-container w3-col w3-border-right w3-border-color-blue-grey");
+  document.getElementById("sideInformBlock").classList.remove( "l3", "m3", "s3",  "w3-animate-right");
+  document.getElementById("mainContent").classList.remove("l9", "m9", "s9");
   document.getElementById("sideInformBlock").style.display = "none";
+}
+
+function clearContent() {
+  console.log("Clear content");
+  var mainContent = document.getElementById("mainContent");
+  
+  //Clear mainContent(display of model)
+  while (mainContent.childNodes[0]) {
+    mainContent.removeChild(mainContent.childNodes[0]);
+  }
+  
+  w3_close();
 }
 
 /** Resize window with info about model(mainContent) and window with info about select element of model(sideContent). 7px - height of scroll
@@ -493,9 +483,15 @@ function showErrMess(mess) {
 }
 
 function startSpin() {
-  document.getElementById("spinner").setAttribute("class", "w3-spin fa fa-spinner w3-xxlarge");
+  console.log("Start spin");
+  //document.getElementById("spinner").setAttribute("class", "w3-spin fa fa-spinner w3-xxlarge");  
+  document.getElementById("spinner").classList.remove("fa-refresh");
+  document.getElementById("spinner").classList.add("w3-spin", "fa-spinner");
 }
 
 function endSpin() {
-  document.getElementById("spinner").setAttribute("class", "fa fa-refresh  w3-xxxlarge");
+  //document.getElementById("spinner").setAttribute("class", "fa fa-refresh  w3-xxxlarge");   
+  document.getElementById("spinner").classList.remove("w3-spin", "fa-spinner");
+  document.getElementById("spinner").classList.add("fa-refresh");  
+  console.log("End spin");
 }
