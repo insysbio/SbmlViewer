@@ -10,11 +10,11 @@ var waysDisplayPage = [
   "sbml2math"
 ];
   
-var optionsDisplay = [
-  "useNames",
-  "correctMathml",
-  "equationsOff"
-];
+var optionsDisplay = {
+  "useNames": { "title": "Some title 1", "notes": "note: useNames"},
+  "correctMathml": { "title": "Some title 2", "notes": "note: correctMathml"},
+  "equationsOff": { "title": "Some title 3", "notes": "note: equationsOff"}
+};
 
 var xsltProcessor1 = new XSLTProcessor(); //processor for 1st xslt
 var xsltProcessor2 = new XSLTProcessor(); //processor for 2d xslt
@@ -108,11 +108,14 @@ window.onload = function () {
     });
     
     /* Generate bar of checkboxes for options display from optionsDisplay*/
-    optionsDisplay.forEach(function(item) {
+    var item;
+    for (item in optionsDisplay)  {
       var div = document.createElement("div");
-      div.setAttribute("class", "w3-cell w3-padding-right");
+      div.classList.add("w3-cell", "w3-padding-right", "w3-tooltip");
       
       options[item] = false; //Default value
+      
+      var p = document.createElement("p");
       
       var checkboxBtn = document.createElement("input");
       checkboxBtn.setAttribute("type", "checkbox");
@@ -120,13 +123,20 @@ window.onload = function () {
       
       var label = document.createElement("label");
       label.setAttribute("for", item);
-      label.appendChild(document.createTextNode(item));
+      label.appendChild(document.createTextNode(optionsDisplay[item]["title"]));
       
-      div.appendChild(checkboxBtn);
-      div.appendChild(label);
+      p.appendChild(checkboxBtn);
+      p.appendChild(label);
+      
+      
+      var note = document.createElement("p");
+      note.appendChild(document.createTextNode(optionsDisplay[item]["notes"]));
+      note.classList.add("w3-text", "w3-tag","w3-tiny", "w3-animate-opacity","noteOptions");
+      
+      div.appendChild(p);
+      div.appendChild(note);
       document.getElementById("listOptionsCheckbox").appendChild(div);
-    }); 
-    
+    }
     console.log("Interface created");
   }
 

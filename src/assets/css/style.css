@@ -7,10 +7,14 @@ html {
   color:transparent;
   width:140px;
 }
+.noteOptions {
+  position: absolute;
+  margin-top: 0;
+}
 
 /*-- Content --*/
 .content {
-  margin-top: 80px;
+  margin-top: 105px;
 }
   /*-- Error message --*/
   #errorContainer {
