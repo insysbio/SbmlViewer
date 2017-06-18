@@ -232,6 +232,7 @@ window.onload = function () {
       
       startSpin();
       clearErrMess();
+      clearContent();
       
       options["transform"] = this.value;
       
@@ -355,12 +356,13 @@ function displayModel(model) {
   //Display name of file into title and beside btn of upload file
   console.log("Run display");
   console.log("Check level of SBML...");
+  
+  
   if (model.firstElementChild.getAttribute("level") == 2) {
     console.log("Ok/n Transform to fragment...");
     try {
       var resultDocument = xsltProcessor1.transformToFragment(model, document);
       console.log(" Success");
-      
       console.log("Display model...");
       if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\?/) || resultDocument.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
         console.error(" Err: Incorrect XML");
@@ -374,7 +376,7 @@ function displayModel(model) {
                
         //Append new display of content
         document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
-                      
+
         //update equations
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         
@@ -495,3 +497,42 @@ function endSpin() {
   document.getElementById("spinner").classList.add("fa-refresh");  
   console.log("End spin");
 }
+/*
+function setClusterize(doc) {
+  var data = [];
+  console.log("Add clusterize");
+  doc.querySelector("div").classList.add("clusterize-content");
+  doc.querySelector("div").setAttribute("id", "contentArea");
+  
+ // traverseTree(doc.querySelector("div"), data)
+  var children = doc.querySelector("div").children,
+      i = 0, 
+      l = doc.querySelector("div").children.length;
+          
+      for (var i; i < l; i++) {
+        console.log(children[i]);
+        //children[i].classList.add("clusterize-no-data");
+        data.push("<li>"+children[i].outerHTML+"</li>")
+        //traverseTree(children[i], data);
+    };
+   console.log(doc.querySelector("div"), data);
+                
+    
+  return {"doc": doc, "data": data};
+  
+  /*function traverseTree(node, data) {
+    console.log("node.children", node.children);
+    if (node.children) {
+      var children = node.children,
+          i = 0, 
+          l = node.children.length;
+          
+      for (var i; i < l; i++) {
+        console.log(children[i]);
+        //children[i].classList.add("clusterize-no-data");
+        if (children[i].tagName == "tr")  data.push("<li>"+children[i].outerHTML+"</li>")
+        traverseTree(children[i], data);
+      };
+    }
+  }
+}*/
