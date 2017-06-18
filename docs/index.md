@@ -22,7 +22,7 @@ When **SbmlViewer** is helpful:
 For models from your computer:
 
 1. Go to the page [http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml](/{{ site.distPath }}viewer.xhtml)
-2. Click on button "Choose file" and select your sbml model.
+2. Drug'n'drop your SBML OR click on button "Choose file" and select your sbml model.
 
 For models shared on web:
 
@@ -41,19 +41,22 @@ To look through example just try the links
 
 ## Current release
 
+Version: 170619
+
 - reading SBML Level 2 Version 1-5
 - creating tabular view of model with: **sbml2table** transformation
 - summary generation for chosen element: **sbml2element** transformation
+- generation of equation corresponding to your model: **sbml2math** transformation
 
 ## Known restrictions
-- wrong representation of local <code>parameter</code> element inside <code>kineticLaw</code>
+
+- some bugs with local parameters in **sbml2element** transformation
 - ignores <code>annotation</code> elements for presentation
 
 ## Roadmap
 
 - support for SBML level 3
 - **sbml2tree** transformation
-- **sbml2ode** transformation
 - Transformation to Antimony format: **sbml2antimony** transformation
 - Chrome extension for SbmlViewer
 
@@ -62,7 +65,7 @@ To look through example just try the links
 
 ## Maintaners
 
-- Viktoria Tkachenko @tkachVika
+- Viktoria Tkachenko @vetedde
 - Evgeny Metelkin @metelkin
 
 ## License
