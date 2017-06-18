@@ -620,13 +620,13 @@ Project-page: http://sv.insysbio.ru
     </xsl:template>
 <!-- END OF unitFormula/unitFormulaScale mode -->
     
-<!-- BEGIN OF idOrName/idOrNamePlus mode -->
+<!-- BEGIN OF idOrName mode -->
   <xsl:template match="@id" mode="idOrName">
       <xsl:if test="$useNames='true' and count(./../@name)>0">'<xsl:value-of select="./../@name"/>'</xsl:if>  <!-- for simbio only-->
       <xsl:if test="$useNames='true' and count(./../@name)=0">'=unnamed='</xsl:if>
       <xsl:if test="not($useNames='true')"><xsl:value-of select="."/></xsl:if>
   </xsl:template>
-<!-- END OF idOrName/idOrNamePlus mode -->
+<!-- END OF idOrName mode -->
   
 <!-- BEGIN OF reactionFormula mode -->
   <xsl:template match="

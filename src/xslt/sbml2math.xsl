@@ -55,7 +55,6 @@ Project-page: http://sv.insysbio.ru
     </div>
   </xsl:template>
   
-<!-- BEGIN OF reactionFormula mode -->
   <!-- SBML -->
   <xsl:template match="*[local-name()='sbml']" mode="math">
       <h1 class="w3-tooltip">Equations crated by SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/></h1>
