@@ -7,7 +7,8 @@ var options = {
   
 var waysDisplayPage = [
   "sbml2table",
-  "sbml2math"
+  "sbml2math",
+  "sbml2tableWithClustTEST"
 ];
   
 var optionsDisplay = {
@@ -364,6 +365,7 @@ function displayModel(model) {
       var resultDocument = xsltProcessor1.transformToFragment(model, document);
       console.log(" Success");
       console.log("Display model...");
+
       if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\?/) || resultDocument.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
         console.error(" Err: Incorrect XML");
         showErrMess("Incorrect XML");
@@ -377,6 +379,7 @@ function displayModel(model) {
         //Append new display of content
         document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
 
+        if (document.getElementById("transformationType").value == "sbml2tableWithClustTEST") setClusterize(document.getElementById("mainContent").children[0]);
         //update equations
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         
@@ -497,42 +500,30 @@ function endSpin() {
   document.getElementById("spinner").classList.add("fa-refresh");  
   console.log("End spin");
 }
-/*
+
 function setClusterize(doc) {
-  var data = [];
-  console.log("Add clusterize");
-  doc.querySelector("div").classList.add("clusterize-content");
-  doc.querySelector("div").setAttribute("id", "contentArea");
-  
- // traverseTree(doc.querySelector("div"), data)
-  var children = doc.querySelector("div").children,
-      i = 0, 
-      l = doc.querySelector("div").children.length;
-          
-      for (var i; i < l; i++) {
-        console.log(children[i]);
-        //children[i].classList.add("clusterize-no-data");
-        data.push("<li>"+children[i].outerHTML+"</li>")
-        //traverseTree(children[i], data);
-    };
-   console.log(doc.querySelector("div"), data);
-                
-    
-  return {"doc": doc, "data": data};
-  
-  /*function traverseTree(node, data) {
-    console.log("node.children", node.children);
-    if (node.children) {
-      var children = node.children,
-          i = 0, 
-          l = node.children.length;
-          
-      for (var i; i < l; i++) {
-        console.log(children[i]);
-        //children[i].classList.add("clusterize-no-data");
-        if (children[i].tagName == "tr")  data.push("<li>"+children[i].outerHTML+"</li>")
-        traverseTree(children[i], data);
-      };
+  var l, i, data, content;
+
+  console.log("Add clusterize...");
+
+  ["FincDef", "UnitDef", "CompType", "CompType", "Comp", "Sp", "Param", "InAs", "Const", "Rule", "React", "Events"].forEach(function(item) {
+    data = [];  
+    if (document.getElementById("contentArea"+item)) {
+      content = document.getElementById("contentArea"+item).children;
+      l = content.length;
+      for (i = 0; i <  l; i++) {
+        data.push(content[i].outerHTML);
+        content[i].innerHTML;
+      }
+      
+      document.getElementById("contentArea"+item).innerHTML = "";
+
+      console.log("data:", data);
+      new Clusterize({
+        rows: data,
+        scrollId: 'scrollArea'+item,
+        contentId: 'contentArea'+item
+      });
     }
-  }
-}*/
+  });
+}
