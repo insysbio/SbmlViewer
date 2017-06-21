@@ -7,8 +7,7 @@ var options = {
   
 var waysDisplayPage = [
   "sbml2table",
-  "sbml2math",
-  "sbml2tableWithClustTEST"
+  "sbml2math"
 ];
   
 var optionsDisplay = {
@@ -378,8 +377,7 @@ function displayModel(model) {
                
         //Append new display of content
         document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
-
-        if (document.getElementById("transformationType").value == "sbml2tableWithClustTEST") setClusterize(document.getElementById("mainContent").children[0]);
+        
         //update equations
         MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
         
@@ -499,31 +497,4 @@ function endSpin() {
   document.getElementById("spinner").classList.remove("w3-spin", "fa-spinner");
   document.getElementById("spinner").classList.add("fa-refresh");  
   console.log("End spin");
-}
-
-function setClusterize(doc) {
-  var l, i, data, content;
-
-  console.log("Add clusterize...");
-
-  ["FincDef", "UnitDef", "CompType", "CompType", "Comp", "Sp", "Param", "InAs", "Const", "Rule", "React", "Events"].forEach(function(item) {
-    data = [];  
-    if (document.getElementById("contentArea"+item)) {
-      content = document.getElementById("contentArea"+item).children;
-      l = content.length;
-      for (i = 0; i <  l; i++) {
-        data.push(content[i].outerHTML);
-        content[i].innerHTML;
-      }
-      
-      document.getElementById("contentArea"+item).innerHTML = "";
-
-      console.log("data:", data);
-      new Clusterize({
-        rows: data,
-        scrollId: 'scrollArea'+item,
-        contentId: 'contentArea'+item
-      });
-    }
-  });
 }
