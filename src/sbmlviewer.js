@@ -467,9 +467,13 @@ function clearContent() {
 /** Resize window with info about model(mainContent) and window with info about select element of model(sideContent). 7px - height of scroll
 */
 function resizeContent() {
-  var newHeight = document.documentElement.clientHeight - document.getElementById("optionsArea").clientHeight - 7 +"px";
+  console.log("Resize");
+  
+  var newHeight = document.documentElement.clientHeight - document.getElementById("optionsArea").clientHeight - 7 + "px";
   document.getElementById("mainContent").style.height = newHeight;
   document.getElementById("sideContent").style.height = newHeight;
+  
+  document.getElementById("content").style.marginTop = document.getElementById("optionsArea").clientHeight + 2 + "px";
 }
 
 function clearErrMess() {
