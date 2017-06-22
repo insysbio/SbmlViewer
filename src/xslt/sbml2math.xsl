@@ -76,7 +76,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:call-template name="constants"/>
     </xsl:if>
     <xsl:if test="count(
-      //*[local-name()='assignmentRule' and (key('idKey',@variable)/@boundaryCondition='true' or key('idKey',@variable)[local-name()!='species'])] |
+      //*[local-name()='assignmentRule'] |
       //*[local-name()='reaction']
       )">
       <xsl:call-template name="exp-rules"/>
@@ -168,7 +168,7 @@ Project-page: http://sv.insysbio.ru
   <xsl:template name="exp-rules">
     <h2>Explicit rules:</h2>
     <p>
-      <xsl:apply-templates select="//*[local-name()='assignmentRule' and (key('idKey',@variable)/@boundaryCondition or key('idKey',@variable)[local-name()!='species'])]"/><!-- ???  -->
+      <xsl:apply-templates select="//*[local-name()='assignmentRule']"/><!-- ???  -->
       <xsl:apply-templates select="//*[local-name()='reaction']"/>
     </p>
   </xsl:template>
