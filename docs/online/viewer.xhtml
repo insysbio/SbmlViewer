@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" style="overflow-x:auto;">
 <!-- 
 Copyright 2016-2017 Institute for Systems Biology Moscow
@@ -24,336 +25,72 @@ Last modification: 2017-04-25
 Project-page: http://sv.insysbio.ru/
 -->
   <head>
+    <title>SMBLViewer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
     
-  <style>
-  #filearea{
-    border: 3px dashed white;
-    min-width: 250px;
-  }
-  hr{
-    margin: 0;
-  }
-  </style>
-       
-    <script type="text/javascript">
-<![CDATA[
-  // OPTIONS
-  var options = {
-    transform: "sbml2table",
-    transform2: "sbml2element",
-    filepath: "",
-    method: "URL"
-  };
-  
-  var waysDisplayPage = [
-    "sbml2table",
-  ];
-  
-  var optionsDisplay = [
-    "useNames",
-    "correctMathml",
-    "equationsOff"
-  ];
-  
-  /* alternative way to set MathJax options
-    window.MathJax = { // settings for MathJax
-      MathML: {
-        //extensions: ["mml3.js", "content-mathml.js"]//,
-        //jax: ["input/MathML","output/PreviewHTML"]
-      },
-      CommonHTML: { linebreaks: { automatic: true } , width: 'container' },
-      "HTML-CSS": { linebreaks: { automatic: true } },
-      SVG: { linebreaks: { automatic: true } }/*,
-      menuSettings: { zoom: "Click", zscale: "200%" }
-    };
-    */
-    function readXml(x, callback) { // return xml object as readed from file 
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("GET", x, false);       
-      xmlhttp.onload = function(){
-        callback(this.responseXML);
-      };
-       
-      xmlhttp.error = function(){
-        document.getElementById("errorMess").innerHTML = "Cannot upload the file.";
-      };
-       
-      xmlhttp.send();
-    }
-    
-    var xsltProcessor1 = new XSLTProcessor(); //processor for 1st xslt
-    var xsltProcessor2 = new XSLTProcessor(); //processor for 2d xslt
-    var modelDoc=null;
-    var file = null;
-    
-    window.onload = function() {      
-        readXml("xslt/"+options["transform"]+".xsl", function(xsl1) {
-          xsltProcessor1.importStylesheet(xsl1);
-          
-          xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
-          xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
-          xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
-        });
-        
-        readXml("xslt/"+options["transform2"]+".xsl", function(xsl2) {
-          xsltProcessor2.importStylesheet(xsl2);
-          xsltProcessor2.setParameter(null, "useNames", options["useNames"]);
-          xsltProcessor2.setParameter(null, "correctMathml", options["correctMathml"]);
-        });        
-        document.getElementById("file").addEventListener("change", function(event) {
-          file = document.getElementById("file").files[0];
-          validateUploadFile(file.name, 'upload');
-        }, false);
+   <script src="sbmlviewer.js"></script>
 
-
-        document.addEventListener("drop", function(event) {
-          event.preventDefault();
-          event.stopPropagation();
-          file = event.dataTransfer.files[0];
-          validateUploadFile(file.name, 'upload');
-        });
-        
-        document.addEventListener("dragstart", function() {
-          event.preventDefault();
-        }); 
-        
-        document.addEventListener("dragover", function(event) {
-          event.preventDefault();
-        });                  
-        
-        document.getElementById("refresh").addEventListener("click", function() {     
-          if ((file) || (options["filepath"])) {
-            loadModeToPage()
-          }
-          else {
-            document.getElementById("errorMess").innerHTML = "Cannot upload the file.";
-          }  
-        });
-        
-        
-        var select = document.getElementsByTagName("select")[0];
-        waysDisplayPage.forEach(function(item) {
-          var option = document.createElement("option");
-          option.innerHTML = item;
-          select.appendChild(option);   
-        });
-        
-        select.addEventListener("change", function() {
-          options["transform"] = this.value;
-          readXml("xslt/"+options["transform"]+".xsl", function(xsl1) {
-            xsltProcessor1.importStylesheet(xsl1);
-            
-            xsltProcessor1.setParameter(null, "useNames", options["useNames"]);
-            xsltProcessor1.setParameter(null, "correctMathml", options["correctMathml"]);
-            xsltProcessor1.setParameter(null, "equationsOff", options["equationsOff"]);
-          });
-        }, true);
-       
-        var listBtn = document.getElementById("listRadioBtn");
-        optionsDisplay.forEach(function(item) {
-          var p = document.createElement("p");
-          
-          options[item] = false;
-          
-          var radioBtn = document.createElement("input");
-          radioBtn.setAttribute("type", "checkbox");
-          radioBtn.setAttribute("id",item);
-          radioBtn.setAttribute("value",item);
-          
-          var label = document.createElement("label");
-          label.setAttribute("for", item);
-          label.innerHTML = item;
-          
-          p.appendChild(radioBtn);
-          p.appendChild(label);
-          p.innerHTML += " ";
-          listBtn.appendChild(p);
-        });
-        
-        var listCheckbox = listBtn.getElementsByTagName("input");
-        for(var i = 0; i < listCheckbox.length; i++) {
-          listCheckbox[i].addEventListener("change", function() {
-            options[this.value] = this.checked;
-            xsltProcessor1.setParameter(null, this.value, options[this.value]);
-          });
-        }
-        
-        document.getElementById("optionsManage").addEventListener("click", function() {
-          if (this.innerHTML == "-") {
-            this.innerHTML = "+";
-            document.getElementById("optionsArea").style.display = "none";
-          }
-          else {
-            this.innerHTML = "-";
-            document.getElementById("optionsArea").style.display = "block";          
-          }
-        });  
-       
-        var sp=window.location.search.substring(1).split("&");
-        if (sp[0]) validateUploadFile(sp[0],"URL");        
-    };
-    
-    function loadModeToPage() { 
-      //Generate modelDoc depending on method of upload file
-      switch(options["method"]) {
-        case "URL": //Not work now, we not support get with URL
-            readXml(options["filepath"], function(Doc) { modelDoc =  Doc });
-            if (modelDoc) {
-                document.getElementById("fileName").innerHTML = options["filepath"].match(/[_-\w]+.xml/);
-                modelDocDisplayToPage();
-              }
-              else {
-                document.getElementById("errorMess").innerHTML = "Cannot read the document";
-              }
-            break;
-        case "upload":
-          document.getElementById("fileName").innerHTML = file.name;
-          var reader = new FileReader();
-          try {
-            reader.readAsText(file);
-            reader.onload = function() {
-              modelDoc = new DOMParser().parseFromString(reader.result, "application/xml");
-              if(modelDoc.firstElementChild.getAttribute("level") == 2) {
-                modelDocDisplayToPage();
-              }
-              else {
-                document.getElementById("errorMess").innerHTML = "File format is not supported" ;
-              }              
-            } 
-          }
-          catch(err) {
-            document.getElementById("errorMess").innerHTML = "Cannot read the document";
-          }
-          break;
-      } 
-        
-
-      function modelDocDisplayToPage() {
-
-        // read and load table
-
-        resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
-        resultDocument = xsltProcessor1.transformToFragment(modelDoc, document);
-        if (resultDocument.firstElementChild.innerHTML.match(/\= \?\?\? html\=/)) {
-          document.getElementById("errorMess").innerHTML = "Incorrect XML";
-        }
-        else {
-          w3_close();
-          document.getElementById("mainContent").innerHTML = "";
-          document.getElementById("mainContent").appendChild(resultDocument.firstElementChild);
-          
-          //update equations
-          MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-              
-          // read additional stylesheet
-
-        }
-      }  
-    }    
-    
-    function validateUploadFile(pathFile,method) {
-      document.getElementById("errorMess").innerHTML = ""; //Delete message about error, when upload new file 
-        
-      if ((pathFile != "") && (pathFile.match(/(.xml)$/))) {
-        switch(method) {
-          case "URL": //Not work now, because now no URL-support
-            options["filepath"] = pathFile;
-            options["method"] = "URL";
-            break;
-          case "upload":
-            options["method"] = "upload";
-            break;
-        }
-            
-        loadModeToPage(); 
-      }        
-      else {
-        document.getElementById("errorMess").innerHTML = "Cannot read the document";
-      }
-    }
-    
-    //transform element and open side window
-    function w3_open(event) {
-      // transformation
-      var id = event.target.id;
-      readXml("xslt/"+options["transform2"]+".xsl", function(xsl2) {
-        xsltProcessor2.setParameter(null, "elementId", event.target.id);
-        var resultDocument = xsltProcessor2.transformToDocument(modelDoc); 
-        document.getElementById("sideContent").removeChild(document.getElementById("sideContent").childNodes[0]);
-        document.getElementById("sideContent").appendChild(resultDocument.firstElementChild);
-      });
-      
-      
-      // show block
-      document.getElementById("sideNav").style.display = "block";
-      
-      //update equations
-      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
-    }
-
-    function w3_close() {
-      document.getElementById("sideNav").style.display = "none";
-    }
-        
-        
-]]>
-    </script>
+    <!-- MathJax settings -->
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-      jax: ["input/MathML","output/PreviewHTML"],
-      extensions: ["mml2jax.js", "MathML/content-mathml.js"]
-    });
+      jax: ["input/MathML", "output/HTML-CSS"],
+      extensions: ["mml2jax.js", "MathML/content-mathml.js", "MathZoom.js"],
+      menuSettings: { zoom: "Click" },      
+      CommonHTML: { linebreaks: { automatic: true } },
+      "HTML-CSS": { 
+        linebreaks: { automatic: true },
+        EqnChunk: 1,
+        EqnChunkFactor: 1,
+        EqnChunkDelay: 1
+      },
+      SVG: { linebreaks: { automatic: true } }
+});
     </script>
-
-    <script type="text/javascript" src="http://insilicobio.ru/mathjax/MathJax.js"> </script> <!----> <!-- external -->
+    <script type="text/javascript" src="http://insilicobio.ru/mathjax/MathJax.js"></script>
     
   </head>
-  <body class="w3-container">
-    <!--<div class="w3-right w3-light-green">
-      <b>SBML Viewer beta by InSysBio:</b> transformation from SBML to human readable page.<br/>Homepage http://sv.insysbio.ru
-    </div> -->
-   
-  <!-- <label id="filearea" class="w3-btn w3-block w3-teal">
-    <input id="file" type="file" accept=".xml,.sbml" style="position:absolute; opacity: 0; width:100%; cursor: pointer;" onchange=""/>
-    Press to load SBML file or drug'n'drop to the area
-  </label> -->
-  <br/>
-  <div class="w3-container w3-card-4 w3-padding w3-blue-grey w3-cell">
-    <span id="optionsManage" class="w3-btn w3-circle w3-blue-grey w3-padding w3-large w3-cell">-</span>
-    <h3 class="w3-cell">Options</h3>
-  <hr/>
-  <div id="optionsArea">
-    <div class="w3-cell w3-padding">
-    <input id="file" type="file" accept=".xml,.sbml" style="color:transparent; width:140px;" onchange=""/><span id="fileName">No file choosen</span><br/><br/>
-      <h4>Transformation type:</h4>
-      <select></select>
-      
+  <body>
+    <div class="w3-top w3-card-4 w3-blue-grey">
+      <div id="optionsArea">
+        <div class="w3-cell w3-padding w3-border-right w3-border-color-white">
+          <input id="file" class="file" type="file" accept=".xml,.sbml"/><span id="fileName" class="w3-padding-bottom">No file choosen</span>
+          <p class="w3-dispay-bottomleft"><a xmlns="http://www.w3.org/1999/xhtml" href="http://insysbio.ru/" class="w3-small w3-text-white">SbmlViewer by InSysBio</a></p>
+        </div>
+        
+        <div class="w3-cell w3-border-right w3-border-color-white w3-padding-left w3-padding-right">
+          <h4>Transformation type:</h4>
+          <select id="transformationType"></select>
+        </div>
+        
+        <div id="listOptionsCheckbox" class="w3-cell w3-padding">  
+          <h4>Options display:</h4>
+        </div>
+        
+        <div class="w3-container w3-cell w3-cell-bottom w3-padding">
+          <div id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple w3-display-right"><i id="spinner" class="w3-spin fa fa-spinner w3-xxlarge"></i></div>
+        </div>
+      </div>  
     </div>
-    <div id="listRadioBtn" class="w3-cell w3-padding">  
-    <h4>Options display:</h4>
-    </div>
-    <div class="w3-container w3-cell w3-cell-bottom w3-padding"> 
-    <img id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple" style="width: 85px; height: 70px; cursor: pointer" src="http://sv.insysbio.ru/assets/img/refresh.png"/>
-    </div>
-  </div>  
-  </div>
-  
- 
-  <!-- 
-  <div class="w3-center w3-text-grey w3-padding">
-    <span>Or link </span><input type="text" id="urlFile" title="Enter URL"/> <button onclick="validateUploadFile(document.getElementById('urlFile').value,'URL')">Upload</button><span id="erMes"></span>
-  </div>   -->
     
-  <div id="errorMess" class="w3-panel w3-text-red w3-center w3-large"/>
-  
-  <div id="sideNav" class="w3-container w3-card-4" style="position:fixed; display: none; top: 50px; right:50px; min-width:800px; max-width:50%; min-height:200px; max-height:90%; overflow-y: auto; overflow-x: auto; background:#ddd; z-index: 10;">
-    <span class="w3-closebtn" onclick="w3_close()">&#215;</span>
-      <div id="sideContent">fff</div>
-    </div>
-    <div id="mainContent">
-      <div class="w3-container w3-center w3-large w3-text-grey">Nothing to show</div>
+   
+    
+    
+    <div id="content">
+      <div id="errorContainer" class="w3-row">
+        <div id="errorMess" class="w3-panel w3-col l12 m12 s12 w3-text-red w3-center w3-large w3-padding"></div>
+      </div>
+      <div class="w3-row">        
+        <div id="mainContent" class="w3-container w3-col w3-border-right w3-border-color-blue-grey">
+          <div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug'n'drop SBML file here.</div>
+        </div>
+        <div id="sideInformBlock" class="w3-container">
+          <button onclick="w3_close()" class="w3-blue-grey w3-button w3-circle w3-large closeSideBarBtn">></button>
+          <div id="sideContent"></div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
