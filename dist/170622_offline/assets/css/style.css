@@ -1,0 +1,40 @@
+html {
+  overflow: hidden;
+}
+
+/*--- Options area ---*/
+.file {
+  color:transparent;
+  width:140px;
+}
+.noteOptions {
+  position: absolute;
+  margin-top: 0;
+}
+
+/*-- Content --*/
+#content {
+  margin-top: 105px;
+}
+  /*-- Error message --*/
+  #errorContainer {
+    display: none;
+  }
+  /*-- Main --*/
+  #mainContent {
+    overflow: auto;
+    padding-bottom: 30px;
+  }
+  /*-- Side --*/
+  #sideInformBlock {
+    display: none;
+    overflow: auto;
+  }
+  #sideContent {
+    overflow: auto;
+  }
+  .closeSideBarBtn {
+  position: fixed;
+  top: 50%;
+  right: 23.5%;
+  }
