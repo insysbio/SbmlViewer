@@ -12,7 +12,8 @@ When **SbmlViewer** is helpful:
 * You need to share your model in human readable format with someone easily.
 * Your have some errors when reading foreign SBML and are trying to check the model code.
 
-![sbmlviewer example](/assets/img/sbmlviewer_example.png)
+![sv scren 1](/assets/img/sv_screen1.png)
+![sv scren 2](/assets/img/sv_screen2.png)
 
 # Quick start 
 <hr/>
@@ -41,7 +42,7 @@ To look through example just try the links
 
 ## Current release
 
-Version: 170619
+Version: 170622
 
 - reading SBML Level 2 Version 1-5
 - creating tabular view of model with: **sbml2table** transformation
