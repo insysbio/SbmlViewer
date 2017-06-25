@@ -227,7 +227,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-      <parameter id="k2" name="constant of reaction" value="1.93148" units="mM/min" constant="true" metaid="metaexample" sboTerm="SBO:001">
+      <parameter id="k2" name="constant of reaction" value="1.93148" units="mM_per_min" constant="true" metaid="metaexample" sboTerm="SBO:001">
     <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -605,10 +605,8 @@
       </example>
     </annotation>
         </parameter>
-            <parameter id="k4" units="uM_per_s" constant="false"/>
             <parameter id="k4r" value="0.001" constant="false"/>
-            <parameter id="v0_0" constant="true"/>
-            <parameter id="someFun" value="0" constant="false"/>
+            <parameter id="local_par" value="0" constant="false"/>
           </listOfParameters>
         </kineticLaw>
       </reaction>

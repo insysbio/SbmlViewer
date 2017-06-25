@@ -12,7 +12,7 @@ When **SbmlViewer** is helpful:
 * You need to share your model in human readable format with someone easily.
 * Your have some errors when reading foreign SBML and are trying to check the model code.
 
-![sbmlviewer example](/assets/img/sbmlviewer_example.png)
+![sv scren 1](/assets/img/sv_screen1.png)
 
 # Quick start 
 <hr/>
@@ -22,7 +22,7 @@ When **SbmlViewer** is helpful:
 For models from your computer:
 
 1. Go to the page [http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml](/{{ site.distPath }}viewer.xhtml)
-2. Click on button "Choose file" and select your sbml model.
+2. Drug'n'drop your SBML OR click on button "Choose file" and select your sbml model.
 
 For models shared on web:
 
@@ -36,24 +36,30 @@ To look through example just try the links
 * [BIOMD0000000588 from BioModels Database, model of the month in February 2017](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000588.xml)
 * [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sv.insysbio.ru/{{ site.distPath }}viewer.xhtml?http://sv.insysbio.ru/cases/BIOMD0000000439.xml)
 
+
+![sv scren 2](/assets/img/sv_screen2.png)
+
 # Features
 <hr/>
 
 ## Current release
 
+Version: 170622
+
 - reading SBML Level 2 Version 1-5
 - creating tabular view of model with: **sbml2table** transformation
 - summary generation for chosen element: **sbml2element** transformation
+- generation of equation corresponding to your model: **sbml2math** transformation
 
 ## Known restrictions
-- wrong representation of local <code>parameter</code> element inside <code>kineticLaw</code>
+
+- some bugs with local parameters in **sbml2element** transformation
 - ignores <code>annotation</code> elements for presentation
 
 ## Roadmap
 
 - support for SBML level 3
 - **sbml2tree** transformation
-- **sbml2ode** transformation
 - Transformation to Antimony format: **sbml2antimony** transformation
 - Chrome extension for SbmlViewer
 
@@ -62,7 +68,7 @@ To look through example just try the links
 
 ## Maintaners
 
-- Viktoria Tkachenko @tkachVika
+- Viktoria Tkachenko @vetedde
 - Evgeny Metelkin @metelkin
 
 ## License

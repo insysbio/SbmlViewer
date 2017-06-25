@@ -36,5 +36,5 @@ Many thanks to:
 * [W3CSS](https://www.w3schools.com/w3css/)
 * Oleg Demin for testing and advices
 
-© Institute for Systems Biology, Moscow, 2016-2017
+© InSysBio, 2016-2017
 http://insysbio.ru
