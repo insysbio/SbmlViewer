@@ -47,7 +47,7 @@ Project-page: http://sv.insysbio.ru
   <!-- GLOBAL KEYS -->
   <xsl:key name="idKey" match="/*/*/*/*" use="@id"/><!-- to exclude local parameters -->
   <!--<xsl:key name="idKey" match="*" use="@id"/>-->
-  <xsl:key name="variableKey" match="*" use="@variable"/>
+  <xsl:key name="variableKey" match="/*/*/*/*" use="@variable"/>
   
   <!-- PARAMETERS -->
   <xsl:param name="useNames">false</xsl:param> <!-- use names instead of id in equations -->
