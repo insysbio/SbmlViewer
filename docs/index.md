@@ -1,5 +1,5 @@
 
-**SbmlViewer** is a tool for fast and easy reading biologycal models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
+**SbmlViewer** is a tool for fast and easy reading biological models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
 
 SbmlViewer never uploads your files to the server and all transformations are performed locally in your browser, so it is safe and secure for your code.
 
