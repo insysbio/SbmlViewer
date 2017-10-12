@@ -3,7 +3,7 @@ The collection of transformation from SBML files into human readable formats and
 
 ## Getting Started
 
-Just play with transformation on the page http://sv.insysbio.ru/online
+Just play with transformation on the page http://sv.insysbio.com/online
 
 ## Contributing
 
@@ -22,8 +22,8 @@ We use date in format YYMMDD for versioning
 
 ## Contact
 
-http://sv.insysbio.ru
-sv@insysbio.ru
+http://sv.insysbio.com
+dev@insysbio.com
 
 ## License
 
@@ -37,4 +37,4 @@ Many thanks to:
 * Oleg Demin for testing and advices
 
 © InSysBio, 2016-2017
-http://insysbio.ru
+http://insysbio.com
