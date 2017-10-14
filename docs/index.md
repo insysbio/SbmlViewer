@@ -64,9 +64,8 @@ Version: 170622
 - Chrome extension for SbmlViewer
 
 <hr/>
-<a class="w3-btn w3-round w3-block w3-teal" href="http://eepurl.com/cL_5az">Subscribe to SbmlViewer updates <i class="fa fa-envelope w3-large"></i></a>
 
-## Maintaners
+## Team
 
 - Viktoria Tkachenko @vetedde
 - Evgeny Metelkin @metelkin
