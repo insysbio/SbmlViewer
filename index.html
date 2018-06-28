@@ -3,7 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>y</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- MathJax settings -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/MathML", "output/HTML-CSS"],
+      extensions: ["mml2jax.js", "MathML/content-mathml.js", "MathZoom.js"],
+      menuSettings: { zoom: "Click" },
+      CommonHTML: { linebreaks: { automatic: true } },
+      "HTML-CSS": {
+        linebreaks: { automatic: true },
+        EqnChunk: 1,
+        EqnChunkFactor: 1,
+        EqnChunkDelay: 1
+      },
+      SVG: { linebreaks: { automatic: true } }
+    });
+    </script>
+    <script type="text/javascript" src="http://insilicobio.ru/mathjax/MathJax.js"></script>
+    <title>SbmlViewer</title>
   </head>
   <body>
     <div id="app"></div>

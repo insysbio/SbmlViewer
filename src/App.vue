@@ -1,23 +1,21 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <ToolBar></ToolBar>
+    <ModelArea></ModelArea>
   </div>
 </template>
 
 <script>
+import ToolBar from './components/tool-bar/tool-bar.vue'
+import ModelArea from './components/model-area/model-area.vue'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    ToolBar,
+    ModelArea
+  }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
