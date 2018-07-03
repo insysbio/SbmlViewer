@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <ToolBar @onUploadFile="updateFile"></ToolBar>
+  <ToolBar @onUploadFile="updateFile" v-bind:options='xsltOptions' @onUpdateOptions='updateOptions'></ToolBar>
     <ModelArea v-bind:displayContent='displayContent'></ModelArea>
   </div>
 </template>
@@ -13,6 +13,7 @@ export default {
   name: 'App',
   data () {
     return {
+      load: false,
       xsltOptions: {
         correctMathml: false,
         equationsOff: false,
@@ -25,7 +26,7 @@ export default {
     }
   },
   mounted () {
-    this.xsltProcessorMainTable = this.applyXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(rawXsltStylesheet, 'text/xml'), this.xsltOptions)
+    this.updateOptions()
   },
   components: {
     ToolBar,
@@ -34,20 +35,23 @@ export default {
   methods: {
     updateFile: function (file) {
       let doc = this.transformDocument(this.xsltProcessorMainTable, new DOMParser().parseFromString(file.rawHTML, 'text/xml'))
-      console.log(doc)
       if (this.checkDocumentVersion(doc) && this.checkDocument(doc)) {
         this.displayDocument(doc)
       }
     },
-    applyXsltProcessor: (xsltProcessor, rawXsltStylesheet, xsltOptions) => {
+    applyXsltProcessor: function (xsltProcessor, rawXsltStylesheet) {
       try {
         xsltProcessor.importStylesheet(rawXsltStylesheet)
-        for (let opt in xsltOptions) {
-          xsltProcessor.setParameter(null, opt, xsltOptions[opt])
+        for (let opt in this.xsltOptions) {
+          console.log(opt, this.xsltOptions[opt])
+          xsltProcessor.setParameter(null, opt, this.xsltOptions[opt])
         }
       } catch (err) {
       }
-      return xsltProcessor
+      this.xsltProcessorMainTable = xsltProcessor
+    },
+    updateOptions: function () {
+      this.applyXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(rawXsltStylesheet, 'text/xml'), this.xsltOptions)
     },
     transformDocument: (xsltProcessor, model) => {
       try {

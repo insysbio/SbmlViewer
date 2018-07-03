@@ -4,7 +4,9 @@
 import { readXmlUpload } from '../../utilites/readXmlUpload'
 export default {
   name: 'ToolBar',
-  props: [],
+  props: [
+    'options'
+  ],
   data () {
     return {
       fileName: 'No file choosen',
@@ -36,6 +38,12 @@ export default {
       readXmlUpload(file, (result) => {
         this.$emit('onUploadFile', result)
       })
+    },
+    changeOption: function (optName) {
+      this.options[optName] = !this.options[optName]
+    },
+    clickUpdateOptions: function () {
+      this.$emit('onUpdateOptions')
     }
   }
 }
