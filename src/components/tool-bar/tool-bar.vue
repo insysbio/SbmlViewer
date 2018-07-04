@@ -52,7 +52,9 @@ export default {
     },
     onSelectXsltTable: function () {
       this.options.transform = this.xslt
-      this.$emit('selectXslt', this.xslt)
+      readXmlUpload(this.getFile(), (result) => {
+        this.$emit('selectedXslt', this.xslt, result.rawHTML)
+      })
     }
   }
 }

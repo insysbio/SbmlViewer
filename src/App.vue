@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <ToolBar @onLoadFile="updateModel" @selectXslt='changeMainXslt' v-bind:options='xsltOptions'></ToolBar>
+  <ToolBar @onLoadFile="updateModel" @selectedXslt='selectXslt' v-bind:options='xsltOptions'></ToolBar>
   <ModelArea v-bind:displayContent='displayContent'></ModelArea>
   </div>
 </template>
@@ -28,7 +28,6 @@ export default {
   },
   mounted () {
     this.changeMainXslt(this.xsltOptions.transform)
-    this.updateOptions()
   },
   components: {
     ToolBar,
@@ -50,9 +49,12 @@ export default {
       }
     },
     changeMainXslt: function (xslt) {
-      console.log(xslt)
       this.xsltStylesheet = require('./assets/xslt/' + xslt + '.xsl')
       this.updateOptions()
+    },
+    selectXslt: function (xslt, file) {
+      this.changeMainXslt(xslt)
+      this.loadFile(file)
     },
     applyXsltProcessor: function (xsltProcessor, xsltStylesheet) {
       try {
