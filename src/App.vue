@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-  <ToolBar @onLoadFile="updateModel" v-bind:options='xsltOptions'></ToolBar>
-    <ModelArea v-bind:displayContent='displayContent'></ModelArea>
+  <ToolBar @onLoadFile="updateModel" @selectXslt='changeMainXslt' v-bind:options='xsltOptions'></ToolBar>
+  <ModelArea v-bind:displayContent='displayContent'></ModelArea>
   </div>
 </template>
 
 <script>
-import * as rawXsltStylesheet from './assets/xslt/sbml2table.xsl'
+// import * as rawXsltStylesheet from './assets/xslt/sbml2table.xsl'
 import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
 export default {
@@ -22,10 +22,12 @@ export default {
         useNames: false
       },
       displayContent: '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>',
-      fileContent: null
+      fileContent: null,
+      xsltStylesheet: ''
     }
   },
   mounted () {
+    this.changeMainXslt(this.xsltOptions.transform)
     this.updateOptions()
   },
   components: {
@@ -38,17 +40,23 @@ export default {
       this.loadFile(file)
     },
     updateOptions: function () {
-      this.applyXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(rawXsltStylesheet, 'text/xml'), this.xsltOptions)
+      this.applyXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
     },
     loadFile: function (file) {
-      let doc = this.transformDocument(this.xsltProcessorMainTable, new DOMParser().parseFromString(file.rawHTML, 'text/xml'))
-      if (this.checkDocumentVersion(doc) && this.checkDocument(doc)) {
-        this.displayDocument(doc)
+      let doc = new DOMParser().parseFromString(file, 'text/xml')
+      let transformDoc = this.transformDocument(this.xsltProcessorMainTable, doc)
+      if (this.checkDocumentVersion(doc) && this.checkDocument(transformDoc)) {
+        this.displayDocument(transformDoc)
       }
     },
-    applyXsltProcessor: function (xsltProcessor, rawXsltStylesheet) {
+    changeMainXslt: function (xslt) {
+      console.log(xslt)
+      this.xsltStylesheet = require('./assets/xslt/' + xslt + '.xsl')
+      this.updateOptions()
+    },
+    applyXsltProcessor: function (xsltProcessor, xsltStylesheet) {
       try {
-        xsltProcessor.importStylesheet(rawXsltStylesheet)
+        xsltProcessor.importStylesheet(xsltStylesheet)
         for (let opt in this.xsltOptions) {
           xsltProcessor.setParameter(null, opt, this.xsltOptions[opt])
         }
@@ -71,14 +79,12 @@ export default {
       }
     },
     checkDocumentVersion: (doc) => {
-      return true
-      /*
-          if (doc.firstElementChild.getAttribute('level') === '2') {
-            return true
-          } else {
-            console.log('Incorrect level')
-            return false
-          } */
+      if (doc.firstElementChild.getAttribute('level') === '2') {
+        return true
+      } else {
+        console.log('Incorrect level')
+        return false
+      }
     },
     displayDocument: function (doc) {
       this.displayContent = this.documentToString(doc)

@@ -7,8 +7,8 @@
 
       <div class="w3-cell w3-border-right w3-border-color-white w3-padding-left w3-padding-right">
         <h4>Transformation type:</h4>
-        <select id="transformationType">
-          <option v-for="way in waysDisplayPage">{{ way }}</option>
+        <select id="transformationType" v-model="xslt" @change='onSelectXsltTable'>
+          <option v-for="(way, i) in waysDisplayPage" v-bind:value='way'>{{ way }}</option>
         </select>
       </div>
 

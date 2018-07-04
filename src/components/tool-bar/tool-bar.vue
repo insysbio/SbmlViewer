@@ -28,6 +28,7 @@ export default {
         'sbml2table',
         'sbml2math'
       ],
+      xslt: 'sbml2table',
       file: null
     }
   },
@@ -37,7 +38,7 @@ export default {
       let file = this.getFile()
       this.fileName = file.name
       readXmlUpload(file, (result) => {
-        this.$emit('onLoadFile', result)
+        this.$emit('onLoadFile', result.rawHTML)
       })
     },
     changeOption: function (optName) {
@@ -48,6 +49,10 @@ export default {
     },
     readFile: function (file) {
       return document.getElementById('file').files[0]
+    },
+    onSelectXsltTable: function () {
+      this.options.transform = this.xslt
+      this.$emit('selectXslt', this.xslt)
     }
   }
 }

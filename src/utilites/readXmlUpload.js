@@ -5,13 +5,10 @@ const DOMParser = require('dom-parser')
 * @param {object} f - file of model(object File)
 */
 export function readXmlUpload (f, callback) {
-  console.log('Read with help FileReader...')
-
   var reader = new FileReader()
   reader.readAsText(f)
   reader.onload = function () {
     try {
-      console.log(' Success')
       callback(new DOMParser().parseFromString(reader.result, 'application/xml'))
     } catch (err) {
       console.error(' Err: ', err)
