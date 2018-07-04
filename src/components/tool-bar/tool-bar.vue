@@ -27,23 +27,27 @@ export default {
       waysDisplayPage: [
         'sbml2table',
         'sbml2math'
-      ]
+      ],
+      file: null
     }
   },
   methods: {
-    upload: function (e) {
+    onLoadFile: function (e) {
       e.preventDefault()
-      let file = e.target.files[0]
+      let file = this.getFile()
       this.fileName = file.name
       readXmlUpload(file, (result) => {
-        this.$emit('onUploadFile', result)
+        this.$emit('onLoadFile', result)
       })
     },
     changeOption: function (optName) {
       this.options[optName] = !this.options[optName]
     },
-    clickUpdateOptions: function () {
-      this.$emit('onUpdateOptions')
+    getFile: function () {
+      return document.getElementById('file').files[0]
+    },
+    readFile: function (file) {
+      return document.getElementById('file').files[0]
     }
   }
 }
