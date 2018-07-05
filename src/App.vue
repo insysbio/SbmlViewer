@@ -37,12 +37,13 @@ export default {
     updateModel: function (file) {
       this.updateOptions()
       this.loadFile(file)
+      this.addEventListenerAnnotationElement()
     },
     updateOptions: function () {
       this.applyXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
     },
     loadFile: function (file) {
-      let doc = new DOMParser().parseFromString(file, 'text/xml')
+      let doc = this.fileContent = new DOMParser().parseFromString(file, 'text/xml')
       let transformDoc = this.transformDocument(this.xsltProcessorMainTable, doc)
       if (this.checkDocumentVersion(doc) && this.checkDocument(transformDoc)) {
         this.displayDocument(transformDoc)
@@ -90,6 +91,17 @@ export default {
     },
     displayDocument: function (doc) {
       this.displayContent = this.documentToString(doc)
+    },
+    addEventListenerAnnotationElement: function () {
+      this.$nextTick(() => {
+        let annotationElements = document.getElementsByClassName('annotationTarget')
+        for (let i = 0; i < annotationElements.length; i++) {
+          annotationElements[i].addEventListener('click', this.сlickAnnotation)
+        }
+      })
+    },
+    сlickAnnotation: function (e) {
+      this.$root.$emit('onClickAnnotation', e.target.id, this.fileContent)
     },
     documentToString: (doc) => {
       let container = document.createElement('div').appendChild(doc.firstElementChild)

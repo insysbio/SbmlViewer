@@ -1,0 +1,13 @@
+/*-- Side --*/
+#sideInformBlock {
+  display: block;
+  overflow: auto;
+}
+#sideContent {
+  overflow: auto;
+}
+.closeSideBarBtn {
+position: fixed;
+top: 50%;
+right: 23.5%;
+}

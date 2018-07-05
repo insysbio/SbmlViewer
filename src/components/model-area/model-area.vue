@@ -1,6 +1,8 @@
 <template src="./model-area.html"></template>
 <style src="./model-area.scss"></style>
 <script>
+import AnnotationSide from '../annotation-side/annotation-side.vue'
+
 export default {
   name: 'ModelArea',
   props: ['displayContent'],
@@ -17,10 +19,12 @@ export default {
       }
     }
   },
+  components: {
+    AnnotationSide
+  },
   mounted () {
   },
   methods: {
-
   }
 }
 </script>
