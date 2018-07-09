@@ -3,16 +3,11 @@
 #content {
   margin-top: 105px;
 }
-  /*-- Error message --*/
-  #errorContainer {
-    display: none;
-  }
-  /*-- Main --*/
-  #mainContent {
-    overflow: auto;
-    padding-bottom: 30px;
-  }
-
+/*-- Main --*/
+#mainContent {
+  overflow: auto;
+  padding-bottom: 30px;
+}
 .main-container-part {
       @extend .l9;
       @extend .m9;

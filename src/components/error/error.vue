@@ -2,13 +2,21 @@
 <style src="./error.scss"></style>
 <script>
 export default {
-  name: 'Error',
+  name: 'ErrorContainer',
   data () {
-    errorMessage: ''
+    return {
+      errorMessage: ''
+    }
   },
   mounted () {
   },
   methods: {
+    displayErr: function (errMess) {
+      this.errorMessage = errMess
+    },
+    clear: function () {
+      this.errorMessage = ''
+    }
   }
 }
 </script>

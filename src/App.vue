@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <ToolBar @onLoadFile="updateModel" @selectedXslt='selectXslt' v-bind:options='xsltOptions'></ToolBar>
+  <ToolBar @onLoadFile="updateModel" @selectedXslt='updateXslt' v-bind:options='xsltOptions'></ToolBar>
   <ModelArea v-bind:displayContent='displayContent'></ModelArea>
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
     }
   },
   mounted () {
-    this.changeMainXslt(this.xsltOptions.transform)
+    this.changeModelXslt(this.xsltOptions.transform)
   },
   components: {
     ToolBar,
@@ -37,30 +37,34 @@ export default {
   methods: {
     updateModel: function (file) {
       this.$root.$emit('startSpin')
-      this.updateOptions()
-      this.loadFile(file)
-      this.addEventListenerAnnotationElement()
-      this.$root.$emit('stopSpin')
+      setTimeout(() => {
+        this.$nextTick(() => {
+          this.updateXsltOptions()
+          this.parseFile(file)
+          this.addEventListenerAnnotationElement()
+          this.$root.$emit('stopSpin')
+        })
+      }, 100)
     },
-    updateOptions: function () {
-      this.applyXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
+    updateXsltOptions: function () {
+      this.importStylesheetToXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
     },
-    loadFile: function (file) {
+    parseFile: function (file) {
       let doc = this.fileContent = new DOMParser().parseFromString(file, 'text/xml')
-      let transformDoc = this.transformDocument(this.xsltProcessorMainTable, doc)
+      let transformDoc = this.transformDocument(this.modelXsltProcessor, doc)
       if (this.checkDocumentVersion(doc) && this.checkDocument(transformDoc)) {
         this.displayDocument(transformDoc)
       }
     },
-    changeMainXslt: function (xslt) {
+    changeModelXslt: function (xslt) {
       this.xsltStylesheet = require('./assets/xslt/' + xslt + '.xsl')
-      this.updateOptions()
+      this.updateXsltOptions()
     },
-    selectXslt: function (xslt, file) {
-      this.changeMainXslt(xslt)
-      this.loadFile(file)
+    updateXslt: function (xslt, file) {
+      this.changeModelXslt(xslt)
+      this.updateModel(file)
     },
-    applyXsltProcessor: function (xsltProcessor, xsltStylesheet) {
+    importStylesheetToXsltProcessor: function (xsltProcessor, xsltStylesheet) {
       try {
         xsltProcessor.importStylesheet(xsltStylesheet)
         for (let opt in this.xsltOptions) {
@@ -68,7 +72,7 @@ export default {
         }
       } catch (err) {
       }
-      this.xsltProcessorMainTable = xsltProcessor
+      this.modelXsltProcessor = xsltProcessor
     },
     transformDocument: (xsltProcessor, model) => {
       try {
@@ -94,19 +98,25 @@ export default {
     },
     displayDocument: function (doc) {
       this.displayContent = this.documentToString(doc)
-      MathJax.Hub.Queue(['Typeset', MathJax.Hub])
+      this.updateMathjax()
       this.$root.$emit('closeAnnotation')
+      this.$root.$emit('cleanErrorMess')
+    },
+    updateMathjax: function () {
+      this.$nextTick(() => {
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub])
+      })
     },
     addEventListenerAnnotationElement: function () {
       this.$nextTick(() => {
         let annotationElements = document.getElementsByClassName('annotationTarget')
         for (let i = 0; i < annotationElements.length; i++) {
-          annotationElements[i].addEventListener('click', this.сlickAnnotation)
+          annotationElements[i].addEventListener('click', this.onClickAnnotation)
         }
       })
     },
-    сlickAnnotation: function (e) {
-      this.$root.$emit('onClickAnnotation', e.target.id, this.fileContent)
+    onClickAnnotation: function (e) {
+      this.$root.$emit('onOpenAnnotation', e.target.id, this.fileContent)
     },
     documentToString: (doc) => {
       let container = document.createElement('div').appendChild(doc.firstElementChild)

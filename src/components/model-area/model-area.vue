@@ -2,6 +2,7 @@
 <style lang="scss" src="./model-area.scss"></style>
 <script>
 import AnnotationSide from '../annotation-side/annotation-side.vue'
+import ErrorContainer from '../error/error.vue'
 
 export default {
   name: 'ModelArea',
@@ -21,7 +22,8 @@ export default {
     }
   },
   components: {
-    AnnotationSide
+    AnnotationSide,
+    ErrorContainer
   },
   mounted () {
     this.$root.$on('onClickAnnotation', () => {

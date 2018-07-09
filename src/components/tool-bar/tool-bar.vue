@@ -42,10 +42,11 @@ export default {
     })
   },
   methods: {
-    onLoadFile: function (e) {
+    onChooseFile: function (e) {
       e.preventDefault()
       let file = this.getFile()
       this.fileName = file.name
+      document.getElementsByTagName('title')[0].innerHTML = file.name
       readXmlUpload(file, (result) => {
         this.$emit('onLoadFile', result.rawHTML)
       })
@@ -56,10 +57,7 @@ export default {
     getFile: function () {
       return document.getElementById('file').files[0]
     },
-    readFile: function (file) {
-      return document.getElementById('file').files[0]
-    },
-    onSelectXsltTable: function () {
+    onSelectXslt: function () {
       this.options.transform = this.xslt
       readXmlUpload(this.getFile(), (result) => {
         this.$emit('selectedXslt', this.xslt, result.rawHTML)

@@ -17,7 +17,7 @@ export default {
   mounted () {
     this.xsltProcessor = new XSLTProcessor()
     this.xsltProcessor.importStylesheet(new DOMParser().parseFromString(xsltStylesheet, 'text/xml'))
-    this.$root.$on('onClickAnnotation', this.openAnnotation)
+    this.$root.$on('onOpenAnnotation', this.openAnnotation)
   },
   methods: {
     openAnnotation: function (id, content) {
