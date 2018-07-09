@@ -24,6 +24,7 @@ export default {
         let docs = this.xsltProcessor.transformToDocument(content)
         let dContent = this.documentToString(docs)
         this.content = dContent
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub])
       } catch (err) {
 
       }
@@ -37,6 +38,4 @@ export default {
     }
   }
 }
-// update equations
-// MathJax.Hub.Queue(['Typeset', MathJax.Hub]) */
 </script>

@@ -9,6 +9,7 @@ export default {
   ],
   data () {
     return {
+      isSpin: false,
       fileName: 'No file choosen',
       optionsDisplay: {
         'useNames': {

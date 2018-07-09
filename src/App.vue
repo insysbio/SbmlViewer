@@ -91,6 +91,7 @@ export default {
     },
     displayDocument: function (doc) {
       this.displayContent = this.documentToString(doc)
+      MathJax.Hub.Queue(['Typeset', MathJax.Hub])
     },
     addEventListenerAnnotationElement: function () {
       this.$nextTick(() => {
