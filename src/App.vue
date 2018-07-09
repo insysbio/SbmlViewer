@@ -35,9 +35,11 @@ export default {
   },
   methods: {
     updateModel: function (file) {
+      this.$root.$emit('startSpin')
       this.updateOptions()
       this.loadFile(file)
       this.addEventListenerAnnotationElement()
+      this.$root.$emit('stopSpin')
     },
     updateOptions: function () {
       this.applyXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
@@ -92,6 +94,7 @@ export default {
     displayDocument: function (doc) {
       this.displayContent = this.documentToString(doc)
       MathJax.Hub.Queue(['Typeset', MathJax.Hub])
+      this.$root.$emit('closeAnnotation')
     },
     addEventListenerAnnotationElement: function () {
       this.$nextTick(() => {

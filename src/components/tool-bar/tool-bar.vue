@@ -33,6 +33,14 @@ export default {
       file: null
     }
   },
+  mounted () {
+    this.$root.$on('startSpin', () => {
+      this.isSpin = true
+    })
+    this.$root.$on('stopSpin', () => {
+      this.isSpin = false
+    })
+  },
   methods: {
     onLoadFile: function (e) {
       e.preventDefault()

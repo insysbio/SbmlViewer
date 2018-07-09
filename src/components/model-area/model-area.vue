@@ -27,6 +27,9 @@ export default {
     this.$root.$on('onClickAnnotation', () => {
       this.isSideOpen = true
     })
+    this.$root.$on('closeAnnotation', () => {
+      this.isSideOpen = false
+    })
   },
   methods: {
   }
