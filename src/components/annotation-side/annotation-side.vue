@@ -1,6 +1,8 @@
 <template src="./annotation-side.html"></template>
 <style lang="scss" src="./annotation-side.scss"></style>
 <script>
+/* global MathJax */
+
 import * as xsltStylesheet from '../../assets/xslt/sbml2element.xsl'
 
 export default {

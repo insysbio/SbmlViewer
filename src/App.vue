@@ -6,7 +6,8 @@
 </template>
 
 <script>
-// import * as rawXsltStylesheet from './assets/xslt/sbml2table.xsl'
+/* global MathJax */
+
 import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
 export default {
