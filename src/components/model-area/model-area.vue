@@ -1,5 +1,5 @@
 <template src="./model-area.html"></template>
-<style src="./model-area.scss"></style>
+<style lang="scss" src="./model-area.scss"></style>
 <script>
 import AnnotationSide from '../annotation-side/annotation-side.vue'
 
@@ -8,6 +8,7 @@ export default {
   props: ['displayContent'],
   data () {
     return {
+      isSideOpen: false,
       method: 'upload',
       xsltProcessorMainTable: null,
       xsltOptions: {
@@ -23,6 +24,9 @@ export default {
     AnnotationSide
   },
   mounted () {
+    this.$root.$on('onClickAnnotation', () => {
+      this.isSideOpen = true
+    })
   },
   methods: {
   }

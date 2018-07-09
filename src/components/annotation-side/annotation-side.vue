@@ -1,5 +1,5 @@
 <template src="./annotation-side.html"></template>
-<style src="./annotation-side.scss"></style>
+<style lang="scss" src="./annotation-side.scss"></style>
 <script>
 import * as xsltStylesheet from '../../assets/xslt/sbml2element.xsl'
 
@@ -19,17 +19,11 @@ export default {
   },
   methods: {
     openAnnotation: function (id, content) {
-      console.log('open')
-      console.log(id, content)
       this.xsltProcessor.setParameter(null, 'elementId', id)
       try {
-        console.log('try')
         let docs = this.xsltProcessor.transformToDocument(content)
         let dContent = this.documentToString(docs)
-        console.log(docs)
-        console.log(dContent)
         this.content = dContent
-        // console.log()
       } catch (err) {
 
       }

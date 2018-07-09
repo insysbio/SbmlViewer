@@ -1,3 +1,4 @@
+@import '../../assets/style/w3.scss';
 /*-- Content --*/
 #content {
   margin-top: 105px;
@@ -11,3 +12,15 @@
     overflow: auto;
     padding-bottom: 30px;
   }
+
+.main-container-part {
+      @extend .l9;
+      @extend .m9;
+      @extend .s9;
+}
+
+.side-container-open {
+    @extend .l3;
+    @extend .m3;
+    @extend .s3;
+}

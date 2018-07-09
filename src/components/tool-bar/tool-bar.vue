@@ -1,5 +1,5 @@
 <template src="./tool-bar.html"></template>
-<style src="./tool-bar.scss"></style>
+<style lang="scss" src="./tool-bar.scss"></style>
 <script>
 import { readXmlUpload } from '../../utilites/readXmlUpload'
 export default {
