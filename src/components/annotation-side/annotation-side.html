@@ -1,5 +1,5 @@
 <div id="sideInformBlock" class="w3-container">
-  <button onclick="w3_close()" class="w3-blue-grey w3-button w3-circle w3-large closeSideBarBtn">></button>
+  <button @click='onAnnotationClose' class="w3-blue-grey w3-button w3-circle w3-large closeSideBarBtn">></button>
   <div id="sideContent" v-html='content'>
       {{ content }}
   </div>
