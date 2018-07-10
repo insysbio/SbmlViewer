@@ -13,6 +13,7 @@
   "dependencies": {
     "dom-parser": "^0.1.5",
     "filereader": "^0.10.3",
+    "jquery": "^3.3.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

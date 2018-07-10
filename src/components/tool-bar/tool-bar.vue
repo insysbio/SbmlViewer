@@ -2,6 +2,8 @@
 <style lang="scss" src="./tool-bar.scss"></style>
 <script>
 import { readXmlUpload } from '../../utilites/readXmlUpload'
+import $ from 'jquery'
+
 export default {
   name: 'ToolBar',
   props: [
@@ -40,27 +42,41 @@ export default {
     this.$root.$on('stopSpin', () => {
       this.isSpin = false
     })
+    this.dragNdropInit()
   },
   methods: {
     onChooseFile: function (e) {
       e.preventDefault()
-      let file = this.getFile()
-      this.fileName = file.name
-      document.getElementsByTagName('title')[0].innerHTML = file.name
-      readXmlUpload(file, (result) => {
+      this.file = document.getElementById('file').files[0]
+      this.changeFile()
+    },
+    changeFile: function () {
+      this.fileName = this.file.name
+      document.getElementsByTagName('title')[0].innerHTML = this.file.name
+      readXmlUpload(this.file, (result) => {
         this.$emit('onLoadFile', result.rawHTML)
       })
     },
     changeOption: function (optName) {
       this.options[optName] = !this.options[optName]
     },
-    getFile: function () {
-      return document.getElementById('file').files[0]
-    },
     onSelectXslt: function () {
       this.options.transform = this.xslt
-      readXmlUpload(this.getFile(), (result) => {
+      readXmlUpload(this.file, (result) => {
         this.$emit('selectedXslt', this.xslt, result.rawHTML)
+      })
+    },
+    dragNdropInit: function () {
+      $(document).on('dragover', function (e) {
+        e.preventDefault()
+      })
+      $(document).on('dragstart', function (e) {
+        e.preventDefault()
+      })
+      $(document).on('drop', (e) => {
+        e.preventDefault()
+        this.file = e.originalEvent.dataTransfer.files[0]
+        this.changeFile()
       })
     }
   }

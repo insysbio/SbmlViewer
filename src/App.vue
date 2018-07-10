@@ -24,7 +24,8 @@ export default {
       },
       displayContent: '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>',
       fileContent: null,
-      xsltStylesheet: ''
+      xsltStylesheet: '',
+      file: null
     }
   },
   mounted () {
