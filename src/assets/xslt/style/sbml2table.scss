@@ -1,0 +1,47 @@
+@import '../../style/w3.scss';
+
+.container {
+  @extend .w3-container;
+}
+
+.tooltip {
+  @extend .w3-tooltip;
+}
+
+.note-content {
+  @extend .w3-container;
+  @extend .w3-pale-blue;
+  max-width:80%;
+  min-width:300px
+}
+
+.tooltip-note {
+  @extend .w3-text;
+  @extend .w3-pale-blue;
+  position:absolute;
+  left:50%;
+  bottom:95%;
+  border-radius:6px;
+  padding:8px;
+  width:300px;
+}
+
+.list {
+  @extend .w3-table;
+  @extend .w3-striped;
+  @extend .w3-border;
+  @extend .w3-hoverable;
+  @extend .w3-card-4;
+}
+
+.list-header {
+  @extend .w3-blue-grey;
+}
+.tiny {
+  @extend .w3-tiny;
+}
+.table {
+  @extend .w3-table;
+  @extend .w3-striped;
+  @extend .w3-border;
+}

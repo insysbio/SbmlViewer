@@ -53,14 +53,14 @@ Project-page: http://sv.insysbio.ru
 
   <!-- top -->
   <xsl:template match="/">
-    <div class="w3-container">
+    <div class="container">
       <xsl:apply-templates mode="table"/>
     </div>
   </xsl:template>
 
   <!-- SBML -->
   <xsl:template match="*[local-name()='sbml']" mode="table">
-      <h1 class="w3-tooltip">SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/></h1>
+      <h1 class="tooltip">SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/></h1>
 
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
@@ -83,21 +83,21 @@ Project-page: http://sv.insysbio.ru
   <!-- Notes -->
   <xsl:template match="*[local-name()='notes']" mode="element">
    <p><strong>notes:</strong></p>
-   <div class="w3-container w3-pale-blue" style="max-width:80%;min-width:300px">
+   <div class="note-content">
     <xsl:copy-of select="node()"/>
    </div>
   </xsl:template>
 
   <xsl:template match="*[local-name()='notes' and xhtml:body]" mode="element">
    <p><strong>notes:</strong></p>
-   <div class="w3-container w3-pale-blue" style="max-width:80%;min-width:300px">
+   <div class="note-content">
     <xsl:copy-of select="xhtml:body/node()"/>
    </div>
   </xsl:template>
 
   <xsl:template match="*[local-name()='notes' and xhtml:html[xhtml:body]]" mode="element">
    <p><strong>notes:</strong></p>
-   <div class="w3-container w3-pale-blue" style="max-width:80%;min-width:300px">
+   <div class="note-content">
     <xsl:copy-of select="xhtml:html/xhtml:body/node()"/>
    </div>
   </xsl:template>
@@ -112,9 +112,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
       <xsl:value-of select="."/>
       </span>
-       <div
-         style="position:absolute; left:50%; bottom:95%; border-radius:6px; padding:8px; width:300px;"
-         class="w3-text w3-pale-blue">
+       <div class="tooltip-note">
            <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
            <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
          </div>
@@ -125,9 +123,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
       <xsl:value-of select="."/>
       </span>
-       <div
-         style="position:absolute; left:50%; bottom:95%; border-radius:6px; padding:8px; width:300px;"
-         class="w3-text w3-pale-blue">
+       <div class="tooltip-note">
            <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
            <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
          </div>
@@ -147,9 +143,7 @@ Project-page: http://sv.insysbio.ru
         </span>
 	  </xsl:if>
 
-       <div
-         style="position:absolute; left:50%; bottom:95%; border-radius:6px; padding:8px; width:300px;"
-         class="w3-text w3-pale-blue">
+       <div class="tooltip-note">
            <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
            <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
          </div>
@@ -167,8 +161,8 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:95%;">
-      <tr class="w3-blue-grey">
+      <table class="list" style="width: auto;max-width:95%;">
+      <tr class="list-header">
         <th>id</th>
         <th><xsl:if test="*/@name">name</xsl:if></th>
         <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -180,9 +174,9 @@ Project-page: http://sv.insysbio.ru
 
     <xsl:template match="*[local-name()='functionDefinition']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
           <td><xsl:value-of select="@name"/></td>
-          <td class="w3-tiny"><xsl:apply-templates select="@metaid" mode="table"/></td>
+          <td class="tiny"><xsl:apply-templates select="@metaid" mode="table"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
         </tr>
     </xsl:template>
@@ -193,8 +187,8 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:95%;">
-      <tr class="w3-blue-grey">
+      <table class="list" style="width: auto;max-width:95%;">
+      <tr class="list-header">
         <th>id</th>
         <th><xsl:if test="*/@name">name</xsl:if></th>
         <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -206,9 +200,9 @@ Project-page: http://sv.insysbio.ru
 
     <xsl:template match="*[local-name()='unitDefinition']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
           <td><xsl:value-of select="@name"/></td>
-          <td class="w3-tiny"><xsl:apply-templates select="@metaid" mode="table"/></td>
+          <td class="tiny"><xsl:apply-templates select="@metaid" mode="table"/></td>
           <td><xsl:apply-templates select="*[local-name()='listOfUnits']" mode="unitFormula"/></td>
         </tr>
     </xsl:template>
@@ -219,17 +213,17 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:95%;">
-      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th></tr>
+      <table class="list" style="width: auto;max-width:95%;">
+      <tr class="list-header"><th>id</th><th>name</th><th>metaid</th></tr>
       <xsl:apply-templates select="*[local-name()='compartmentType']" mode="table"/>
       </table>
     </xsl:template>
 
     <xsl:template match="*[local-name()='compartmentType']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
           <td><xsl:value-of select="@name"/></td>
-          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
         </tr>
     </xsl:template>
 
@@ -239,17 +233,17 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:95%;">
-      <tr class="w3-blue-grey"><th>id</th><th>name</th><th>metaid</th></tr>
+      <table class="list" style="width: auto;max-width:95%;">
+      <tr class="list-header"><th>id</th><th>name</th><th>metaid</th></tr>
       <xsl:apply-templates select="*[local-name()='speciesType']" mode="table"/>
       </table>
     </xsl:template>
 
     <xsl:template match="*[local-name()='speciesType']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
           <td><xsl:value-of select="@name"/></td>
-          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
         </tr>
     </xsl:template>
 
@@ -260,8 +254,8 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto;max-width:95%;">
-      <tr class="w3-blue-grey">
+      <table class="list" style="width: auto;max-width:95%;">
+      <tr class="list-header">
       <th>id</th>
       <th><xsl:if test="*/@name">name</xsl:if></th>
       <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -276,9 +270,9 @@ Project-page: http://sv.insysbio.ru
 
     <xsl:template match="*[local-name()='compartment']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
           <td><xsl:value-of select="@name"/></td>
-          <td  class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="@compartmentType"/></td>
           <td><xsl:apply-templates select="@outside"/></td>
           <td><xsl:apply-templates select="@units"/></td>
@@ -293,8 +287,8 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:95%;">
-      <tr class="w3-blue-grey">
+      <table class="list"  style="width: auto; max-width:95%;">
+      <tr class="list-header">
       <th>id</th>
       <th><xsl:if test="*/@name">name</xsl:if></th>
       <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -313,9 +307,9 @@ Project-page: http://sv.insysbio.ru
 
     <xsl:template match="*[local-name()='species']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
           <td><xsl:value-of select="@name"/></td>
-          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="@speciesType"/></td>
           <td><xsl:apply-templates select="@substanceUnits"/></td>
           <td><xsl:value-of select="@hasOnlySubstanceUnits"/></td>
@@ -334,8 +328,8 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width:auto; max-width:95%;">
-      <tr class="w3-blue-grey">
+      <table class="list" style="width:auto; max-width:95%;">
+      <tr class="list-header">
       <th>id</th>
       <th><xsl:if test="*/@name">name</xsl:if></th>
       <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -348,9 +342,9 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='parameter']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
           <td><xsl:value-of select="@name"/></td>
-          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="@units"/></td>
           <td>
           <xsl:if test="not(key('variableKey', @id))"><xsl:value-of select="@value"/></xsl:if>
@@ -366,8 +360,8 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:95%;">
-      <tr class="w3-blue-grey">
+      <table class="list"  style="width: auto; max-width:95%;">
+      <tr class="list-header">
       <th>symbol</th>
       <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
       <th>math:</th>
@@ -378,8 +372,8 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='initialAssignment']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@symbol" mode="no-link"/></td>
-          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@symbol" mode="no-link"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
         </tr>
   </xsl:template>
@@ -391,8 +385,8 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:95%;">
-      <tr class="w3-blue-grey">
+      <table class="list"  style="width: auto; max-width:95%;">
+      <tr class="list-header">
         <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
         <th>message</th>
         <th>math:</th>
@@ -403,7 +397,7 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='constraint']" mode="table">
         <tr>
-          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="*[local-name()='message']" mode="table"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
         </tr>
@@ -416,8 +410,8 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:95%;">
-      <tr class="w3-blue-grey">
+      <table class="list"  style="width: auto; max-width:95%;">
+      <tr class="list-header">
 	    <th>type</th>
 		<th>variable</th>
 		<th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -434,8 +428,8 @@ Project-page: http://sv.insysbio.ru
     " mode="table">
         <tr>
           <td><xsl:value-of select="local-name()"/></td>
-          <td class="w3-tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
-          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
         </tr>
   </xsl:template>
@@ -447,8 +441,8 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4" style="width: auto; max-width:95%;">
-      <tr class="w3-blue-grey">
+      <table class="list" style="width: auto; max-width:95%;">
+      <tr class="list-header">
         <th>id</th>
         <th><xsl:if test="*/@name">name</xsl:if></th>
         <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -464,9 +458,9 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='reaction']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
           <td><xsl:value-of select="@name"/></td>
-          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="." mode="reactionFormula"/></td>
           <td><xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/></td>
         </tr>
@@ -485,8 +479,8 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="w3-table w3-striped w3-border w3-hoverable w3-card-4"  style="width: auto; max-width:95%;">
-      <tr class="w3-blue-grey">
+      <table class="list"  style="width: auto; max-width:95%;">
+      <tr class="list-header">
         <th>id</th>
         <th><xsl:if test="*/@name">name</xsl:if></th>
         <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -501,9 +495,9 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='event']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
           <td><xsl:value-of select="@name"/></td>
-          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:value-of select="@useValuesFromTriggerTime"/></td>
           <td><xsl:apply-templates select="*[local-name()='trigger']" mode="table"/></td>
           <td><xsl:apply-templates select="*[local-name()='delay']" mode="table"/></td>
@@ -522,7 +516,7 @@ Project-page: http://sv.insysbio.ru
   <!-- listOfEventAssignments annotation -->
   <xsl:template match="*[local-name()='listOfEventAssignments']" mode="table">
     <b><xsl:value-of select="@metaid"/></b>
-      <table class="w3-table w3-striped w3-border"  style="width: auto; max-width:95%;">
+      <table class="table"  style="width: auto; max-width:95%;">
       <tr>
       <th>variable</th>
       <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -534,8 +528,8 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='eventAssignment']" mode="table">
         <tr>
-          <td class="w3-tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
-          <td class="w3-tiny"><xsl:value-of select="@metaid"/></td>
+          <td class="tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
+          <td class="tiny"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
         </tr>
   </xsl:template>
