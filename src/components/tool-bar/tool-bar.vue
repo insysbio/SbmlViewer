@@ -74,7 +74,7 @@ export default {
     },
     updateFileName: function (name) {
       this.fileName = name
-      document.getElementsByTagName('title')[0].innerHTML = name
+      $('title').html(name)
     },
     changeOption: function (optName) {
       this.options[optName] = !this.options[optName]

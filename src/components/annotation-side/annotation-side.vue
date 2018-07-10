@@ -15,7 +15,7 @@ export default {
     }
   },
   mounted () {
-    this.xsltProcessor = new XSLTProcessor()
+    this.xsltProcessor = window.XSLTProcessor && new XSLTProcessor() || new ActiveXObject('Msxml2.XSLTemplate')
     this.xsltProcessor.importStylesheet(new DOMParser().parseFromString(xsltStylesheet, 'text/xml'))
     this.$root.$on('onOpenAnnotation', this.openAnnotation)
   },

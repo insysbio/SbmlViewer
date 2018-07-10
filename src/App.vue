@@ -10,6 +10,8 @@
 
 import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
+import $ from 'jquery'
+window['$'] = $
 export default {
   name: 'App',
   data () {
@@ -48,7 +50,7 @@ export default {
       }, 100)
     },
     updateXsltOptions: function () {
-      this.importStylesheetToXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
+      this.importStylesheetToXsltProcessor(XSLTProcessor && new XSLTProcessor() || new ActiveXObject('Msxml2.XSLTemplate'), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
     },
     parseFile: function (file) {
       let doc = this.fileContent = file
@@ -84,7 +86,7 @@ export default {
       }
     },
     checkDocument: function (doc) {
-      if (doc.firstElementChild.innerHTML.match(/= \?\?\?/) || doc.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
+      if ($(doc).children().html().match(/= \?\?\?/) || doc.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
         this.$root.$emit('onThrowError', 'Incorrect XML')
         return false
       } else {
@@ -92,7 +94,7 @@ export default {
       }
     },
     checkDocumentVersion: function (doc) {
-      if (doc.firstElementChild.getAttribute('level') === '2') {
+      if ($(doc).contents('sbml').attr('level') === '2') {
         return true
       } else {
         this.$root.$emit('onThrowError', 'Incorrect level')
