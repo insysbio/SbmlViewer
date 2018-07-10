@@ -11,7 +11,7 @@
 import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
 import $ from 'jquery'
-window['$'] = $
+
 export default {
   name: 'App',
   data () {
@@ -50,7 +50,7 @@ export default {
       }, 100)
     },
     updateXsltOptions: function () {
-      this.importStylesheetToXsltProcessor(XSLTProcessor && new XSLTProcessor() || new ActiveXObject('Msxml2.XSLTemplate'), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
+      this.importStylesheetToXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
     },
     parseFile: function (file) {
       let doc = this.fileContent = file
