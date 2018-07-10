@@ -26,7 +26,8 @@ export default {
     ErrorContainer
   },
   mounted () {
-    this.$root.$on('onClickAnnotation', () => {
+    this.$root.$on('onOpenAnnotation', () => {
+      console.log('detect')
       this.isSideOpen = true
     })
     this.$root.$on('closeAnnotation', () => {

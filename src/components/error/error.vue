@@ -5,7 +5,7 @@ export default {
   name: 'ErrorContainer',
   data () {
     return {
-      errorMessage: '',
+      errorMessage: null,
       errorDictionary: require('./error.json')
     }
   },
@@ -20,7 +20,7 @@ export default {
       this.errorMessage = errMess
     },
     clear: function () {
-      this.errorMessage = ''
+      this.errorMessage = null
     }
   }
 }

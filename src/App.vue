@@ -92,7 +92,6 @@ export default {
       }
     },
     checkDocumentVersion: function (doc) {
-      console.log(doc)
       if (doc.firstElementChild.getAttribute('level') === '2') {
         return true
       } else {
