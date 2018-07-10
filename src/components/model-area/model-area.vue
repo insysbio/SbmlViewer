@@ -27,7 +27,6 @@ export default {
   },
   mounted () {
     this.$root.$on('onOpenAnnotation', () => {
-      console.log('detect')
       this.isSideOpen = true
     })
     this.$root.$on('closeAnnotation', () => {

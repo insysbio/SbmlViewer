@@ -65,6 +65,7 @@ export default {
       this.uploadFileFromComputer()
     },
     uploadFileFromComputer: function () {
+      this.updateFileName(this.file.name)
       readXmlUpload(this.file, (result) => {
         let fileContent = new DOMParser().parseFromString(result.rawHTML, 'text/xml')
         this.fileContent = fileContent
@@ -112,7 +113,7 @@ export default {
       $(document).on('drop', (e) => {
         e.preventDefault()
         this.file = e.originalEvent.dataTransfer.files[0]
-        this.changeFile()
+        this.uploadFileFromComputer()
       })
     }
   }
