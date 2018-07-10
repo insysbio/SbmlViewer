@@ -71,28 +71,30 @@ export default {
           xsltProcessor.setParameter(null, opt, this.xsltOptions[opt])
         }
       } catch (err) {
+        this.$root.$emit('onThrowError', 'Fail import stylesheet')
       }
       this.modelXsltProcessor = xsltProcessor
     },
-    transformDocument: (xsltProcessor, model) => {
+    transformDocument: function (xsltProcessor, model) {
       try {
         return xsltProcessor.transformToFragment(model, document)
       } catch (err) { // if transfrom not success
+        this.$root.$emit('onThrowError', 'Fail transform document')
       }
     },
-    checkDocument: (doc) => {
+    checkDocument: function (doc) {
       if (doc.firstElementChild.innerHTML.match(/= \?\?\?/) || doc.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
-        console.log('Incorrect XML')
+        this.$root.$emit('onThrowError', 'Incorrect XML')
         return false
       } else {
         return true
       }
     },
-    checkDocumentVersion: (doc) => {
+    checkDocumentVersion: function (doc) {
       if (doc.firstElementChild.getAttribute('level') === '2') {
         return true
       } else {
-        console.log('Incorrect level')
+        this.$root.$emit('onThrowError', 'Incorrect level')
         return false
       }
     },
@@ -100,12 +102,14 @@ export default {
       this.displayContent = this.documentToString(doc)
       this.updateMathjax()
       this.$root.$emit('closeAnnotation')
-      this.$root.$emit('cleanErrorMess')
+      this.$root.$emit('onClearErr')
     },
     updateMathjax: function () {
-      this.$nextTick(() => {
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub])
-      })
+      setTimeout(() => {
+        this.$nextTick(() => {
+          MathJax.Hub.Queue(['Typeset', MathJax.Hub])
+        })
+      }, 500)
     },
     addEventListenerAnnotationElement: function () {
       this.$nextTick(() => {
@@ -118,7 +122,7 @@ export default {
     onClickAnnotation: function (e) {
       this.$root.$emit('onOpenAnnotation', e.target.id, this.fileContent)
     },
-    documentToString: (doc) => {
+    documentToString: function (doc) {
       let container = document.createElement('div').appendChild(doc.firstElementChild)
       return container.innerHTML
     }

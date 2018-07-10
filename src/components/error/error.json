@@ -1,0 +1,14 @@
+{
+  "Incorrect XML": {
+    "message": "Incorrect XML"
+  },
+  "Incorrect level": {
+    "message": "Incorrect level"
+  },
+  "Fail import stylesheet": {
+    "message": "Fail import stylesheet"
+  },
+  "Fail transform document": {
+    "message": "Fail transform document"
+  }
+}
