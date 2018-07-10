@@ -51,7 +51,7 @@ export default {
       this.importStylesheetToXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
     },
     parseFile: function (file) {
-      let doc = this.fileContent = new DOMParser().parseFromString(file, 'text/xml')
+      let doc = this.fileContent = file
       let transformDoc = this.transformDocument(this.modelXsltProcessor, doc)
       if (this.checkDocumentVersion(doc) && this.checkDocument(transformDoc)) {
         this.displayDocument(transformDoc)
@@ -92,6 +92,7 @@ export default {
       }
     },
     checkDocumentVersion: function (doc) {
+      console.log(doc)
       if (doc.firstElementChild.getAttribute('level') === '2') {
         return true
       } else {

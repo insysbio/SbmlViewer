@@ -32,7 +32,8 @@ export default {
         'sbml2math'
       ],
       xslt: 'sbml2table',
-      file: null
+      file: null,
+      fileContent: null
     }
   },
   mounted () {
@@ -43,27 +44,62 @@ export default {
       this.isSpin = false
     })
     this.dragNdropInit()
+    this.url = this.checkGetUploadReq()
+    if (this.url) {
+      this.uploadFileByUrl()
+    }
   },
   methods: {
+    refresh: function () {
+      if (this.url) {
+        this.uploadFileByUrl()
+      }
+      if (this.file) {
+        this.uploadFileFromComputer()
+      }
+    },
     onChooseFile: function (e) {
       e.preventDefault()
       this.file = document.getElementById('file').files[0]
-      this.changeFile()
+      this.url = null
+      this.uploadFileFromComputer()
     },
-    changeFile: function () {
-      this.fileName = this.file.name
-      document.getElementsByTagName('title')[0].innerHTML = this.file.name
+    uploadFileFromComputer: function () {
       readXmlUpload(this.file, (result) => {
-        this.$emit('onLoadFile', result.rawHTML)
+        let fileContent = new DOMParser().parseFromString(result.rawHTML, 'text/xml')
+        this.fileContent = fileContent
+        this.$emit('onLoadFile', fileContent)
       })
+    },
+    updateFileName: function (name) {
+      this.fileName = name
+      document.getElementsByTagName('title')[0].innerHTML = name
     },
     changeOption: function (optName) {
       this.options[optName] = !this.options[optName]
     },
     onSelectXslt: function () {
       this.options.transform = this.xslt
-      readXmlUpload(this.file, (result) => {
-        this.$emit('selectedXslt', this.xslt, result.rawHTML)
+      this.$emit('selectedXslt', this.xslt, this.fileContent)
+    },
+    checkGetUploadReq: function () {
+      let parameters = window.location.search.substring(1).split('&')
+      if (parameters.length !== 0) {
+        return parameters[0]
+      } else {
+        return null
+      }
+    },
+    uploadFileByUrl: function () {
+      this.file = null
+      this.updateFileName(this.url.match(/[_-\w]+.xml/)[0])
+      $.ajax({
+        url: this.url,
+        success: (result) => {
+          let fileContent = result
+          this.fileContent = fileContent
+          this.$emit('onLoadFile', fileContent)
+        }
       })
     },
     dragNdropInit: function () {
