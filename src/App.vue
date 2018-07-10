@@ -133,7 +133,7 @@ export default {
 }
 </script>
 
-<style lang='scss' src='./assets/xslt/style/sbml2table.scss'></style>
+<style lang='scss' src='./assets/xslt/style/style.scss'></style>
 <style>
 html {
   overflow-x: hidden;

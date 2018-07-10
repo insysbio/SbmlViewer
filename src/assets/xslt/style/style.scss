@@ -37,6 +37,9 @@
 .list-header {
   @extend .w3-blue-grey;
 }
+.large {
+  @extend .w3-large;
+}
 .tiny {
   @extend .w3-tiny;
 }

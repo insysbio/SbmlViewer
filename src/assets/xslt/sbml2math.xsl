@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
 Copyright 2016-2017 Institute for Systems Biology Moscow
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,14 +20,14 @@ modes:
   - idOrName
   - math
   - const/diff-init/diff-eq
-  
+
 Author: Evgeny Metelkin
 Copyright: InSysBio LLC, 2016-2017
 Last modification: 2017-06-15
 
 Project-page: http://sv.insysbio.ru
 -->
-<xsl:stylesheet version="1.0" 
+<xsl:stylesheet version="1.0"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:l2v1="http://www.sbml.org/sbml/level2"
@@ -38,11 +38,11 @@ Project-page: http://sv.insysbio.ru
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   exclude-result-prefixes="l1v1 l1v2 l1v3 l1v4 l1v5">
-  
+
   <!-- GLOBAL KEYS -->
   <xsl:key name="idKey" match="*" use="@id"/>
   <xsl:key name="variableKey" match="*" use="@variable"/>
-  
+
   <!-- PARAMETERS -->
   <xsl:param name="useNames">false</xsl:param> <!-- use names instead of id in equations -->
   <xsl:param name="correctMathml">false</xsl:param> <!-- use correction in MathML (for simbio) always on currently-->
@@ -50,21 +50,21 @@ Project-page: http://sv.insysbio.ru
 
   <!-- top -->
   <xsl:template match="/">
-    <div class="w3-container">
+    <div class="container">
       <xsl:apply-templates mode="math"/>
     </div>
   </xsl:template>
-  
+
   <!-- SBML -->
   <xsl:template match="*[local-name()='sbml']" mode="math">
-      <h1 class="w3-tooltip">Equations crated by SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/></h1>
+      <h1 class="tooltip">Equations crated by SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/></h1>
       <xsl:apply-templates select="*[local-name()='model']" mode="math"/>
   </xsl:template>
-  
+
   <!-- model -->
   <xsl:template match="*[local-name()='model']" mode="math">
     <xsl:apply-templates select="@*"/>
-    
+
     <xsl:if test="count(//*[local-name()='functionDefinition'])">
       <xsl:call-template name="functions"/>
     </xsl:if>
@@ -100,18 +100,18 @@ Project-page: http://sv.insysbio.ru
       <xsl:call-template name="events"/>
     </xsl:if>
   </xsl:template>
-  
+
   <xsl:template match="@*">
     <p><strong><xsl:value-of select="local-name()"/></strong>: <xsl:value-of select="."/></p>
   </xsl:template>
-  
+
   <!-- idOrName mode -->
   <xsl:template match="@id" mode="idOrName">
       <xsl:if test="$useNames='true' and count(./../@name)>0">'<xsl:value-of select="./../@name"/>'</xsl:if>  <!-- for simbio only-->
       <xsl:if test="$useNames='true' and count(./../@name)=0">'=unnamed='</xsl:if>
       <xsl:if test="not($useNames='true')"><xsl:value-of select="."/></xsl:if>
   </xsl:template>
-  
+
   <!-- functions -->
   <xsl:template name="functions">
     <h2>Functions:</h2>
@@ -119,7 +119,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="//*[local-name()='functionDefinition']"/>
     </p>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='functionDefinition']">
       <mml:math>
         <mml:apply>
@@ -133,7 +133,7 @@ Project-page: http://sv.insysbio.ru
       </mml:math>
       <br/>
   </xsl:template>
-  
+
   <!-- constants -->
   <xsl:template name="constants">
     <h2>Constants:</h2>
@@ -143,27 +143,27 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="//*[local-name()='species' and @boundaryCondition='true' and not(key('variableKey',@id))]" mode="const"/>
     </p>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='parameter']" mode="const">
-    <xsl:apply-templates select="@id" mode="idOrName"/> 
+    <xsl:apply-templates select="@id" mode="idOrName"/>
     = <xsl:value-of select="@value"/><xsl:if test="not(@value)">?</xsl:if>
     <br/>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='compartment']" mode="const">
-    <xsl:apply-templates select="@id" mode="idOrName"/> 
+    <xsl:apply-templates select="@id" mode="idOrName"/>
     = <xsl:value-of select="@size"/><xsl:if test="not(@size)">?</xsl:if>
     <br/>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='species' and @initialAmount]" mode="const">
     <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@initialAmount"/><xsl:if test="@hasOnlySunstanceUnits!='true'">/<xsl:value-of select="@compartment"/></xsl:if><br/>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='species' and @initialConcentration]" mode="const">
     <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@initialConcentration"/><xsl:if test="@hasOnlySunstanceUnits='true'">*<xsl:value-of select="@compartment"/></xsl:if><br/>
   </xsl:template>
-  
+
   <!-- explicit rules -->
   <xsl:template name="exp-rules">
     <h2>Explicit rules:</h2>
@@ -172,22 +172,22 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="//*[local-name()='reaction']"/>
     </p>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='assignmentRule']">
     <xsl:if test="key('idKey',@variable)"><xsl:apply-templates select="key('idKey',@variable)/@id" mode="idOrName"/></xsl:if>
     <xsl:if test="not(key('idKey',@variable))"><span style="color:red;"><xsl:value-of select="@variable"/></span></xsl:if>
     = <xsl:apply-templates select="mml:math"/><br/>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='reaction']">
-    <p><xsl:apply-templates select="@id" mode="idOrName"/> 
+    <p><xsl:apply-templates select="@id" mode="idOrName"/>
     = <xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/>
     <xsl:if test="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']/*[local-name()='parameter']">
     <br/><i>where<br/>
     <xsl:apply-templates select="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']/*[local-name()='parameter']" mode="const"/></i>
     </xsl:if></p>
   </xsl:template>
-  
+
   <!-- implicit rules -->
   <xsl:template name="imp-rules">
     <h2>Implicit rules:</h2>
@@ -195,11 +195,11 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="//*[local-name()='algebraicRule']"/>
     </p>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='algebraicRule']">
     0 = <xsl:apply-templates select="mml:math"/><br/>
   </xsl:template>
-  
+
   <!-- diff-init -->
   <xsl:template name="init">
     <h2>Initiate at start:</h2>
@@ -208,17 +208,17 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="//*[local-name()='initialAssignment']" mode="diff-init"/>
     </p>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='initialAssignment']" mode="diff-init">
     <xsl:if test="key('idKey',@symbol)"><xsl:apply-templates select="key('idKey',@symbol)/@id" mode="idOrName"/></xsl:if>
     <xsl:if test="not(key('idKey',@symbol))"><span style="color:red;"><xsl:value-of select="@symbol"/></span></xsl:if>
-    &#8592; 
+    &#8592;
     <xsl:apply-templates select="mml:math"/>
       <br/>
   </xsl:template>
 
     <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true') and not(@hasOnlySubstanceUnits='true')]" mode="diff-init">
-      <xsl:apply-templates select="@id" mode="idOrName"/> &#8592; 
+      <xsl:apply-templates select="@id" mode="idOrName"/> &#8592;
       <mml:math>
             <xsl:if test="@initialConcentration">
               <mml:cn><xsl:value-of select="@initialConcentration"/></mml:cn>
@@ -236,7 +236,7 @@ Project-page: http://sv.insysbio.ru
       </mml:math>
       <br/>
     </xsl:template>
-    
+
     <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true') and @hasOnlySubstanceUnits='true']" mode="diff-init">
       <xsl:apply-templates select="@id" mode="idOrName"/> &#8592;
       <mml:math>
@@ -256,7 +256,7 @@ Project-page: http://sv.insysbio.ru
       </mml:math>
       <br/>
     </xsl:template>
-  
+
   <!-- diff-eq -->
   <xsl:template name="diff-eq">
     <h2>Differential equations:</h2>
@@ -265,7 +265,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="//*[local-name()='rateRule']" mode="diff-eq"/>
     </p>
   </xsl:template>
-  
+
     <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true')]" mode="diff-eq">
       <mml:math>
         <mml:apply>
@@ -290,18 +290,18 @@ Project-page: http://sv.insysbio.ru
       </mml:math>
       <br/>
     </xsl:template>
-  
+
     <xsl:template match="*[local-name()='listOfProducts']/*[local-name()='speciesReference' and not(@stoichiometry!='1')]" mode="diff-eq">
         <mml:ci><xsl:apply-templates select="../../@id" mode="idOrName"/></mml:ci>
     </xsl:template>
-    
+
     <xsl:template match="*[local-name()='listOfReactants']/*[local-name()='speciesReference' and not(@stoichiometry!='1')]" mode="diff-eq">
       <mml:apply>
         <mml:minus/>
         <mml:ci><xsl:apply-templates select="../../@id" mode="idOrName"/></mml:ci>
       </mml:apply>
     </xsl:template>
-    
+
     <xsl:template match="*[local-name()='listOfProducts']/*[local-name()='speciesReference' and @stoichiometry!='1']" mode="diff-eq">
       <mml:apply>
         <mml:times/>
@@ -309,7 +309,7 @@ Project-page: http://sv.insysbio.ru
         <mml:ci><xsl:apply-templates select="../../@id" mode="idOrName"/></mml:ci>
       </mml:apply>
     </xsl:template>
-    
+
     <xsl:template match="*[local-name()='listOfReactants']/*[local-name()='speciesReference' and @stoichiometry!='1']" mode="diff-eq">
       <mml:apply>
         <mml:minus/>
@@ -320,7 +320,7 @@ Project-page: http://sv.insysbio.ru
         </mml:apply>
       </mml:apply>
     </xsl:template>
-    
+
   <xsl:template match="*[local-name()='rateRule']" mode="diff-eq">
       <mml:math>
         <mml:apply>
@@ -337,27 +337,27 @@ Project-page: http://sv.insysbio.ru
       </mml:math>
       <br/>
   </xsl:template>
-  
+
   <!-- events -->
   <xsl:template name="events">
     <h2>Events:</h2>
     <xsl:apply-templates select="//*[local-name()='event']"/>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='event']">
     <p>
-      <strong>When </strong> <xsl:apply-templates select="*[local-name()='trigger']/mml:math"/> 
+      <strong>When </strong> <xsl:apply-templates select="*[local-name()='trigger']/mml:math"/>
       <xsl:if test="*[local-name()='delay']"><strong> after delay </strong> <xsl:apply-templates select="*[local-name()='delay']/mml:math"/></xsl:if>
       <br/><xsl:apply-templates select="*[local-name()='listOfEventAssignments']/*[local-name()='eventAssignment']"/>
     </p>
   </xsl:template>
-  
+
   <xsl:template match="*[local-name()='eventAssignment']">
     <xsl:if test="key('idKey',@variable)"><xsl:apply-templates select="key('idKey',@variable)/@id" mode="idOrName"/></xsl:if>
     <xsl:if test="not(key('idKey',@variable))"><span style="color:red;"><xsl:value-of select="@variable"/></span></xsl:if>
     &#8592; <xsl:apply-templates select="mml:math"/><br/>
   </xsl:template>
-  
+
   <!-- BEGIN OF mml -->
   <!-- correct for max function -->
   <xsl:template match="mml:apply[*[1][self::mml:ci][normalize-space(text())='max'][following-sibling::mml:ci]]">
@@ -367,7 +367,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[position()&gt;1]"/>
     </xsl:copy>
   </xsl:template>
-  
+
   <!-- exclude vertcat inside max -->
   <xsl:template match="mml:apply[*[1][self::mml:ci][normalize-space(text())='max'][following-sibling::mml:apply]]">
     <xsl:copy>
@@ -376,7 +376,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[2]/*[position()&gt;1]"/>
     </xsl:copy>
   </xsl:template>
-  
+
   <!-- correct for min function -->
   <xsl:template match="mml:apply[*[1][self::mml:ci][normalize-space(text())='min'][following-sibling::mml:ci]]">
     <xsl:copy>
@@ -385,7 +385,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[position()&gt;1]"/>
     </xsl:copy>
   </xsl:template>
-  
+
   <!-- exclude vertcat inside min -->
   <xsl:template match="mml:apply[*[1][self::mml:ci][normalize-space(text())='min'][following-sibling::mml:apply]]">
     <xsl:copy>
@@ -394,7 +394,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="*[2]/*[position()&gt;1]"/>
     </xsl:copy>
   </xsl:template>
-  
+
   <!-- use id or names for equations and normalize space -->
   <xsl:template match="mml:ci">
     <xsl:element name="ci" namespace="http://www.w3.org/1998/Math/MathML">
@@ -403,7 +403,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:if test="not($useNames='true')"><xsl:value-of select="normalize-space(text())"/></xsl:if>
     </xsl:element>
   </xsl:template>
-  
+
   <!-- adaptation of e-notation for MathJax -->
   <xsl:template match="mml:cn[@type='e-notation']">
     <xsl:element name="cn" namespace="http://www.w3.org/1998/Math/MathML">
@@ -411,14 +411,14 @@ Project-page: http://sv.insysbio.ru
       </xsl:if>
     </xsl:element>
   </xsl:template>
-  
+
   <!-- adaptation of integer for MathJax -->
   <xsl:template match="mml:cn[@type='integer']">
     <xsl:element name="cn" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:copy-of select="normalize-space(text())"/>
     </xsl:element>
   </xsl:template>
-  
+
   <!-- just copy mml or not -->
   <xsl:template match="mml:math">
     <xsl:if test="$equationsOff='true'"><i style="color:red;">Equations are hidden</i></xsl:if>
@@ -429,7 +429,7 @@ Project-page: http://sv.insysbio.ru
     </xsl:copy>
     </xsl:if>
   </xsl:template>
-  
+
   <xsl:template match="mml:*">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
