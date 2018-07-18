@@ -5,14 +5,12 @@
   "author": "Victoria Tkachenko <tkachenko@insysbio.ru>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --open --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js"
   },
   "dependencies": {
-    "dom-parser": "^0.1.5",
-    "filereader": "^0.10.3",
     "jquery": "^3.3.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"

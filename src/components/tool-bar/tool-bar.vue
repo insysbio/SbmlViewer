@@ -66,10 +66,10 @@ export default {
     },
     uploadFileFromComputer: function () {
       this.updateFileName(this.file.name)
-      readXmlUpload(this.file, (result) => {
-        let fileContent = new DOMParser().parseFromString(result.rawHTML, 'text/xml')
-        this.fileContent = fileContent
-        this.$emit('onLoadFile', fileContent)
+      readXmlUpload(this.file, (err, result) => {
+        if (err) throw err
+        this.fileContent = result
+        this.$emit('onLoadFile', result)
       })
     },
     updateFileName: function (name) {
