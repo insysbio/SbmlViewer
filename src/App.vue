@@ -10,7 +10,7 @@
 
 import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
-import $ from 'jquery'
+// import $ from 'jquery'
 
 export default {
   name: 'App',
@@ -86,15 +86,20 @@ export default {
       }
     },
     checkDocument: function (doc) {
+      /* do not understand this part
       if ($(doc).children().html().match(/= \?\?\?/) || doc.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
         this.$root.$emit('onThrowError', 'Incorrect XML')
         return false
       } else {
         return true
       }
+      */
+      return true
     },
     checkDocumentVersion: function (doc) {
-      if ($(doc).contents('sbml').attr('level') === '2') {
+      // if ($(doc).contents('sbml').attr('level') === '2') {
+      let SBMLElement = doc.getElementsByTagName('sbml')
+      if (SBMLElement[0].getAttribute('level') === '2') {
         return true
       } else {
         this.$root.$emit('onThrowError', 'Incorrect level')
