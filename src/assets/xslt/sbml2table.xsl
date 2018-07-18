@@ -25,10 +25,10 @@ modes:
   - element
 
 Author: Evgeny Metelkin
-Copyright: InSysBio LLC, 2016-2017
-Last modification: 2017-06-15
+Copyright: InSysBio LLC, 2016-2018
+Last modification: 2018-07-18
 
-Project-page: http://sv.insysbio.ru
+Project-page: http://sv.insysbio.com
 -->
 <xsl:stylesheet version="1.0"
   xmlns="http://www.w3.org/1999/xhtml"
@@ -53,41 +53,50 @@ Project-page: http://sv.insysbio.ru
 
   <!-- top -->
   <xsl:template match="/">
-    <div class="container">
-      <xsl:apply-templates mode="table"/>
-    </div>
+    <xsl:apply-templates mode="table"/>
   </xsl:template>
 
   <!-- SBML -->
   <xsl:template match="*[local-name()='sbml']" mode="table">
-      <h1 class="tooltip">SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/></h1>
+    <div class="sv-sbml-container">
+      <h1 class="sv-sbml-header">SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/></h1>
 
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='model']" mode="table"/>
+    </div>
   </xsl:template>
 
   <!-- model -->
   <xsl:template match="*[local-name()='model']" mode="table">
-    <h2>model:</h2>
-    <xsl:apply-templates select="@*" mode="element"/>
-    <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
-    <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-    <xsl:apply-templates select="*[contains(local-name(), 'listOf')]" mode="table"/>
+    <div class="sv-model-container">
+      <h2 class="sv-model-header">model:</h2>
+
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+      <xsl:apply-templates select="*[contains(local-name(), 'listOf')]" mode="table"/>
+    </div>
   </xsl:template>
 
+  <!-- annotation -->
   <xsl:template match="*[local-name()='annotation']" mode="element">
-   <p><strong>annotation:</strong> =presented=</p>
+    <div class="sv-annotation-container">
+      <p class="sv-annotation-header">annotation:</p>
+      <div class="sv-annotation-content"> = presented = </div>
+    </div>
   </xsl:template>
 
-  <!-- Notes -->
+  <!-- notes -->
   <xsl:template match="*[local-name()='notes']" mode="element">
-   <p><strong>notes:</strong></p>
-   <div class="note-content">
-    <xsl:copy-of select="node()"/>
-   </div>
+    <div class="sv-notes-container">
+      <p class="sv-notes-header">notes:</p>
+      <div class="sv-note-content">
+        <xsl:copy-of select="node()"/>
+      </div>
+    </div>
   </xsl:template>
-
+<!--
   <xsl:template match="*[local-name()='notes' and xhtml:body]" mode="element">
    <p><strong>notes:</strong></p>
    <div class="note-content">
@@ -101,94 +110,108 @@ Project-page: http://sv.insysbio.ru
     <xsl:copy-of select="xhtml:html/xhtml:body/node()"/>
    </div>
   </xsl:template>
-
+-->
+  <!-- @attributes -->
   <xsl:template match="@*" mode="element">
-    <p><strong><xsl:value-of select="local-name()"/></strong>: <xsl:value-of select="."/></p>
+    <p class="sv-attribute-container">
+      <span class="sv-attribute-name"><xsl:value-of select="local-name()"/></span>: <span class="sv-attribute-value"><xsl:value-of select="."/></span>
+    </p>
   </xsl:template>
 
   <!-- id with notes -->
-    <xsl:template match="@id" mode="link">
-      <span style="color: blue; text-decoration: underline; cursor: pointer;" class='annotationTarget'>
+  <xsl:template match="@id" mode="link">
+    <span class="sv-attribute-value sv-id-target">
       <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
       <xsl:value-of select="."/>
-      </span>
-       <div class="tooltip-note">
-           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
-           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
-         </div>
-    </xsl:template>
+    </span>
 
-    <xsl:template match="@id" mode="no-link">
-      <span style="color: blue;">
+    <div>
+      <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+      <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="@id" mode="no-link">
+    <span class="sv-attribute-value sv-id">
       <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
       <xsl:value-of select="."/>
-      </span>
-       <div class="tooltip-note">
-           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
-           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
-         </div>
-    </xsl:template>
+    </span>
 
-    <xsl:template match="@symbol|@variable" mode="no-link">
-	  <xsl:if test="not(key('idKey',.))">
-	    <span style="color:red;">
-		<xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
-		<xsl:value-of select="."/>
-		</span>
-      </xsl:if>
-	  <xsl:if test="key('idKey',.)">
-	    <span style="color: blue;">
+    <div class="sv-tooltip">
+      <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+      <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="@symbol|@variable" mode="no-link">
+    <xsl:if test="not(key('idKey',.))">
+      <span class="sv-attribute-value sv-id-lost">
         <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
-	    <xsl:apply-templates select="key('idKey',.)/@id" mode="idOrName"/>
-        </span>
+        <xsl:value-of select="."/>
+      </span>
+    </xsl:if>
+
+    <xsl:if test="key('idKey',.)">
+      <span class="sv-attribute-value sv-id">
+        <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
+        <xsl:apply-templates select="key('idKey',.)/@id" mode="idOrName"/>
+      </span>
 	  </xsl:if>
 
-       <div class="tooltip-note">
-           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
-           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
-         </div>
-    </xsl:template>
+    <div class="sv-tooltip">
+      <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+      <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+    </div>
+  </xsl:template>
 
 	<!-- SId object: internal ref -->
-    <xsl:template match="@species|@substanceUnits|@units|@compartment|@speciesType|@compartmentType|@outside">
-	  <xsl:if test="not(key('idKey',.))"><span style="color:red;"><xsl:value-of select="."/></span></xsl:if>
-	  <xsl:if test="key('idKey',.)"><xsl:apply-templates select="key('idKey',.)/@id" mode="idOrName"/></xsl:if>
-    </xsl:template>
+  <xsl:template match="@species|@substanceUnits|@units|@compartment|@speciesType|@compartmentType|@outside">
+    <xsl:if test="not(key('idKey',.))">
+      <span class="sv-attribute-value sv-id-lost"><xsl:value-of select="."/></span>
+    </xsl:if>
 
-    <!-- listOfFunctionDefinitions -->
-    <xsl:template match="*[local-name()='listOfFunctionDefinitions']" mode="table">
-      <h3>listOfFunctionDefinitions:</h3>
+    <xsl:if test="key('idKey',.)">
+      <span class="sv-attribute-value sv-id"><xsl:apply-templates select="key('idKey',.)/@id" mode="idOrName"/></span>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- listOfFunctionDefinitions -->
+  <xsl:template match="*[local-name()='listOfFunctionDefinitions']" mode="table">
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfFunctionDefinitions:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-      <table class="list" style="width: auto;max-width:95%;">
-      <tr class="list-header">
-        <th>id</th>
-        <th><xsl:if test="*/@name">name</xsl:if></th>
-        <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
-        <th>math</th>
-      </tr>
-      <xsl:apply-templates select="*[local-name()='functionDefinition']" mode="table"/>
-      </table>
-    </xsl:template>
-
-    <xsl:template match="*[local-name()='functionDefinition']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
-          <td><xsl:value-of select="@name"/></td>
-          <td class="tiny"><xsl:apply-templates select="@metaid" mode="table"/></td>
-          <td><xsl:apply-templates select="mml:math"/></td>
+      <table class="sv-listof-table">
+        <tr class="sv-listof-table-header">
+          <th>id</th>
+          <th><xsl:if test="*/@name">name</xsl:if></th>
+          <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+          <th>math</th>
         </tr>
-    </xsl:template>
+        <xsl:apply-templates select="*[local-name()='functionDefinition']" mode="table"/>
+      </table>
+    </div>
+  </xsl:template>
 
-    <!-- listOfUnitDefinitions -->
-    <xsl:template match="*[local-name()='listOfUnitDefinitions']" mode="table">
-      <h3>listOfUnitDefinitions:</h3>
+  <xsl:template match="*[local-name()='functionDefinition']" mode="table">
+      <tr class="sv-listof-table-row">
+        <td><xsl:apply-templates select="@id" mode="no-link"/></td>
+        <td><xsl:value-of select="@name"/></td>
+        <td><xsl:apply-templates select="@metaid" mode="table"/></td>
+        <td><xsl:apply-templates select="mml:math"/></td>
+      </tr>
+  </xsl:template>
+
+  <!-- listOfUnitDefinitions -->
+  <xsl:template match="*[local-name()='listOfUnitDefinitions']" mode="table">
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfUnitDefinitions:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-      <table class="list" style="width: auto;max-width:95%;">
-      <tr class="list-header">
+      <table class="sv-listof-table">
+      <tr class="sv-listof-table-header">
         <th>id</th>
         <th><xsl:if test="*/@name">name</xsl:if></th>
         <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -196,229 +219,250 @@ Project-page: http://sv.insysbio.ru
       </tr>
       <xsl:apply-templates select="*[local-name()='unitDefinition']" mode="table"/>
       </table>
-    </xsl:template>
+    </div>
+  </xsl:template>
 
-    <xsl:template match="*[local-name()='unitDefinition']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
-          <td><xsl:value-of select="@name"/></td>
-          <td class="tiny"><xsl:apply-templates select="@metaid" mode="table"/></td>
-          <td><xsl:apply-templates select="*[local-name()='listOfUnits']" mode="unitFormula"/></td>
-        </tr>
-    </xsl:template>
+  <xsl:template match="*[local-name()='unitDefinition']" mode="table">
+      <tr>
+        <td><xsl:apply-templates select="@id" mode="no-link"/></td>
+        <td><xsl:value-of select="@name"/></td>
+        <td><xsl:apply-templates select="@metaid" mode="table"/></td>
+        <td><xsl:apply-templates select="*[local-name()='listOfUnits']" mode="unitFormula"/></td>
+      </tr>
+  </xsl:template>
 
-    <!-- listOfCompartmentTypes -->
-    <xsl:template match="*[local-name()='listOfCompartmentTypes']" mode="table">
-      <h3>listOfCompartmentTypes:</h3>
+  <!-- listOfCompartmentTypes -->
+  <xsl:template match="*[local-name()='listOfCompartmentTypes']" mode="table">
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfCompartmentTypes:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-      <table class="list" style="width: auto;max-width:95%;">
-      <tr class="list-header"><th>id</th><th>name</th><th>metaid</th></tr>
+      <table class="sv-listof-table">
+      <tr class="sv-listof-table-header">
+        <th>id</th><th>name</th><th>metaid</th>
+      </tr>
       <xsl:apply-templates select="*[local-name()='compartmentType']" mode="table"/>
       </table>
-    </xsl:template>
+    </div>
+  </xsl:template>
 
-    <xsl:template match="*[local-name()='compartmentType']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
-          <td><xsl:value-of select="@name"/></td>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
-        </tr>
-    </xsl:template>
+  <xsl:template match="*[local-name()='compartmentType']" mode="table">
+    <tr>
+      <td><xsl:apply-templates select="@id" mode="no-link"/></td>
+      <td><xsl:value-of select="@name"/></td>
+      <td><xsl:value-of select="@metaid"/></td>
+    </tr>
+  </xsl:template>
 
-    <!-- listOfSpeciesTypes -->
-    <xsl:template match="*[local-name()='listOfSpeciesTypes']" mode="table">
-      <h3>listOfSpeciesTypes:</h3>
+  <!-- listOfSpeciesTypes -->
+  <xsl:template match="*[local-name()='listOfSpeciesTypes']" mode="table">
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfSpeciesTypes:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-      <table class="list" style="width: auto;max-width:95%;">
-      <tr class="list-header"><th>id</th><th>name</th><th>metaid</th></tr>
+      <table class="sv-listof-table">
+      <tr class="sv-listof-table-header">
+        <th>id</th><th>name</th><th>metaid</th>
+      </tr>
       <xsl:apply-templates select="*[local-name()='speciesType']" mode="table"/>
       </table>
-    </xsl:template>
+    </div>
+  </xsl:template>
 
-    <xsl:template match="*[local-name()='speciesType']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
-          <td><xsl:value-of select="@name"/></td>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
-        </tr>
-    </xsl:template>
+  <xsl:template match="*[local-name()='speciesType']" mode="table">
+    <tr>
+      <td><xsl:apply-templates select="@id" mode="no-link"/></td>
+      <td><xsl:value-of select="@name"/></td>
+      <td><xsl:value-of select="@metaid"/></td>
+    </tr>
+  </xsl:template>
 
-    <!-- listOfCompartments -->
-    <xsl:template match="*[local-name()='listOfCompartments']" mode="table">
-      <h3>listOfCompartments:</h3>
+  <!-- listOfCompartments -->
+  <xsl:template match="*[local-name()='listOfCompartments']" mode="table">
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfCompartments:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="list" style="width: auto;max-width:95%;">
-      <tr class="list-header">
-      <th>id</th>
-      <th><xsl:if test="*/@name">name</xsl:if></th>
-      <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
-      <th><xsl:if test="*/@compartmentType">compartment<br/>Type</xsl:if></th>
-      <th><xsl:if test="*/@outside">outside</xsl:if></th>
-      <th><xsl:if test="*/@units">units</xsl:if></th>
-      <th><xsl:if test="*/@size">size</xsl:if></th>
+      <table class="sv-listof-table">
+      <tr class="sv-listof-table-header">
+        <th>id</th>
+        <th><xsl:if test="*/@name">name</xsl:if></th>
+        <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+        <th><xsl:if test="*/@compartmentType">compartment<br/>Type</xsl:if></th>
+        <th><xsl:if test="*/@outside">outside</xsl:if></th>
+        <th><xsl:if test="*/@units">units</xsl:if></th>
+        <th><xsl:if test="*/@size">size</xsl:if></th>
       </tr>
       <xsl:apply-templates select="*[local-name()='compartment']" mode="table"/>
       </table>
-    </xsl:template>
+    </div>
+  </xsl:template>
 
-    <xsl:template match="*[local-name()='compartment']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
-          <td><xsl:value-of select="@name"/></td>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:apply-templates select="@compartmentType"/></td>
-          <td><xsl:apply-templates select="@outside"/></td>
-          <td><xsl:apply-templates select="@units"/></td>
-          <td><xsl:value-of select="@size"/></td>
-        </tr>
-    </xsl:template>
+  <xsl:template match="*[local-name()='compartment']" mode="table">
+      <tr>
+        <td><xsl:apply-templates select="@id" mode="link"/></td>
+        <td><xsl:value-of select="@name"/></td>
+        <td><xsl:value-of select="@metaid"/></td>
+        <td><xsl:apply-templates select="@compartmentType"/></td>
+        <td><xsl:apply-templates select="@outside"/></td>
+        <td><xsl:apply-templates select="@units"/></td>
+        <td><xsl:value-of select="@size"/></td>
+      </tr>
+  </xsl:template>
 
   <!-- listOfSpecies -->
   <xsl:template match="*[local-name()='listOfSpecies']" mode="table">
-      <h3>listOfSpecies:</h3>
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfSpecies:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="list"  style="width: auto; max-width:95%;">
-      <tr class="list-header">
-      <th>id</th>
-      <th><xsl:if test="*/@name">name</xsl:if></th>
-      <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
-      <th><xsl:if test="*/@speciesType">speciesType</xsl:if></th>
-      <th><xsl:if test="*/@substanceUnits">substance<br/>Units</xsl:if></th>
-      <th><xsl:if test="*/@hasOnlySubstanceUnits">hasOnly<br/>Substance<br/>Units</xsl:if></th>
-      <th><xsl:if test="*/@initialConcentration">initial<br/>Concentration</xsl:if></th>
-      <th><xsl:if test="*/@initialAmount">initial<br/>Amount</xsl:if></th>
-      <th><xsl:if test="*/@boundaryCondition">boundary<br/>Condition</xsl:if></th>
-      <th><xsl:if test="*/@compartment">compartment</xsl:if></th>
-      <th><xsl:if test="*/@charge">charge</xsl:if></th>
-      </tr>
+      <table class="sv-listof-table">
+        <tr class="sv-listof-table-header">
+          <th>id</th>
+          <th><xsl:if test="*/@name">name</xsl:if></th>
+          <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+          <th><xsl:if test="*/@speciesType">speciesType</xsl:if></th>
+          <th><xsl:if test="*/@substanceUnits">substance<br/>Units</xsl:if></th>
+          <th><xsl:if test="*/@hasOnlySubstanceUnits">hasOnly<br/>Substance<br/>Units</xsl:if></th>
+          <th><xsl:if test="*/@initialConcentration">initial<br/>Concentration</xsl:if></th>
+          <th><xsl:if test="*/@initialAmount">initial<br/>Amount</xsl:if></th>
+          <th><xsl:if test="*/@boundaryCondition">boundary<br/>Condition</xsl:if></th>
+          <th><xsl:if test="*/@compartment">compartment</xsl:if></th>
+          <th><xsl:if test="*/@charge">charge</xsl:if></th>
+        </tr>
         <xsl:apply-templates select="*[local-name()='species']" mode="table"/>
       </table>
+    </div>
   </xsl:template>
 
-    <xsl:template match="*[local-name()='species']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
-          <td><xsl:value-of select="@name"/></td>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:apply-templates select="@speciesType"/></td>
-          <td><xsl:apply-templates select="@substanceUnits"/></td>
-          <td><xsl:value-of select="@hasOnlySubstanceUnits"/></td>
-          <td><xsl:value-of select="@initialConcentration"/></td>
-          <td><xsl:value-of select="@initialAmount"/></td>
-          <td><xsl:value-of select="@boundaryCondition"/></td>
-          <td><xsl:apply-templates select="@compartment"/></td>
-          <td><xsl:value-of select="@charge"/></td>
-        </tr>
-    </xsl:template>
+  <xsl:template match="*[local-name()='species']" mode="table">
+    <tr>
+      <td><xsl:apply-templates select="@id" mode="link"/></td>
+      <td><xsl:value-of select="@name"/></td>
+      <td><xsl:value-of select="@metaid"/></td>
+      <td><xsl:apply-templates select="@speciesType"/></td>
+      <td><xsl:apply-templates select="@substanceUnits"/></td>
+      <td><xsl:value-of select="@hasOnlySubstanceUnits"/></td>
+      <td><xsl:value-of select="@initialConcentration"/></td>
+      <td><xsl:value-of select="@initialAmount"/></td>
+      <td><xsl:value-of select="@boundaryCondition"/></td>
+      <td><xsl:apply-templates select="@compartment"/></td>
+      <td><xsl:value-of select="@charge"/></td>
+    </tr>
+  </xsl:template>
 
   <!-- listOfParameters -->
   <xsl:template match="*[local-name()='listOfParameters']" mode="table">
-      <h3>listOfParameters:</h3>
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfParameters:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="list" style="width:auto; max-width:95%;">
-      <tr class="list-header">
-      <th>id</th>
-      <th><xsl:if test="*/@name">name</xsl:if></th>
-      <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
-      <th><xsl:if test="*/@units">units</xsl:if></th>
-      <th><xsl:if test="*/@value">value</xsl:if></th>
-      </tr>
+      <table class="sv-listof-table">
+        <tr class="sv-listof-table-header">
+          <th>id</th>
+          <th><xsl:if test="*/@name">name</xsl:if></th>
+          <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+          <th><xsl:if test="*/@units">units</xsl:if></th>
+          <th><xsl:if test="*/@value">value</xsl:if></th>
+        </tr>
         <xsl:apply-templates select="*[local-name()='parameter']" mode="table"/>
       </table>
+    </div>
   </xsl:template>
 
   <xsl:template match="*[local-name()='parameter']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
-          <td><xsl:value-of select="@name"/></td>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:apply-templates select="@units"/></td>
-          <td>
-          <xsl:if test="not(key('variableKey', @id))"><xsl:value-of select="@value"/></xsl:if>
-          <!--<xsl:apply-templates select="key('variableKey', @id)/mml:math"/>-->
-          </td>
-        </tr>
+    <tr>
+      <td><xsl:apply-templates select="@id" mode="link"/></td>
+      <td><xsl:value-of select="@name"/></td>
+      <td><xsl:value-of select="@metaid"/></td>
+      <td><xsl:apply-templates select="@units"/></td>
+      <td>
+      <xsl:if test="not(key('variableKey', @id))"><xsl:value-of select="@value"/></xsl:if>
+      <!--<xsl:apply-templates select="key('variableKey', @id)/mml:math"/>-->
+      </td>
+    </tr>
   </xsl:template>
 
   <!-- listOfInitialAssignments annotation -->
   <xsl:template match="*[local-name()='listOfInitialAssignments']" mode="table">
-      <h3>listOfInitialAssignments:</h3>
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfInitialAssignments:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="list"  style="width: auto; max-width:95%;">
-      <tr class="list-header">
-      <th>symbol</th>
-      <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
-      <th>math:</th>
-      </tr>
+      <table class="sv-listof-table">
+        <tr class="sv-listof-table-header">
+          <th>symbol</th>
+          <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+          <th>math:</th>
+        </tr>
         <xsl:apply-templates select="*[local-name()='initialAssignment']" mode="table"/>
       </table>
+    </div>
   </xsl:template>
 
   <xsl:template match="*[local-name()='initialAssignment']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@symbol" mode="no-link"/></td>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:apply-templates select="mml:math"/></td>
-        </tr>
+    <tr>
+      <td><xsl:apply-templates select="@symbol" mode="no-link"/></td>
+      <td><xsl:value-of select="@metaid"/></td>
+      <td><xsl:apply-templates select="mml:math"/></td>
+    </tr>
   </xsl:template>
 
   <!-- listOfConstraints annotation -->
   <xsl:template match="*[local-name()='listOfConstraints']" mode="table">
-      <h3>listOfConstraints:</h3>
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfConstraints:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="list"  style="width: auto; max-width:95%;">
-      <tr class="list-header">
+      <table class="sv-listof-table">
+      <tr class="sv-listof-table-header">
         <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
         <th>message</th>
         <th>math:</th>
       </tr>
         <xsl:apply-templates select="*[local-name()='constraint']" mode="table"/>
       </table>
+    </div>
   </xsl:template>
 
   <xsl:template match="*[local-name()='constraint']" mode="table">
-        <tr>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:apply-templates select="*[local-name()='message']" mode="table"/></td>
-          <td><xsl:apply-templates select="mml:math"/></td>
-        </tr>
+    <tr>
+      <td><xsl:value-of select="@metaid"/></td>
+      <td><xsl:apply-templates select="*[local-name()='message']" mode="table"/></td>
+      <td><xsl:apply-templates select="mml:math"/></td>
+    </tr>
   </xsl:template>
 
   <!-- listOfRules annotation -->
   <xsl:template match="*[local-name()='listOfRules']" mode="table">
-      <h3>listOfRules:</h3>
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfRules:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="list"  style="width: auto; max-width:95%;">
-      <tr class="list-header">
-	    <th>type</th>
-		<th>variable</th>
-		<th><xsl:if test="*/@metaid">metaid</xsl:if></th>
-		<th>math:</th>
-	  </tr>
+      <table class="sv-listof-table">
+      <tr class="sv-listof-table-header">
+  	    <th>type</th>
+        <th>variable</th>
+        <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+        <th>math:</th>
+      </tr>
       <xsl:apply-templates select="*[local-name()='assignmentRule'] | *[local-name()='algebraicRule'] | *[local-name()='rateRule']" mode="table"/>
       </table>
+    </div>
   </xsl:template>
 
   <xsl:template match="
@@ -428,21 +472,22 @@ Project-page: http://sv.insysbio.ru
     " mode="table">
         <tr>
           <td><xsl:value-of select="local-name()"/></td>
-          <td class="tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
+          <td><xsl:apply-templates select="@variable" mode="no-link"/></td>
+          <td><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
         </tr>
   </xsl:template>
 
   <!-- listOfReactions annotation -->
   <xsl:template match="*[local-name()='listOfReactions']" mode="table">
-      <h3>listOfReactions:</h3>
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfReactions:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="list" style="width: auto; max-width:95%;">
-      <tr class="list-header">
+      <table class="sv-listof-table">
+      <tr class="sv-listof-table-header">
         <th>id</th>
         <th><xsl:if test="*/@name">name</xsl:if></th>
         <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -454,33 +499,35 @@ Project-page: http://sv.insysbio.ru
       </table>
 
       <!-- <h3>listOfReactions (local parameters):</h3> --> <!-- add later-->
+    </div>
   </xsl:template>
 
   <xsl:template match="*[local-name()='reaction']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
-          <td><xsl:value-of select="@name"/></td>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:apply-templates select="." mode="reactionFormula"/></td>
-          <td><xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/></td>
-        </tr>
+    <tr>
+      <td><xsl:apply-templates select="@id" mode="link"/></td>
+      <td><xsl:value-of select="@name"/></td>
+      <td><xsl:value-of select="@metaid"/></td>
+      <td><xsl:apply-templates select="." mode="reactionFormula"/></td>
+      <td><xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/></td>
+    </tr>
 
-        <xsl:if test="*[local-name()='kineticLaw']/*/*[local-name()='parameter']">
-        <tr>
+    <xsl:if test="*[local-name()='kineticLaw']/*/*[local-name()='parameter']">
+      <tr>
         <td colspan="10" style="font-size:67%;"><xsl:apply-templates select="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']" mode="table"/></td>
-        </tr>
-        </xsl:if>
+      </tr>
+    </xsl:if>
   </xsl:template>
 
   <!-- listOfEvents annotation -->
   <xsl:template match="*[local-name()='listOfEvents']" mode="table">
-      <h3>listOfEvents:</h3>
+    <div class="sv-listof-container">
+      <h3 class="sv-listof-header">listOfEvents:</h3>
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
 
-      <table class="list"  style="width: auto; max-width:95%;">
-      <tr class="list-header">
+      <table class="sv-listof-table">
+      <tr class="sv-listof-table-header">
         <th>id</th>
         <th><xsl:if test="*/@name">name</xsl:if></th>
         <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -491,18 +538,19 @@ Project-page: http://sv.insysbio.ru
       </tr>
       <xsl:apply-templates select="*[local-name()='event']" mode="table"/>
       </table>
+    </div>
   </xsl:template>
 
   <xsl:template match="*[local-name()='event']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
-          <td><xsl:value-of select="@name"/></td>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:value-of select="@useValuesFromTriggerTime"/></td>
-          <td><xsl:apply-templates select="*[local-name()='trigger']" mode="table"/></td>
-          <td><xsl:apply-templates select="*[local-name()='delay']" mode="table"/></td>
-          <td><xsl:apply-templates select="*[local-name()='listOfEventAssignments']" mode="table"/></td>
-        </tr>
+    <tr>
+      <td><xsl:apply-templates select="@id" mode="no-link"/></td>
+      <td><xsl:value-of select="@name"/></td>
+      <td><xsl:value-of select="@metaid"/></td>
+      <td><xsl:value-of select="@useValuesFromTriggerTime"/></td>
+      <td><xsl:apply-templates select="*[local-name()='trigger']" mode="table"/></td>
+      <td><xsl:apply-templates select="*[local-name()='delay']" mode="table"/></td>
+      <td><xsl:apply-templates select="*[local-name()='listOfEventAssignments']" mode="table"/></td>
+    </tr>
   </xsl:template>
 
   <xsl:template match="*[local-name()='trigger']" mode="table">
@@ -515,23 +563,23 @@ Project-page: http://sv.insysbio.ru
 
   <!-- listOfEventAssignments annotation -->
   <xsl:template match="*[local-name()='listOfEventAssignments']" mode="table">
-    <b><xsl:value-of select="@metaid"/></b>
-      <table class="table"  style="width: auto; max-width:95%;">
+    <xsl:value-of select="@metaid"/>
+    <table class="sv-listof-table">
       <tr>
-      <th>variable</th>
-      <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
-      <th>math:</th>
+        <th>variable</th>
+        <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+        <th>math:</th>
       </tr>
-        <xsl:apply-templates select="*[local-name()='eventAssignment']" mode="table"/>
-      </table>
+      <xsl:apply-templates select="*[local-name()='eventAssignment']" mode="table"/>
+    </table>
   </xsl:template>
 
   <xsl:template match="*[local-name()='eventAssignment']" mode="table">
-        <tr>
-          <td class="tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
-          <td class="tiny"><xsl:value-of select="@metaid"/></td>
-          <td><xsl:apply-templates select="mml:math"/></td>
-        </tr>
+    <tr>
+      <td><xsl:apply-templates select="@variable" mode="no-link"/></td>
+      <td><xsl:value-of select="@metaid"/></td>
+      <td><xsl:apply-templates select="mml:math"/></td>
+    </tr>
   </xsl:template>
 
   <xsl:template match="*[local-name()='unitDefinition']/@name" mode="table">
@@ -559,7 +607,6 @@ Project-page: http://sv.insysbio.ru
 <!-- END OF table mode -->
 
 <!-- BEGIN OF unitFormula/unitFormulaScale mode -->
-
     <xsl:template match="l2v2:listOfUnits | l2v3:listOfUnits | l2v4:listOfUnits| l2v5:listOfUnits" mode="unitFormula">
       <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
         <xsl:element name="apply" namespace="http://www.w3.org/1998/Math/MathML">

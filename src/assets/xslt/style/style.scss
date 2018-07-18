@@ -1,21 +1,35 @@
 @import '../../style/w3.scss';
 
-.container {
+.sv-sbml-container {
   @extend .w3-container;
 }
 
-.tooltip {
+.sv-sbml-header {
   @extend .w3-tooltip;
 }
 
-.note-content {
+.sv-note-content, .sv-annotation-content {
   @extend .w3-container;
   @extend .w3-pale-blue;
-  max-width:80%;
-  min-width:300px
+  max-width: 80%;
+  min-width: 300px
 }
 
-.tooltip-note {
+.sv-id-target {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sv-id {
+  color: blue;
+}
+
+.sv-id-lost {
+  color: red;
+}
+
+.sv-tooltip {
   @extend .w3-text;
   @extend .w3-pale-blue;
   position:absolute;
@@ -26,23 +40,20 @@
   width:300px;
 }
 
-.list {
+.sv-listof-table {
   @extend .w3-table;
   @extend .w3-striped;
   @extend .w3-border;
   @extend .w3-hoverable;
   @extend .w3-card-4;
+  width: auto;
+  max-width:95%;
 }
 
-.list-header {
+.sv-listof-table-header {
   @extend .w3-blue-grey;
 }
-.large {
-  @extend .w3-large;
-}
-.tiny {
-  @extend .w3-tiny;
-}
+
 .table {
   @extend .w3-table;
   @extend .w3-striped;
