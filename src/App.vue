@@ -121,7 +121,7 @@ export default {
     },
     addEventListenerAnnotationElement: function () {
       this.$nextTick(() => {
-        let annotationElements = document.getElementsByClassName('annotationTarget')
+        let annotationElements = document.getElementsByClassName('sv-id-target')
         for (let i = 0; i < annotationElements.length; i++) {
           annotationElements[i].addEventListener('click', this.onClickAnnotation)
         }
