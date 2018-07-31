@@ -137,7 +137,7 @@ Project-page: http://sv.insysbio.com
       <xsl:value-of select="."/>
     </span>
 
-    <div class="sv-tooltip">
+    <div class="sv-tooltip-text">
       <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
       <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
     </div>
@@ -158,7 +158,7 @@ Project-page: http://sv.insysbio.com
       </span>
 	  </xsl:if>
 
-    <div class="sv-tooltip">
+    <div class="sv-tooltip-text">
       <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
       <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
     </div>
@@ -196,7 +196,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='functionDefinition']" mode="table">
       <tr class="sv-listof-table-row">
-        <td><xsl:apply-templates select="@id" mode="no-link"/></td>
+        <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
         <td><xsl:value-of select="@name"/></td>
         <td><xsl:apply-templates select="@metaid" mode="table"/></td>
         <td><xsl:apply-templates select="mml:math"/></td>
@@ -224,7 +224,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='unitDefinition']" mode="table">
       <tr>
-        <td><xsl:apply-templates select="@id" mode="no-link"/></td>
+        <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
         <td><xsl:value-of select="@name"/></td>
         <td><xsl:apply-templates select="@metaid" mode="table"/></td>
         <td><xsl:apply-templates select="*[local-name()='listOfUnits']" mode="unitFormula"/></td>
@@ -249,7 +249,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='compartmentType']" mode="table">
     <tr>
-      <td><xsl:apply-templates select="@id" mode="no-link"/></td>
+      <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
       <td><xsl:value-of select="@name"/></td>
       <td><xsl:value-of select="@metaid"/></td>
     </tr>
@@ -273,7 +273,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='speciesType']" mode="table">
     <tr>
-      <td><xsl:apply-templates select="@id" mode="no-link"/></td>
+      <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
       <td><xsl:value-of select="@name"/></td>
       <td><xsl:value-of select="@metaid"/></td>
     </tr>
@@ -304,7 +304,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='compartment']" mode="table">
       <tr>
-        <td><xsl:apply-templates select="@id" mode="link"/></td>
+        <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
         <td><xsl:value-of select="@name"/></td>
         <td><xsl:value-of select="@metaid"/></td>
         <td><xsl:apply-templates select="@compartmentType"/></td>
@@ -343,7 +343,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='species']" mode="table">
     <tr>
-      <td><xsl:apply-templates select="@id" mode="link"/></td>
+      <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
       <td><xsl:value-of select="@name"/></td>
       <td><xsl:value-of select="@metaid"/></td>
       <td><xsl:apply-templates select="@speciesType"/></td>
@@ -380,7 +380,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='parameter']" mode="table">
     <tr>
-      <td><xsl:apply-templates select="@id" mode="link"/></td>
+      <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
       <td><xsl:value-of select="@name"/></td>
       <td><xsl:value-of select="@metaid"/></td>
       <td><xsl:apply-templates select="@units"/></td>
@@ -412,7 +412,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='initialAssignment']" mode="table">
     <tr>
-      <td><xsl:apply-templates select="@symbol" mode="no-link"/></td>
+      <td class="sv-tooltip"><xsl:apply-templates select="@symbol" mode="no-link"/></td>
       <td><xsl:value-of select="@metaid"/></td>
       <td><xsl:apply-templates select="mml:math"/></td>
     </tr>
@@ -472,7 +472,7 @@ Project-page: http://sv.insysbio.com
     " mode="table">
         <tr>
           <td><xsl:value-of select="local-name()"/></td>
-          <td><xsl:apply-templates select="@variable" mode="no-link"/></td>
+          <td class="sv-tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
           <td><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
         </tr>
@@ -504,7 +504,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='reaction']" mode="table">
     <tr>
-      <td><xsl:apply-templates select="@id" mode="link"/></td>
+      <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="link"/></td>
       <td><xsl:value-of select="@name"/></td>
       <td><xsl:value-of select="@metaid"/></td>
       <td><xsl:apply-templates select="." mode="reactionFormula"/></td>
@@ -543,7 +543,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='event']" mode="table">
     <tr>
-      <td><xsl:apply-templates select="@id" mode="no-link"/></td>
+      <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
       <td><xsl:value-of select="@name"/></td>
       <td><xsl:value-of select="@metaid"/></td>
       <td><xsl:value-of select="@useValuesFromTriggerTime"/></td>
@@ -576,7 +576,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='eventAssignment']" mode="table">
     <tr>
-      <td><xsl:apply-templates select="@variable" mode="no-link"/></td>
+      <td class="sv-tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
       <td><xsl:value-of select="@metaid"/></td>
       <td><xsl:apply-templates select="mml:math"/></td>
     </tr>

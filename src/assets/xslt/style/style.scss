@@ -5,7 +5,6 @@
 }
 
 .sv-sbml-header {
-  @extend .w3-tooltip;
 }
 
 .sv-note-content, .sv-annotation-content {
@@ -30,6 +29,9 @@
 }
 
 .sv-tooltip {
+  @extend .w3-tooltip;
+}
+.sv-tooltip-text {
   @extend .w3-text;
   @extend .w3-pale-blue;
   position:absolute;
