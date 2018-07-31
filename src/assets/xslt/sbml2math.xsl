@@ -121,6 +121,7 @@ Project-page: http://sv.insysbio.ru
   </xsl:template>
 
   <xsl:template match="*[local-name()='functionDefinition']">
+    <script type="math/mml">
       <mml:math>
         <mml:apply>
           <mml:equivalent/>
@@ -131,6 +132,7 @@ Project-page: http://sv.insysbio.ru
             <xsl:copy-of select="mml:math/mml:lambda/*[local-name()!='bvar']"/>
         </mml:apply>
       </mml:math>
+    </script>
       <br/>
   </xsl:template>
 
@@ -219,6 +221,7 @@ Project-page: http://sv.insysbio.ru
 
     <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true') and not(@hasOnlySubstanceUnits='true')]" mode="diff-init">
       <xsl:apply-templates select="@id" mode="idOrName"/> &#8592;
+      <script type="math/mml">
       <mml:math>
             <xsl:if test="@initialConcentration">
               <mml:cn><xsl:value-of select="@initialConcentration"/></mml:cn>
@@ -234,11 +237,13 @@ Project-page: http://sv.insysbio.ru
               <mml:ci>?</mml:ci>
             </xsl:if>
       </mml:math>
+    </script>
       <br/>
     </xsl:template>
 
     <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true') and @hasOnlySubstanceUnits='true']" mode="diff-init">
       <xsl:apply-templates select="@id" mode="idOrName"/> &#8592;
+      <script type="math/mml">
       <mml:math>
             <xsl:if test="@initialAmount">
               <mml:cn><xsl:value-of select="@initialAmount"/></mml:cn>
@@ -254,6 +259,7 @@ Project-page: http://sv.insysbio.ru
               <mml:ci>?</mml:ci>
             </xsl:if>
       </mml:math>
+    </script>
       <br/>
     </xsl:template>
 
@@ -267,6 +273,7 @@ Project-page: http://sv.insysbio.ru
   </xsl:template>
 
     <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true')]" mode="diff-eq">
+      <script type="math/mml">
       <mml:math>
         <mml:apply>
           <mml:eq/>
@@ -288,6 +295,7 @@ Project-page: http://sv.insysbio.ru
             </mml:apply>
         </mml:apply>
       </mml:math>
+    </script>
       <br/>
     </xsl:template>
 
@@ -322,6 +330,7 @@ Project-page: http://sv.insysbio.ru
     </xsl:template>
 
   <xsl:template match="*[local-name()='rateRule']" mode="diff-eq">
+    <script type="math/mml">
       <mml:math>
         <mml:apply>
           <mml:eq/>
@@ -335,6 +344,7 @@ Project-page: http://sv.insysbio.ru
             <xsl:apply-templates select="mml:math/mml:*"/>
         </mml:apply>
       </mml:math>
+    </script>
       <br/>
   </xsl:template>
 

@@ -132,7 +132,7 @@ export default {
     },
     documentToString: function (doc) {
       let container = document.createElement('div').appendChild(doc.firstElementChild)
-      return container.innerHTML
+      return container.outerHTML
     }
   }
 }
