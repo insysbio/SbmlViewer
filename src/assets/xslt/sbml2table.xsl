@@ -125,7 +125,7 @@ Project-page: http://sv.insysbio.com
       <xsl:value-of select="."/>
     </span>
 
-    <div>
+    <div class="sv-tooltip-text">
       <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
       <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
     </div>
