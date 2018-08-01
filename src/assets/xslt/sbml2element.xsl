@@ -39,7 +39,7 @@ Project-page: http://sv.insysbio.ru
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:exsl="http://exslt.org/common"
-  exclude-result-prefixes="xhtml exsl l1v1 l1v2 l1v3 l1v4 l1v5">
+  exclude-result-prefixes="mml xhtml exsl l1v1 l1v2 l1v3 l1v4 l1v5">
 
   <!-- IMPORTS
   <xsl:include href="sbmlshared.xsl"/> -->
@@ -284,21 +284,21 @@ Project-page: http://sv.insysbio.ru
 	</td>
     <td style="width:500px;">
     <xsl:if test="not(key('variableKey', @id))">
-      <mml:math>
+      <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
             <xsl:if test="@initialConcentration">
-              <mml:cn><xsl:value-of select="@initialConcentration"/></mml:cn>
+              <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialConcentration"/></cn>
             </xsl:if>
             <xsl:if test="@initialAmount">
-              <mml:apply>
-                <mml:divide/>
-                <mml:cn><xsl:value-of select="@initialAmount"/></mml:cn>
-                <mml:ci><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></mml:ci>
-              </mml:apply>
+              <apply xmlns="http://www.w3.org/1998/Math/MathML">
+                <divide xmlns="http://www.w3.org/1998/Math/MathML"/>
+                <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialAmount"/></cn>
+                <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci>
+              </apply>
             </xsl:if>
             <xsl:if test="not(@initialConcentration or @initialAmount)">
-              <mml:ci>?</mml:ci>
+              <ci xmlns="http://www.w3.org/1998/Math/MathML">?</ci>
             </xsl:if>
-      </mml:math>
+      </xsl:element>
     </xsl:if>
 	<xsl:if test="key('variableKey', @id)">
       <xsl:apply-templates select="key('variableKey', @id)/mml:math"/>
@@ -318,21 +318,21 @@ Project-page: http://sv.insysbio.ru
 	</td>
     <td style="width:500px;">
     <xsl:if test="not(key('variableKey', @id))">
-      <mml:math>
+      <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
             <xsl:if test="@initialAmount">
-              <mml:cn><xsl:value-of select="@initialAmount"/></mml:cn>
+              <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialAmount"/></cn>
             </xsl:if>
             <xsl:if test="@initialConcentration">
-              <mml:apply>
-                <mml:times/>
-                <mml:cn><xsl:value-of select="@initialConcentration"/></mml:cn>
-                <mml:ci><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></mml:ci>
-              </mml:apply>
+              <apply xmlns="http://www.w3.org/1998/Math/MathML">
+                <times xmlns="http://www.w3.org/1998/Math/MathML"/>
+                <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialConcentration"/></cn>
+                <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci>
+              </apply>
             </xsl:if>
             <xsl:if test="not(@initialConcentration or @initialAmount)">
-              <mml:ci>?</mml:ci>
+              <ci xmlns="http://www.w3.org/1998/Math/MathML">?</ci>
             </xsl:if>
-      </mml:math>
+      </xsl:element>
     </xsl:if>
 	<xsl:if test="key('variableKey', @id)">
       <xsl:apply-templates select="key('variableKey', @id)/mml:math"/>

@@ -37,7 +37,7 @@ Project-page: http://sv.insysbio.ru
   xmlns:l2v5="http://www.sbml.org/sbml/level2/version5"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
-  exclude-result-prefixes="l1v1 l1v2 l1v3 l1v4 l1v5">
+  exclude-result-prefixes="mml l2v5 l2v4 l2v3 l2v2 l2v1">
 
   <!-- GLOBAL KEYS -->
   <xsl:key name="idKey" match="*" use="@id"/>
@@ -50,7 +50,7 @@ Project-page: http://sv.insysbio.ru
 
   <!-- top -->
   <xsl:template match="/">
-    <div class="container">
+    <div id="top">
       <xsl:apply-templates mode="math"/>
     </div>
   </xsl:template>
@@ -121,18 +121,16 @@ Project-page: http://sv.insysbio.ru
   </xsl:template>
 
   <xsl:template match="*[local-name()='functionDefinition']">
-    <script type="math/mml">
-      <mml:math>
-        <mml:apply>
-          <mml:equivalent/>
-            <mml:apply>
-                <mml:ci><xsl:apply-templates select="@id" mode="idOrName"/></mml:ci>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <apply xmlns="http://www.w3.org/1998/Math/MathML">
+          <equivalent xmlns="http://www.w3.org/1998/Math/MathML"/>
+            <apply xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="@id" mode="idOrName"/></ci>
                 <xsl:copy-of select="mml:math/mml:lambda/mml:bvar/mml:*"/>
-            </mml:apply>
+            </apply>
             <xsl:copy-of select="mml:math/mml:lambda/*[local-name()!='bvar']"/>
-        </mml:apply>
-      </mml:math>
-    </script>
+        </apply>
+      </math>
       <br/>
   </xsl:template>
 
@@ -221,45 +219,41 @@ Project-page: http://sv.insysbio.ru
 
     <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true') and not(@hasOnlySubstanceUnits='true')]" mode="diff-init">
       <xsl:apply-templates select="@id" mode="idOrName"/> &#8592;
-      <script type="math/mml">
-      <mml:math>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
             <xsl:if test="@initialConcentration">
-              <mml:cn><xsl:value-of select="@initialConcentration"/></mml:cn>
+              <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialConcentration"/></cn>
             </xsl:if>
             <xsl:if test="@initialAmount">
-              <mml:apply>
-                <mml:divide/>
-                <mml:cn><xsl:value-of select="@initialAmount"/></mml:cn>
-                <mml:ci><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></mml:ci>
-              </mml:apply>
+              <apply xmlns="http://www.w3.org/1998/Math/MathML">
+                <divide xmlns="http://www.w3.org/1998/Math/MathML"/>
+                <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialAmount"/></cn>
+                <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci>
+              </apply>
             </xsl:if>
             <xsl:if test="not(@initialConcentration or @initialAmount)">
-              <mml:ci>?</mml:ci>
+              <ci xmlns="http://www.w3.org/1998/Math/MathML">?</ci>
             </xsl:if>
-      </mml:math>
-    </script>
+      </math>
       <br/>
     </xsl:template>
 
     <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true') and @hasOnlySubstanceUnits='true']" mode="diff-init">
       <xsl:apply-templates select="@id" mode="idOrName"/> &#8592;
-      <script type="math/mml">
-      <mml:math>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
             <xsl:if test="@initialAmount">
-              <mml:cn><xsl:value-of select="@initialAmount"/></mml:cn>
+              <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialAmount"/></cn>
             </xsl:if>
             <xsl:if test="@initialConcentration">
-              <mml:apply>
-                <mml:times/>
-                <mml:cn><xsl:value-of select="@initialConcentration"/></mml:cn>
-                <mml:ci><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></mml:ci>
-              </mml:apply>
+              <apply xmlns="http://www.w3.org/1998/Math/MathML">
+                <times xmlns="http://www.w3.org/1998/Math/MathML"/>
+                <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialConcentration"/></cn>
+                <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci>
+              </apply>
             </xsl:if>
             <xsl:if test="not(@initialConcentration or @initialAmount)">
-              <mml:ci>?</mml:ci>
+              <ci xmlns="http://www.w3.org/1998/Math/MathML">?</ci>
             </xsl:if>
-      </mml:math>
-    </script>
+      </math>
       <br/>
     </xsl:template>
 
@@ -273,78 +267,78 @@ Project-page: http://sv.insysbio.ru
   </xsl:template>
 
     <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true')]" mode="diff-eq">
-      <script type="math/mml">
-      <mml:math>
-        <mml:apply>
-          <mml:eq/>
-            <mml:apply>
-              <mml:diff/>
-              <mml:bvar>
-                <mml:ci>t</mml:ci>
-              </mml:bvar>
-              <mml:apply>
-                <mml:times/>
-                <xsl:if test="not(@hasOnlySubstanceUnits='true')"><mml:ci><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></mml:ci></xsl:if>
-                  <mml:ci><xsl:apply-templates select="@id" mode="idOrName"/></mml:ci>
-              </mml:apply>
-          </mml:apply>
-            <mml:apply>
-              <mml:plus/>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <apply xmlns="http://www.w3.org/1998/Math/MathML">
+          <eq xmlns="http://www.w3.org/1998/Math/MathML"/>
+            <apply xmlns="http://www.w3.org/1998/Math/MathML">
+              <diff xmlns="http://www.w3.org/1998/Math/MathML"/>
+              <bvar xmlns="http://www.w3.org/1998/Math/MathML">
+                <ci xmlns="http://www.w3.org/1998/Math/MathML">t</ci>
+              </bvar>
+              <apply xmlns="http://www.w3.org/1998/Math/MathML">
+                <times xmlns="http://www.w3.org/1998/Math/MathML"/>
+                <xsl:if test="not(@hasOnlySubstanceUnits='true')"><ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci></xsl:if>
+                  <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="@id" mode="idOrName"/></ci>
+              </apply>
+          </apply>
+            <apply xmlns="http://www.w3.org/1998/Math/MathML">
+              <plus xmlns="http://www.w3.org/1998/Math/MathML"/>
               <xsl:apply-templates select="//*[local-name()='reaction']/*/*[local-name()='speciesReference' and @species=current()/@id]" mode="diff-eq"/>
-              <xsl:if test="count(//*[local-name()='reaction']/*/*[local-name()='speciesReference' and @species=current()/@id])=0"><mml:cn>0</mml:cn></xsl:if>
-            </mml:apply>
-        </mml:apply>
-      </mml:math>
-    </script>
+              <xsl:if test="count(//*[local-name()='reaction']/*/*[local-name()='speciesReference' and @species=current()/@id])=0"><cn xmlns="http://www.w3.org/1998/Math/MathML">0</cn></xsl:if>
+            </apply>
+        </apply>
+      </math>
       <br/>
     </xsl:template>
 
     <xsl:template match="*[local-name()='listOfProducts']/*[local-name()='speciesReference' and not(@stoichiometry!='1')]" mode="diff-eq">
-        <mml:ci><xsl:apply-templates select="../../@id" mode="idOrName"/></mml:ci>
+        <xsl:element name="ci" namespace="http://www.w3.org/1998/Math/MathML">
+          <xsl:apply-templates select="../../@id" mode="idOrName"/>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template match="*[local-name()='listOfReactants']/*[local-name()='speciesReference' and not(@stoichiometry!='1')]" mode="diff-eq">
-      <mml:apply>
-        <mml:minus/>
-        <mml:ci><xsl:apply-templates select="../../@id" mode="idOrName"/></mml:ci>
-      </mml:apply>
+      <xsl:element name="apply" namespace="http://www.w3.org/1998/Math/MathML">
+        <minus xmlns="http://www.w3.org/1998/Math/MathML"/>
+        <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="../../@id" mode="idOrName"/></ci>
+      </xsl:element>
     </xsl:template>
 
     <xsl:template match="*[local-name()='listOfProducts']/*[local-name()='speciesReference' and @stoichiometry!='1']" mode="diff-eq">
-      <mml:apply>
-        <mml:times/>
-        <mml:cn><xsl:value-of select="@stoichiometry"/></mml:cn>
-        <mml:ci><xsl:apply-templates select="../../@id" mode="idOrName"/></mml:ci>
-      </mml:apply>
+      <xsl:element name="apply" namespace="http://www.w3.org/1998/Math/MathML">
+        <times xmlns="http://www.w3.org/1998/Math/MathML"/>
+        <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@stoichiometry"/></cn>
+        <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="../../@id" mode="idOrName"/></ci>
+      </xsl:element>
     </xsl:template>
 
     <xsl:template match="*[local-name()='listOfReactants']/*[local-name()='speciesReference' and @stoichiometry!='1']" mode="diff-eq">
-      <mml:apply>
-        <mml:minus/>
-        <mml:apply>
-          <mml:times/>
-          <mml:cn><xsl:value-of select="@stoichiometry"/></mml:cn>
-          <mml:ci><xsl:apply-templates select="../../@id" mode="idOrName"/></mml:ci>
-        </mml:apply>
-      </mml:apply>
+      <!--<apply xmlns="http://www.w3.org/1998/Math/MathML">-->
+      <xsl:element name="apply" namespace="http://www.w3.org/1998/Math/MathML">
+        <minus xmlns="http://www.w3.org/1998/Math/MathML"/>
+        <apply xmlns="http://www.w3.org/1998/Math/MathML">
+          <times xmlns="http://www.w3.org/1998/Math/MathML"/>
+          <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@stoichiometry"/></cn>
+          <ci xmlns="http://www.w3.org/1998/Math/MathML"> <xsl:apply-templates select="../../@id" mode="idOrName"/></ci>
+        </apply>
+      <!--</apply>-->
+      </xsl:element>
     </xsl:template>
 
   <xsl:template match="*[local-name()='rateRule']" mode="diff-eq">
-    <script type="math/mml">
-      <mml:math>
-        <mml:apply>
-          <mml:eq/>
-            <mml:apply>
-              <mml:diff/>
-              <mml:bvar>
-                <mml:ci>t</mml:ci>
-              </mml:bvar>
-                  <mml:ci><xsl:value-of select="@variable"/></mml:ci>
-            </mml:apply>
-            <xsl:apply-templates select="mml:math/mml:*"/>
-        </mml:apply>
-      </mml:math>
-    </script>
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <apply xmlns="http://www.w3.org/1998/Math/MathML">
+          <eq xmlns="http://www.w3.org/1998/Math/MathML"/>
+          <apply xmlns="http://www.w3.org/1998/Math/MathML">
+            <diff xmlns="http://www.w3.org/1998/Math/MathML"/>
+            <bvar xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci xmlns="http://www.w3.org/1998/Math/MathML">t</ci>
+            </bvar>
+                <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@variable"/></ci>
+          </apply>
+          <xsl:apply-templates select="mml:math/mml:*"/>
+        </apply>
+      </math>
       <br/>
   </xsl:template>
 
