@@ -26,7 +26,11 @@ export default {
         let docs = this.xsltProcessor.transformToDocument(content)
         let dContent = this.documentToString(docs)
         this.content = dContent
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub])
+        setTimeout(() => {
+          this.$nextTick(() => {
+            MathJax.Hub.Queue(['Typeset', MathJax.Hub])
+          })
+        }, 500)
       } catch (err) {
 
       }
