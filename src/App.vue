@@ -99,7 +99,7 @@ export default {
       }
     },
     checkDocument: function (doc) {
-      if (doc.firstElementChild.innerHTML.match(/\= \?\?\?/) || doc.firstElementChild.innerHTML.match(/This page contains the following errors/)
+      if (doc.firstElementChild.innerHTML.match(/= \?\?\?/) || doc.firstElementChild.innerHTML.match(/This page contains the following errors/)
       ) { //
         this.$root.$emit('onThrowError', 'Incorrect XML')
         return false
