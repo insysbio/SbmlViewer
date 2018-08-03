@@ -57,7 +57,7 @@ Project-page: http://sv.insysbio.ru
 
   <!-- SBML -->
   <xsl:template match="*[local-name()='sbml']" mode="math">
-      <h1 class="tooltip">Equations crated by SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/></h1>
+      <h1 class="sv-tooltip">Equations crated by SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/></h1>
       <xsl:apply-templates select="*[local-name()='model']" mode="math"/>
   </xsl:template>
 
