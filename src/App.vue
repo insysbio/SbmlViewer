@@ -32,6 +32,8 @@ export default {
   },
   mounted () {
     this.changeModelXslt(this.xsltOptions.transform)
+    this.updateWindowSize()
+    window.addEventListener('resize', this.updateWindowSize)
   },
   components: {
     ToolBar,
@@ -51,6 +53,12 @@ export default {
     },
     updateXsltOptions: function () {
       this.importStylesheetToXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
+    },
+    updateWindowSize: function () {
+      var newHeight = document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 7 + 'px'
+      document.getElementById('mainContent').style.height = newHeight
+      document.getElementById('sideContent').style.height = newHeight
+      document.getElementById('content').style.marginTop = document.getElementById('optionsArea').clientHeight + 2 + 'px'
     },
     parseFile: function (file) {
       let doc = this.fileContent = file
@@ -142,5 +150,8 @@ export default {
 <style>
 html {
   overflow-x: hidden;
+}
+html, head {
+  height: 100%;
 }
 </style>

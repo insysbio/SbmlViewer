@@ -32,6 +32,9 @@ export default {
     this.$root.$on('closeAnnotation', () => {
       this.isSideOpen = false
     })
+    window.addEventListener('resize', () => {
+
+    })
   },
   methods: {
   }
