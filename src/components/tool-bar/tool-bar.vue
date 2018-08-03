@@ -52,10 +52,10 @@ export default {
   methods: {
     refresh: function () {
       if (this.url) {
-        this.uploadFileByUrl()
+        this.uploadFileByUrl(true)
       }
       if (this.file) {
-        this.uploadFileFromComputer()
+        this.uploadFileFromComputer(true)
       }
     },
     onChooseFile: function (e) {
@@ -66,12 +66,12 @@ export default {
         this.uploadFileFromComputer()
       }
     },
-    uploadFileFromComputer: function () {
+    uploadFileFromComputer: function (isRefresh = false) {
       this.updateFileName(this.file.name)
       readXmlUpload(this.file, (err, result) => {
         if (err) throw err
         this.fileContent = result
-        this.$emit('onLoadFile', result)
+        this.$emit('onLoadFile', result, isRefresh)
       })
     },
     updateFileName: function (name) {
@@ -93,7 +93,7 @@ export default {
         return null
       }
     },
-    uploadFileByUrl: function () {
+    uploadFileByUrl: function (isRefresh = false) {
       this.file = null
       this.updateFileName(this.url.match(/[_-\w]+.xml/)[0])
       $.ajax({
@@ -101,7 +101,7 @@ export default {
         success: (result) => {
           let fileContent = result
           this.fileContent = fileContent
-          this.$emit('onLoadFile', fileContent)
+          this.$emit('onLoadFile', fileContent, isRefresh)
         }
       })
     },

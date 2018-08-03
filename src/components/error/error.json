@@ -10,5 +10,8 @@
   },
   "Fail transform document": {
     "message": "Fail transform document"
+  },
+  "Broken document": {
+    "message": "Broken document"
   }
 }

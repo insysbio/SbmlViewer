@@ -40,13 +40,13 @@ export default {
     ModelArea
   },
   methods: {
-    updateModel: function (file) {
+    updateModel: function (file, isRefresh) {
       this.$root.$emit('startSpin')
-      this.displayContent = ''
+      if (!(isRefresh)) this.displayContent = ''
       setTimeout(() => {
         this.$nextTick(() => {
           this.updateXsltOptions()
-          this.parseFile(file)
+          this.parseFile(file, isRefresh)
           this.addEventListenerAnnotationElement()
           this.$root.$emit('stopSpin')
         })
@@ -61,12 +61,14 @@ export default {
       document.getElementById('sideContent').style.height = newHeight
       document.getElementById('content').style.marginTop = document.getElementById('optionsArea').clientHeight + 2 + 'px'
     },
-    parseFile: function (file) {
+    parseFile: function (file, isRefresh) {
       let doc = this.fileContent = file
       let transformDoc = this.transformDocument(this.modelXsltProcessor, doc)
       if (this.checkDocumentVersion(doc) && this.checkDocument(transformDoc)) {
+        console.log('ok')
         this.displayDocument(transformDoc)
-      } else {
+      } else if (!(isRefresh)) {
+        console.log('ups')
         this.displayContent = '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>'
       }
     },
@@ -97,23 +99,26 @@ export default {
       }
     },
     checkDocument: function (doc) {
-      /* do not understand this part
-      if ($(doc).children().html().match(/= \?\?\?/) || doc.firstElementChild.innerHTML.match(/This page contains the following errors/)) { //
+      if (doc.firstElementChild.innerHTML.match(/\= \?\?\?/) || doc.firstElementChild.innerHTML.match(/This page contains the following errors/)
+      ) { //
         this.$root.$emit('onThrowError', 'Incorrect XML')
         return false
       } else {
         return true
       }
-      */
-      return true
     },
     checkDocumentVersion: function (doc) {
-      // if ($(doc).contents('sbml').attr('level') === '2') {
-      let SBMLElement = doc.getElementsByTagName('sbml')
-      if (SBMLElement[0].getAttribute('level') === '2') {
-        return true
-      } else {
-        this.$root.$emit('onThrowError', 'Incorrect level')
+      try {
+        let SBMLElement = doc.getElementsByTagName('sbml')
+        if (SBMLElement[0].getAttribute('level') && SBMLElement[0].getAttribute('level') === '2') {
+          return true
+        } else {
+          this.$root.$emit('onThrowError', 'Incorrect level')
+          return false
+        }
+      } catch (err) {
+        console.log(err)
+        this.$root.$emit('onThrowError', 'Broken document')
         return false
       }
     },
