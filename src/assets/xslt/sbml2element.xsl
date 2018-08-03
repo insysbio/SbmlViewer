@@ -62,7 +62,7 @@ Project-page: http://sv.insysbio.ru
 
   <!-- top element -->
   <xsl:template match="/">
-    <div class="container">
+    <div class="sv-sbml-container">
     <xsl:apply-templates select="key('idKey', $elementId)[1]"/>
     </div>
   </xsl:template>
@@ -80,21 +80,21 @@ Project-page: http://sv.insysbio.ru
   <!-- Notes -->
   <xsl:template match="*[local-name()='notes']" mode="element">
    <p><strong>notes:</strong></p>
-   <div class="note-content">
+   <div class="sv-note-content">
     <xsl:copy-of select="node()"/>
    </div>
   </xsl:template>
 
   <xsl:template match="*[local-name()='notes' and xhtml:body]" mode="element">
    <p><strong>notes:</strong></p>
-   <div class="note-content">
+   <div class="sv-note-content">
     <xsl:copy-of select="xhtml:body/node()"/>
    </div>
   </xsl:template>
 
   <xsl:template match="*[local-name()='notes' and xhtml:html[xhtml:body]]" mode="element">
    <p><strong>notes:</strong></p>
-   <div class="note-content">
+   <div class="sv-note-content">
     <xsl:copy-of select="xhtml:html/xhtml:body/node()"/>
    </div>
   </xsl:template>
@@ -136,7 +136,7 @@ Project-page: http://sv.insysbio.ru
 	<xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
     <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
     <h3>formula: </h3>
-    <p class="large"><xsl:apply-templates select="." mode="reactionFormula"/></p>
+    <p><xsl:apply-templates select="." mode="reactionFormula"/></p>
 
     <xsl:call-template name="dependences"/>
   </xsl:template>
@@ -155,7 +155,7 @@ Project-page: http://sv.insysbio.ru
     <xsl:template match="@id|@variable" mode="idOrNamePlus">
       <xsl:if test="$useNames='true'"><xsl:value-of select="./../@name"/></xsl:if>  <!-- for simbio only-->
       <xsl:if test="not($useNames='true')"><xsl:value-of select="."/></xsl:if>
-       <div class="tooltip-note">
+       <div class="sv-tooltip-text">
            <xsl:apply-templates select="../*[local-name()='notes']" />
          </div>
     </xsl:template>
@@ -250,7 +250,7 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='compartment' or local-name()='parameter']" mode="dependences">
     <tr>
-    <td class="tooltip" style="cursor:default;"><xsl:apply-templates select="@id" mode="idOrNamePlus"/></td>
+    <td class="sv-tooltip" style="cursor:default;"><xsl:apply-templates select="@id" mode="idOrNamePlus"/></td>
     <td>=</td>
     <td style="width:500px;">
     <xsl:if test="not(key('variableKey', @id))">
@@ -267,7 +267,7 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='reaction']" mode="dependences">
     <tr>
-    <td class="tooltip" style="cursor:default;"><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
+    <td class="sv-tooltip" style="cursor:default;"><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
     <td>=</td>
     <td style="width:500px;"><xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/></td>
     </tr>
@@ -275,7 +275,7 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='species' and not(@hasOnlySubstanceUnits='true')]" mode="dependences">
     <tr>
-    <td class="tooltip" style="cursor:default;">
+    <td class="sv-tooltip" style="cursor:default;">
     <xsl:apply-templates select="@id"  mode="idOrNamePlus"/>
     </td>
     <td>
@@ -309,7 +309,7 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='species' and @hasOnlySubstanceUnits='true']" mode="dependences">
     <tr>
-    <td class="tooltip" style="cursor:default;">
+    <td class="sv-tooltip" style="cursor:default;">
     <xsl:apply-templates select="@id"  mode="idOrNamePlus"/>
     </td>
     <td>
