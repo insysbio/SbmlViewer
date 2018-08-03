@@ -60,9 +60,11 @@ export default {
     },
     onChooseFile: function (e) {
       e.preventDefault()
-      this.file = document.getElementById('file').files[0]
-      this.url = null
-      this.uploadFileFromComputer()
+      if (document.getElementById('file').files[0]) {
+        this.file = document.getElementById('file').files[0]
+        this.url = null
+        this.uploadFileFromComputer()
+      }
     },
     uploadFileFromComputer: function () {
       this.updateFileName(this.file.name)

@@ -42,6 +42,7 @@ export default {
   methods: {
     updateModel: function (file) {
       this.$root.$emit('startSpin')
+      this.displayContent = ''
       setTimeout(() => {
         this.$nextTick(() => {
           this.updateXsltOptions()
@@ -65,6 +66,8 @@ export default {
       let transformDoc = this.transformDocument(this.modelXsltProcessor, doc)
       if (this.checkDocumentVersion(doc) && this.checkDocument(transformDoc)) {
         this.displayDocument(transformDoc)
+      } else {
+        this.displayContent = '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>'
       }
     },
     changeModelXslt: function (xslt) {
