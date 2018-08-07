@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #errors {
+      color: red;
+    }
+    #menu span, #menu2 span {
+      color: blue;
+      cursor: pointer;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    div {
+      border: 1px dotted grey;
+    }
+    .sv-tooltip-text {
+      display: none;
+    }
+    .sv-id-lost {
+      color: red;
+    }
+    .sv-attribute-sboTerm .sv-attribute-value {
+      color: blue;
+      text-decoration: underline;
+    }
+    .sv-id {
+      color: blue;
+    }
+    .sv-id-target {
+      color: green;
+    }
+  </style>
+
+    <!-- MathJax settings -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/MathML", "output/HTML-CSS"],
+        extensions: ["mml2jax.js", "MathML/content-mathml.js", "MathZoom.js"],
+        menuSettings: { zoom: "Click" },
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": {
+          linebreaks: { automatic: true },
+          EqnChunk: 1,
+          EqnChunkFactor: 1,
+          EqnChunkDelay: 1
+        },
+        SVG: { linebreaks: { automatic: true } }
+  });
+      </script>
+    <script type="text/javascript" src="http://insilicobio.ru/mathjax/MathJax.js"></script>
+</head>
+<body>
+  <div id="menu"></div>
+  <div id="menu2"></div>
+  <div id="menu3"></div>
+  <p id="errors"></p>
+  <hr/>
+
+  <div id="result"></div>
+</body>
+</html>

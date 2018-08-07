@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sbml xmlns="http://www.sbml.org/sbml/level2/version5" level="3" version="5" metaid="metaexample" sboTerm="SBO:001">
+<sbml xmlns="http://www.sbml.org/sbml/level3/version5" level="3" version="5" metaid="metaexample" sboTerm="SBO:001">
   <notes>
     <html xmlns="http://www.w3.org/1999/xhtml"><head><title/></head><body>
     <p>This is a test SBML which includes all cominations of nodes and attributes.</p>
