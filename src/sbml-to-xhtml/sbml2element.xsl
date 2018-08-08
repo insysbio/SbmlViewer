@@ -143,8 +143,10 @@ Project-page: http://sv.insysbio.ru
 	<xsl:apply-templates select="@*" mode="element"/>
 	<xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
     <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-    <h3>formula: </h3>
+    <h3 class="sv-header">reactants / products: </h3>
     <p><xsl:apply-templates select="." mode="reactionFormula"/></p>
+    <h3 class="sv-header">modifiers:</h3>
+    <p><xsl:apply-templates select="*[local-name()='listOfModifiers']" mode="reactionFormula"/></p>
 
     <xsl:call-template name="dependences"/>
   </xsl:template>
@@ -181,7 +183,6 @@ Project-page: http://sv.insysbio.ru
     <xsl:if test="not(@reversible='false') and not(@fast='true')"> &#8660; </xsl:if>
     <xsl:if test="count(*[local-name()='listOfProducts']/*[local-name()='speciesReference'])=0">&#8709;</xsl:if>
     <xsl:apply-templates select="*[local-name()='listOfProducts']" mode="reactionFormula"/>
-    <xsl:apply-templates select="*[local-name()='listOfModifiers']" mode="reactionFormula"/>
   </xsl:template>
 
   <!-- listOfReactants / listOfProducts-->
@@ -190,11 +191,9 @@ Project-page: http://sv.insysbio.ru
     *[local-name()='listOfProducts']
     " mode="reactionFormula">
     <xsl:for-each select="*[local-name()='speciesReference']">
-      <xsl:if test="@stoichiometry!='1'">
-        <xsl:value-of select="@stoichiometry"/> &#215;
-      </xsl:if>
+      <xsl:if test="@stoichiometry!='1'"><xsl:value-of select="@stoichiometry"/>&#215;</xsl:if>
       <xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/>
-      <xsl:if test="position()!=last()">+</xsl:if>
+      <xsl:if test="position()!=last()"> + </xsl:if>
     </xsl:for-each>
   </xsl:template>
 
@@ -202,10 +201,9 @@ Project-page: http://sv.insysbio.ru
   <xsl:template match="
     *[local-name()='listOfModifiers']
     " mode="reactionFormula">
-    <xsl:if test="count(*[local-name()='modifierSpeciesReference'])>0"> ~ </xsl:if>
     <xsl:for-each select="*[local-name()='modifierSpeciesReference']">
       <xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/>
-      <xsl:if test="position()!=last()">, </xsl:if>
+      <xsl:if test="position()!=last()">; </xsl:if>
     </xsl:for-each>
   </xsl:template>
 <!-- END OF reactionFormula mode -->
