@@ -1,9 +1,12 @@
 <template src="./annotation-side.html"></template>
 <style lang="scss" src="./annotation-side.scss"></style>
 <script>
-/* global MathJax */
+/* global window MathJax */
 
-import * as xsltStylesheet from '../../assets/xslt/sbml2element.xsl'
+const parser = new window.DOMParser()
+
+let xsltCollection = require('../../sbml-to-xhtml')(parser)
+let sbml2elementDoc = xsltCollection[2].xslt
 
 export default {
   name: 'AnnotationSide',
@@ -16,7 +19,7 @@ export default {
   },
   mounted () {
     this.xsltProcessor = new XSLTProcessor()
-    this.xsltProcessor.importStylesheet(new DOMParser().parseFromString(xsltStylesheet, 'text/xml'))
+    this.xsltProcessor.importStylesheet(sbml2elementDoc.firstElementChild)
     this.$root.$on('onOpenAnnotation', this.openAnnotation)
   },
   methods: {

@@ -11,6 +11,8 @@
 import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
 // import $ from 'jquery'
+const parser = new window.DOMParser()
+const xsltCollection = require('./sbml-to-xhtml')(parser)
 
 export default {
   name: 'App',
@@ -27,6 +29,7 @@ export default {
       displayContent: '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>',
       fileContent: null,
       xsltStylesheet: '',
+      xsltDoc: null,
       file: null
     }
   },
@@ -53,7 +56,11 @@ export default {
       }, 100)
     },
     updateXsltOptions: function () {
-      this.importStylesheetToXsltProcessor(new XSLTProcessor(), new DOMParser().parseFromString(this.xsltStylesheet, 'text/xml'), this.xsltOptions)
+      this.importStylesheetToXsltProcessor(
+        new XSLTProcessor(),
+        this.xsltDoc.firstElementChild,
+        this.xsltOptions // TOFIX: no 3d argument in funtion
+      )
     },
     updateWindowSize: function () {
       var newHeight = document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 7 + 'px'
@@ -65,7 +72,7 @@ export default {
       let doc = this.fileContent = file
       let transformDoc = this.transformDocument(this.modelXsltProcessor, doc)
       if (this.checkDocumentVersion(doc) && this.checkDocument(transformDoc)) {
-        console.log('ok')
+        // console.log('ok')
         this.displayDocument(transformDoc)
       } else if (!(isRefresh)) {
         console.log('ups')
@@ -73,7 +80,7 @@ export default {
       }
     },
     changeModelXslt: function (xslt) {
-      this.xsltStylesheet = require('./assets/xslt/' + xslt + '.xsl')
+      this.xsltDoc = xsltCollection.filter((x) => x.name === xslt)[0].xslt
       this.updateXsltOptions()
     },
     updateXslt: function (xslt, file) {
@@ -154,7 +161,7 @@ export default {
 }
 </script>
 
-<style lang='scss' src='./assets/xslt/style/style.scss'></style>
+<style lang='scss' src='./assets/style/style.scss'></style>
 <style>
 html {
   overflow-x: hidden;
