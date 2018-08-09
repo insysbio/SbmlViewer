@@ -1,12 +1,10 @@
 @import '../../../static/style/w3.scss';
 /*-- Content --*/
 #content {
-  margin-top: 105px;
 }
 /*-- Main --*/
 #mainContent {
   overflow: auto;
-  padding-bottom: 30px;
 }
 .main-container-part {
       @extend .l9;

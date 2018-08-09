@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <ToolBar @onLoadFile="displayFile" @selectedXslt='toggleXslt' @onChangeXsltParam='rebuildXsltParams' v-bind:options='xsltOptions' v-bind:transformationTypes='transformationTypes'></ToolBar>
+  <ToolBar @onLoadFile="loadFile" @selectedXslt='toggleXslt' @onChangeXsltParam='rebuildXsltParams' v-bind:options='xsltOptions' v-bind:transformationTypes='transformationTypes'></ToolBar>
   <ModelArea v-bind:displayContent='displayContent'></ModelArea>
   </div>
 </template>
@@ -37,13 +37,16 @@ export default {
     ModelArea
   },
   methods: {
+    loadFile: function (file, xsltName, isRefresh) {
+      this.getListTransformationType(file, isRefresh)
+      this.displayFile(file, xsltName, isRefresh)
+    },
     displayFile: function (file, xsltName, isRefresh) {
       this.$root.$emit('startSpin')
 
       if (!(isRefresh)) this.displayContent = ''
 
       this.doNextTick(() => {
-        this.getListTransformationType(file)
         this.xsltDoc = this.getTransformationType(xsltName)
         if (this.xsltDoc) {
           this.importStylesheetToXsltProcessor(
@@ -53,11 +56,12 @@ export default {
           this.parseFile(file, isRefresh)
           this.addEventListenerAnnotationElement()
         }
-
-        this.$root.$emit('stopSpin')
       }, 100)
+      this.doNextTick(() => {
+        this.$root.$emit('stopSpin')
+      })
     },
-    getListTransformationType: function (file) {
+    getListTransformationType: function (file, isRefresh) {
       let SBMLElement = file.getElementsByTagName('sbml')
       let level = SBMLElement && SBMLElement[0] && SBMLElement[0].getAttribute('level')
       if (level) {
@@ -67,7 +71,7 @@ export default {
         this.$root.$emit('onThrowError', 'Incorrect level')
       }
       this.doNextTick(() => {
-        this.$root.$emit('onUpdateTransformationType', true)
+        this.$root.$emit('onUpdateTransformationType', !(isRefresh))
       })
     },
     getTransformationType: function (xsltName) {
@@ -157,7 +161,7 @@ export default {
       var newHeight = document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 7 + 'px'
       document.getElementById('mainContent').style.height = newHeight
       document.getElementById('sideContent').style.height = newHeight
-      document.getElementById('content').style.marginTop = document.getElementById('optionsArea').clientHeight + 2 + 'px'
+      document.getElementById('content').style.marginTop = document.getElementById('optionsArea').clientHeight + 15 + 'px'
     },
     doNextTick: function (callback, time = 100) {
       setTimeout(() => {
