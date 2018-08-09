@@ -1,26 +1,26 @@
 <div class="w3-top w3-card-4 w3-blue-grey">
     <div id="optionsArea">
-      <div class="w3-cell w3-padding w3-border-right w3-border-color-white">
+      <div class="w3-cell w3-padding w3-border-color-white">
         <input id="file" @change='onChooseFile' class="file" type="file" accept=".xml,.sbml"/><span id="fileName" class="w3-padding-bottom">{{ fileName }}</span>
-        <p class="w3-dispay-bottomleft"><span class="w3-small w3-text-white"><a href="http://sv.insysbio.ru">SbmlViewer</a> by <a href="http://insysbio.ru/en">InSysBio</a></span></p>
+        <!-- <p class="w3-dispay-bottomleft"><span class="w3-small w3-text-white"><a href="http://sv.insysbio.ru">SbmlViewer</a> by <a href="http://insysbio.ru/en">InSysBio</a></span></p> -->
       </div>
 
-      <div class="w3-cell w3-border-right w3-border-color-white w3-padding-left w3-padding-right">
-        <h4>Transformation type:</h4>
+      <div v-if="transformationTypes" class="w3-cell w3-border-left w3-border-color-white w3-padding-left w3-padding-right">
+        <!-- <h4>Transformation type:</h4> -->
         <select id="transformationType" v-model="xslt" @change='onSelectXslt'>
-          <option v-for="(way, i) in waysDisplayPage" v-bind:value='way'>{{ way }}</option>
+          <option v-for="(type, i) in transformationTypes" v-bind:value='type.name'>{{ type.name }}</option>
         </select>
       </div>
 
-      <div id="listOptionsCheckbox" class="w3-cell w3-padding">
-        <h4>Options display:</h4>
-        <div v-for="(optionData, optionName) in optionsDisplay" class="w3-cell w3-padding-right w3-tooltip">
+      <div v-if="optionsDisplay" id="listOptionsCheckbox" class="w3-cell w3-padding w3-border-left">
+        <!-- <h4>Options display:</h4> -->
+        <div v-for="(optinonName) in optionsDisplay" class="w3-cell w3-padding-right w3-tooltip">
           <p>
-            <input :id="optionName" type="checkbox" @change="changeOption(optionName)"/>
-            <label :for='optionName'>{{ optionData['title'] }}</label>
+            <input :id="optinonName" type="checkbox" @change="changeOption(optinonName)"/>
+            <label :for='optinonName'>{{ optinonName }}</label>
           </p>
           <p class="w3-text w3-tag w3-tiny w3-animate-opacity noteOptions">
-            {{ optionData['notes'] }}
+            {{ optionsInformation[optinonName] }}
           </p>
         </div>
       </div>

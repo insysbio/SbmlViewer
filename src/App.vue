@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <ToolBar @onLoadFile="updateModel" @selectedXslt='updateXslt' v-bind:options='xsltOptions'></ToolBar>
+  <ToolBar @onLoadFile="updateModel" @selectedXslt='updateXslt' @onUpdateXsltOptins='updateXsltOptions' v-bind:options='xsltOptions' v-bind:transformationTypes='transformationTypes'></ToolBar>
   <ModelArea v-bind:displayContent='displayContent'></ModelArea>
   </div>
 </template>
@@ -19,13 +19,14 @@ export default {
   data () {
     return {
       load: false,
-      xsltOptions: {
+      transformationTypes: null,
+      xsltOptions: null, /* {
         correctMathml: false,
         equationsOff: false,
         transform: 'sbml2table',
         transform2: 'sbml2element',
         useNames: false
-      },
+      } */
       displayContent: '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>',
       fileContent: null,
       xsltStylesheet: '',
@@ -34,7 +35,7 @@ export default {
     }
   },
   mounted () {
-    this.changeModelXslt(this.xsltOptions.transform)
+    // this.changeModelXslt(this.xsltOptions.transform)
     this.updateWindowSize()
     window.addEventListener('resize', this.updateWindowSize)
   },
@@ -46,21 +47,27 @@ export default {
     updateModel: function (file, isRefresh) {
       this.$root.$emit('startSpin')
       if (!(isRefresh)) this.displayContent = ''
-      setTimeout(() => {
-        this.$nextTick(() => {
-          this.updateXsltOptions()
-          this.parseFile(file, isRefresh)
-          this.addEventListenerAnnotationElement()
-          this.$root.$emit('stopSpin')
-        })
+
+      this.doNextTick(() => {
+        this.getTransformationType(file)
+        this.xsltDoc = this.transformationTypes[0].xslt
+        this.applyXsltOptions()
+        this.parseFile(file, isRefresh)
+        this.addEventListenerAnnotationElement()
+        this.$root.$emit('stopSpin')
       }, 100)
     },
-    updateXsltOptions: function () {
-      this.importStylesheetToXsltProcessor(
-        new XSLTProcessor(),
-        this.xsltDoc.firstElementChild,
-        this.xsltOptions // TOFIX: no 3d argument in funtion
-      )
+    getTransformationType: function (file) {
+      let SBMLElement = file.getElementsByTagName('sbml')
+      let level = SBMLElement && SBMLElement[0] && SBMLElement[0].getAttribute('level')
+      if (level) {
+        this.transformationTypes = xsltCollection.filter((x) => x.level === level && x.name !== 'sbml2element')
+        this.doNextTick(() => {
+          this.$root.$emit('onUpdateTransformationType')
+        })
+      } else {
+        this.$root.$emit('onThrowError', 'Incorrect level')
+      }
     },
     updateWindowSize: function () {
       var newHeight = document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 7 + 'px'
@@ -79,13 +86,26 @@ export default {
         this.displayContent = '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>'
       }
     },
-    changeModelXslt: function (xslt) {
-      this.xsltDoc = xsltCollection.filter((x) => x.name === xslt)[0].xslt
-      this.updateXsltOptions()
-    },
     updateXslt: function (xslt, file) {
       this.changeModelXslt(xslt)
       this.updateModel(file)
+    },
+    changeModelXslt: function (xslt) {
+      this.xsltDoc = xsltCollection.filter((x) => x.name === xslt)[0].xslt
+      this.applyXsltOptions()
+    },
+    updateXsltOptions: function (transform, barOpt) {
+      console.log(transform, barOpt)
+      let options = barOpt
+      options['transform'] = transform
+      options['transform2'] = 'sbml2element'
+      this.xsltOptions = options
+    },
+    applyXsltOptions: function () {
+      this.importStylesheetToXsltProcessor(
+        new XSLTProcessor(),
+        this.xsltDoc.firstElementChild
+      )
     },
     importStylesheetToXsltProcessor: function (xsltProcessor, xsltStylesheet) {
       try {
@@ -124,7 +144,6 @@ export default {
           return false
         }
       } catch (err) {
-        console.log(err)
         this.$root.$emit('onThrowError', 'Broken document')
         return false
       }
@@ -136,10 +155,8 @@ export default {
       this.$root.$emit('onClearErr')
     },
     updateMathjax: function () {
-      setTimeout(() => {
-        this.$nextTick(() => {
-          MathJax.Hub.Queue(['Typeset', MathJax.Hub])
-        })
+      this.doNextTick(() => {
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub])
       }, 500)
     },
     addEventListenerAnnotationElement: function () {
@@ -156,6 +173,13 @@ export default {
     documentToString: function (doc) {
       let container = document.createElement('div').appendChild(doc.firstElementChild)
       return container.outerHTML
+    },
+    doNextTick: function (callback, time = 100) {
+      setTimeout(() => {
+        this.$nextTick(() => {
+          callback()
+        })
+      }, time)
     }
   }
 }
