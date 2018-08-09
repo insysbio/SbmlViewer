@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <ToolBar @onLoadFile="updateModel" @selectedXslt='updateXslt' @onUpdateXsltOptins='updateXsltOptions' v-bind:options='xsltOptions' v-bind:transformationTypes='transformationTypes'></ToolBar>
+  <ToolBar @onLoadFile="displayFile" @selectedXslt='toggleXslt' @onChangeXsltParam='rebuildXsltParams' v-bind:options='xsltOptions' v-bind:transformationTypes='transformationTypes'></ToolBar>
   <ModelArea v-bind:displayContent='displayContent'></ModelArea>
   </div>
 </template>
@@ -19,14 +19,8 @@ export default {
   data () {
     return {
       load: false,
-      transformationTypes: null,
-      xsltOptions: null, /* {
-        correctMathml: false,
-        equationsOff: false,
-        transform: 'sbml2table',
-        transform2: 'sbml2element',
-        useNames: false
-      } */
+      transformationTypes: {},
+      xsltOptions: null,
       displayContent: '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>',
       fileContent: null,
       xsltStylesheet: '',
@@ -35,7 +29,6 @@ export default {
     }
   },
   mounted () {
-    // this.changeModelXslt(this.xsltOptions.transform)
     this.updateWindowSize()
     window.addEventListener('resize', this.updateWindowSize)
   },
@@ -44,16 +37,23 @@ export default {
     ModelArea
   },
   methods: {
-    updateModel: function (file, isRefresh) {
+    displayFile: function (file, isRefresh) {
       this.$root.$emit('startSpin')
+
       if (!(isRefresh)) this.displayContent = ''
 
       this.doNextTick(() => {
         this.getTransformationType(file)
-        this.xsltDoc = this.transformationTypes[0].xslt
-        this.applyXsltOptions()
-        this.parseFile(file, isRefresh)
-        this.addEventListenerAnnotationElement()
+        this.xsltDoc = (this.transformationTypes[0] && this.transformationTypes[0].xslt) || null
+        if (this.xsltDoc) {
+          this.importStylesheetToXsltProcessor(
+            new XSLTProcessor(),
+            this.xsltDoc.firstElementChild
+          )
+          this.parseFile(file, isRefresh)
+          this.addEventListenerAnnotationElement()
+        }
+
         this.$root.$emit('stopSpin')
       }, 100)
     },
@@ -62,50 +62,36 @@ export default {
       let level = SBMLElement && SBMLElement[0] && SBMLElement[0].getAttribute('level')
       if (level) {
         this.transformationTypes = xsltCollection.filter((x) => x.level === level && x.name !== 'sbml2element')
-        this.doNextTick(() => {
-          this.$root.$emit('onUpdateTransformationType')
-        })
       } else {
+        this.transformationTypes = {}
         this.$root.$emit('onThrowError', 'Incorrect level')
       }
-    },
-    updateWindowSize: function () {
-      var newHeight = document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 7 + 'px'
-      document.getElementById('mainContent').style.height = newHeight
-      document.getElementById('sideContent').style.height = newHeight
-      document.getElementById('content').style.marginTop = document.getElementById('optionsArea').clientHeight + 2 + 'px'
+      this.doNextTick(() => {
+        this.$root.$emit('onUpdateTransformationType')
+      })
     },
     parseFile: function (file, isRefresh) {
       let doc = this.fileContent = file
       let transformDoc = this.transformDocument(this.modelXsltProcessor, doc)
       if (this.checkDocumentVersion(doc) && this.checkDocument(transformDoc)) {
-        // console.log('ok')
         this.displayDocument(transformDoc)
       } else if (!(isRefresh)) {
-        console.log('ups')
         this.displayContent = '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>'
       }
     },
-    updateXslt: function (xslt, file) {
-      this.changeModelXslt(xslt)
-      this.updateModel(file)
-    },
-    changeModelXslt: function (xslt) {
+    toggleXslt: function (xslt) {
       this.xsltDoc = xsltCollection.filter((x) => x.name === xslt)[0].xslt
-      this.applyXsltOptions()
-    },
-    updateXsltOptions: function (transform, barOpt) {
-      console.log(transform, barOpt)
-      let options = barOpt
-      options['transform'] = transform
-      options['transform2'] = 'sbml2element'
-      this.xsltOptions = options
-    },
-    applyXsltOptions: function () {
       this.importStylesheetToXsltProcessor(
         new XSLTProcessor(),
         this.xsltDoc.firstElementChild
       )
+      this.displayFile(this.fileContent)
+    },
+    rebuildXsltParams: function (transform, opt) {
+      let params = opt
+      params['transform'] = transform
+      params['transform2'] = 'sbml2element'
+      this.xsltOptions = params
     },
     importStylesheetToXsltProcessor: function (xsltProcessor, xsltStylesheet) {
       try {
@@ -135,18 +121,7 @@ export default {
       }
     },
     checkDocumentVersion: function (doc) {
-      try {
-        let SBMLElement = doc.getElementsByTagName('sbml')
-        if (SBMLElement[0].getAttribute('level') && SBMLElement[0].getAttribute('level') === '2') {
-          return true
-        } else {
-          this.$root.$emit('onThrowError', 'Incorrect level')
-          return false
-        }
-      } catch (err) {
-        this.$root.$emit('onThrowError', 'Broken document')
-        return false
-      }
+      return true
     },
     displayDocument: function (doc) {
       this.displayContent = this.documentToString(doc)
@@ -173,6 +148,12 @@ export default {
     documentToString: function (doc) {
       let container = document.createElement('div').appendChild(doc.firstElementChild)
       return container.outerHTML
+    },
+    updateWindowSize: function () {
+      var newHeight = document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 7 + 'px'
+      document.getElementById('mainContent').style.height = newHeight
+      document.getElementById('sideContent').style.height = newHeight
+      document.getElementById('content').style.marginTop = document.getElementById('optionsArea').clientHeight + 2 + 'px'
     },
     doNextTick: function (callback, time = 100) {
       setTimeout(() => {

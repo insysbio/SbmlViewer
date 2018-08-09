@@ -15,12 +15,10 @@ export default {
       isSpin: false,
       fileName: 'No file choosen',
       optionsInformation: require('./options.json'),
-      optionsDisplay: null,
-      waysDisplayPage: null,
-      xslt: 'sbml2table',
+      optionsDisplay: {},
+      xslt: null,
       file: null,
-      options: {},
-      fileContent: null
+      options: {}
     }
   },
   mounted () {
@@ -59,7 +57,6 @@ export default {
       this.updateFileName(this.file.name)
       readXmlUpload(this.file, (err, result) => {
         if (err) throw err
-        this.fileContent = result
         this.$emit('onLoadFile', result, isRefresh)
       })
     },
@@ -72,14 +69,22 @@ export default {
     },
     onSelectXslt: function () {
       this.options.transform = this.xslt
-      this.$emit('selectedXslt', this.xslt, this.fileContent)
+      this.getDisplayOptions()
+      this.$emit('selectedXslt', this.xslt)
     },
     getDisplayOptions: function () {
-      this.optionsDisplay = this.transformationTypes.find((x) => x.name === this.xslt).parameters
-      this.optionsDisplay.forEach((item, i) => {
-        this.options[item] = (this.options && this.options[item]) || false
-      })
-      this.$emit('onUpdateXsltOptins', this.xslt, this.options)
+      if (Object.keys(this.transformationTypes).length !== 0) {
+        this.xslt = this.transformationTypes[0].name
+        this.optionsDisplay = this.transformationTypes.find((x) => x.name === this.xslt).parameters
+        this.optionsDisplay.forEach((item, i) => {
+          this.options[item] = (this.options && this.options[item]) || false
+        })
+      } else {
+        this.xslt = ''
+        this.options = {}
+        this.optionsDisplay = {}
+      }
+      this.$emit('onChangeXsltParam', this.xslt, this.options)
     },
     checkGetUploadReq: function () {
       let parameters = window.location.search.substring(1).split('&')

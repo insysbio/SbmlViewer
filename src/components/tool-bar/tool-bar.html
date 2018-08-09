@@ -5,14 +5,14 @@
         <!-- <p class="w3-dispay-bottomleft"><span class="w3-small w3-text-white"><a href="http://sv.insysbio.ru">SbmlViewer</a> by <a href="http://insysbio.ru/en">InSysBio</a></span></p> -->
       </div>
 
-      <div v-if="transformationTypes" class="w3-cell w3-border-left w3-border-color-white w3-padding-left w3-padding-right">
+      <div v-if="Object.keys(transformationTypes).length !== 0" class="w3-cell w3-border-left w3-border-color-white w3-padding-left w3-padding-right">
         <!-- <h4>Transformation type:</h4> -->
         <select id="transformationType" v-model="xslt" @change='onSelectXslt'>
           <option v-for="(type, i) in transformationTypes" v-bind:value='type.name'>{{ type.name }}</option>
         </select>
       </div>
 
-      <div v-if="optionsDisplay" id="listOptionsCheckbox" class="w3-cell w3-padding w3-border-left">
+      <div v-if="Object.keys(optionsDisplay).length !== 0" id="listOptionsCheckbox" class="w3-cell w3-padding w3-border-left">
         <!-- <h4>Options display:</h4> -->
         <div v-for="(optinonName) in optionsDisplay" class="w3-cell w3-padding-right w3-tooltip">
           <p>
