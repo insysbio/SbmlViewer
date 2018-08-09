@@ -57,7 +57,7 @@ export default {
       this.updateFileName(this.file.name)
       readXmlUpload(this.file, (err, result) => {
         if (err) throw err
-        this.$emit('onLoadFile', result, isRefresh)
+        this.$emit('onLoadFile', result, this.xslt, isRefresh)
       })
     },
     updateFileName: function (name) {
@@ -72,9 +72,9 @@ export default {
       this.getDisplayOptions()
       this.$emit('selectedXslt', this.xslt)
     },
-    getDisplayOptions: function () {
+    getDisplayOptions: function (isNewListTransformationType = false) {
       if (Object.keys(this.transformationTypes).length !== 0) {
-        this.xslt = this.transformationTypes[0].name
+        if (!(this.xslt) || isNewListTransformationType) this.xslt = this.transformationTypes[0].name
         this.optionsDisplay = this.transformationTypes.find((x) => x.name === this.xslt).parameters
         this.optionsDisplay.forEach((item, i) => {
           this.options[item] = (this.options && this.options[item]) || false
@@ -102,7 +102,7 @@ export default {
         success: (result) => {
           let fileContent = result
           this.fileContent = fileContent
-          this.$emit('onLoadFile', fileContent, isRefresh)
+          this.$emit('onLoadFile', fileContent, this.xslt, isRefresh)
         }
       })
     },

@@ -37,14 +37,14 @@ export default {
     ModelArea
   },
   methods: {
-    displayFile: function (file, isRefresh) {
+    displayFile: function (file, xsltName, isRefresh) {
       this.$root.$emit('startSpin')
 
       if (!(isRefresh)) this.displayContent = ''
 
       this.doNextTick(() => {
-        this.getTransformationType(file)
-        this.xsltDoc = (this.transformationTypes[0] && this.transformationTypes[0].xslt) || null
+        this.getListTransformationType(file)
+        this.xsltDoc = this.getTransformationType(xsltName)
         if (this.xsltDoc) {
           this.importStylesheetToXsltProcessor(
             new XSLTProcessor(),
@@ -57,7 +57,7 @@ export default {
         this.$root.$emit('stopSpin')
       }, 100)
     },
-    getTransformationType: function (file) {
+    getListTransformationType: function (file) {
       let SBMLElement = file.getElementsByTagName('sbml')
       let level = SBMLElement && SBMLElement[0] && SBMLElement[0].getAttribute('level')
       if (level) {
@@ -67,8 +67,12 @@ export default {
         this.$root.$emit('onThrowError', 'Incorrect level')
       }
       this.doNextTick(() => {
-        this.$root.$emit('onUpdateTransformationType')
+        this.$root.$emit('onUpdateTransformationType', true)
       })
+    },
+    getTransformationType: function (xsltName) {
+      let xsltDoc = this.transformationTypes.find(x => x.name === xsltName)
+      return (xsltDoc && xsltDoc.xslt) || this.transformationTypes[0].xslt
     },
     parseFile: function (file, isRefresh) {
       let doc = this.fileContent = file
@@ -80,12 +84,12 @@ export default {
       }
     },
     toggleXslt: function (xslt) {
-      this.xsltDoc = xsltCollection.filter((x) => x.name === xslt)[0].xslt
+      /* this.xsltDoc = xsltCollection.filter((x) => x.name === xslt)[0].xslt
       this.importStylesheetToXsltProcessor(
         new XSLTProcessor(),
         this.xsltDoc.firstElementChild
-      )
-      this.displayFile(this.fileContent)
+      ) */
+      this.displayFile(this.fileContent, xslt)
     },
     rebuildXsltParams: function (transform, opt) {
       let params = opt
