@@ -15,6 +15,7 @@ function transform(
   document.getElementById('errors').innerHTML = '';
 
   let processor = new window.XSLTProcessor();
+  
   parameters.forEach((x) => {
     processor.setParameter(null, x.id, x.value);
   });
@@ -72,6 +73,19 @@ function getTransformationMenu(caseName){
           menu2Div.appendChild(formatButton);
         });
       getParametersMenu(caseDoc, xsltCollection[0]);
+      break;
+    case 'http://www.sbml.org/sbml/level3/version1/core':
+      xsltCollection
+        .filter((x) => x.format==='SBML' && x.level==='3')
+        .forEach((x) => {
+          let formatButton = document.createElement('span');
+          formatButton.textContent = x.name + ' | ';
+          formatButton.addEventListener('click', () => {
+            getParametersMenu(caseDoc, x);
+          });
+          menu2Div.appendChild(formatButton);
+        });
+      getParametersMenu(caseDoc, xsltCollection[3]);
       break;
     default:
       let errorDiv = document.getElementById('errors');
