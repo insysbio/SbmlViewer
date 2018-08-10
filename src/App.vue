@@ -10,10 +10,10 @@
 
 import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
+import 'code-prettify'
 // import $ from 'jquery'
 var xmlescape = require('xml-escape')
 var pd = require('pretty-data').pd
-var PR = require('code-prettify')
 const parser = new window.DOMParser()
 const xsltCollection = require('./sbml-to-xhtml')(parser)
 
@@ -151,6 +151,16 @@ export default {
         let annotationElements = document.getElementsByClassName('sv-id-target')
         for (let i = 0; i < annotationElements.length; i++) {
           annotationElements[i].addEventListener('click', this.onClickAnnotation)
+        }
+
+        let annotationOpenElements = document.getElementsByClassName('sv-annotation-toogle-btn')
+        for (let i = 0; i < annotationOpenElements.length; i++) {
+          annotationOpenElements[i].addEventListener('click', (e) => {
+            let annotationContainer = e.target.parentNode.parentNode.nextSibling
+            let annotation = annotationContainer.firstElementChild
+            annotationContainer.classList.toggle('sv-element-annotation-conatiner-height-open')
+            annotation.classList.toggle('sv-element-annotation-height')
+          })
         }
       })
     },

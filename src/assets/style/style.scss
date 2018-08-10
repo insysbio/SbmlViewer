@@ -13,6 +13,20 @@
   min-width: 300px
 }
 
+.sv-element-annotation-content, .sv-element-annotation-conatiner-height-open {
+  transition: max-height 0.3s ease-out;
+  max-height: 0px;
+  overflow: hidden;
+  display: block!important;
+  height:auto;
+}
+.sv-element-annotation-height, .sv-element-annotation-conatiner-height-open {
+   max-height: 300px;
+}
+.sv-annotation-toogle-btn {
+  padding-left: 3px;
+  cursor: pointer;
+}
 .sv-id-target {
   color: blue;
   text-decoration: underline;
