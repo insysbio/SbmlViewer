@@ -14,7 +14,6 @@ export default {
     return {
       isSpin: false,
       fileName: 'No file choosen',
-      optionsInformation: require('./options.json'),
       optionsDisplay: {},
       xslt: null,
       file: null,
@@ -68,13 +67,11 @@ export default {
       this.options[optName] = !this.options[optName]
     },
     onSelectXslt: function () {
-      console.log(this.xslt)
       this.options.transform = this.xslt
       this.getDisplayOptions()
       this.$emit('selectedXslt', this.xslt)
     },
     getDisplayOptions: function (isNewListTransformationType = false) {
-      console.log(this.xslt, isNewListTransformationType, !(this.xslt) || isNewListTransformationType)
       if (Object.keys(this.transformationTypes).length !== 0) {
         if (!(this.xslt) || isNewListTransformationType) this.xslt = this.transformationTypes[0].name
         this.optionsDisplay = this.transformationTypes.find((x) => x.name === this.xslt).parameters

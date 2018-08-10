@@ -20,7 +20,7 @@
             <label :for='optinonName'>{{ optinonName }}</label>
           </p>
           <p class="w3-text w3-tag w3-tiny w3-animate-opacity noteOptions">
-            {{ optionsInformation[optinonName] }}
+            {{ transformationTypes.find(x => x.name === xslt)['parameterNotes'][optinonName] }}
           </p>
         </div>
       </div>
