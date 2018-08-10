@@ -11,6 +11,9 @@
 import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
 // import $ from 'jquery'
+var xmlescape = require('xml-escape')
+var pd = require('pretty-data').pd
+var PR = require('code-prettify')
 const parser = new window.DOMParser()
 const xsltCollection = require('./sbml-to-xhtml')(parser)
 
@@ -55,6 +58,7 @@ export default {
           )
           this.parseFile(file, isRefresh)
           this.addEventListenerAnnotationElement()
+          this.prettifyAnnotation()
         }
       }, 100)
       this.doNextTick(() => {
@@ -150,6 +154,16 @@ export default {
         }
       })
     },
+    prettifyAnnotation: function () {
+      this.$nextTick(() => {
+        let annotation = document.getElementsByClassName('sv-annotation-content')
+        for (let i = 0; i < annotation.length; i++) {
+          let data = annotation[i].innerHTML
+          annotation[i].innerHTML = xmlescape(pd.xml(data))
+        }
+        window.PR.prettyPrint()
+      })
+    },
     onClickAnnotation: function (e) {
       this.$root.$emit('onOpenAnnotation', e.target.id, this.fileContent)
     },
@@ -175,6 +189,7 @@ export default {
 </script>
 
 <style lang='scss' src='./assets/style/style.scss'></style>
+<style lang='scss' src='code-prettify/src/prettify.css'></style>
 <style>
 html {
   overflow-x: hidden;
