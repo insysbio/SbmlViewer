@@ -33,9 +33,10 @@ Project-page: http://sv.insysbio.com
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:l3v1="http://www.sbml.org/sbml/level3/version1/core"
+  xmlns:l3v2="http://www.sbml.org/sbml/level3/version2/core"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
-  exclude-result-prefixes="mml xhtml l1v1 l1v2 l1v3 l1v4 l1v5">
+  exclude-result-prefixes="mml xhtml l3v1 l3v2">
 
   <!-- GLOBAL KEYS -->
   <xsl:key name="idKey" match="*" use="@id"/>
@@ -64,7 +65,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <!-- model -->
-  <xsl:template match="*[local-name()='model']" mode="table">
+  <xsl:template match="*[local-name()='model']" mode="table">.
     <div class="sv-model-container">
       <h2 class="sv-model-header">Model</h2>
       <div class="sv-model-content">
@@ -80,7 +81,7 @@ Project-page: http://sv.insysbio.com
   <xsl:template match="*[local-name()='annotation']" mode="element">
     <div class="sv-annotation-container">
       <p class="sv-annotation-header">Annotation</p>
-      <div class="sv-annotation-content"> = presented = </div>
+      <pre class="sv-annotation-content prettyprint"><xsl:copy-of select="node()"/></pre>
     </div>
   </xsl:template>
 

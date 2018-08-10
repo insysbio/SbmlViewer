@@ -79,7 +79,7 @@ Project-page: http://sv.insysbio.ru
   <xsl:template match="*[local-name()='annotation']" mode="element">
     <div class="sv-annotation-container">
       <p class="sv-annotation-header">Annotation</p>
-      <div class="sv-annotation-content"> = presented = </div>
+      <pre class="sv-annotation-content prettyprint"><xsl:copy-of select="node()"/></pre>
     </div>
   </xsl:template>
 

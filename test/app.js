@@ -15,7 +15,7 @@ function transform(
   document.getElementById('errors').innerHTML = '';
 
   let processor = new window.XSLTProcessor();
-  
+
   parameters.forEach((x) => {
     processor.setParameter(null, x.id, x.value);
   });
@@ -122,7 +122,7 @@ function getParametersMenu(caseDoc, transformation){
 }
 
 window.onload = function(){
-  let defaultCaseName = 'superexample';
+  let defaultCaseName = 'superexample_l2v4';
   getCasesMenu();
   getTransformationMenu(defaultCaseName);
 };
