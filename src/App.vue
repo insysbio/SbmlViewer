@@ -202,7 +202,7 @@ export default {
 <style lang='scss' src='code-prettify/src/prettify.css'></style>
 <style>
 html {
-  overflow-x: hidden;
+  overflow-y: hidden;
 }
 html, head {
   height: 100%;
