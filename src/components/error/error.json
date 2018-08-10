@@ -1,15 +1,15 @@
 {
   "Incorrect XML": {
-    "message": "Incorrect XML"
+    "message": "Unclear problems with file"
   },
   "Incorrect level": {
-    "message": "Incorrect level"
+    "message": "Unsupported file content"
   },
   "Fail import stylesheet": {
-    "message": "Fail import stylesheet"
+    "message": "XSLT problems"
   },
   "Fail transform document": {
-    "message": "Fail transform document"
+    "message": "Fail when transforming document"
   },
   "Broken document": {
     "message": "Broken document"
