@@ -191,13 +191,17 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='functionDefinition']" mode="table">
       <tr class="sv-listof-table-row">
-        <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
+        <td class="sv-tooltip">
+          <xsl:apply-templates select="@id" mode="no-link"/>
+          <i class="sv-annotation-toogle-btn sv-tooltip fa fa-info-circle"></i>
+          <span class="sv-tooltip-text">Click for show(hide) annotation</span>
+        </td>
         <td><xsl:value-of select="@name"/></td>
         <td class="sv-attribute-value sv-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
         <td><xsl:apply-templates select="mml:math"/></td>
       </tr>
-      <tr>
-        <td colspan="4" class="sv-tooltip">
+      <tr class="sv-element-annotation-conatiner">
+        <td colspan="4" class="sv-element-annotation-content">
           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
         </td>
@@ -225,13 +229,17 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='unitDefinition']" mode="table">
       <tr>
-        <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
+        <td class="sv-tooltip">
+          <xsl:apply-templates select="@id" mode="no-link"/>
+          <i class="sv-annotation-toogle-btn sv-tooltip fa fa-info-circle"></i>
+          <span class="sv-tooltip-text">Click for show(hide) annotation</span>
+        </td>
         <td><xsl:value-of select="@name"/></td>
         <td class="sv-attribute-value sv-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
         <td><xsl:apply-templates select="*[local-name()='listOfUnits']" mode="unitFormula"/></td>
       </tr>
-      <tr>
-        <td colspan="4" class="sv-tooltip">
+      <tr class="sv-element-annotation-conatiner">
+        <td colspan="4" class="sv-element-annotation-content">
           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
         </td>

@@ -15,10 +15,14 @@
 
 .sv-element-annotation-content, .sv-element-annotation-conatiner-height-open {
   transition: max-height 0.3s ease-out;
-  max-height: 0px;
   overflow: hidden;
   display: block!important;
   height:auto;
+}
+.sv-element-annotation-content {  
+  max-height: 0px;
+  padding: 0px!important;
+  margin: 8px!important;
 }
 .sv-element-annotation-height, .sv-element-annotation-conatiner-height-open {
    max-height: 300px;

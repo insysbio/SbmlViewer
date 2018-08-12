@@ -204,7 +204,7 @@ Project-page: http://sv.insysbio.com
         <td><xsl:apply-templates select="mml:math"/></td>
       </tr>
       <tr class="sv-element-annotation-conatiner">
-        <td colspan="4" class="sv-element-annotation-height sv-element-annotation-content">
+        <td colspan="4" class="sv-element-annotation-content">
           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
         </td>
