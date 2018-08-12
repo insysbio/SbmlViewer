@@ -716,7 +716,7 @@
             <cn> 5 </cn>
           </math>
         </priority>
-        <delay id="deleyid" name="delay" metaid="metaexample" sboTerm="SBO:001">
+        <delay metaid="metaexample" sboTerm="SBO:001">
           <notes>This is a delay from event.</notes>
           <annotation>
             <example xmlns="example.com">
