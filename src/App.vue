@@ -148,18 +148,30 @@ export default {
     },
     addEventListenerAnnotationElement: function () {
       this.$nextTick(() => {
+        // set annotation in the right part
         let annotationElements = document.getElementsByClassName('sv-id-target')
         for (let i = 0; i < annotationElements.length; i++) {
           annotationElements[i].addEventListener('click', this.onClickAnnotation)
         }
 
-        let annotationOpenElements = document.getElementsByClassName('sv-annotation-toogle-btn')
-        for (let i = 0; i < annotationOpenElements.length; i++) {
-          annotationOpenElements[i].addEventListener('click', (e) => {
-            let annotationContainer = e.target.parentNode.parentNode.nextSibling
-            let annotation = annotationContainer.firstElementChild
-            annotationContainer.classList.toggle('sv-element-annotation-container-height-open')
-            annotation.classList.toggle('sv-element-annotation-height')
+        let annotationContainerArray = document
+          .getElementsByClassName('sv-element-annotation-container')
+        for (let i = 0; i < annotationContainerArray.length; i++) {
+          let annotationContainer = annotationContainerArray[i]
+
+          // set button for notes and annotation
+          let button = document.createElement('i')
+          button.setAttribute('class', 'sv-annotation-toogle-btn fa fa-info-circle')
+          annotationContainer
+            .previousSibling
+            .firstElementChild
+            .appendChild(button)
+
+          button.addEventListener('click', () => {
+            annotationContainer
+              .firstElementChild
+              .classList
+              .toggle('sv-element-annotation-height')
           })
         }
       })
@@ -201,10 +213,10 @@ export default {
 <style lang='scss' src='./assets/style/style.scss'></style>
 <style lang='scss' src='code-prettify/src/prettify.css'></style>
 <style>
-html {
-  overflow-y: hidden;
-}
-html, head {
-  height: 100%;
-}
+  html {
+    overflow-y: hidden;
+  }
+  html, head {
+    height: 100%;
+  }
 </style>

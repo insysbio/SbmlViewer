@@ -186,8 +186,6 @@ Project-page: http://sv.insysbio.com
       <tr class="sv-listof-table-row">
         <td class="sv-tooltip">
           <xsl:apply-templates select="@id" mode="no-link"/>
-          <i class="sv-annotation-toogle-btn sv-tooltip fa fa-info-circle"></i>
-          <span class="sv-tooltip-text">Click for show(hide) annotation</span>
         </td>
         <td><xsl:value-of select="@name"/></td>
         <td class="sv-attribute-value sv-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
@@ -224,8 +222,6 @@ Project-page: http://sv.insysbio.com
       <tr>
         <td class="sv-tooltip">
           <xsl:apply-templates select="@id" mode="no-link"/>
-          <i class="sv-annotation-toogle-btn sv-tooltip fa fa-info-circle"></i>
-          <span class="sv-tooltip-text">Click for show(hide) annotation</span>
         </td>
         <td><xsl:value-of select="@name"/></td>
         <td class="sv-attribute-value sv-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
@@ -568,13 +564,11 @@ Project-page: http://sv.insysbio.com
     </tr>
 
     <tr class="sv-element-annotation-container">
-      <td colspan="6" class="sv-element-annotation-content">
+      <td colspan="10" class="sv-element-annotation-content">
         <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
         <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+        <xsl:apply-templates select="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']" mode="table"/>
       </td>
-    </tr>
-    <tr class="sv-localParameters">
-      <td colspan="10"><xsl:apply-templates select="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']" mode="table"/></td>
     </tr>
   </xsl:template>
 
