@@ -200,7 +200,7 @@ Project-page: http://sv.insysbio.com
         <td class="sv-attribute-value sv-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
         <td><xsl:apply-templates select="mml:math"/></td>
       </tr>
-      <tr class="sv-element-annotation-conatiner">
+      <tr class="sv-element-annotation-container">
         <td colspan="4" class="sv-element-annotation-content">
           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
@@ -238,7 +238,7 @@ Project-page: http://sv.insysbio.com
         <td class="sv-attribute-value sv-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
         <td><xsl:apply-templates select="*[local-name()='listOfUnits']" mode="unitFormula"/></td>
       </tr>
-      <tr class="sv-element-annotation-conatiner">
+      <tr class="sv-element-annotation-container">
         <td colspan="4" class="sv-element-annotation-content">
           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>

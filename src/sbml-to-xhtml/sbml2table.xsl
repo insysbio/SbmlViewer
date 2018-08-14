@@ -127,11 +127,6 @@ Project-page: http://sv.insysbio.com
       <xsl:attribute name="id"><xsl:value-of select="."/></xsl:attribute>
       <xsl:value-of select="."/>
     </span>
-
-    <div class="sv-tooltip-text">
-      <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
-      <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
-    </div>
   </xsl:template>
 
   <xsl:template match="@id" mode="no-link">
@@ -155,11 +150,6 @@ Project-page: http://sv.insysbio.com
         <xsl:apply-templates select="key('idKey',.)/@id" mode="idOrName"/>
       </span>
 	  </xsl:if>
-
-    <div class="sv-tooltip-text">
-      <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
-      <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
-    </div>
   </xsl:template>
 
 	<!-- SId object: internal ref -->
@@ -203,7 +193,7 @@ Project-page: http://sv.insysbio.com
         <td class="sv-attribute-value sv-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
         <td><xsl:apply-templates select="mml:math"/></td>
       </tr>
-      <tr class="sv-element-annotation-conatiner">
+      <tr class="sv-element-annotation-container">
         <td colspan="4" class="sv-element-annotation-content">
           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
@@ -241,7 +231,7 @@ Project-page: http://sv.insysbio.com
         <td class="sv-attribute-value sv-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
         <td><xsl:apply-templates select="*[local-name()='listOfUnits']" mode="unitFormula"/></td>
       </tr>
-      <tr class="sv-element-annotation-conatiner">
+      <tr class="sv-element-annotation-container">
         <td colspan="4" class="sv-element-annotation-content">
           <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
           <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
@@ -271,6 +261,12 @@ Project-page: http://sv.insysbio.com
       <td><xsl:value-of select="@name"/></td>
       <td class="sv-attribute-value sv-metaid"><xsl:value-of select="@metaid"/></td>
     </tr>
+    <tr class="sv-element-annotation-container">
+      <td colspan="3" class="sv-element-annotation-content">
+        <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+      </td>
+    </tr>
   </xsl:template>
 
   <!-- listOfSpeciesTypes -->
@@ -294,6 +290,12 @@ Project-page: http://sv.insysbio.com
       <td class="sv-tooltip"><xsl:apply-templates select="@id" mode="no-link"/></td>
       <td><xsl:value-of select="@name"/></td>
       <td class="sv-attribute-value sv-metaid"><xsl:value-of select="@metaid"/></td>
+    </tr>
+    <tr class="sv-element-annotation-container">
+      <td colspan="3" class="sv-element-annotation-content">
+        <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+      </td>
     </tr>
   </xsl:template>
 
@@ -329,6 +331,12 @@ Project-page: http://sv.insysbio.com
         <td><xsl:apply-templates select="@outside"/></td>
         <td><xsl:apply-templates select="@units"/></td>
         <td><xsl:value-of select="@size"/></td>
+      </tr>
+      <tr class="sv-element-annotation-container">
+        <td colspan="7" class="sv-element-annotation-content">
+          <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+          <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+        </td>
       </tr>
   </xsl:template>
 
@@ -373,6 +381,12 @@ Project-page: http://sv.insysbio.com
       <td><xsl:apply-templates select="@compartment"/></td>
       <td><xsl:value-of select="@charge"/></td>
     </tr>
+    <tr class="sv-element-annotation-container">
+      <td colspan="11" class="sv-element-annotation-content">
+        <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+      </td>
+    </tr>
   </xsl:template>
 
   <!-- listOfParameters -->
@@ -407,6 +421,12 @@ Project-page: http://sv.insysbio.com
       <!--<xsl:apply-templates select="key('variableKey', @id)/mml:math"/>-->
       </td>
     </tr>
+    <tr class="sv-element-annotation-container">
+      <td colspan="5" class="sv-element-annotation-content">
+        <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+      </td>
+    </tr>
   </xsl:template>
 
   <!-- listOfInitialAssignments annotation -->
@@ -434,6 +454,12 @@ Project-page: http://sv.insysbio.com
       <td class="sv-attribute-value sv-metaid"><xsl:value-of select="@metaid"/></td>
       <td><xsl:apply-templates select="mml:math"/></td>
     </tr>
+    <tr class="sv-element-annotation-container">
+      <td colspan="3" class="sv-element-annotation-content">
+        <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+      </td>
+    </tr>
   </xsl:template>
 
   <!-- listOfConstraints annotation -->
@@ -460,6 +486,12 @@ Project-page: http://sv.insysbio.com
       <td class="sv-attribute-value sv-metaid"><xsl:value-of select="@metaid"/></td>
       <td><xsl:apply-templates select="*[local-name()='message']" mode="table"/></td>
       <td><xsl:apply-templates select="mml:math"/></td>
+    </tr>
+    <tr class="sv-element-annotation-container">
+      <td colspan="3" class="sv-element-annotation-content">
+        <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+      </td>
     </tr>
   </xsl:template>
 
@@ -493,6 +525,12 @@ Project-page: http://sv.insysbio.com
           <td class="sv-tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
           <td class="sv-attribute-value sv-metaid"><xsl:value-of select="@metaid"/></td>
           <td><xsl:apply-templates select="mml:math"/></td>
+        </tr>
+        <tr class="sv-element-annotation-container">
+          <td colspan="4" class="sv-element-annotation-content">
+            <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+            <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+          </td>
         </tr>
   </xsl:template>
 
@@ -529,6 +567,12 @@ Project-page: http://sv.insysbio.com
       <td><xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/></td>
     </tr>
 
+    <tr class="sv-element-annotation-container">
+      <td colspan="6" class="sv-element-annotation-content">
+        <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+      </td>
+    </tr>
     <tr class="sv-localParameters">
       <td colspan="10"><xsl:apply-templates select="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']" mode="table"/></td>
     </tr>
@@ -567,6 +611,12 @@ Project-page: http://sv.insysbio.com
       <td><xsl:apply-templates select="*[local-name()='delay']" mode="table"/></td>
       <td><xsl:apply-templates select="*[local-name()='listOfEventAssignments']" mode="table"/></td>
     </tr>
+    <tr class="sv-element-annotation-container">
+      <td colspan="7" class="sv-element-annotation-content">
+        <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+      </td>
+    </tr>
   </xsl:template>
 
   <xsl:template match="*[local-name()='trigger']" mode="table">
@@ -595,6 +645,12 @@ Project-page: http://sv.insysbio.com
       <td class="sv-tooltip"><xsl:apply-templates select="@variable" mode="no-link"/></td>
       <td class="sv-attribute-value sv-metaid"><xsl:value-of select="@metaid"/></td>
       <td><xsl:apply-templates select="mml:math"/></td>
+    </tr>
+    <tr class="sv-element-annotation-container">
+      <td colspan="3" class="sv-element-annotation-content">
+        <xsl:apply-templates select="../*[local-name()='notes']" mode="table"/>
+        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+      </td>
     </tr>
   </xsl:template>
 

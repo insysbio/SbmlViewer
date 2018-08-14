@@ -13,7 +13,7 @@
   min-width: 300px
 }
 
-.sv-element-annotation-content, .sv-element-annotation-conatiner-height-open {
+.sv-element-annotation-content, .sv-element-annotation-container-height-open {
   transition: max-height 0.3s ease-out;
   overflow: hidden;
   display: block!important;
@@ -24,7 +24,7 @@
   padding: 0px!important;
   margin: 8px!important;
 }
-.sv-element-annotation-height, .sv-element-annotation-conatiner-height-open {
+.sv-element-annotation-height, .sv-element-annotation-container-height-open {
    max-height: 300px;
 }
 .sv-annotation-toogle-btn {

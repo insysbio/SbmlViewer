@@ -158,7 +158,7 @@ export default {
           annotationOpenElements[i].addEventListener('click', (e) => {
             let annotationContainer = e.target.parentNode.parentNode.nextSibling
             let annotation = annotationContainer.firstElementChild
-            annotationContainer.classList.toggle('sv-element-annotation-conatiner-height-open')
+            annotationContainer.classList.toggle('sv-element-annotation-container-height-open')
             annotation.classList.toggle('sv-element-annotation-height')
           })
         }
