@@ -149,19 +149,19 @@ export default {
     addEventListenerAnnotationElement: function () {
       this.$nextTick(() => {
         // set annotation in the right part
-        let annotationElements = document.getElementsByClassName('sv-id-target')
+        //  let annotationElements = document.getElementsByClassName('sv-id-target')
+        let annotationElements = document.querySelectorAll('.sbml-id[id]')
         for (let i = 0; i < annotationElements.length; i++) {
           annotationElements[i].addEventListener('click', this.onClickAnnotation)
         }
 
-        let annotationContainerArray = document
-          .getElementsByClassName('sv-element-annotation-container')
+        let annotationContainerArray = document.querySelectorAll('tr.sv-hidden')
         for (let i = 0; i < annotationContainerArray.length; i++) {
           let annotationContainer = annotationContainerArray[i]
 
           // set button for notes and annotation
           let button = document.createElement('i')
-          button.setAttribute('class', 'sv-annotation-toogle-btn fa fa-info-circle')
+          button.setAttribute('class', 'sv-hide-button fa fa-info-circle')
           annotationContainer
             .previousSibling
             .firstElementChild
@@ -169,16 +169,15 @@ export default {
 
           button.addEventListener('click', () => {
             annotationContainer
-              .firstElementChild
               .classList
-              .toggle('sv-element-annotation-height')
+              .toggle('sv-hidden')
           })
         }
       })
     },
     prettifyAnnotation: function () {
       this.$nextTick(() => {
-        let annotation = document.getElementsByClassName('sv-annotation-content')
+        let annotation = document.getElementsByClassName('sv-raw-xml')
         for (let i = 0; i < annotation.length; i++) {
           let data = annotation[i].innerHTML
           annotation[i].innerHTML = xmlescape(pd.xml(data))

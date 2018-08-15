@@ -4,9 +4,6 @@
   @extend .w3-container;
 }
 
-.sv-sbml-header {
-}
-
 .sv-note-content, .sv-annotation-content {
   @extend .w3-container;
   @extend .w3-pale-blue;
@@ -17,37 +14,20 @@
   transition: max-height 0.3s ease-out;
   overflow: hidden;
   display: block!important;
+  /*display: table-cell!important;*/
   height:auto;
 }
-.sv-element-annotation-content {  
+
+.sv-element-annotation-content {
   max-height: 0px;
   padding: 0px!important;
   margin: 8px!important;
-}
-.sv-element-annotation-height, .sv-element-annotation-container-height-open {
-   max-height: 300px;
-}
-.sv-annotation-toogle-btn {
-  padding-left: 3px;
-  cursor: pointer;
-}
-.sv-id-target {
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.sv-id {
-  color: blue;
-}
-
-.sv-id-lost {
-  color: red;
 }
 
 .sv-tooltip {
   @extend .w3-tooltip;
 }
+
 .sv-tooltip-text {
   @extend .w3-text;
   @extend .w3-pale-blue;
@@ -59,22 +39,65 @@
   width:300px;
 }
 
-.sv-listof-table {
+/* === NEW CSS === */
+.sv-raw-xml {
+  padding: 2px;
+  border: 1px solid #888;
+}
+
+.sv-xhtml {
+  padding: 2px;
+  border: 1px solid #888;
+}
+
+.sbml-attribute-value.sbml-id[id] {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sbml-id-lost {
+  color: red;
+}
+
+.sbml-id-ref {
+  color: blue;
+}
+
+.sv-hidden {
+  display: none;
+  /*display: table-row;*/
+}
+
+.sv-hide-button {
+  padding-left: 3px;
+  cursor: pointer;
+}
+
+div.sv-mode-table table {
   @extend .w3-table;
-  @extend .w3-striped;
+  /*@extend .w3-striped;*/
   @extend .w3-border;
   @extend .w3-hoverable;
-  @extend .w3-card-4;
+  @extend .w3-card-2;
   width: auto;
   max-width:95%;
 }
 
-.sv-listof-table-header {
+div.sv-mode-table tr:first-child {
   @extend .w3-blue-grey;
 }
 
-.table {
-  @extend .w3-table;
-  @extend .w3-striped;
-  @extend .w3-border;
+.sbml-element.sbml-annotation .sv-content{
+  width: fit-content;
+  max-width: 90%;
+  @extend .w3-container;
+  @extend .w3-pale-blue;
+}
+
+.sbml-element.sbml-notes .sv-content{
+  width: fit-content;
+  max-width: 90%;
+  @extend .w3-container;
+  @extend .w3-light-grey;
 }
