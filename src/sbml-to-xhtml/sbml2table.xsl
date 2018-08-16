@@ -84,7 +84,7 @@ Project-page: http://sv.insysbio.com
   <xsl:template match="*[local-name()='annotation']" mode="element">
     <div class="sbml-element sbml-annotation sv-container">
       <p class="sv-header">Annotation</p>
-      <pre class="sv-content sv-raw-xml"><xsl:copy-of select="node()"/></pre>
+      <pre class="sv-content sv-raw-xml prettyprint"><xsl:copy-of select="node()"/></pre>
     </div>
   </xsl:template>
 
@@ -226,7 +226,7 @@ Project-page: http://sv.insysbio.com
         <td><xsl:apply-templates select="@id" mode="no-link"/></td>
         <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
         <td class="sbml-attribute-value sbml-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
-        <td><xsl:apply-templates select="*[local-name()='listOfUnits']" mode="unitFormula"/></td>
+        <td class="sbml-listOf sbml-listOfUnitDefinition"><xsl:apply-templates select="*[local-name()='listOfUnits']" mode="unitFormula"/></td>
       </tr>
       <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
       <tr class="sbml-mixed sv-hidden">
@@ -323,7 +323,7 @@ Project-page: http://sv.insysbio.com
           <th>id</th>
           <th><xsl:if test="*/@name">name</xsl:if></th>
           <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
-          <th><xsl:if test="*/@compartmentType">compartment<br/>Type</xsl:if></th>
+          <th><xsl:if test="*/@compartmentType">compartment Type</xsl:if></th>
           <th><xsl:if test="*/@outside">outside</xsl:if></th>
           <th><xsl:if test="*/@units">units</xsl:if></th>
           <th><xsl:if test="*/@size">size</xsl:if></th>
@@ -368,11 +368,11 @@ Project-page: http://sv.insysbio.com
             <th><xsl:if test="*/@name">name</xsl:if></th>
             <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
             <th><xsl:if test="*/@speciesType">speciesType</xsl:if></th>
-            <th><xsl:if test="*/@substanceUnits">substance<br/>Units</xsl:if></th>
-            <th><xsl:if test="*/@hasOnlySubstanceUnits">hasOnly<br/>Substance<br/>Units</xsl:if></th>
-            <th><xsl:if test="*/@initialConcentration">initial<br/>Concentration</xsl:if></th>
-            <th><xsl:if test="*/@initialAmount">initial<br/>Amount</xsl:if></th>
-            <th><xsl:if test="*/@boundaryCondition">boundary<br/>Condition</xsl:if></th>
+            <th><xsl:if test="*/@substanceUnits">substance Units</xsl:if></th>
+            <th><xsl:if test="*/@hasOnlySubstanceUnits">hasOnly Substance Units</xsl:if></th>
+            <th><xsl:if test="*/@initialConcentration">initial Concentration</xsl:if></th>
+            <th><xsl:if test="*/@initialAmount">initial Amount</xsl:if></th>
+            <th><xsl:if test="*/@boundaryCondition">boundary Condition</xsl:if></th>
             <th><xsl:if test="*/@compartment">compartment</xsl:if></th>
             <th><xsl:if test="*/@charge">charge</xsl:if></th>
           </tr>
@@ -615,7 +615,7 @@ Project-page: http://sv.insysbio.com
             <th>id</th>
             <th><xsl:if test="*/@name">name</xsl:if></th>
             <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
-            <th><xsl:if test="*/@useValuesFromTriggerTime">useValuesFrom<br/>TriggerTime</xsl:if></th>
+            <th><xsl:if test="*/@useValuesFromTriggerTime">useValuesFrom TriggerTime</xsl:if></th>
             <th>trigger</th>
             <th>delay</th>
           </tr>
@@ -708,7 +708,10 @@ Project-page: http://sv.insysbio.com
 <!-- END OF table mode -->
 
 <!-- BEGIN OF unitFormula/unitFormulaScale mode -->
-    <xsl:template match="l2v2:listOfUnits | l2v3:listOfUnits | l2v4:listOfUnits| l2v5:listOfUnits" mode="unitFormula">
+    <xsl:template match="l2v2:listOfUnits
+      | l2v3:listOfUnits
+      | l2v4:listOfUnits
+      | l2v5:listOfUnits" mode="unitFormula">
       <xsl:apply-templates select="*[local-name()='unit']" mode="unitFormula"/>
     </xsl:template>
 

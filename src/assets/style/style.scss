@@ -88,11 +88,19 @@ div.sv-mode-table tr:first-child {
   @extend .w3-blue-grey;
 }
 
+td.sbml-metaid.sbml-attribute-value {
+  @extend .w3-small
+}
+
 .sbml-element.sbml-annotation .sv-content{
-  width: fit-content;
-  max-width: 90%;
   @extend .w3-container;
   @extend .w3-pale-blue;
+  width: fit-content;
+  max-width: 100%;
+  height: 200px;
+  max-height: fit-content;
+  overflow: auto;
+  resize: both;
 }
 
 .sbml-element.sbml-notes .sv-content{
