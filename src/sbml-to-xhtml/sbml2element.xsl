@@ -36,13 +36,12 @@ Project-page: http://sv.insysbio.ru
   xmlns:l2v3="http://www.sbml.org/sbml/level2/version3"
   xmlns:l2v4="http://www.sbml.org/sbml/level2/version4"
   xmlns:l2v5="http://www.sbml.org/sbml/level2/version5"
+  xmlns:l3v1="http://www.sbml.org/sbml/level3/version1/core"
+  xmlns:l3v2="http://www.sbml.org/sbml/level3/version2/core"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:exsl="http://exslt.org/common"
-  exclude-result-prefixes="mml xhtml exsl l1v1 l1v2 l1v3 l1v4 l1v5">
-
-  <!-- IMPORTS
-  <xsl:include href="sbmlshared.xsl"/> -->
+  exclude-result-prefixes="mml xhtml exsl l2v1 l2v2 l2v3 l2v4 l2v5 l3v1 l3v2">
 
   <!-- GLOBAL KEYS -->
   <xsl:key name="idKey" match="/*/*/*/*" use="@id"/><!-- to exclude local parameters -->
@@ -63,31 +62,33 @@ Project-page: http://sv.insysbio.ru
   <!-- top element -->
   <xsl:template match="/">
     <div class="sv-container">
-    <xsl:apply-templates select="key('idKey', $elementId)[1]"/>
+      <xsl:attribute name="class">sbml-element <!--sbml-<xsl:value-of select="key('idKey', $elementId)[1]/local-name()"/>--> sv-container sv-mode-element</xsl:attribute>
+      <xsl:apply-templates select="key('idKey', $elementId)[1]"/>
     </div>
   </xsl:template>
 
   <!-- Attributes -->
   <xsl:template match="@*" mode="element">
-    <p class="sv-attribute-container">
-      <span class="sv-attribute-name"><xsl:value-of select="local-name()"/></span>:
-      <span class="sv-attribute-value"><xsl:value-of select="."/></span>
+    <p>
+      <xsl:attribute name="class">sbml-attribute sbml-<xsl:value-of select="local-name()"/></xsl:attribute>
+      <span class="sbml-attribute-name"><xsl:value-of select="local-name()"/></span>:
+      <span class="sbml-attribute-value"><xsl:value-of select="."/></span>
     </p>
   </xsl:template>
 
   <!-- Annotation -->
   <xsl:template match="*[local-name()='annotation']" mode="element">
-    <div class="sv-annotation-container">
-      <p class="sv-annotation-header">Annotation</p>
-      <pre class="sv-annotation-content prettyprint"><xsl:copy-of select="node()"/></pre>
+    <div class="sbml-element sbml-annotation sv-container">
+      <p class="sv-header">Annotation</p>
+      <pre class="sv-content sv-raw-xml prettyprint"><xsl:copy-of select="node()"/></pre>
     </div>
   </xsl:template>
 
   <!-- Notes -->
   <xsl:template match="*[local-name()='notes']" mode="element">
-    <div class="sv-notes-container">
-      <p class="sv-notes-header">Notes</p>
-      <div class="sv-notes-content">
+    <div class="sbml-element sbml-notes sv-container">
+      <p class="sv-header">Notes</p>
+      <div class="sv-content sv-xhtml">
         <xsl:copy-of select="node()"/>
       </div>
     </div>
@@ -108,52 +109,32 @@ Project-page: http://sv.insysbio.ru
   </xsl:template>
 -->
   <!-- compartment summary -->
-  <xsl:template match="*[local-name()='compartment']">
-    <h3 class="sv-header">compartment</h3>
-	<xsl:apply-templates select="@*" mode="element"/>
-	<xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
-    <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-
-    <xsl:call-template name="dependences"/>
-  </xsl:template>
-
-  <!-- parameter summary -->
-  <xsl:template match="*[local-name()='parameter']">
-    <h3 class="sv-header">parameter</h3>
-	<xsl:apply-templates select="@*" mode="element"/>
-	<xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
-    <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-
-    <xsl:call-template name="dependences"/>
-  </xsl:template>
-
-  <!-- species summary -->
-  <xsl:template match="*[local-name()='species']">
-    <h3 class="sv-header">species</h3>
-	<xsl:apply-templates select="@*" mode="element"/>
-	<xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
-    <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-
-    <xsl:call-template name="dependences"/>
+  <xsl:template match="*[local-name()='compartment']
+    | *[local-name()='parameter']
+    | *[local-name()='species']">
+      <h1 class="sv-header"><xsl:value-of select="local-name()"/></h1>
+      <div class="sv-content sbml-mixed">
+        <xsl:apply-templates select="@*" mode="element"/>
+        <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+        <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+        <xsl:call-template name="dependences"/>
+    </div>
   </xsl:template>
 
   <!-- reaction summary -->
   <xsl:template match="*[local-name()='reaction']">
-    <h3 class="sv-header">reaction</h3>
-	<xsl:apply-templates select="@*" mode="element"/>
-	<xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
-    <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-    <h3 class="sv-header">reactants / products: </h3>
-    <p><xsl:apply-templates select="." mode="reactionFormula"/></p>
-    <h3 class="sv-header">modifiers:</h3>
-    <p><xsl:apply-templates select="*[local-name()='listOfModifiers']" mode="reactionFormula"/></p>
+    <h1 class="sv-header">reaction</h1>
+    <div class="sv-content sbml-mixed">
+      <xsl:apply-templates select="@*" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
+      <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
+      <h2 class="sv-header">reactants / products: </h2>
+      <p class="sv-content"><xsl:apply-templates select="." mode="reactionFormula"/></p>
+      <h2 class="sv-header">modifiers:</h2>
+      <p class="sv-content"><xsl:apply-templates select="*[local-name()='listOfModifiers']" mode="reactionFormula"/></p>
 
-    <xsl:call-template name="dependences"/>
-  </xsl:template>
-
-  <!-- Notes type: just copy -->
-  <xsl:template match="*[local-name()='notes']">
-    <xsl:copy-of select="node()"/>
+      <xsl:call-template name="dependences"/>
+    </div>
   </xsl:template>
 
 <!-- BEGIN OF idOrName/idOrNamePlus mode -->
@@ -165,16 +146,11 @@ Project-page: http://sv.insysbio.ru
     <xsl:template match="@id|@variable" mode="idOrNamePlus">
       <xsl:if test="$useNames='true'"><xsl:value-of select="./../@name"/></xsl:if>  <!-- for simbio only-->
       <xsl:if test="not($useNames='true')"><xsl:value-of select="."/></xsl:if>
-       <div class="sv-tooltip-text">
-           <xsl:apply-templates select="../*[local-name()='notes']" />
-         </div>
     </xsl:template>
 <!-- END OF idOrName/idOrNamePlus mode -->
 
 <!-- BEGIN OF reactionFormula mode -->
-  <xsl:template match="
-    *[local-name()='reaction']
-    " mode="reactionFormula">
+  <xsl:template match="*[local-name()='reaction']" mode="reactionFormula">
     <xsl:if test="count(*[local-name()='listOfReactants']/*[local-name()='speciesReference'])=0">&#8709;</xsl:if>
     <xsl:apply-templates select="*[local-name()='listOfReactants']" mode="reactionFormula"/>
     <xsl:if test="@reversible='false' and @fast='true'"> &#8594; </xsl:if>
@@ -186,10 +162,8 @@ Project-page: http://sv.insysbio.ru
   </xsl:template>
 
   <!-- listOfReactants / listOfProducts-->
-  <xsl:template match="
-    *[local-name()='listOfReactants'] |
-    *[local-name()='listOfProducts']
-    " mode="reactionFormula">
+  <xsl:template match="*[local-name()='listOfReactants']
+    | *[local-name()='listOfProducts']" mode="reactionFormula">
     <xsl:for-each select="*[local-name()='speciesReference']">
       <xsl:if test="@stoichiometry!='1'"><xsl:value-of select="@stoichiometry"/>&#215;</xsl:if>
       <xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/>
@@ -198,9 +172,7 @@ Project-page: http://sv.insysbio.ru
   </xsl:template>
 
   <!-- listOfModifiers-->
-  <xsl:template match="
-    *[local-name()='listOfModifiers']
-    " mode="reactionFormula">
+  <xsl:template match="*[local-name()='listOfModifiers']" mode="reactionFormula">
     <xsl:for-each select="*[local-name()='modifierSpeciesReference']">
       <xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/>
       <xsl:if test="position()!=last()">; </xsl:if>
@@ -211,9 +183,7 @@ Project-page: http://sv.insysbio.ru
 <!-- BEGIN OF searchDependences mode -->
   <xsl:template match="*[local-name()='reaction']" mode="searchDependences">
     <xsl:for-each select="descendant::mml:ci">
-      <ci>
-      <xsl:value-of select="normalize-space(text())"/>
-      </ci>
+      <ci><xsl:value-of select="normalize-space(text())"/></ci>
       <xsl:apply-templates select="key('idKey', normalize-space(text()))" mode="searchDependences"/>
     </xsl:for-each>
   </xsl:template>
@@ -244,7 +214,7 @@ Project-page: http://sv.insysbio.ru
 
 <!-- BEGIN OF dependences mode -->
   <xsl:template name="dependences">
-    <h3 class="sv-header">dependences:</h3>
+    <h2 class="sv-header">dependences:</h2>
 
     <table>
       <xsl:for-each select="exsl:node-set($dependent)/xhtml:ci[not(text()=preceding-sibling::xhtml:ci/text())]">
@@ -256,7 +226,7 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='compartment' or local-name()='parameter']" mode="dependences">
     <tr>
-    <td class="sv-tooltip" style="cursor:default;"><xsl:apply-templates select="@id" mode="idOrNamePlus"/></td>
+    <td><xsl:apply-templates select="@id" mode="idOrNamePlus"/></td>
     <td>=</td>
     <td style="width:500px;">
     <xsl:if test="not(key('variableKey', @id))">
@@ -273,7 +243,7 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='reaction']" mode="dependences">
     <tr>
-      <td class="sv-tooltip" style="cursor:default;"><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
+      <td><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
       <td>=</td>
       <td style="width:500px;"><xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/></td>
     </tr>
@@ -281,43 +251,39 @@ Project-page: http://sv.insysbio.ru
 
   <xsl:template match="*[local-name()='species' and not(@hasOnlySubstanceUnits='true')]" mode="dependences">
     <tr>
-      <td class="sv-tooltip" style="cursor:default;">
-        <xsl:apply-templates select="@id"  mode="idOrNamePlus"/>
+      <td><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
+      <td>
+        <xsl:if test="@boundaryCondition='true'">=</xsl:if>
+        <xsl:if test="not(@boundaryCondition='true')">&#8592;</xsl:if>
       </td>
-    <td>
-	<xsl:if test="@boundaryCondition='true'">=</xsl:if>
-	<xsl:if test="not(@boundaryCondition='true')">&#8592;</xsl:if>
-	</td>
-    <td style="width:500px;">
-    <xsl:if test="not(key('variableKey', @id))">
-      <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
-            <xsl:if test="@initialConcentration">
-              <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialConcentration"/></cn>
-            </xsl:if>
-            <xsl:if test="@initialAmount">
-              <apply xmlns="http://www.w3.org/1998/Math/MathML">
-                <divide xmlns="http://www.w3.org/1998/Math/MathML"/>
-                <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialAmount"/></cn>
-                <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci>
-              </apply>
-            </xsl:if>
-            <xsl:if test="not(@initialConcentration or @initialAmount)">
-              <ci xmlns="http://www.w3.org/1998/Math/MathML">?</ci>
-            </xsl:if>
-      </xsl:element>
-    </xsl:if>
-	<xsl:if test="key('variableKey', @id)">
-      <xsl:apply-templates select="key('variableKey', @id)/mml:math"/>
-    </xsl:if>
-    </td>
+      <td>
+      <xsl:if test="not(key('variableKey', @id))">
+        <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
+              <xsl:if test="@initialConcentration">
+                <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialConcentration"/></cn>
+              </xsl:if>
+              <xsl:if test="@initialAmount">
+                <apply xmlns="http://www.w3.org/1998/Math/MathML">
+                  <divide xmlns="http://www.w3.org/1998/Math/MathML"/>
+                  <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialAmount"/></cn>
+                  <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci>
+                </apply>
+              </xsl:if>
+              <xsl:if test="not(@initialConcentration or @initialAmount)">
+                <ci xmlns="http://www.w3.org/1998/Math/MathML">?</ci>
+              </xsl:if>
+        </xsl:element>
+        </xsl:if>
+        <xsl:if test="key('variableKey', @id)">
+          <xsl:apply-templates select="key('variableKey', @id)/mml:math"/>
+        </xsl:if>
+      </td>
     </tr>
   </xsl:template>
 
   <xsl:template match="*[local-name()='species' and @hasOnlySubstanceUnits='true']" mode="dependences">
     <tr>
-    <td class="sv-tooltip" style="cursor:default;">
-    <xsl:apply-templates select="@id"  mode="idOrNamePlus"/>
-    </td>
+      <td><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
     <td>
 	<xsl:if test="@boundaryCondition='true'">=</xsl:if>
 	<xsl:if test="not(@boundaryCondition='true')">&#8592;</xsl:if>

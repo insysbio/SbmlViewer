@@ -39,8 +39,10 @@ export default {
       }
     },
     documentToString: (doc) => {
-      let container = document.createElement('div').appendChild(doc.firstElementChild)
-      return container.innerHTML
+      let container = document
+        .createElement('div')
+        .appendChild(doc.firstElementChild)
+      return container.outerHTML
     },
     onAnnotationClose: function () {
       this.$emit('closeAnnotation')

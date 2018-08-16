@@ -39,7 +39,7 @@ Project-page: http://sv.insysbio.com
   xmlns:l2v5="http://www.sbml.org/sbml/level2/version5"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
-  exclude-result-prefixes="mml xhtml l1v1 l1v2 l1v3 l1v4 l1v5">
+  exclude-result-prefixes="mml xhtml l2v1 l2v2 l2v3 l2v4 l2v5">
 
   <!-- GLOBAL KEYS -->
   <xsl:key name="idKey" match="*" use="@id"/>

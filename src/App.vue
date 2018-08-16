@@ -92,11 +92,6 @@ export default {
       }
     },
     toggleXslt: function (xslt) {
-      /* this.xsltDoc = xsltCollection.filter((x) => x.name === xslt)[0].xslt
-      this.importStylesheetToXsltProcessor(
-        new XSLTProcessor(),
-        this.xsltDoc.firstElementChild
-      ) */
       this.displayFile(this.fileContent, xslt)
     },
     rebuildXsltParams: function (transform, opt) {
@@ -189,7 +184,9 @@ export default {
       this.$root.$emit('onOpenAnnotation', e.target.id, this.fileContent)
     },
     documentToString: function (doc) {
-      let container = document.createElement('div').appendChild(doc.firstElementChild)
+      let container = document
+        .createElement('div')
+        .appendChild(doc.firstElementChild)
       return container.outerHTML
     },
     updateWindowSize: function () {
