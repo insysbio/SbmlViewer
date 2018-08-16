@@ -97,14 +97,17 @@ export default {
     uploadFileByUrl: function (isRefresh = false) {
       this.file = null
       this.updateFileName(this.url.match(/[_-\w]+.xml/)[0])
-      $.ajax({
-        url: this.url,
-        success: (result) => {
-          let fileContent = result
+
+      let xmlhttp = new XMLHttpRequest()
+      xmlhttp.onreadystatechange = () => {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+          let fileContent = xmlhttp.responseXML
           this.fileContent = fileContent
           this.$emit('onLoadFile', fileContent, this.xslt, isRefresh)
         }
-      })
+      }
+      xmlhttp.open('GET', this.url, true)
+      xmlhttp.send()
     },
     dragNdropInit: function () {
       document.addEventListener('dragover', (event) => {
