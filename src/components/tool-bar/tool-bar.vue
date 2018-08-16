@@ -3,7 +3,6 @@
 <script>
 
 import { readXmlUpload } from '../../utilites/readXmlUpload'
-import $ from 'jquery'
 
 export default {
   name: 'ToolBar',
@@ -44,8 +43,8 @@ export default {
         this.uploadFileFromComputer(true)
       }
     },
-    onChooseFile: function (e) {
-      e.preventDefault()
+    onChooseFile: function (event) {
+      event.preventDefault()
       if (document.getElementById('file').files[0]) {
         this.file = document.getElementById('file').files[0]
         this.url = null
@@ -61,7 +60,9 @@ export default {
     },
     updateFileName: function (name) {
       this.fileName = name
-      $('title').html(name)
+      document
+        .getElementsByTagName('title')[0]
+        .innerText = name
     },
     changeOption: function (optName) {
       this.options[optName] = !this.options[optName]
@@ -106,15 +107,15 @@ export default {
       })
     },
     dragNdropInit: function () {
-      $(document).on('dragover', function (e) {
-        e.preventDefault()
+      document.addEventListener('dragover', (event) => {
+        event.preventDefault()
       })
-      $(document).on('dragstart', function (e) {
-        e.preventDefault()
+      document.addEventListener('dragstart', (event) => {
+        event.preventDefault()
       })
-      $(document).on('drop', (e) => {
-        e.preventDefault()
-        this.file = e.originalEvent.dataTransfer.files[0]
+      document.addEventListener('drop', (event) => {
+        event.preventDefault()
+        this.file = event.dataTransfer.files[0]
         this.uploadFileFromComputer()
       })
     }

@@ -11,9 +11,9 @@
 import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
 import 'code-prettify'
-// import $ from 'jquery'
-var xmlescape = require('xml-escape')
-var pd = require('pretty-data').pd
+
+const xmlescape = require('xml-escape')
+const {pd} = require('pretty-data')
 const parser = new window.DOMParser()
 const xsltCollection = require('./sbml-to-xhtml')(parser)
 
