@@ -1,9 +1,18 @@
 {
-  "name": "y",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "Victoria Tkachenko <tkachenko@insysbio.ru>",
-  "private": true,
+  "name": "SbmlViewer",
+  "version": "0.2.0",
+  "description": "The collection of transformation from SBML files into human readable formats",
+  "contributors": [
+    "Evgeny Metelkin",
+    "Victoria Tkachenko"
+  ],
+  "private": false,
+  "repository": "github:insysbio/SbmlViewer",
+  "bugs": {
+    "url": "https://github.com/insysbio/SbmlViewer/issues",
+    "email": "dev@insysbio.com"
+  },
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --open --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -13,7 +22,6 @@
   },
   "dependencies": {
     "code-prettify": "^0.1.0",
-    "jquery": "^3.3.1",
     "pretty-data": "^0.40.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",

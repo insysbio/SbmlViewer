@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* global window */
 
 const parser = new window.DOMParser();
