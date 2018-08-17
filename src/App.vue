@@ -144,7 +144,6 @@ export default {
     addEventListenerAnnotationElement: function () {
       this.$nextTick(() => {
         // set annotation in the right part
-        //  let annotationElements = document.getElementsByClassName('sv-id-target')
         let annotationElements = document.querySelectorAll('.sbml-id[id]')
         for (let i = 0; i < annotationElements.length; i++) {
           annotationElements[i].addEventListener('click', this.onClickAnnotation)

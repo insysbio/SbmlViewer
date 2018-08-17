@@ -5,6 +5,8 @@
 
 const parser = new window.DOMParser()
 
+const xmlescape = require('xml-escape')
+const {pd} = require('pretty-data')
 let xsltCollection = require('../../sbml-to-xhtml')(parser)
 let sbml2elementDoc = xsltCollection[2].xslt
 
@@ -26,17 +28,25 @@ export default {
     openAnnotation: function (id, content) {
       this.xsltProcessor.setParameter(null, 'elementId', id)
       try {
-        let docs = this.xsltProcessor.transformToDocument(content)
-        let dContent = this.documentToString(docs)
-        this.content = dContent
-        setTimeout(() => {
-          this.$nextTick(() => {
-            MathJax.Hub.Queue(['Typeset', MathJax.Hub])
-          })
-        }, 500)
+        let transformDoc = this.xsltProcessor.transformToFragment(content, document)
+        this.content = this.documentToString(transformDoc)
+        this.$nextTick(() => {
+          MathJax.Hub.Queue(['Typeset', MathJax.Hub])
+          this.prettifyAnnotation()
+        })
       } catch (err) {
 
       }
+    },
+    prettifyAnnotation: function () {
+      let annotation = document
+        .getElementById('sideContent')
+        .getElementsByClassName('sv-raw-xml')
+      for (let i = 0; i < annotation.length; i++) {
+        let data = annotation[i].innerHTML
+        annotation[i].innerHTML = xmlescape(pd.xml(data))
+      }
+      window.PR.prettyPrint()
     },
     documentToString: (doc) => {
       let container = document
