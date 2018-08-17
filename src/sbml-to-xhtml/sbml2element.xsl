@@ -15,11 +15,11 @@ Copyright 2016-2017 Institute for Systems Biology Moscow
    limitations under the License.
 -->
 <!-- INFO
-Description: Creating representation of single element with dependences
+Description: Creating representation of single element with dependencies
 modes:
   - element
   - reactionFormula
-  - dependences/searchDependences
+  - dependencies/searchdependencies
   - idOrName/idOrNamePlus
 
 Author: Evgeny Metelkin
@@ -56,7 +56,7 @@ Project-page: http://sv.insysbio.ru
   <xsl:param name="elementId">default</xsl:param> <!-- include unitDefinitions and attribute -->
   <xsl:param name="dependent" >
     <ci><xsl:value-of select="$elementId"/></ci>
-    <xsl:apply-templates select="key('idKey', $elementId)" mode="searchDependences"/>
+    <xsl:apply-templates select="key('idKey', $elementId)" mode="searchdependencies"/>
   </xsl:param>
 
   <!-- top element -->
@@ -117,7 +117,7 @@ Project-page: http://sv.insysbio.ru
         <xsl:apply-templates select="@*" mode="element"/>
         <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
         <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-        <xsl:call-template name="dependences"/>
+        <xsl:call-template name="dependencies"/>
     </div>
   </xsl:template>
 
@@ -128,12 +128,10 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="@*" mode="element"/>
       <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
       <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
-      <h2 class="sv-header">reactants / products: </h2>
-      <p class="sv-content"><xsl:apply-templates select="." mode="reactionFormula"/></p>
-      <h2 class="sv-header">modifiers:</h2>
-      <p class="sv-content"><xsl:apply-templates select="*[local-name()='listOfModifiers']" mode="reactionFormula"/></p>
+      <xsl:apply-templates select="." mode="reactionFormula"/>
+      <xsl:apply-templates select="*[local-name()='listOfModifiers']" mode="reactionFormula"/>
 
-      <xsl:call-template name="dependences"/>
+      <xsl:call-template name="dependencies"/>
     </div>
   </xsl:template>
 
@@ -151,14 +149,19 @@ Project-page: http://sv.insysbio.ru
 
 <!-- BEGIN OF reactionFormula mode -->
   <xsl:template match="*[local-name()='reaction']" mode="reactionFormula">
-    <xsl:if test="count(*[local-name()='listOfReactants']/*[local-name()='speciesReference'])=0">&#8709;</xsl:if>
-    <xsl:apply-templates select="*[local-name()='listOfReactants']" mode="reactionFormula"/>
-    <xsl:if test="@reversible='false' and @fast='true'"> &#8594; </xsl:if>
-    <xsl:if test="not(@reversible='false') and @fast='true'"> &#8596; </xsl:if>
-    <xsl:if test="@reversible='false' and not(@fast='true')"> &#8658; </xsl:if>
-    <xsl:if test="not(@reversible='false') and not(@fast='true')"> &#8660; </xsl:if>
-    <xsl:if test="count(*[local-name()='listOfProducts']/*[local-name()='speciesReference'])=0">&#8709;</xsl:if>
-    <xsl:apply-templates select="*[local-name()='listOfProducts']" mode="reactionFormula"/>
+    <div class="sbml-mixed sv-container">
+      <h2 class="sv-header">reactants / products:</h2>
+      <div class="sv-content">
+        <xsl:if test="count(*[local-name()='listOfReactants']/*[local-name()='speciesReference'])=0">&#8709;</xsl:if>
+        <xsl:apply-templates select="*[local-name()='listOfReactants']" mode="reactionFormula"/>
+        <xsl:if test="@reversible='false' and @fast='true'"> &#8594; </xsl:if>
+        <xsl:if test="not(@reversible='false') and @fast='true'"> &#8596; </xsl:if>
+        <xsl:if test="@reversible='false' and not(@fast='true')"> &#8658; </xsl:if>
+        <xsl:if test="not(@reversible='false') and not(@fast='true')"> &#8660; </xsl:if>
+        <xsl:if test="count(*[local-name()='listOfProducts']/*[local-name()='speciesReference'])=0">&#8709;</xsl:if>
+        <xsl:apply-templates select="*[local-name()='listOfProducts']" mode="reactionFormula"/>
+      </div>
+    </div>
   </xsl:template>
 
   <!-- listOfReactants / listOfProducts-->
@@ -173,58 +176,66 @@ Project-page: http://sv.insysbio.ru
 
   <!-- listOfModifiers-->
   <xsl:template match="*[local-name()='listOfModifiers']" mode="reactionFormula">
-    <xsl:for-each select="*[local-name()='modifierSpeciesReference']">
-      <xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/>
-      <xsl:if test="position()!=last()">; </xsl:if>
-    </xsl:for-each>
+    <div class="sbml-element sbml-listOf sbml-listOfModifiers sv-container">
+      <h2 class="sv-header">modifiers:</h2>
+      <div class="sv-content">
+        <xsl:for-each select="*[local-name()='modifierSpeciesReference']">
+          <xsl:apply-templates select="key('idKey',@species)/@id" mode="idOrName"/>
+          <xsl:if test="position()!=last()">; </xsl:if>
+        </xsl:for-each>
+      </div>
+    </div>
   </xsl:template>
 <!-- END OF reactionFormula mode -->
 
-<!-- BEGIN OF searchDependences mode -->
-  <xsl:template match="*[local-name()='reaction']" mode="searchDependences">
+<!-- BEGIN OF searchdependencies mode -->
+  <xsl:template match="*[local-name()='reaction']" mode="searchdependencies">
     <xsl:for-each select="descendant::mml:ci">
       <ci><xsl:value-of select="normalize-space(text())"/></ci>
-      <xsl:apply-templates select="key('idKey', normalize-space(text()))" mode="searchDependences"/>
+      <xsl:apply-templates select="key('idKey', normalize-space(text()))" mode="searchdependencies"/>
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template match="*[local-name()='compartment' or local-name()='parameter']" mode="searchDependences">
+  <xsl:template match="*[local-name()='compartment' or local-name()='parameter']" mode="searchdependencies">
     <xsl:for-each select="key('variableKey', @id)/descendant::mml:ci">
       <ci>
       <xsl:value-of select="normalize-space(text())"/>
       </ci>
-      <xsl:apply-templates select="key('idKey', normalize-space(text()))" mode="searchDependences"/>
+      <xsl:apply-templates select="key('idKey', normalize-space(text()))" mode="searchdependencies"/>
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template match="*[local-name()='species']" mode="searchDependences">
+  <xsl:template match="*[local-name()='species']" mode="searchdependencies">
     <xsl:for-each select="key('variableKey', @id)/descendant::mml:ci">
       <ci>
       <xsl:value-of select="normalize-space(text())"/>
       </ci>
-      <xsl:apply-templates select="key('idKey', normalize-space(text()))" mode="searchDependences"/>
+      <xsl:apply-templates select="key('idKey', normalize-space(text()))" mode="searchdependencies"/>
     </xsl:for-each>
 	<!-- add compartment to search -->
 	<xsl:if test="(@hasOnlySubstanceUnits='true' and @initialConcentration) or (not(@hasOnlySubstanceUnits='true') and @initialAmount)">
 	  <ci><xsl:value-of select="@compartment"/></ci>
-      <xsl:apply-templates select="key('idKey', @compartment)" mode="searchDependences"/>
+      <xsl:apply-templates select="key('idKey', @compartment)" mode="searchdependencies"/>
 	</xsl:if>
   </xsl:template>
-<!-- END OF searchDependences mode -->
+<!-- END OF searchdependencies mode -->
 
-<!-- BEGIN OF dependences mode -->
-  <xsl:template name="dependences">
-    <h2 class="sv-header">dependences:</h2>
-
-    <table>
-      <xsl:for-each select="exsl:node-set($dependent)/xhtml:ci[not(text()=preceding-sibling::xhtml:ci/text())]">
-       <!--<xsl:apply-templates select="exsl:node-set($input_root)/descendant::*[@id=current()/text()]" mode="dependences"/>-->
-	   <xsl:apply-templates select="exsl:node-set($input_root)/*/*/*/*[@id=current()/text()]" mode="dependences"/> <!-- search id without local parameters -->
-      </xsl:for-each>
-    </table>
+<!-- BEGIN OF dependencies mode -->
+  <xsl:template name="dependencies">
+    <div class="sbml-mixed sv-container">
+      <h2 class="sv-header">dependencies:</h2>
+      <div class="sv-content">
+        <table>
+          <xsl:for-each select="exsl:node-set($dependent)/xhtml:ci[not(text()=preceding-sibling::xhtml:ci/text())]">
+           <!--<xsl:apply-templates select="exsl:node-set($input_root)/descendant::*[@id=current()/text()]" mode="dependencies"/>-->
+    	      <xsl:apply-templates select="exsl:node-set($input_root)/*/*/*/*[@id=current()/text()]" mode="dependencies"/> <!-- search id without local parameters -->
+          </xsl:for-each>
+        </table>
+      </div>
+    </div>
   </xsl:template>
 
-  <xsl:template match="*[local-name()='compartment' or local-name()='parameter']" mode="dependences">
+  <xsl:template match="*[local-name()='compartment' or local-name()='parameter']" mode="dependencies">
     <tr>
     <td><xsl:apply-templates select="@id" mode="idOrNamePlus"/></td>
     <td>=</td>
@@ -241,7 +252,7 @@ Project-page: http://sv.insysbio.ru
     </tr>
   </xsl:template>
 
-  <xsl:template match="*[local-name()='reaction']" mode="dependences">
+  <xsl:template match="*[local-name()='reaction']" mode="dependencies">
     <tr>
       <td><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
       <td>=</td>
@@ -249,7 +260,7 @@ Project-page: http://sv.insysbio.ru
     </tr>
   </xsl:template>
 
-  <xsl:template match="*[local-name()='species' and not(@hasOnlySubstanceUnits='true')]" mode="dependences">
+  <xsl:template match="*[local-name()='species' and not(@hasOnlySubstanceUnits='true')]" mode="dependencies">
     <tr>
       <td><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
       <td>
@@ -281,7 +292,7 @@ Project-page: http://sv.insysbio.ru
     </tr>
   </xsl:template>
 
-  <xsl:template match="*[local-name()='species' and @hasOnlySubstanceUnits='true']" mode="dependences">
+  <xsl:template match="*[local-name()='species' and @hasOnlySubstanceUnits='true']" mode="dependencies">
     <tr>
       <td><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
     <td>
@@ -313,7 +324,7 @@ Project-page: http://sv.insysbio.ru
     </tr>
   </xsl:template>
 
-<!-- END OF dependences mode -->
+<!-- END OF dependencies mode -->
 
 <!-- BEGIN OF mml: part -->
   <!-- correct for max function -->
