@@ -59,7 +59,7 @@ Project-page: http://sv.insysbio.com
   <xsl:template match="*[local-name()='sbml']" mode="table">
     <div class="sbml-element sbml-sbml sv-container sv-mode-table">
       <h1 class="sv-header">SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/></h1>
-      <div class="sbml-mixed sv-content">
+      <div class="sv-content">
         <xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
         <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
         <xsl:apply-templates select="*[local-name()='model']" mode="table"/>

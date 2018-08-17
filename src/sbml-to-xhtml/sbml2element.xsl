@@ -239,7 +239,7 @@ Project-page: http://sv.insysbio.ru
     <tr>
     <td><xsl:apply-templates select="@id" mode="idOrNamePlus"/></td>
     <td>=</td>
-    <td style="width:500px;">
+    <td>
     <xsl:if test="not(key('variableKey', @id))">
       <xsl:value-of select="@value"/>
       <xsl:value-of select="@size"/>
@@ -256,7 +256,7 @@ Project-page: http://sv.insysbio.ru
     <tr>
       <td><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
       <td>=</td>
-      <td style="width:500px;"><xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/></td>
+      <td><xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/></td>
     </tr>
   </xsl:template>
 
@@ -296,10 +296,10 @@ Project-page: http://sv.insysbio.ru
     <tr>
       <td><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
     <td>
-	<xsl:if test="@boundaryCondition='true'">=</xsl:if>
-	<xsl:if test="not(@boundaryCondition='true')">&#8592;</xsl:if>
-	</td>
-    <td style="width:500px;">
+      <xsl:if test="@boundaryCondition='true'">=</xsl:if>
+      <xsl:if test="not(@boundaryCondition='true')">&#8592;</xsl:if>
+    </td>
+    <td>
     <xsl:if test="not(key('variableKey', @id))">
       <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
             <xsl:if test="@initialAmount">
@@ -317,11 +317,45 @@ Project-page: http://sv.insysbio.ru
             </xsl:if>
       </xsl:element>
     </xsl:if>
-	<xsl:if test="key('variableKey', @id)">
+    <xsl:if test="key('variableKey', @id)">
       <xsl:apply-templates select="key('variableKey', @id)/mml:math"/>
     </xsl:if>
     </td>
     </tr>
+  </xsl:template>
+
+  <xsl:template match="*[local-name()='functionDefinition']" mode="dependencies">
+    <tr>
+      <td>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply xmlns="http://www.w3.org/1998/Math/MathML">
+            <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="@id" mode="idOrName"/></ci>
+            <xsl:copy-of select="mml:math/mml:lambda/mml:bvar/mml:*"/>
+          </apply>
+        </math>
+      </td>
+      <td>&#8801;</td>
+      <td>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <xsl:copy-of select="mml:math/mml:lambda/*[local-name()!='bvar']"/>
+        </math>
+      </td>
+    </tr>
+
+  <!--
+      <p>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply xmlns="http://www.w3.org/1998/Math/MathML">
+            <equivalent xmlns="http://www.w3.org/1998/Math/MathML"/>
+              <apply xmlns="http://www.w3.org/1998/Math/MathML">
+                  <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="@id" mode="idOrName"/></ci>
+                  <xsl:copy-of select="mml:math/mml:lambda/mml:bvar/mml:*"/>
+              </apply>
+              <xsl:copy-of select="mml:math/mml:lambda/*[local-name()!='bvar']"/>
+          </apply>
+        </math>
+      </p>
+  -->
   </xsl:template>
 
 <!-- END OF dependencies mode -->
