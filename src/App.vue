@@ -41,12 +41,11 @@ export default {
   },
   methods: {
     loadFile: function (file, xsltName, isRefresh) {
-      this.getListTransformationType(file, isRefresh)
+      if (!(isRefresh)) this.getListTransformationType(file)
       this.displayFile(file, xsltName, isRefresh)
     },
     displayFile: function (file, xsltName, isRefresh) {
       this.$root.$emit('startSpin')
-
       if (!(isRefresh)) this.displayContent = ''
 
       this.doNextTick(() => {
@@ -56,16 +55,22 @@ export default {
             new XSLTProcessor(),
             this.xsltDoc.firstElementChild
           )
-          this.parseFile(file, isRefresh)
-          this.addEventListenerAnnotationElement()
-          this.prettifyAnnotation()
+          let oldCont = this.displayContent
+          this.displayContent = this.getContent(file, isRefresh)
+          if (this.displayContent !== oldCont) {
+            this.updateMathjax()
+            this.$root.$emit('closeAnnotation')
+            this.$root.$emit('onClearErr')
+            this.addEventListenerAnnotationElement()
+            this.prettifyAnnotation()
+          }
         }
       }, 100)
       this.doNextTick(() => {
         this.$root.$emit('stopSpin')
       })
     },
-    getListTransformationType: function (file, isRefresh) {
+    getListTransformationType: function (file) {
       let SBMLElement = file.getElementsByTagName('sbml')
       let level = SBMLElement && SBMLElement[0] && SBMLElement[0].getAttribute('level')
       if (level) {
@@ -75,20 +80,20 @@ export default {
         this.$root.$emit('onThrowError', 'Incorrect level')
       }
       this.doNextTick(() => {
-        this.$root.$emit('onUpdateTransformationType', !(isRefresh))
+        this.$root.$emit('onUpdateTransformationType')
       })
     },
     getTransformationType: function (xsltName) {
       let xsltDoc = this.transformationTypes.find(x => x.name === xsltName)
       return (xsltDoc && xsltDoc.xslt) || this.transformationTypes[0].xslt
     },
-    parseFile: function (file, isRefresh) {
+    getContent: function (file, isRefresh) {
       let doc = this.fileContent = file
       let transformDoc = this.transformDocument(this.modelXsltProcessor, doc)
       if (this.checkDocumentVersion(doc) && this.checkDocument(transformDoc)) {
-        this.displayDocument(transformDoc)
+        return this.documentToString(transformDoc)
       } else if (!(isRefresh)) {
-        this.displayContent = '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>'
+        return '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>'
       }
     },
     toggleXslt: function (xslt) {
@@ -129,12 +134,6 @@ export default {
     },
     checkDocumentVersion: function (doc) {
       return true
-    },
-    displayDocument: function (doc) {
-      this.displayContent = this.documentToString(doc)
-      this.updateMathjax()
-      this.$root.$emit('closeAnnotation')
-      this.$root.$emit('onClearErr')
     },
     updateMathjax: function () {
       this.doNextTick(() => {
