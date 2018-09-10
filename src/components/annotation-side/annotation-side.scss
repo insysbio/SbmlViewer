@@ -2,9 +2,13 @@
 #sidebarContent {
   position: fixed;
   overflow: auto;
+  width: 25%;
+  height: 100vh;
+  z-index: 1px;
 }
 .close-sidebar-btn {
 position: fixed;
 top: 50%;
-right: 20%;
+right: 23%;
+z-index: 2;
 }
