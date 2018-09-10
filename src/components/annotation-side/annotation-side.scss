@@ -1,13 +1,10 @@
 /*-- Side --*/
-#sideInformBlock {
-  display: block;
+#sidebarContent {
+  position: fixed;
   overflow: auto;
 }
-#sideContent {
-  overflow: auto;
-}
-.closeSideBarBtn {
+.close-sidebar-btn {
 position: fixed;
 top: 50%;
-right: 23.5%;
+right: 20%;
 }

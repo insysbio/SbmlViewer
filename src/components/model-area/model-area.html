@@ -1,8 +1,8 @@
 <div id="content">
-  <ErrorContainer></ErrorContainer>
-  <div class="w3-row">
-    <div id="mainContent" class="w3-container w3-col w3-border-right w3-border-color-blue-grey"  v-html='displayContent' v-bind:class="{ 'main-container-part': isSideOpen }">
+  <ErrorContainer class="sv-full-width"></ErrorContainer>
+  <div class="sv-full-width">
+    <div id="mainContent" class="w3-container w3-border-right w3-border-color-blue-grey"  v-html='displayContent' v-bind:class="{ 'main-container-part': isSideOpen }">
     </div>
-    <AnnotationSide @closeAnnotation='isSideOpen = false' class="w3-col" v-show='isSideOpen' v-bind:class="{ 'side-container-open': isSideOpen }"></AnnotationSide>
-    </div>
+    <AnnotationSide @closeAnnotation='isSideOpen = false' class="side-container" v-show='isSideOpen'></AnnotationSide>
+  </div>
 </div>

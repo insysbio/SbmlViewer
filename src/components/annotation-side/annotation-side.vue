@@ -40,7 +40,7 @@ export default {
     },
     prettifyAnnotation: function () {
       let annotation = document
-        .getElementById('sideContent')
+        .getElementById('sidebarContent')
         .getElementsByClassName('sv-raw-xml')
       for (let i = 0; i < annotation.length; i++) {
         let data = annotation[i].innerHTML

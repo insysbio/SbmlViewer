@@ -188,10 +188,9 @@ export default {
       return container.outerHTML
     },
     updateWindowSize: function () {
-      var newHeight = document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 7 + 'px'
-      document.getElementById('mainContent').style.height = newHeight
-      document.getElementById('sideContent').style.height = newHeight
-      document.getElementById('content').style.marginTop = document.getElementById('optionsArea').clientHeight + 15 + 'px'
+      let newMargin = document.getElementById('optionsArea').clientHeight + 15 + 'px'
+      document.getElementById('sidebarContent').style.top = newMargin
+      document.getElementById('content').style.marginTop = newMargin
     },
     doNextTick: function (callback, time = 100) {
       setTimeout(() => {
@@ -208,7 +207,6 @@ export default {
 <style lang='scss' src='code-prettify/src/prettify.css'></style>
 <style>
   html {
-    overflow-y: hidden;
   }
   html, head {
     height: 100%;

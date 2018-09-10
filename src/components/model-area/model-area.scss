@@ -4,16 +4,19 @@
 }
 /*-- Main --*/
 #mainContent {
-  overflow: auto;
+}
+.sv-full-width {
+  width: 100%;
+}
+.main-container {
+  float: left;
+  box-sizing: border-box;
+}
+.side-container {
+  width: 19%;
+  float: right;
+  box-sizing: border-box;
 }
 .main-container-part {
-      @extend .l9;
-      @extend .m9;
-      @extend .s9;
-}
-
-.side-container-open {
-    @extend .l3;
-    @extend .m3;
-    @extend .s3;
+   width: 79%;
 }
