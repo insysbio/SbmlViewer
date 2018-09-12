@@ -190,6 +190,7 @@ export default {
     updateWindowSize: function () {
       let newMargin = document.getElementById('optionsArea').clientHeight + 15 + 'px'
       document.getElementById('sidebarContent').style.top = newMargin
+      document.getElementById('sidebarContent').style.height = document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 7 + 'px'
       document.getElementById('content').style.marginTop = newMargin
     },
     doNextTick: function (callback, time = 100) {
