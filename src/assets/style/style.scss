@@ -74,6 +74,10 @@
   cursor: pointer;
 }
 
+.sv-table-top-border {
+  border-top: 1px solid #ddd;
+}
+
 div.sv-mode-table table {
   @extend .w3-table;
   /*@extend .w3-striped;*/
