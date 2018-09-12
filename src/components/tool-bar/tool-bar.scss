@@ -6,3 +6,9 @@
   position: absolute;
   margin-top: 0;
 }
+
+@media print {
+  #tool-bar {
+    position: absolute;
+  }
+}

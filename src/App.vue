@@ -207,9 +207,8 @@ export default {
 <style lang='scss' src='./assets/style/style.scss'></style>
 <style lang='scss' src='code-prettify/src/prettify.css'></style>
 <style>
-  html {
-  }
-  html, head {
+html {}
+html, head {
     height: 100%;
-  }
+}
 </style>

@@ -11,3 +11,8 @@
   right: 23%;
   z-index: 2;
 }
+@media print {
+  #sidebarContent {
+    position: absolute;
+  }
+}
