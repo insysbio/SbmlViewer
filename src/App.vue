@@ -118,6 +118,7 @@ export default {
     },
     transformDocument: function (xsltProcessor, model) {
       try {
+        console.log(xsltProcessor.transformToFragment(model, document))
         return xsltProcessor.transformToFragment(model, document)
       } catch (err) { // if transfrom not success
         this.$root.$emit('onThrowError', 'Fail transform document')
