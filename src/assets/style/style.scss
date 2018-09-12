@@ -1,4 +1,4 @@
-@import '../../../static/style/w3.scss';
+@import '../../../lib/w3-css/3/w3.scss';
 
 .sv-sbml-container {
   @extend .w3-container;
@@ -74,7 +74,7 @@
   cursor: pointer;
 }
 
-.sv-table-top-border {
+tr.sbml-element {
   border-top: 1px solid #ddd;
 }
 

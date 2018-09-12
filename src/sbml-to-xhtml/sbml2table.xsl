@@ -184,7 +184,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='functionDefinition']" mode="table">
-      <tr class="sbml-element sbml-functionDefinition sv-table-top-border">
+      <tr class="sbml-element sbml-functionDefinition">
         <td><xsl:apply-templates select="@id" mode="no-link"/></td>
         <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
         <td class="sbml-attribute-value sbml-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
@@ -222,7 +222,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='unitDefinition']" mode="table">
-      <tr class="sbml-element sbml-unitDefinition sv-table-top-border">
+      <tr class="sbml-element sbml-unitDefinition">
         <td><xsl:apply-templates select="@id" mode="no-link"/></td>
         <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
         <td class="sbml-attribute-value sbml-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
@@ -259,7 +259,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='compartmentType']" mode="table">
-    <tr class="sbml-element sbml-compartmentType sv-table-top-border">
+    <tr class="sbml-element sbml-compartmentType">
       <td><xsl:apply-templates select="@id" mode="no-link"/></td>
       <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
@@ -295,7 +295,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='speciesType']" mode="table">
-    <tr class="sbml-element sbml-speciesType sv-table-top-border">
+    <tr class="sbml-element sbml-speciesType">
       <td><xsl:apply-templates select="@id" mode="no-link"/></td>
       <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
@@ -335,7 +335,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='compartment']" mode="table">
-      <tr class="sbml-element sbml-compartment sv-table-top-border">
+      <tr class="sbml-element sbml-compartment">
         <td><xsl:apply-templates select="@id" mode="link"/></td>
         <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
         <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
@@ -383,7 +383,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='species']" mode="table">
-    <tr class="sbml-element sbml-species sv-table-top-border">
+    <tr class="sbml-element sbml-species">
       <td><xsl:apply-templates select="@id" mode="link"/></td>
       <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
@@ -429,7 +429,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='parameter']" mode="table">
-    <tr class="sbml-element sbml-parameter sv-table-top-border">
+    <tr class="sbml-element sbml-parameter">
       <td><xsl:apply-templates select="@id" mode="link"/></td>
       <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
@@ -467,7 +467,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='initialAssignment']" mode="table">
-    <tr class="sbml-element sbml-initialAssignment sv-table-top-border">
+    <tr class="sbml-element sbml-initialAssignment">
       <td><xsl:apply-templates select="@symbol"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="mml:math"/></td>
@@ -503,7 +503,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='constraint']" mode="table">
-    <tr class="sbml-element sbml-constraint sv-table-top-border">
+    <tr class="sbml-element sbml-constraint">
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-element sbml-message"><xsl:apply-templates select="*[local-name()='message']" mode="table"/></td>
       <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="mml:math"/></td>
@@ -542,7 +542,7 @@ Project-page: http://sv.insysbio.com
   <xsl:template match="*[local-name()='assignmentRule']
     |*[local-name()='algebraicRule']
     |*[local-name()='rateRule']" mode="table">
-    <tr class="sv-table-top-border">
+    <tr>
       <xsl:attribute name="class">sbml-element sbml-<xsl:value-of select="local-name()"/></xsl:attribute>
       <td><xsl:value-of select="local-name()"/></td>
       <td><xsl:apply-templates select="@variable"/></td>
@@ -583,7 +583,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='reaction']" mode="table">
-    <tr class="sbml-element sbml-functionDefinition sv-table-top-border">
+    <tr class="sbml-element sbml-functionDefinition">
       <td><xsl:apply-templates select="@id" mode="link"/></td>
       <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
@@ -626,7 +626,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='event']" mode="table">
-    <tr class="sbml-element sbml-event sv-table-top-border">
+    <tr class="sbml-element sbml-event">
       <td><xsl:apply-templates select="@id" mode="no-link"/></td>
       <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
@@ -676,7 +676,7 @@ Project-page: http://sv.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='eventAssignment']" mode="table">
-    <tr class="sbml-element sbml-eventAssignment sv-table-top-border">
+    <tr class="sbml-element sbml-eventAssignment">
       <td><xsl:apply-templates select="@variable"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="mml:math"/></td>
