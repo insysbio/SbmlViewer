@@ -72,9 +72,9 @@ export default {
       this.getDisplayOptions()
       this.$emit('selectedXslt', this.xslt)
     },
-    getDisplayOptions: function (isNewListTransformationType = false) {
+    getDisplayOptions: function () {
       if (Object.keys(this.transformationTypes).length !== 0) {
-        if (!(this.xslt) || isNewListTransformationType) this.xslt = this.transformationTypes[0].name
+        this.xslt = this.transformationTypes[0].name
         this.optionsDisplay = this.transformationTypes.find((x) => x.name === this.xslt).parameters
         this.optionsDisplay.forEach((item, i) => {
           this.options[item] = (this.options && this.options[item]) || false
