@@ -2,21 +2,18 @@
 <style lang="scss" src="./tool-bar.scss"></style>
 <script>
 
-import { readXmlUpload } from '../../utilites/readXmlUpload'
-
 export default {
   name: 'ToolBar',
   props: [
-    'transformationTypes'
+    'TTList',
+    'ListTTParametrs',
+    'stateTTparametrs',
+    'currentTTName'
   ],
   data () {
     return {
       isSpin: false,
-      fileName: 'No file choosen',
-      optionsDisplay: {},
-      xslt: null,
-      file: null,
-      options: {}
+      fileName: 'No file choosen'
     }
   },
   mounted () {
@@ -26,52 +23,36 @@ export default {
     this.$root.$on('stopSpin', () => {
       this.isSpin = false
     })
-    this.dragNdropInit()
-    this.url = this.checkGetUploadReq()
-    if (this.url) {
-      this.uploadFileByUrl()
-    }
+    // this.dragNdropInit()
 
-    this.$root.$on('onUpdateTransformationType', this.getDisplayOptions)
+    // this.$root.$on('onUpdateTransformationType', this.getDisplayOptions)
   },
   methods: {
     refresh: function () {
-      if (this.url) {
+      /* if (this.url) {
         this.uploadFileByUrl(true)
       }
       if (this.file) {
         this.uploadFileFromComputer(true)
+      } */
+    },
+    onChooseFileInput: function (e) {
+      e.preventDefault()
+      // Запуск спина c $nextTick
+      let file = document.getElementById('file').files[0]
+      if (file) { // file can be emty, if user clicked on the button, but he not selected file
+        this.$emit('onOpenFile', file)
       }
-    },
-    onChooseFile: function (event) {
-      event.preventDefault()
-      if (document.getElementById('file').files[0]) {
-        this.file = document.getElementById('file').files[0]
-        this.url = null
-        this.uploadFileFromComputer()
-      }
-    },
-    uploadFileFromComputer: function (isRefresh = false) {
-      this.updateFileName(this.file.name)
-      readXmlUpload(this.file, (err, result) => {
-        if (err) throw err
-        this.$emit('onLoadFile', result, this.xslt, isRefresh)
-      })
-    },
-    updateFileName: function (name) {
-      this.fileName = name
-      document
-        .getElementsByTagName('title')[0]
-        .innerText = name
     },
     changeOption: function (optName) {
       this.options[optName] = !this.options[optName]
     },
-    onSelectXslt: function () {
-      this.options.transform = this.xslt
-      this.getDisplayOptions()
-      this.$emit('selectedXslt', this.xslt)
+    onSelectTT: function () {
+      this.$nextTick(() => {
+        this.$emit('onChangeTT')
+      })
     },
+    /*
     getDisplayOptions: function () {
       if (Object.keys(this.transformationTypes).length !== 0) {
         this.xslt = this.transformationTypes[0].name
@@ -86,28 +67,15 @@ export default {
       }
       this.$emit('onChangeXsltParam', this.xslt, this.options)
     },
+    */
     checkGetUploadReq: function () {
-      let parameters = window.location.search.substring(1).split('&')
+      /* let parameters = window.location.search.substring(1).split('&')
       if (parameters.length !== 0) {
         return parameters[0]
       } else {
         return null
-      }
-    },
-    uploadFileByUrl: function (isRefresh = false) {
-      this.file = null
-      this.updateFileName(this.url.match(/[_-\w]+.xml/)[0])
-
-      let xmlhttp = new XMLHttpRequest()
-      xmlhttp.onreadystatechange = () => {
-        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-          let fileContent = xmlhttp.responseXML
-          this.fileContent = fileContent
-          this.$emit('onLoadFile', fileContent, this.xslt, isRefresh)
-        }
-      }
-      xmlhttp.open('GET', this.url, true)
-      xmlhttp.send()
+      } */
+      return null
     },
     dragNdropInit: function () {
       document.addEventListener('dragover', (event) => {
@@ -118,8 +86,8 @@ export default {
       })
       document.addEventListener('drop', (event) => {
         event.preventDefault()
-        this.file = event.dataTransfer.files[0]
-        this.uploadFileFromComputer()
+        // this.file = event.dataTransfer.files[0]
+        // this.uploadFileFromComputer()
       })
     }
   }
