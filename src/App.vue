@@ -54,10 +54,12 @@ export default {
   },
   methods: {
     loadFile: function (file, isRefresh = false) {
+      if (!(isRefresh)) {
+        this.currentTTName = null
+        this.stateTTparametrs = {}
+      }
       this.currentTT = {}
-      this.currentTTName = null
       this.ListTTParametrs = {}
-      this.stateTTparametrs = {}
 
       this.readFile(file, (content) => {
         this.fileContent = content
@@ -99,9 +101,12 @@ export default {
         this.ListTTParametrs = this.TTList.find((x) => x.name === this.currentTTName).parameters
       }
       this.setStateTTParametrs()
-      let content = this.transformDocument(fileContent, this.currentTT.xslt)
-      this.displayContent = this.documentToString(content)
-      this.$root.$emit('resetContent')
+      let doc = this.transformDocument(fileContent, this.currentTT.xslt)
+      let content = this.documentToString(doc)
+      if (content !== this.displayContent) {
+        this.$root.$emit('resetContent')
+      }
+      this.displayContent = content
     },
     checkFileByURL: function () {
       let parameters = window.location.search.substring(1).split('&')
@@ -124,7 +129,6 @@ export default {
       }
     },
     getCurrentTT: function () {
-      console.log(this.currentTTName)
       if (this.currentTTName) {
         return this.TTList.find((x) => x.name === this.currentTTName) || this.TTList[0]
       } else {
@@ -146,10 +150,11 @@ export default {
         let xsltProcessor = new XSLTProcessor()
         xsltProcessor.importStylesheet(xsltStylesheet)
         // set parameters transfrom
-        let params = this.currentTT.parameters
+        let params = this.ListTTParametrs
         params['transform'] = this.currentTT.name
         params['transform2'] = 'sbml' + this.currentTT.level + 'element'
-        for (let param in params) {
+        for (let i in params) {
+          let param = params[i]
           xsltProcessor.setParameter(null, param, this.stateTTparametrs[param])
         }
         return xsltProcessor.transformToFragment(transformDoc, document)

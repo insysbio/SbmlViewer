@@ -13,7 +13,8 @@ export default {
   data () {
     return {
       isSpin: false,
-      fileName: 'No file choosen'
+      fileName: 'No file choosen',
+      file: null
     }
   },
   mounted () {
@@ -28,7 +29,8 @@ export default {
     // this.$root.$on('onUpdateTransformationType', this.getDisplayOptions)
   },
   methods: {
-    refresh: function () {
+    onRefresh: function () {
+      this.$emit('onOpenFile', this.file, true)
       /* if (this.url) {
         this.uploadFileByUrl(true)
       }
@@ -41,11 +43,12 @@ export default {
       // Запуск спина c $nextTick
       let file = document.getElementById('file').files[0]
       if (file) { // file can be emty, if user clicked on the button, but he not selected file
+        this.file = file
         this.$emit('onOpenFile', file)
       }
     },
-    changeOption: function (optName) {
-      this.options[optName] = !this.options[optName]
+    toogleParam: function (paramName) {
+      this.stateTTparametrs[paramName] = !this.stateTTparametrs[paramName]
     },
     onSelectTT: function () {
       this.$nextTick(() => {
