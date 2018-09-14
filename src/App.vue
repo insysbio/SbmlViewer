@@ -157,6 +157,7 @@ export default {
           let param = params[i]
           xsltProcessor.setParameter(null, param, this.stateTTparametrs[param])
         }
+
         return xsltProcessor.transformToFragment(transformDoc, document)
       } catch (err) { // if transfrom not success
         this.$root.$emit('onThrowError', 'Fail transform document')

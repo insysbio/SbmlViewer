@@ -52,7 +52,11 @@ export default {
         for (let i = 0; i < annotationElements.length; i++) {
           annotationElements[i].addEventListener('click', (e) => {
             this.isSideOpen = true
-            this.$root.$emit('onOpenAnnotation', e.target.id, this.fileContent)
+            let contentNode = document
+              .getElementById('mainContent')
+              .firstElementChild
+
+            this.$root.$emit('onOpenAnnotation', e.target.id, contentNode)
           })
         }
 

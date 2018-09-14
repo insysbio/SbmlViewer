@@ -26,6 +26,7 @@ export default {
   },
   methods: {
     openAnnotation: function (id, content) {
+      console.log(content)
       this.xsltProcessor.setParameter(null, 'elementId', id)
       try {
         let transformDoc = this.xsltProcessor.transformToFragment(content, document)
@@ -35,7 +36,7 @@ export default {
           this.prettifyAnnotation()
         })
       } catch (err) {
-
+        console.log(err)
       }
     },
     prettifyAnnotation: function () {
