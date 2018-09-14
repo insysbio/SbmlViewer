@@ -8,12 +8,12 @@ export default {
     'TTList',
     'ListTTParametrs',
     'stateTTparametrs',
-    'currentTTName'
+    'currentTTName',
+    'fileName'
   ],
   data () {
     return {
       isSpin: false,
-      fileName: 'No file choosen',
       file: null
     }
   },
@@ -26,11 +26,14 @@ export default {
     })
     this.dragNdropInit()
 
-    // this.$root.$on('onUpdateTransformationType', this.getDisplayOptions)
+    document.title = this.fileName
   },
   methods: {
     onRefresh: function () {
-      this.$emit('onOpenFile', this.file, true)
+      this.isSpin = true
+      this.$nextTick(() => {
+        this.$emit('onOpenFile', this.file, true)
+      })
     },
     onChooseFileInput: function (e) {
       e.preventDefault()
@@ -38,13 +41,17 @@ export default {
       let file = document.getElementById('file').files[0]
       if (file) { // file can be emty, if user clicked on the button, but he not selected file
         this.file = file
-        this.$emit('onOpenFile', file)
+        this.isSpin = true
+        this.$nextTick(() => {
+          this.$emit('onOpenFile', file)
+        })
       }
     },
     toogleParam: function (paramName) {
       this.stateTTparametrs[paramName] = !this.stateTTparametrs[paramName]
     },
     onSelectTT: function () {
+      this.isSpin = true
       this.$nextTick(() => {
         this.$emit('onChangeTT', this.currentTTName)
       })

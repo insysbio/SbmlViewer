@@ -7,6 +7,10 @@
       v-html='displayContent'
       v-bind:class="{ 'main-container-part': isSideOpen }">
     </div>
-    <AnnotationSide @closeAnnotation='isSideOpen = false' class="side-container" v-show='isSideOpen'></AnnotationSide>
+    <AnnotationSide
+      v-bind:fileContent='fileContent'
+      @closeAnnotation='isSideOpen = false'
+      class="side-container"
+      v-show='isSideOpen'></AnnotationSide>
   </div>
 </div>

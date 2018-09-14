@@ -3,13 +3,16 @@
   <ToolBar
     @onOpenFile="loadFile"
     @onChangeTT="toogleTT"
+    v-bind:fileName = 'fileName'
     v-bind:currentTTName='currentTTName'
     v-bind:TTList='TTList'
     v-bind:ListTTParametrs='ListTTParametrs'
     v-bind:stateTTparametrs='stateTTparametrs'>
   </ToolBar>
   <ModelArea
-    v-bind:displayContent='displayContent'>
+    v-bind:displayContent='displayContent'
+    v-bind:fileContent='fileContent'
+    >
   </ModelArea>
   </div>
 </template>
@@ -20,6 +23,7 @@ import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
 
 import { readXmlUpload } from './utilites/readXmlUpload'
+import { documentToString } from './utilites/documentToString'
 
 const parser = new window.DOMParser()
 const xsltCollection = require('./sbml-to-xhtml')(parser)
@@ -28,24 +32,23 @@ export default {
   name: 'App',
   data () {
     return {
-      load: false,
       TTList: {},
       currentTTName: null,
       currentTT: {},
       ListTTParametrs: {},
       stateTTparametrs: {},
-      file: null,
       fileUrl: null,
-      displayContent: '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>'
-
+      fileName: 'No file choosen',
+      displayContent: '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>',
+      fileContent: ''
     }
   },
   mounted () {
-    // this.updateWindowSize()
-    // window.addEventListener('resize', this.updateWindowSize)
-
+    this.$root.$emit('startSpin')
     if (this.checkFileByURL()) {
-      this.loadFile()
+      this.$nextTick(() => {
+        this.loadFile()
+      })
     }
   },
   components: {
@@ -54,10 +57,12 @@ export default {
   },
   methods: {
     loadFile: function (file, isRefresh = false) {
+      // eliminate the conflict between the link and the file
       if (file && this.fileUrl) {
         this.fileUrl = null
       }
 
+      // save parameters for refresh and clean TT
       if (!(isRefresh)) {
         this.currentTTName = null
         this.stateTTparametrs = {}
@@ -69,36 +74,28 @@ export default {
         this.fileContent = content
         this.getDataForDisplay(content, isRefresh)
       })
-      // if (!(isRefresh)) this.getListTransformationType(file)
-      // this.displayFile(file, xsltName, isRefresh)
     },
     readFile: function (file, callback) {
-      if (this.fileUrl) {
-        this.getFileByUrl(null, callback)
-      } else {
-        this.getFileFromComputer(file, callback)
-      }
-    },
-    getFileByUrl: function (isRefresh = false, callback) {
-      this.file = null
-      // this.updateFileName(this.url.match(/[_-\w]+.xml/)[0])
+      if (this.fileUrl) { // read file by url
+        this.fileName = this.fileUrl.match(/[_-\w]+.xml/)[0]
 
-      let xmlhttp = new XMLHttpRequest()
-      xmlhttp.onreadystatechange = () => {
-        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-          callback(xmlhttp.responseXML, isRefresh)
+        let xmlhttp = new XMLHttpRequest()
+        xmlhttp.onreadystatechange = () => {
+          if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+            callback(xmlhttp.responseXML)
+          }
         }
+        xmlhttp.open('GET', this.fileUrl, true)
+        xmlhttp.send()
+      } else { // read file from computer
+        this.fileName = file.name
+        readXmlUpload(file, (err, result) => {
+          if (err) throw err
+          callback(result)
+        })
       }
-      xmlhttp.open('GET', this.fileUrl, true)
-      xmlhttp.send()
     },
-    getFileFromComputer: function (file, callback) {
-      readXmlUpload(file, (err, result) => {
-        if (err) throw err
-        callback(result)
-      })
-    },
-    getDataForDisplay: function (fileContent = this.fileContent, isRefresh = false) {
+    getDataForDisplay: function (fileContent, isRefresh = false) {
       this.TTList = this.getListTT(fileContent)
       this.currentTT = this.getCurrentTT()
       if (Object.keys(this.TTList).length !== 0) {
@@ -106,15 +103,16 @@ export default {
       }
       this.setStateTTParametrs()
       let doc = this.transformDocument(fileContent, this.currentTT.xslt)
-      let content = this.documentToString(doc)
+      let content = documentToString(doc)
       if (content !== this.displayContent) {
         this.$root.$emit('resetContent')
       }
       this.displayContent = content
+      this.$root.$emit('stopSpin')
     },
     checkFileByURL: function () {
       let parameters = window.location.search.substring(1).split('&')
-      if (parameters.length !== 0) {
+      if (parameters.length !== 0 && parameters[0] !== '') {
         this.fileUrl = parameters[0]
         return true
       } else {
@@ -170,7 +168,7 @@ export default {
     },
     toogleTT: function (newTTName) {
       this.currentTTName = newTTName
-      this.getDataForDisplay()
+      this.getDataForDisplay(this.fileContent)
     },
     checkDocument: function (doc) {
       if (doc.firstElementChild.innerHTML.match(/= \?\?\?/) || doc.firstElementChild.innerHTML.match(/This page contains the following errors/)
@@ -183,18 +181,11 @@ export default {
     },
     checkDocumentVersion: function (doc) {
       return true
-    },
-    documentToString: function (doc) {
-      let container = document
-        .createElement('div')
-        .appendChild(doc.firstElementChild)
-      return container.outerHTML
-    },
-    updateWindowSize: function () {
-      let newMargin = document.getElementById('optionsArea').clientHeight + 15 + 'px'
-      document.getElementById('sidebarContent').style.top = newMargin
-      document.getElementById('sidebarContent').style.height = document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 7 + 'px'
-      document.getElementById('content').style.marginTop = newMargin
+    }
+  },
+  watch: {
+    fileName: function (val, old) {
+      document.title = val
     }
   }
 }

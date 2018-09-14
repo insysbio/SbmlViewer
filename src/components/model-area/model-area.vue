@@ -2,16 +2,19 @@
 <style lang="scss" src="./model-area.scss"></style>
 <script>
 /* global MathJax */
-
 import AnnotationSide from '../annotation-side/annotation-side.vue'
 import ErrorContainer from '../error/error.vue'
-import 'code-prettify'
 
-const xmlescape = require('xml-escape')
-const {pd} = require('pretty-data')
+import 'code-prettify'
+import { updateContainerSize } from '../../utilites/updateContainerSize'
+import { prettifyAnnotation } from '../../utilites/prettifyAnnotation'
+
 export default {
   name: 'ModelArea',
-  props: ['displayContent'],
+  props: [
+    'displayContent',
+    'fileContent'
+  ],
   data () {
     return {
       isSideOpen: false
@@ -23,17 +26,19 @@ export default {
   },
   mounted () {
     this.$root.$on('resetContent', () => {
+      this.isSideOpen = false
+      // add addons after render component
       setTimeout(() => {
         this.$nextTick(() => {
           this.addEventListenerAnnotationElement()
           MathJax.Hub.Queue(['Typeset', MathJax.Hub])
-          this.prettifyAnnotation()
+          prettifyAnnotation('mainContent')
         })
       }, 100)
     })
-    this.$root.$on('closeAnnotation', () => {
-      this.isSideOpen = false
-    })
+
+    updateContainerSize()
+    window.addEventListener('resize', updateContainerSize)
   },
   methods: {
     addEventListenerAnnotationElement: function () {
@@ -70,14 +75,11 @@ export default {
           })
         }
       })
-    },
-    prettifyAnnotation: function () {
-      let annotation = document.getElementsByClassName('sv-raw-xml')
-      for (let i = 0; i < annotation.length; i++) {
-        let data = annotation[i].innerHTML
-        annotation[i].innerHTML = xmlescape(pd.xml(data))
-      }
-      window.PR.prettyPrint()
+    }
+  },
+  watch: {
+    displayContent: function () {
+      this.isSideOpen = false
     }
   }
 }
