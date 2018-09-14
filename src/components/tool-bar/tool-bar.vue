@@ -24,19 +24,13 @@ export default {
     this.$root.$on('stopSpin', () => {
       this.isSpin = false
     })
-    // this.dragNdropInit()
+    this.dragNdropInit()
 
     // this.$root.$on('onUpdateTransformationType', this.getDisplayOptions)
   },
   methods: {
     onRefresh: function () {
       this.$emit('onOpenFile', this.file, true)
-      /* if (this.url) {
-        this.uploadFileByUrl(true)
-      }
-      if (this.file) {
-        this.uploadFileFromComputer(true)
-      } */
     },
     onChooseFileInput: function (e) {
       e.preventDefault()
@@ -55,31 +49,6 @@ export default {
         this.$emit('onChangeTT', this.currentTTName)
       })
     },
-    /*
-    getDisplayOptions: function () {
-      if (Object.keys(this.transformationTypes).length !== 0) {
-        this.xslt = this.transformationTypes[0].name
-        this.optionsDisplay = this.transformationTypes.find((x) => x.name === this.xslt).parameters
-        this.optionsDisplay.forEach((item, i) => {
-          this.options[item] = (this.options && this.options[item]) || false
-        })
-      } else {
-        this.xslt = ''
-        this.options = {}
-        this.optionsDisplay = {}
-      }
-      this.$emit('onChangeXsltParam', this.xslt, this.options)
-    },
-    */
-    checkGetUploadReq: function () {
-      /* let parameters = window.location.search.substring(1).split('&')
-      if (parameters.length !== 0) {
-        return parameters[0]
-      } else {
-        return null
-      } */
-      return null
-    },
     dragNdropInit: function () {
       document.addEventListener('dragover', (event) => {
         event.preventDefault()
@@ -89,8 +58,8 @@ export default {
       })
       document.addEventListener('drop', (event) => {
         event.preventDefault()
-        // this.file = event.dataTransfer.files[0]
-        // this.uploadFileFromComputer()
+        let file = this.file = event.dataTransfer.files[0]
+        this.$emit('onOpenFile', file)
       })
     }
   }

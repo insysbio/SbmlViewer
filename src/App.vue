@@ -45,7 +45,7 @@ export default {
     // window.addEventListener('resize', this.updateWindowSize)
 
     if (this.checkFileByURL()) {
-
+      this.loadFile()
     }
   },
   components: {
@@ -54,6 +54,10 @@ export default {
   },
   methods: {
     loadFile: function (file, isRefresh = false) {
+      if (file && this.fileUrl) {
+        this.fileUrl = null
+      }
+
       if (!(isRefresh)) {
         this.currentTTName = null
         this.stateTTparametrs = {}
@@ -70,7 +74,7 @@ export default {
     },
     readFile: function (file, callback) {
       if (this.fileUrl) {
-        this.getFileByUrl(file, callback)
+        this.getFileByUrl(null, callback)
       } else {
         this.getFileFromComputer(file, callback)
       }

@@ -14,16 +14,7 @@ export default {
   props: ['displayContent'],
   data () {
     return {
-      isSideOpen: false,
-      method: 'upload',
-      xsltProcessorMainTable: null,
-      xsltOptions: {
-        correctMathml: false,
-        equationsOff: false,
-        transform: 'sbml2table',
-        transform2: 'sbml2element',
-        useNames: false
-      }
+      isSideOpen: false
     }
   },
   components: {
