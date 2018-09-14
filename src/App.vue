@@ -54,6 +54,11 @@ export default {
   },
   methods: {
     loadFile: function (file, isRefresh = false) {
+      this.currentTT = {}
+      this.currentTTName = null
+      this.ListTTParametrs = {}
+      this.stateTTparametrs = {}
+
       this.readFile(file, (content) => {
         this.fileContent = content
         this.getDataForDisplay(content, isRefresh)
@@ -119,6 +124,7 @@ export default {
       }
     },
     getCurrentTT: function () {
+      console.log(this.currentTTName)
       if (this.currentTTName) {
         return this.TTList.find((x) => x.name === this.currentTTName) || this.TTList[0]
       } else {
@@ -153,7 +159,7 @@ export default {
       }
     },
     toogleTT: function (newTTName) {
-      // this.currentTTName = '1'
+      this.currentTTName = newTTName
       this.getDataForDisplay()
     },
     checkDocument: function (doc) {

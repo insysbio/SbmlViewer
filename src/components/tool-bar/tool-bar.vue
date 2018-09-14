@@ -49,7 +49,7 @@ export default {
     },
     onSelectTT: function () {
       this.$nextTick(() => {
-        this.$emit('onChangeTT')
+        this.$emit('onChangeTT', this.currentTTName)
       })
     },
     /*
