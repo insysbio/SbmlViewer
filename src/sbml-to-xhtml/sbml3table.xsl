@@ -340,6 +340,7 @@ Project-page: http://sv.insysbio.com
             <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
             <th><xsl:if test="*/@units">units</xsl:if></th>
             <th><xsl:if test="*/@value">value</xsl:if></th>
+            <th><xsl:if test="*/@constant">constant</xsl:if></th>
           </tr>
           <xsl:apply-templates select="*[local-name()='parameter']" mode="table"/>
         </table>
@@ -354,6 +355,7 @@ Project-page: http://sv.insysbio.com
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-attribute-value sbml-units"><xsl:apply-templates select="@units"/></td>
       <td class="sbml-attribute-value sbml-value"><xsl:value-of select="@value"/></td>
+      <td class="sbml-attribute-value sbml-constant"><xsl:value-of select="@constant"/></td>
     </tr>
     <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
     <tr class="sbml-mixed sv-hidden">
