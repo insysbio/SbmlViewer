@@ -286,14 +286,14 @@ Project-page: http://sv.insysbio.com
             <th>id</th>
             <th><xsl:if test="*/@name">name</xsl:if></th>
             <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
-            <th><xsl:if test="*/@speciesType">speciesType</xsl:if></th>
             <th><xsl:if test="*/@substanceUnits">substance Units</xsl:if></th>
             <th><xsl:if test="*/@hasOnlySubstanceUnits">hasOnly Substance Units</xsl:if></th>
             <th><xsl:if test="*/@initialConcentration">initial Concentration</xsl:if></th>
             <th><xsl:if test="*/@initialAmount">initial Amount</xsl:if></th>
             <th><xsl:if test="*/@boundaryCondition">boundary Condition</xsl:if></th>
             <th><xsl:if test="*/@compartment">compartment</xsl:if></th>
-            <th><xsl:if test="*/@charge">charge</xsl:if></th>
+            <th><xsl:if test="*/@conversionFactor">conversion factor</xsl:if></th>
+            <th><xsl:if test="*/@constant">constant</xsl:if></th>
           </tr>
           <xsl:apply-templates select="*[local-name()='species']" mode="table"/>
         </table>
@@ -306,14 +306,14 @@ Project-page: http://sv.insysbio.com
       <td><xsl:apply-templates select="@id" mode="link"/></td>
       <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
-      <td class="sbml-attribute-value sbml-speciesType"><xsl:apply-templates select="@speciesType"/></td>
       <td class="sbml-attribute-value sbml-substanceUnits"><xsl:apply-templates select="@substanceUnits"/></td>
       <td class="sbml-attribute-value sbml-hasOnlySubstanceUnits"><xsl:value-of select="@hasOnlySubstanceUnits"/></td>
       <td class="sbml-attribute-value sbml-initialConcentration"><xsl:value-of select="@initialConcentration"/></td>
       <td class="sbml-attribute-value sbml-initialAmount"><xsl:value-of select="@initialAmount"/></td>
       <td class="sbml-attribute-value sbml-boundaryCondition"><xsl:value-of select="@boundaryCondition"/></td>
       <td class="sbml-attribute-value sbml-compartment"><xsl:apply-templates select="@compartment"/></td>
-      <td class="sbml-attribute-value sbml-charge"><xsl:value-of select="@charge"/></td>
+      <td class="sbml-attribute-value sbml-conversationFactor"><xsl:value-of select="@conversionFactor"/></td>
+      <td class="sbml-attribute-value sbml-constant"><xsl:value-of select="@constant"/></td>
     </tr>
     <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
     <tr class="sbml-mixed sv-hidden">

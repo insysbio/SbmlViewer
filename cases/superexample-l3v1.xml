@@ -193,7 +193,6 @@
         id="A"
         name="A"
         compartment="Total"
-        speciesType="NKb_abs"
         substanceUnits="mmole"
         initialAmount="1.898501"
         boundaryCondition="true"
@@ -208,7 +207,7 @@
           </example>
         </annotation>
       </species>
-      <species id="B" name="B" compartment="comp1" speciesType="NKb_abs" initialAmount="1.490793" substanceUnits="mmole" boundaryCondition="false" constant="true" hasOnlySubstanceUnits="false" spatialSizeUnits="l"/>
+      <species id="B" name="B" compartment="comp1" speciesType="NKb_abs" initialAmount="1.490793" substanceUnits="mmole" boundaryCondition="false" constant="true" hasOnlySubstanceUnits="false" spatialSizeUnits="l" conversionFactor="s_conv"/>
       <species id="C" name="C" compartment="comp2" initialConcentration="1.300637" substanceUnits="mmole" boundaryCondition="false" constant="false"  hasOnlySubstanceUnits="true"/>
       <species id="D" name="D" compartment="comp2" initialConcentration="1.234049" boundaryCondition="false" constant="true"/>
       <species id="E" name="Some new" compartment="comp1" initialConcentration="1.234049" constant="false" hasOnlySubstanceUnits="false"/>
