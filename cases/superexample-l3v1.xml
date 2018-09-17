@@ -36,20 +36,20 @@
 <!-- listOfFunctionDefinitions -->
     <listOfFunctionDefinitions metaid="metaexample" sboTerm="SBO:001">
       <notes>
-      <p xmlns="http://www.w3.org/1999/xhtml">This is a test p element</p>
-    </notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+        <p xmlns="http://www.w3.org/1999/xhtml">This is a test p element</p>
+      </notes>
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
       <functionDefinition id="multiply" name="multiply function" metaid="metaexample" sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+        <annotation>
+          <example xmlns="example.com">
+            <exe a="2" b="3"/>
+          </example>
+        </annotation>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <lambda>
             <bvar>
@@ -142,17 +142,16 @@
 <!-- listOfCompartments -->
     <listOfCompartments metaid="metaexample" sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
       <compartment
         id="Total"
         name="Total volume"
         size="100"
         constant="true"
-        compartmentType="cmp_type"
         spatialDimensions="1"
         units="nd"
         metaid="metaexample"
@@ -166,19 +165,19 @@
       </compartment>
       <compartment id="comp1" name="first compartment" size="12" outside="Total" constant="false"  spatialDimensions="3" units="l" metaid="metaexample" sboTerm="SBO:001">
       <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
       </compartment>
       <compartment id="comp2" name="second compartment" size="4.19999980926514" outside="Total" constant="true" compartmentType="cmp_type" metaid="metaexample" sboTerm="SBO:001">
       <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
       </compartment>
     </listOfCompartments>
 
