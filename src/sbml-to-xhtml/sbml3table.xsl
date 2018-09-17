@@ -377,6 +377,9 @@ Project-page: http://sv.insysbio.com
         <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
         <table>
           <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>sboTerm</th>
             <th>symbol</th>
             <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
             <th>math:</th>
@@ -389,6 +392,9 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='initialAssignment']" mode="table">
     <tr class="sbml-element sbml-initialAssignment">
+      <td><xsl:apply-templates select="@id"/></td>
+      <td><xsl:apply-templates select="@name"/></td>
+      <td><xsl:apply-templates select="@sboTerm"/></td>
       <td><xsl:apply-templates select="@symbol"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="mml:math"/></td>
