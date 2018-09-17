@@ -455,6 +455,9 @@ Project-page: http://sv.insysbio.com
         <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
         <table>
         <tr>
+    	    <th>id</th>
+    	    <th>name</th>
+    	    <th>sboTerm</th>
     	    <th>type</th>
           <th>variable</th>
           <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
@@ -471,6 +474,9 @@ Project-page: http://sv.insysbio.com
     |*[local-name()='rateRule']" mode="table">
     <tr>
       <xsl:attribute name="class">sbml-element sbml-<xsl:value-of select="local-name()"/></xsl:attribute>
+      <td><xsl:value-of select="@id"/></td>
+      <td><xsl:value-of select="@name"/></td>
+      <td><xsl:value-of select="@sboTerm"/></td>
       <td><xsl:value-of select="local-name()"/></td>
       <td><xsl:apply-templates select="@variable"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
