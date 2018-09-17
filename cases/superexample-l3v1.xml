@@ -383,7 +383,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-     <constraint metaid="metaexample" sboTerm="SBO:001">
+     <constraint id='id1' name='testName' metaid="metaexample" sboTerm="SBO:001">
     <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">

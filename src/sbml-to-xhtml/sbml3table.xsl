@@ -419,6 +419,9 @@ Project-page: http://sv.insysbio.com
         <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>
         <table>
         <tr>
+          <th><xsl:if test="*/@id">id</xsl:if></th>
+          <th><xsl:if test="*/@name">name</xsl:if></th>
+          <th><xsl:if test="*/@sboTerm">sboTerm</xsl:if></th>
           <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
           <th><xsl:if test="*/*[local-name()='message']">message</xsl:if></th>
           <th>math:</th>
@@ -431,6 +434,9 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='constraint']" mode="table">
     <tr class="sbml-element sbml-constraint">
+      <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@id"/></td>
+      <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@name"/></td>
+      <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@sboTerm"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-element sbml-message"><xsl:apply-templates select="*[local-name()='message']" mode="table"/></td>
       <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="mml:math"/></td>
