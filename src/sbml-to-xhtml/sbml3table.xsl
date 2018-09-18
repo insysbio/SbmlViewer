@@ -553,10 +553,12 @@ Project-page: http://sv.insysbio.com
           <tr>
             <th>id</th>
             <th><xsl:if test="*/@name">name</xsl:if></th>
+            <th><xsl:if test="*/@name">sboTerm</xsl:if></th>
             <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
             <th><xsl:if test="*/@useValuesFromTriggerTime">useValuesFrom TriggerTime</xsl:if></th>
             <th>trigger</th>
             <th>delay</th>
+            <th>priority</th>
           </tr>
           <xsl:apply-templates select="*[local-name()='event']" mode="table"/>
         </table>
@@ -568,10 +570,12 @@ Project-page: http://sv.insysbio.com
     <tr class="sbml-element sbml-event">
       <td><xsl:apply-templates select="@id" mode="no-link"/></td>
       <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
+      <td class="sbml-attribute-value sbml-sboTerm"><xsl:value-of select="@sboTerm"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-attribute-value sbml-useValuesFromTriggerTime"><xsl:value-of select="@useValuesFromTriggerTime"/></td>
       <td class="sbml-element sbml-trigger sbml-math sv-mml"><xsl:apply-templates select="*[local-name()='trigger']" mode="table"/></td>
       <td class="sbml-element sbml-delay sbml-math sv-mml"><xsl:apply-templates select="*[local-name()='delay']" mode="table"/></td>
+      <td class="sbml-element sbml-priority"><xsl:apply-templates select="@priority"/></td>
     </tr>
     <xsl:if test="../*[local-name()='notes']
       |../*[local-name()='annotation']
