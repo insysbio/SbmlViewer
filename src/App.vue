@@ -11,8 +11,7 @@
   </ToolBar>
   <ModelArea
     v-bind:displayContent='displayContent'
-    v-bind:fileContent='fileContent'
-    >
+    v-bind:fileContent='fileContent'>
   </ModelArea>
   </div>
 </template>
@@ -32,15 +31,16 @@ export default {
   name: 'App',
   data () {
     return {
-      TTList: {},
-      currentTTName: null,
-      currentTT: {},
-      ListTTParametrs: {},
-      stateTTparametrs: {},
-      fileUrl: null,
-      fileName: 'No file choosen',
-      displayContent: '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>',
-      fileContent: ''
+      TTList: {}, // list of xslt
+      currentTTName: null, // name of current xslt
+      currentTT: {}, // object of current xslt
+      ListTTParametrs: {}, // list of xslt parameters
+      stateTTparametrs: {}, // list of state(checked/unchecked) of xslt parameters
+      fileUrl: null, // file url, save for read file by url after resfresh
+      fileName: 'No file choosen', // file name, value of varible show beside input button
+      displayContent: // content on display, save for transmit to model-area component
+        '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>',
+      fileContent: '' // file content, save for use after toggle xslt
     }
   },
   mounted () {
@@ -56,11 +56,18 @@ export default {
     ModelArea
   },
   methods: {
+    /**
+     * Save(isRefresh) or remove parameters and transmit file for readFile
+     * * @param file - object of file, if file selected by button, or url of file, if it was transmit as query
+     * * @param {bool} isRefresh - file refresh rate. It affects the saving of selected xslt and state of xslt parameters
+     */
     loadFile: function (file, isRefresh = false) {
-      // eliminate the conflict between the link and the file
+      // eliminate the conflict between the link and the selected file
       if (file && this.fileUrl) {
         this.fileUrl = null
       }
+
+      this.$root.$emit('onClearErr')
 
       // save parameters for refresh and clean TT
       if (!(isRefresh)) {
@@ -72,7 +79,10 @@ export default {
 
       this.readFile(file, (content) => {
         this.fileContent = content
-        this.getDataForDisplay(content, isRefresh)
+        if (this.getTTData(content)) {
+          this.setDataForDisplay(content)
+        }
+        this.$root.$emit('stopSpin')
       })
     },
     readFile: function (file, callback) {
@@ -83,6 +93,8 @@ export default {
         xmlhttp.onreadystatechange = () => {
           if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
             callback(xmlhttp.responseXML)
+          } else {
+            this.$root.$emit('onThrowError', 'Can not read file')
           }
         }
         xmlhttp.open('GET', this.fileUrl, true)
@@ -90,25 +102,41 @@ export default {
       } else { // read file from computer
         this.fileName = file.name
         readXmlUpload(file, (err, result) => {
-          if (err) throw err
+          if (err) {
+            this.$root.$emit('onThrowError', 'Can not read file')
+          }
           callback(result)
         })
       }
     },
-    getDataForDisplay: function (fileContent, isRefresh = false) {
+    getTTData: function (fileContent) {
       this.TTList = this.getListTT(fileContent)
-      this.currentTT = this.getCurrentTT()
       if (Object.keys(this.TTList).length !== 0) {
+        this.currentTT = this.getCurrentTT()
         this.ListTTParametrs = this.TTList.find((x) => x.name === this.currentTTName).parameters
+        this.setStateTTParametrs()
+        return true
+      } else {
+        this.$root.$emit('onThrowError', 'Incorrect level')
+        return false
       }
-      this.setStateTTParametrs()
+    },
+    setDataForDisplay: function (fileContent) {
       let doc = this.transformDocument(fileContent, this.currentTT.xslt)
-      let content = documentToString(doc)
-      if (content !== this.displayContent) {
-        this.$root.$emit('resetContent')
+      if (doc && checkCorrectTransfromDocument(doc)) {
+        let content = documentToString(doc)
+        // transfromation result may not change if not change xslt parameters and file content
+        // If the result does not match what is displayed on the page at the moment,
+        // the component will be updated and the events and etc will need to be re-hung
+        // else events, prettry annotation and etc will be double
+        if (content !== this.displayContent) {
+          this.$root.$emit('resetContent')
+        }
+        this.displayContent = content
+      } else {
+        this.$root.$emit('onThrowError', 'Incorrect XML')
+        return false
       }
-      this.displayContent = content
-      this.$root.$emit('stopSpin')
     },
     checkFileByURL: function () {
       let parameters = window.location.search.substring(1).split('&')
@@ -151,6 +179,7 @@ export default {
       try {
         let xsltProcessor = new XSLTProcessor()
         xsltProcessor.importStylesheet(xsltStylesheet)
+
         // set parameters transfrom
         let params = this.ListTTParametrs
         params['transform'] = this.currentTT.name
@@ -164,23 +193,15 @@ export default {
       } catch (err) { // if transfrom not success
         this.$root.$emit('onThrowError', 'Fail transform document')
         console.log(err)
+        return null
       }
     },
     toogleTT: function (newTTName) {
       this.currentTTName = newTTName
-      this.getDataForDisplay(this.fileContent)
-    },
-    checkDocument: function (doc) {
-      if (doc.firstElementChild.innerHTML.match(/= \?\?\?/) || doc.firstElementChild.innerHTML.match(/This page contains the following errors/)
-      ) { //
-        this.$root.$emit('onThrowError', 'Incorrect XML')
-        return false
-      } else {
-        return true
+      if (this.getTTData(this.fileContent)) {
+        this.setDataForDisplay(this.fileContent)
       }
-    },
-    checkDocumentVersion: function (doc) {
-      return true
+      this.$root.$emit('stopSpin')
     }
   },
   watch: {
@@ -189,6 +210,18 @@ export default {
     }
   }
 }
+
+// utilites
+function checkCorrectTransfromDocument (doc) {
+  if (doc.firstElementChild.innerHTML.match(/= \?\?\?/) ||
+      doc.firstElementChild.innerHTML.match(/This page contains the following errors/)
+  ) {
+    return false
+  } else {
+    return true
+  }
+}
+
 </script>
 
 <style lang='scss' src='./assets/style/style.scss'></style>

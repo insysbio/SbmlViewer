@@ -119,14 +119,14 @@
           <unit scale="3" kind="item" multiplier="1" exponent="1"/>
           <unit scale="0" kind="litre" multiplier="1" exponent="-1"/>
         </listOfUnits>
-      </unitDefinition>      
+      </unitDefinition>
       <unitDefinition id="celsium" name="celsium degrees">
         <listOfUnits>
           <unit scale="0" kind="kelvin" multiplier="1" exponent="1" offset="-376"/>
         </listOfUnits>
       </unitDefinition>
   </listOfUnitDefinitions>
-  
+
 <!-- listOfCompartmentTypes -->
     <listOfCompartmentTypes sboTerm="SBO:00100" metaid="metaexample">
         <notes>This is a test text element.</notes>
@@ -144,7 +144,7 @@
     </annotation>
       </compartmentType>
     </listOfCompartmentTypes>
-    
+
 <!-- listOfSpeciesTypes -->
     <listOfSpeciesTypes sboTerm="SBO:00100" metaid="metaexample">
         <notes>This is a test text element.</notes>
@@ -162,7 +162,7 @@
     </annotation>
       </speciesType>
     </listOfSpeciesTypes>
-    
+
 <!-- listOfCompartments -->
     <listOfCompartments metaid="metaexample" sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
@@ -196,7 +196,7 @@
     </annotation>
       </compartment>
     </listOfCompartments>
-    
+
 <!-- listOfSpecies -->
     <listOfSpecies metaid="metaexample" sboTerm="SBO:001">
     <notes>This is a test text element.</notes>
@@ -218,7 +218,7 @@
       <species id="D" name="D" compartment="comp2" initialConcentration="1.234049" boundaryCondition="false" constant="true"/>
       <species id="E" name="Some new" compartment="comp1" initialConcentration="1.234049" constant="false" hasOnlySubstanceUnits="false"/>
     </listOfSpecies>
-    
+
 <!-- listOfParameters -->
     <listOfParameters metaid="metaexample" sboTerm="SBO:001">
     <notes>This is a test text element.</notes>
@@ -256,7 +256,7 @@
       <parameter id="v0_0" constant="true"/>
       <parameter id="someFun" value="0" constant="false"/>
     </listOfParameters>
-    
+
 <!-- listOfInitialAssignments -->
     <listOfInitialAssignments metaid="metaexample" sboTerm="SBO:001">
     <notes>This is a test text element.</notes>
@@ -277,7 +277,7 @@
         </math>
       </initialAssignment>
     </listOfInitialAssignments>
-    
+
 <!-- listOfRules -->
     <listOfRules metaid="metaexample" sboTerm="SBO:001">
     <notes>This is a test text element.</notes>
@@ -380,7 +380,7 @@
         </math>
       </algebraicRule>
     </listOfRules>
-    
+
 <!-- listOfContraints -->
    <listOfConstraints metaid="metaexample" sboTerm="SBO:001">
     <notes>This is a test text element.</notes>
@@ -648,7 +648,7 @@
         </kineticLaw>
       </reaction>
     </listOfReactions>
-    
+
 <!-- listOfEvents -->
     <listOfEvents metaid="metaexample" sboTerm="SBO:001">
         <notes>This is a test text element.</notes>

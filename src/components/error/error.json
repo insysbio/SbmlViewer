@@ -11,7 +11,7 @@
   "Fail transform document": {
     "message": "Fail when transforming document"
   },
-  "Broken document": {
-    "message": "Broken document"
+  "Can not read file": {
+    "message": "Can not read file"
   }
 }
