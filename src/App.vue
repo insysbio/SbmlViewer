@@ -224,6 +224,7 @@ function checkCorrectTransfromDocument (doc) {
 
 </script>
 
+<style src='w3css/w3.css'></style>
 <style lang='scss' src='./assets/style/style.scss'></style>
 <style lang='scss' src='code-prettify/src/prettify.css'></style>
 <style>

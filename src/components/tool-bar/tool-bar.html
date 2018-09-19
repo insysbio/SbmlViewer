@@ -1,20 +1,20 @@
 <div id='tool-bar' class="w3-top w3-card-4 w3-blue-grey">
     <div id="optionsArea">
-      <div class="w3-cell w3-padding w3-border-color-white">
+      <div class="sv-cell w3-padding w3-border-color-white">
         <input id="file" @change='onChooseFileInput' class="file" type="file" accept=".xml,.sbml"/><span id="fileName" class="w3-padding-bottom">{{ fileName }}</span>
         <!-- <p class="w3-dispay-bottomleft"><span class="w3-small w3-text-white"><a href="http://sv.insysbio.ru">SbmlViewer</a> by <a href="http://insysbio.ru/en">InSysBio</a></span></p> -->
       </div>
 
-      <div v-if="Object.keys(TTList).length !== 0" class="w3-cell w3-border-left w3-border-color-white w3-padding-left w3-padding-right">
+      <div v-if="Object.keys(TTList).length !== 0" class="sv-cell w3-border-left w3-border-color-white w3-padding-left w3-padding-right">
         <!-- <h4>Transformation type:</h4> -->
         <select id="transformationType" v-model="currentTTName" @change='onSelectTT'>
           <option v-for="(type, i) in TTList" v-bind:value='type.name'>{{ type.name }}</option>
         </select>
       </div>
 
-      <div v-if="Object.keys(ListTTParametrs).length !== 0" id="listOptionsCheckbox" class="w3-cell w3-padding w3-border-left">
+      <div v-if="Object.keys(ListTTParametrs).length !== 0" id="listOptionsCheckbox" class="sv-cell w3-padding w3-border-left">
         <!-- <h4>Options display:</h4> -->
-        <div v-for="(paramName) in ListTTParametrs" class="w3-cell w3-padding-right w3-tooltip">
+        <div v-for="(paramName) in ListTTParametrs" class="sv-cell w3-padding-right w3-tooltip">
           <p>
             <input :id="paramName" type="checkbox" @change="toogleParam(paramName)" :checked='stateTTparametrs[paramName]'/>
             <label :for='paramName'>{{ paramName }}</label>
@@ -25,8 +25,8 @@
         </div>
       </div>
 
-      <div class="w3-container w3-cell w3-cell-bottom w3-padding">
-        <div id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple w3-display-right" @click="onRefresh"><i id="spinner" class="fa w3-xlarge" v-bind:class="{ 'w3-spin': isSpin, 'fa-spinner': isSpin, 'fa-refresh': !isSpin }"></i></div>
+      <div class="w3-container sv-cell w3-padding" v-if='currentTTName'>
+        <div id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple sv-display-right" @click="onRefresh"><i id="spinner" class="fa w3-xlarge" v-bind:class="{ 'w3-spin': isSpin, 'fa-spinner': isSpin, 'fa-refresh': !isSpin }"></i></div>
       </div>
     </div>
   </div>
