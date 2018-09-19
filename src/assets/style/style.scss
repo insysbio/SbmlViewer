@@ -10,20 +10,6 @@
   min-width: 300px
 }
 
-.sv-element-annotation-content, .sv-element-annotation-container-height-open {
-  transition: max-height 0.3s ease-out;
-  overflow: hidden;
-  display: block!important;
-  /*display: table-cell!important;*/
-  height:auto;
-}
-
-.sv-element-annotation-content {
-  max-height: 0px;
-  padding: 0px!important;
-  margin: 8px!important;
-}
-
 .sv-tooltip {
   @extend .w3-tooltip;
 }
