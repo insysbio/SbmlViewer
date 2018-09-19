@@ -1,7 +1,8 @@
-@import '../../../lib/w3-css/3/w3.scss';
+
+@import '../../../lib/w3-css/3/w3';
 
 .sv-sbml-container {
-  @extend .w3-container;
+  @extend .w3-container!optional;
 }
 
 .sv-note-content, .sv-annotation-content {
