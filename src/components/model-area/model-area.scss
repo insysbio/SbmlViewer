@@ -5,6 +5,7 @@
 /*-- Main --*/
 #mainContent {
   padding-bottom: 15px!important;
+  height: 100%;  
 }
 .sv-full-width {
   width: 100%;
@@ -19,5 +20,6 @@
   box-sizing: border-box;
 }
 .main-container-part {
-   width: 65%;
+   width: 76%;
+   overflow-x: scroll;
 }
