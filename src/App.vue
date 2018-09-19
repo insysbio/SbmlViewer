@@ -44,8 +44,8 @@ export default {
     }
   },
   mounted () {
-    this.$root.$emit('startSpin')
     if (this.checkFileByURL()) {
+      this.$root.$emit('startSpin')
       this.$nextTick(() => {
         this.loadFile()
       })
