@@ -5,10 +5,16 @@
 /*-- Main --*/
 #mainContent {
   padding-bottom: 15px!important;
-  height: 100%;  
+  height: 100%;
 }
 .sv-full-width {
   width: 100%;
+}
+.sv-info-symbol {
+  font-style: normal;
+}
+.sv-info-symbol::after {
+  content: 'ⓘ';
 }
 .main-container {
   float: left;

@@ -62,7 +62,7 @@ export default {
 
           // set button for notes and annotation
           let button = document.createElement('i')
-          button.setAttribute('class', 'sv-hide-button fa fa-info-circle')
+          button.setAttribute('class', 'sv-hide-button sv-info-symbol')
           annotationContainer
             .previousSibling
             .firstElementChild

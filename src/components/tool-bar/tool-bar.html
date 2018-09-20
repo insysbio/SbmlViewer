@@ -26,7 +26,13 @@
       </div>
 
       <div class="w3-container sv-cell w3-padding" v-if='currentTTName'>
-        <div id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple sv-display-right" @click="onRefresh"><i id="spinner" class="fa w3-xlarge" v-bind:class="{ 'w3-spin': isSpin, 'fa-spinner': isSpin, 'fa-refresh': !isSpin }"></i></div>
+        <div id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple sv-display-right" @click="onRefresh">
+          <i
+            id="spinner"
+            class="w3-xlarge"
+            v-bind:class="{ 'w3-spin': isSpin, 'sv-icon-spinner': isSpin, 'sv-icon-refresh': !isSpin }">
+          </i>
+        </div>
       </div>
     </div>
   </div>

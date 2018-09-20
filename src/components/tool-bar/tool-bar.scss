@@ -1,6 +1,15 @@
 .sv-cell {
   display: table-cell;
 }
+.sv-icon-spinner, .sv-icon-refresh {
+  font-style: normal;
+}
+.sv-icon-spinner::after {
+  content: url('../../assets/img/icons/spinner.png');
+}
+.sv-icon-refresh::after {
+  content: '\21BB';
+}
 
 .sv-display-right {
   position: fixed;
