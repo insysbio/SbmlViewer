@@ -9,22 +9,23 @@
       content: '\00B7';
     }
     </style>
-    <script type="text/x-mathjax-config">
+   <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         jax: ["input/MathML", "output/HTML-CSS"],
         extensions: ["mml2jax.js", "MathML/content-mathml.js", "MathZoom.js"],
         menuSettings: { zoom: "Click" },
-        CommonHTML: { linebreaks: { automatic: true } },
+        CommonHTML: {linebreaks: { automatic: true, width: "container" }},
         "HTML-CSS": {
-          linebreaks: { automatic: true },
+          linebreaks: { automatic: true, width: "container" },
           EqnChunk: 1,
           EqnChunkFactor: 1,
           EqnChunkDelay: 1
         },
-        SVG: { linebreaks: { automatic: true } }
+        SVG: { linebreaks: { automatic: true, width: "container" } }
       });
       </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+    <!-- <script type="text/javascript" src="http://insilicobio.ru/mathjax/MathJax.js"></script> -->
     <title>SbmlViewer</title>
   </head>
   <body>
