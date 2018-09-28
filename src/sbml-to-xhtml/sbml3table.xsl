@@ -696,9 +696,9 @@ Project-page: http://sv.insysbio.com
   <xsl:template match="*[local-name()='listOfReactants']
     | *[local-name()='listOfProducts']" mode="reactionFormula">
     <xsl:for-each select="*[local-name()='speciesReference']">
-      <xsl:if test="@stoichiometry!='1'"><xsl:value-of select="@stoichiometry"/>&#215;</xsl:if>
-	    <xsl:if test="@constant='true'"><xsl:apply-templates select="@species"/></xsl:if>
-	    <xsl:if test="@constant='false'"><xsl:apply-templates select="@id"/></xsl:if>
+      <xsl:if test="@stoichiometry!='1' and @constant='false'"><xsl:value-of select="@stoichiometry"/>&#215;</xsl:if>
+      <xsl:if test="@stoichiometry!='1' and @constant='true'"><xsl:value-of select="@id"/>&#215;</xsl:if>
+      <xsl:apply-templates select="@species"/>
       <xsl:if test="position()!=last()"> + </xsl:if>
     </xsl:for-each>
   </xsl:template>

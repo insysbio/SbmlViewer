@@ -486,7 +486,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-          <speciesReference species="A" metaid="metaexample" sboTerm="SBO:001" constant="false">
+          <speciesReference id="A_in_v1" species="A" metaid="metaexample" sboTerm="SBO:001" constant="false">
           <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -511,7 +511,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-          <speciesReference species="B" stoichiometry="2" metaid="metaexample" sboTerm="SBO:001" constant="true">
+          <speciesReference id="B_in_v1" species="B" stoichiometry="2" metaid="metaexample" sboTerm="SBO:001" constant="true">
           <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -565,11 +565,11 @@
       </reaction>
       <reaction id="v2" name="reaction two" reversible="true" fast="false">
         <listOfReactants>
-          <speciesReference id="idB" species="B" stoichiometry="2" constant="false"/>
-          <speciesReference id="idA" species="A" stoichiometry="1"/>
+          <speciesReference id="B_in_v2" species="B" stoichiometry="2" constant="false"/>
+          <speciesReference id="A_in_v2" species="A" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference id="idC" species="C" stoichiometry="3" constant="true"/>
+          <speciesReference id="C_in_v2" species="C" stoichiometry="3" constant="true"/>
         </listOfProducts>
         <kineticLaw metaid="metaexample" sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
@@ -638,7 +638,7 @@
       </example>
     </annotation>
         <listOfReactants>
-          <speciesReference species="C" stoichiometry="3"/>
+          <speciesReference id="C_in_v3" species="C" stoichiometry="3" constant="true"/>
         </listOfReactants>
         <listOfModifiers>
           <modifierSpeciesReference species="A"/>
