@@ -26,6 +26,10 @@
 }
 
 /* === NEW CSS === */
+.sbml-attribute-name, .sbml-element-name {
+  font-weight: bold;
+}
+
 .sv-raw-xml {
   padding: 2px;
   border: 1px solid #888;

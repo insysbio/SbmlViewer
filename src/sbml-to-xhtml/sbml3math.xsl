@@ -110,7 +110,7 @@ Project-page: http://sv.insysbio.ru
   <xsl:template match="@*">
     <p>
       <xsl:attribute name="class">sv-attribute-container sv-attribute-<xsl:value-of select="local-name()"/></xsl:attribute>
-      <span class="sv-attribute-name"><xsl:value-of select="local-name()"/></span>: <span class="sv-attribute-value"><xsl:value-of select="."/></span>
+      <span class="sbml-attribute-name"><xsl:value-of select="local-name()"/></span>: <span class="sv-attribute-value"><xsl:value-of select="."/></span>
     </p>
   </xsl:template>
 

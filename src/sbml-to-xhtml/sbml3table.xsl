@@ -80,7 +80,7 @@ Project-page: http://sv.insysbio.com
   <!-- annotation -->
   <xsl:template match="*[local-name()='annotation']" mode="element">
     <div class="sbml-element sbml-annotation sv-container">
-      <p class="sv-header">Annotation</p>
+      <p class="sv-header sbml-element-name">Annotation</p>
       <pre class="sv-content sv-raw-xml prettyprint"><xsl:copy-of select="node()"/></pre>
     </div>
   </xsl:template>
@@ -88,7 +88,7 @@ Project-page: http://sv.insysbio.com
   <!-- notes -->
   <xsl:template match="*[local-name()='notes']" mode="element">
     <div class="sbml-element sbml-notes sv-container">
-      <p class="sv-header">Notes</p>
+      <p class="sv-header sbml-element-name">Notes</p>
       <div class="sv-content sv-xhtml">
         <xsl:copy-of select="node()"/>
       </div>
