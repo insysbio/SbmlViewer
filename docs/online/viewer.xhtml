@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" style="overflow-x:auto;">
+<!-- 
+Copyright 2016-2017 Institute for Systems Biology Moscow
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<!-- INFO
+Description: Web application to interact with sbml files and transformations
+
+Maintainers: Evgeny Metelkin, Viktoria Tkachenko
+Copyright: Institute for Systems Biology, Moscow
+Last modification: 2017-04-25
+
+Project-page: http://sv.insysbio.ru/
+-->
+  <head>
+    <title>SMBLViewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    
+   <script src="sbmlviewer.js"></script>
+
+    <!-- MathJax settings -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/MathML", "output/HTML-CSS"],
+      extensions: ["mml2jax.js", "MathML/content-mathml.js", "MathZoom.js"],
+      menuSettings: { zoom: "Click" },      
+      CommonHTML: { linebreaks: { automatic: true } },
+      "HTML-CSS": { 
+        linebreaks: { automatic: true },
+        EqnChunk: 1,
+        EqnChunkFactor: 1,
+        EqnChunkDelay: 1
+      },
+      SVG: { linebreaks: { automatic: true } }
+});
+    </script>
+    <script type="text/javascript" src="http://insilicobio.ru/mathjax/MathJax.js"></script>
+    
+  </head>
+  <body>
+    <div class="w3-top w3-card-4 w3-blue-grey">
+      <div id="optionsArea">
+        <div class="w3-cell w3-padding w3-border-right w3-border-color-white">
+          <input id="file" class="file" type="file" accept=".xml,.sbml"/><span id="fileName" class="w3-padding-bottom">No file choosen</span>
+          <p class="w3-dispay-bottomleft"><span class="w3-small w3-text-white"><a href="http://sv.insysbio.ru">SbmlViewer</a> by <a href="http://insysbio.ru/en">InSysBio</a></span></p>
+        </div>
+        
+        <div class="w3-cell w3-border-right w3-border-color-white w3-padding-left w3-padding-right">
+          <h4>Transformation type:</h4>
+          <select id="transformationType"></select>
+        </div>
+        
+        <div id="listOptionsCheckbox" class="w3-cell w3-padding">  
+          <h4>Options display:</h4>
+        </div>
+        
+        <div class="w3-container w3-cell w3-cell-bottom w3-padding">
+          <div id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple w3-display-right"><i id="spinner" class="w3-spin fa fa-spinner w3-xxlarge"></i></div>
+        </div>
+      </div>  
+    </div>
+    
+   
+    
+    
+    <div id="content">
+      <div id="errorContainer" class="w3-row">
+        <div id="errorMess" class="w3-panel w3-col l12 m12 s12 w3-text-red w3-center w3-large w3-padding"></div>
+      </div>
+      <div class="w3-row">        
+        <div id="mainContent" class="w3-container w3-col w3-border-right w3-border-color-blue-grey">
+          <div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug'n'drop SBML file here.</div>
+        </div>
+        <div id="sideInformBlock" class="w3-container">
+          <button onclick="w3_close()" class="w3-blue-grey w3-button w3-circle w3-large closeSideBarBtn">></button>
+          <div id="sideContent"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
