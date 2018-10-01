@@ -89,15 +89,15 @@ export default {
         this.fileName = this.fileUrl.match(/[_-\w]+.xml/)[0]
 
         let xmlhttp = new XMLHttpRequest()
-        xmlhttp.onreadystatechange = () => {
-          if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-            callback(xmlhttp.responseXML)
-          } else {
-            this.$root.$emit('onThrowError', 'Can not read file')
-          }
-        }
         xmlhttp.open('GET', this.fileUrl, true)
         xmlhttp.send()
+        xmlhttp.onreadystatechange = () => {
+          if (xmlhttp.status === 200 && xmlhttp.readyState === 4) {
+            callback(xmlhttp.responseXML)
+          }
+
+          if (xmlhttp.status !== 200 && xmlhttp.status !== 0) { this.$root.$emit('onThrowError', 'Can not read file') }
+        }
       } else { // read file from computer
         this.fileName = file.name
         readXmlUpload(file, (err, result) => {
