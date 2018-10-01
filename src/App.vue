@@ -180,9 +180,10 @@ export default {
         xsltProcessor.importStylesheet(xsltStylesheet)
 
         // set parameters transfrom
+        xsltProcessor.setParameter(null, 'transform', this.currentTT.name)
+        xsltProcessor.setParameter(null, 'transform2', 'sbml' + this.currentTT.level + 'element')
+
         let params = this.ListTTParametrs
-        params['transform'] = this.currentTT.name
-        params['transform2'] = 'sbml' + this.currentTT.level + 'element'
         for (let i in params) {
           let param = params[i]
           xsltProcessor.setParameter(null, param, this.stateTTparametrs[param])
