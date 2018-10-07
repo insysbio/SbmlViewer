@@ -4,6 +4,7 @@
 /* global MathJax */
 import AnnotationSide from '../annotation-side/annotation-side.vue'
 import ErrorContainer from '../error/error.vue'
+import Vue from 'vue'
 
 import 'code-prettify'
 import { updateContainerSize } from '../../utilites/updateContainerSize'

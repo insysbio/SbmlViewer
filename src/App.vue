@@ -37,8 +37,7 @@ export default {
       stateTTparametrs: {}, // list of state(checked/unchecked) of xslt parameters
       fileUrl: null, // file url, save for read file by url after resfresh
       fileName: 'No file choosen', // file name, value of varible show beside input button
-      displayContent: // content on display, save for transmit to model-area component
-        '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>',
+      displayContent: '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>', // content on display, save for transmit to model-area component
       fileContent: '' // file content, save for use after toggle xslt
     }
   },
@@ -121,21 +120,17 @@ export default {
       }
     },
     setDataForDisplay: function (fileContent) {
-      let doc = this.transformDocument(fileContent, this.currentTT.xslt)
-      if (doc && checkCorrectTransfromDocument(doc)) {
-        let content = documentToString(doc)
-        // transfromation result may not change if not change xslt parameters and file content
-        // If the result does not match what is displayed on the page at the moment,
-        // the component will be updated and the events and etc will need to be re-hung
-        // else events, prettry annotation and etc will be double
-        if (content !== this.displayContent) {
+      this.displayContent = ''
+      this.$nextTick(() => {
+        let doc = this.transformDocument(fileContent, this.currentTT.xslt)
+        if (doc && checkCorrectTransfromDocument(doc)) {
           this.$root.$emit('resetContent')
+          this.displayContent = doc.children[0].outerHTML
+        } else {
+          this.$root.$emit('onThrowError', 'Incorrect XML')
+          return false
         }
-        this.displayContent = content
-      } else {
-        this.$root.$emit('onThrowError', 'Incorrect XML')
-        return false
-      }
+      })
     },
     checkFileByURL: function () {
       let parameters = window.location.search.substring(1).split('&')
