@@ -21,7 +21,6 @@ import ToolBar from './components/tool-bar/tool-bar.vue'
 import ModelArea from './components/model-area/model-area.vue'
 
 import { readXmlUpload } from './utilites/readXmlUpload'
-import { documentToString } from './utilites/documentToString'
 
 const parser = new window.DOMParser()
 const xsltCollection = require('./sbml-to-xhtml')(parser)

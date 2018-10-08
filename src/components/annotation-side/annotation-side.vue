@@ -3,7 +3,6 @@
 <script>
 /* global window MathJax */
 import { prettifyAnnotation } from '../../utilites/prettifyAnnotation'
-import { documentToString } from '../../utilites/documentToString'
 const parser = new window.DOMParser()
 
 let xsltCollection = require('../../sbml-to-xhtml')(parser)
@@ -27,8 +26,9 @@ export default {
     openAnnotation: function (id) {
       this.xsltProcessor.setParameter(null, 'elementId', id)
       try {
+        console.log(this.fileContent)
         let transformDoc = this.xsltProcessor.transformToFragment(this.fileContent, document)
-        this.content = documentToString(transformDoc)
+        this.content = transformDoc.children[0].outerHTML
         this.$nextTick(() => {
           MathJax.Hub.Queue(['Typeset', MathJax.Hub])
           prettifyAnnotation('sidebarContent')
