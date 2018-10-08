@@ -23,6 +23,8 @@ export default {
     this.xsltProcessor = new XSLTProcessor()
     this.xsltProcessor.importStylesheet(sbml2elementDoc.firstElementChild)
     this.$root.$on('onOpenAnnotation', this.openAnnotation)
+    let isEdge = navigator.userAgent.search('Edge') !== -1
+    this.xsltProcessor.setParameter(null, 'isEdge', isEdge)
   },
   methods: {
     openAnnotation: function (id) {

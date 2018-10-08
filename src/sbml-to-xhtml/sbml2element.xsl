@@ -41,7 +41,9 @@ Project-page: http://sv.insysbio.ru
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:exsl="http://exslt.org/common"
-  exclude-result-prefixes="mml xhtml exsl l2v1 l2v2 l2v3 l2v4 l2v5 l3v1 l3v2">
+  xmlns:msexsl="urn:schemas-microsoft-com:xslt"
+
+  exclude-result-prefixes="mml xhtml exsl msexsl l2v1 l2v2 l2v3 l2v4 l2v5 l3v1 l3v2">
 
   <!-- GLOBAL KEYS -->
   <xsl:key name="idKey" match="/*/*/*/*" use="@id"/><!-- to exclude local parameters -->
@@ -54,6 +56,7 @@ Project-page: http://sv.insysbio.ru
   <xsl:param name="equationsOff">false</xsl:param> <!-- do not show equations -->
   <xsl:param name="input_root" select="/"/> <!-- main document reference -->
   <xsl:param name="elementId">default</xsl:param> <!-- include unitDefinitions and attribute -->
+  <xsl:param name="isEdge">false</xsl:param> <!-- define browser -->
   <xsl:param name="dependent" >
     <ci><xsl:value-of select="$elementId"/></ci>
     <xsl:apply-templates select="key('idKey', $elementId)" mode="searchdependencies"/>
@@ -226,10 +229,18 @@ Project-page: http://sv.insysbio.ru
       <h2 class="sv-header">dependencies:</h2>
       <div class="sv-content">
         <table>
-          <xsl:for-each select="exsl:node-set($dependent)/xhtml:ci[not(text()=preceding-sibling::xhtml:ci/text())]">
-           <!--<xsl:apply-templates select="exsl:node-set($input_root)/descendant::*[@id=current()/text()]" mode="dependencies"/>-->
-    	      <xsl:apply-templates select="exsl:node-set($input_root)/*/*/*/*[@id=current()/text()]" mode="dependencies"/> <!-- search id without local parameters -->
-          </xsl:for-each>
+          <xsl:if test="$isEdge='false'">
+            <xsl:for-each select="exsl:node-set($dependent)/xhtml:ci[not(text()=preceding-sibling::xhtml:ci/text())]">
+             <!--<xsl:apply-templates select="exsl:node-set($input_root)/descendant::*[@id=current()/text()]" mode="dependencies"/>-->
+      	      <xsl:apply-templates select="exsl:node-set($input_root)/*/*/*/*[@id=current()/text()]" mode="dependencies"/> <!-- search id without local parameters -->
+            </xsl:for-each>
+          </xsl:if>
+          <xsl:if test="$isEdge='true'">
+            <xsl:for-each select="msexsl:node-set($dependent)/xhtml:ci[not(text()=preceding-sibling::xhtml:ci/text())]">
+             <!--<xsl:apply-templates select="exsl:node-set($input_root)/descendant::*[@id=current()/text()]" mode="dependencies"/>-->
+      	      <xsl:apply-templates select="msexsl:node-set($input_root)/*/*/*/*[@id=current()/text()]" mode="dependencies"/> <!-- search id without local parameters -->
+            </xsl:for-each>
+          </xsl:if>
         </table>
       </div>
     </div>
