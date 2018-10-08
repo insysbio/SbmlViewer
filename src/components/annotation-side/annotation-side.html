@@ -1,6 +1,4 @@
 <div class="w3-container">
   <button @click='onAnnotationClose' class="w3-blue-grey w3-button w3-circle w3-large close-sidebar-btn">></button>
-  <div id="sidebarContent" v-html='content' class="w3-border-left">
-      {{ content }}
-  </div>
+  <div id="sidebarContent" v-dom='content' class="w3-border-left"></div>
 </div>

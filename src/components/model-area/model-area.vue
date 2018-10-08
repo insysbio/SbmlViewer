@@ -5,6 +5,8 @@
 import AnnotationSide from '../annotation-side/annotation-side.vue'
 import ErrorContainer from '../error/error.vue'
 
+import '../../directives/dom'
+
 import 'code-prettify'
 import { updateContainerSize } from '../../utilites/updateContainerSize'
 import { prettifyAnnotation } from '../../utilites/prettifyAnnotation'
@@ -83,4 +85,5 @@ export default {
     }
   }
 }
+
 </script>

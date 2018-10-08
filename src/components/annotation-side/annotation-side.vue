@@ -2,6 +2,8 @@
 <style lang="scss" src="./annotation-side.scss"></style>
 <script>
 /* global window MathJax */
+import '../../directives/dom'
+
 import { prettifyAnnotation } from '../../utilites/prettifyAnnotation'
 const parser = new window.DOMParser()
 
@@ -13,7 +15,8 @@ export default {
   props: ['fileContent'],
   data () {
     return {
-      content: 'Nothing display',
+      content: document.createElement('div')
+        .appendChild(document.createTextNode('Nothing display')),
       xsltProcessor: null
     }
   },
@@ -27,7 +30,7 @@ export default {
       this.xsltProcessor.setParameter(null, 'elementId', id)
       try {
         let transformDoc = this.xsltProcessor.transformToFragment(this.fileContent, document)
-        this.content = transformDoc.children[0].outerHTML
+        this.content = transformDoc.children[0]
         this.$nextTick(() => {
           MathJax.Hub.Queue(['Typeset', MathJax.Hub])
           prettifyAnnotation('sidebarContent')

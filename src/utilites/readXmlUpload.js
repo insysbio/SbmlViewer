@@ -4,6 +4,7 @@
  * @param {object} file - file of model(object File)
  */
 export function readXmlUpload (file, callback) {
+  console.log(file)
   const reader = new FileReader()
 
   reader.onload = function () {

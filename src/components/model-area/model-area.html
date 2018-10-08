@@ -4,9 +4,11 @@
     <div
       id="mainContent"
       class="w3-container w3-border-color-blue-grey"
-      v-html='displayContent'
-      v-bind:class="{ 'main-container-part': isSideOpen }">
+      v-if="displayContent"
+      v-bind:class="{ 'main-container-part': isSideOpen }"
+      v-dom='displayContent'>
     </div>
+    <div class="w3-container w3-center w3-large w3-text-grey w3-margin" v-if="!displayContent">Drug'n'drop SBML file here.</div>
     <AnnotationSide
       v-bind:fileContent='fileContent'
       @closeAnnotation='isSideOpen = false'

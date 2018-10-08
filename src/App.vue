@@ -36,7 +36,7 @@ export default {
       stateTTparametrs: {}, // list of state(checked/unchecked) of xslt parameters
       fileUrl: null, // file url, save for read file by url after resfresh
       fileName: 'No file choosen', // file name, value of varible show beside input button
-      displayContent: '<div class="w3-container w3-center w3-large w3-text-grey w3-margin">Drug\'n\'drop SBML file here.</div>', // content on display, save for transmit to model-area component
+      displayContent: null, // content on display, save for transmit to model-area component
       fileContent: '' // file content, save for use after toggle xslt
     }
   },
@@ -119,14 +119,14 @@ export default {
       }
     },
     setDataForDisplay: function (fileContent) {
-      this.displayContent = ''
+      this.displayContent = null
       this.$nextTick(() => {
         let docDom = this.transformDocument(fileContent, this.currentTT.xslt)
         let docHTML = docDom && docDom.children[0].outerHTML
 
         if (docDom && checkCorrectTransfromDocument(docHTML)) {
           this.$root.$emit('resetContent')
-          this.displayContent = docHTML
+          this.displayContent = docDom.children[0]
         } else {
           this.$root.$emit('onThrowError', 'Incorrect XML')
           return false
