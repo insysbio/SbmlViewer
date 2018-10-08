@@ -83,7 +83,7 @@ export default {
       })
     },
     readFile: function (file, callback) {
-      if (this.fileUrl) { // read file by url
+      if (this.fileUrl) { // read file by URL
         this.fileName = this.fileUrl.match(/[_-\w]+.xml/)[0]
 
         let xmlhttp = new XMLHttpRequest()
@@ -96,7 +96,7 @@ export default {
 
           if (xmlhttp.status !== 200 && xmlhttp.status !== 0) { this.$root.$emit('onThrowError', 'Can not read file') }
         }
-      } else { // read file from computer
+      } else { // read file from COMPUTER
         this.fileName = file.name
         readXmlUpload(file, (err, result) => {
           if (err) {
@@ -121,10 +121,12 @@ export default {
     setDataForDisplay: function (fileContent) {
       this.displayContent = ''
       this.$nextTick(() => {
-        let doc = this.transformDocument(fileContent, this.currentTT.xslt)
-        if (doc && checkCorrectTransfromDocument(doc)) {
+        let docDom = this.transformDocument(fileContent, this.currentTT.xslt)
+        let docHTML = docDom && docDom.children[0].outerHTML
+
+        if (docDom && checkCorrectTransfromDocument(docHTML)) {
           this.$root.$emit('resetContent')
-          this.displayContent = doc.children[0].outerHTML
+          this.displayContent = docHTML
         } else {
           this.$root.$emit('onThrowError', 'Incorrect XML')
           return false
@@ -206,9 +208,9 @@ export default {
 }
 
 // utilites
-function checkCorrectTransfromDocument (doc) {
-  if (doc.firstElementChild.innerHTML.match(/= \?\?\?/) ||
-      doc.firstElementChild.innerHTML.match(/This page contains the following errors/)
+function checkCorrectTransfromDocument (html) {
+  if (html.match(/= \?\?\?/) ||
+      html.match(/This page contains the following errors/)
   ) {
     return false
   } else {
