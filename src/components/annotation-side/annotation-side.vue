@@ -26,7 +26,6 @@ export default {
     openAnnotation: function (id) {
       this.xsltProcessor.setParameter(null, 'elementId', id)
       try {
-        console.log(this.fileContent)
         let transformDoc = this.xsltProcessor.transformToFragment(this.fileContent, document)
         this.content = transformDoc.children[0].outerHTML
         this.$nextTick(() => {
