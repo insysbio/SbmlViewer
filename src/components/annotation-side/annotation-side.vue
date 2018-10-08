@@ -15,8 +15,7 @@ export default {
   props: ['fileContent'],
   data () {
     return {
-      content: document.createElement('div')
-        .appendChild(document.createTextNode('Nothing display')),
+      content: null,
       xsltProcessor: null
     }
   },
