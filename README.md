@@ -5,11 +5,10 @@ The collection of transformation from SBML files into human readable formats and
 
 Just play with transformation on the page http://sv.insysbio.com/online
 
-## Contributing
+## Support
 
-Two options to contribute:
- - Use [Issues page](https://github.com/insysbio/SbmlViewer/issues)
- - Fork and pull requests to us.
+[Issues page](https://github.com/insysbio/SbmlViewer/issues)
+
 
 ## Contact
 
