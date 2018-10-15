@@ -14,7 +14,7 @@ When **SbmlViewer** is helpful:
 
 ![sv scren 1](/assets/img/sv_screen1.png)
 
-# Quick start 
+# Quick start
 <hr/>
 
 <div class="w3-btn w3-card-2 w3-green w3-circle w3-text-white"><a href="{{ site.distPath }}viewer.xhtml" id="tryDemoLink">Try demo online</a></div>
@@ -47,21 +47,11 @@ To look through example just try the links
 Version: 170622
 
 - reading SBML Level 2 Version 1-5
-- creating tabular view of model with: **sbml2table** transformation
-- summary generation for chosen element: **sbml2element** transformation
+- reading SBML Level 3 Version 1-2
+- creating tabular view of model with: **sbml2table** or **sbml3table** transformation
+- summary generation for chosen element: **sbml2element** or **sbml3element** transformation
 - generation of equation corresponding to your model: **sbml2math** transformation
 
-## Known restrictions
-
-- some bugs with local parameters in **sbml2element** transformation
-- ignores <code>annotation</code> elements for presentation
-
-## Roadmap
-
-- support for SBML level 3
-- **sbml2tree** transformation
-- Transformation to Antimony format: **sbml2antimony** transformation
-- Chrome extension for SbmlViewer
 
 <hr/>
 
@@ -76,7 +66,7 @@ Apache 2.0
 ## 3d party software used
 
 - [MathJax](https://www.mathjax.org)
-- [W3.CSS](http://www.w3schools.com/w3css/) 
+- [W3.CSS](http://www.w3schools.com/w3css/)
 
 ## About SBML
 

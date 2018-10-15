@@ -5,36 +5,23 @@ The collection of transformation from SBML files into human readable formats and
 
 Just play with transformation on the page http://sv.insysbio.com/online
 
-## Contributing
+## Support
 
-Two options to contribute: 
- - Use [Issues page](https://github.com/insysbio/SbmlViewer/issues)
- - Fork and pull requests to us.
+[Issues page](https://github.com/insysbio/SbmlViewer/issues)
 
-## Versioning
-
-We use date in format YYMMDD for versioning
-
-## Authors
-
-- Viktoria Tkachenko @vetedde
-- Evgeny Metelkin @metelkin
 
 ## Contact
 
-http://sv.insysbio.com
 dev@insysbio.com
 
 ## License
 
 This project is licensed under Apache-2.0 License - see the [LICENSE](LICENSE) file for details
 
-## Acknowledgments
+## Contributors
 
-Many thanks to:
-* [MathJax](https://www.mathjax.org/)
-* [W3CSS](https://www.w3schools.com/w3css/)
-* Oleg Demin for testing and advices
+- Viktoria Tkachenko @vetedde
+- Evgeny Metelkin @metelkin
 
-© InSysBio, 2016-2017
+© InSysBio, 2016-2018
 http://insysbio.com

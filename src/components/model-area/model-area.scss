@@ -1,0 +1,31 @@
+
+/*-- Content --*/
+#content {
+}
+/*-- Main --*/
+#mainContent {
+  padding-bottom: 15px!important;
+  height: 100%;
+}
+.sv-full-width {
+  width: 100%;
+}
+.sv-info-symbol {
+  font-style: normal;
+}
+.sv-info-symbol::after {
+  content: 'ⓘ';
+}
+.main-container {
+  float: left;
+  box-sizing: border-box;
+}
+.side-container {
+  width: 25%;
+  float: right;
+  box-sizing: border-box;
+}
+.main-container-part {
+   width: 76%;
+   overflow-x: scroll;
+}

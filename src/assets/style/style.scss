@@ -1,0 +1,109 @@
+@import '~w3css/w3';
+
+.sv-sbml-container {
+  @extend .w3-container!optional;
+}
+
+.sv-note-content, .sv-annotation-content {
+  @extend .w3-container;
+  @extend .w3-pale-blue;
+  min-width: 300px
+}
+
+.sv-tooltip {
+  @extend .w3-tooltip;
+}
+
+.sv-tooltip-text {
+  @extend .w3-text;
+  @extend .w3-pale-blue;
+  position:absolute;
+  left:50%;
+  bottom:95%;
+  border-radius:6px;
+  padding:8px;
+  width:300px;
+}
+
+/* === NEW CSS === */
+.sbml-attribute-name, .sbml-element-name {
+  font-weight: bold;
+}
+
+.sv-raw-xml {
+  padding: 2px;
+  border: 1px solid #888;
+}
+
+.sv-xhtml {
+  padding: 2px;
+  border: 1px solid #888;
+}
+
+.sbml-attribute-value.sbml-id[id] {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sbml-id-lost {
+  color: red;
+}
+
+.sbml-id-ref {
+  color: blue;
+}
+
+.sv-hidden {
+  display: none;
+  /*display: table-row;*/
+}
+
+.sv-hide-button {
+  padding-left: 3px;
+  cursor: pointer;
+}
+
+tr.sbml-element {
+  border-top: 1px solid #ddd;
+}
+
+div.sv-mode-table table {
+  @extend .w3-table;
+  /*@extend .w3-striped;*/
+  @extend .w3-border;
+  @extend .w3-hoverable;
+  @extend .w3-card-2;
+  width: auto;
+  max-width:95%;
+}
+
+div.sv-mode-table tr:first-child {
+  @extend .w3-blue-grey;
+}
+
+td.sbml-metaid.sbml-attribute-value {
+  @extend .w3-small
+}
+
+.sbml-element.sbml-annotation .sv-content{
+  @extend .w3-container;
+  @extend .w3-pale-blue;
+  width: fit-content;
+  max-width: 100%;
+  height: 200px;
+  max-height: fit-content;
+  overflow: auto;
+  resize: both;
+}
+
+.sbml-element.sbml-notes .sv-content{
+  width: fit-content;
+  max-width: 90%;
+  @extend .w3-container;
+  @extend .w3-light-grey;
+}
+
+.sv-mode-element {
+  @extend .w3-container;
+}

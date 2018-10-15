@@ -5,8 +5,8 @@
 @import "rouge-github";
 pre{
   overflow: auto;
-} 
- 
+}
+
 img{
   max-width: 100%;
 }
@@ -21,5 +21,17 @@ ul.share-buttons li {
   display: inline-block;
 }
 .w3-content {
-  max-width: 750px;
+  max-width: 850px;
+}
+
+.header, .footer {
+  background: #802090;
+}
+
+#mainContent {
+  background-color: #e9edec;
+}
+
+#tryDemo {
+  background: #6C953C;
 }

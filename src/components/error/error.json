@@ -1,0 +1,17 @@
+{
+  "Incorrect XML": {
+    "message": "Unclear problems with file"
+  },
+  "Incorrect level": {
+    "message": "Unsupported file content"
+  },
+  "Fail import stylesheet": {
+    "message": "XSLT problems"
+  },
+  "Fail transform document": {
+    "message": "Fail when transforming document"
+  },
+  "Can not read file": {
+    "message": "Can not read file"
+  }
+}

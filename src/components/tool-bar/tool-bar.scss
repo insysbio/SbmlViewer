@@ -1,0 +1,33 @@
+.sv-cell {
+  display: table-cell;
+}
+.sv-icon-spinner, .sv-icon-refresh {
+  font-style: normal;
+}
+.sv-icon-spinner::after {
+  content: '\21BB';
+}
+.sv-icon-refresh::after {
+  content: '\21BB';
+}
+
+.sv-display-right {
+  position: fixed;
+  right: 5px;
+  top: 5px;
+}
+
+.file {
+  color:transparent;
+  width:140px;
+}
+.noteOptions {
+  position: absolute;
+  margin-top: 0;
+}
+
+@media print {
+  #tool-bar {
+    position: absolute;
+  }
+}

@@ -1,0 +1,19 @@
+/*-- Side --*/
+#sidebarContent {
+  position: fixed;
+  overflow: auto;
+  width: 24%;
+  padding-bottom: 15px;
+  background-color: white;
+}
+.close-sidebar-btn {
+  position: fixed;
+  top: 50%;
+  right: 23%;
+  z-index: 2;
+}
+@media print {
+  #sidebarContent {
+    position: absolute;
+  }
+}

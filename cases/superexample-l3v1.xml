@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sbml xmlns="http://www.sbml.org/sbml/level2/version4" level="2" version="4" metaid="metaexample" sboTerm="SBO:001">
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1" metaid="metaexample" sboTerm="SBO:001">
   <notes>
     <html xmlns="http://www.w3.org/1999/xhtml"><head><title/></head><body>
     <p>This is a test SBML which includes all cominations of nodes and attributes.</p>
@@ -10,7 +10,19 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-  <model id="superexample" name="Example which includes all structures and attributes" metaid="metaexample" sboTerm="SBO:001">
+  <model
+    id="superexample"
+    name="Example which includes all structures and attributes"
+    metaid="metaexample"
+    sboTerm="SBO:001"
+    substanceUnits="mmole"
+    timeUnits="min"
+    volumeUnits="mL"
+    areaUnits="m2"
+    lengthUnits="m"
+    extendUnits="xxx"
+    conversionFactor="p_conv"
+    >
     <notes>
     <body xmlns="http://www.w3.org/1999/xhtml">
     <p>This is a test SBML which includes all cominations of nodes and attributes.</p>
@@ -24,20 +36,20 @@
 <!-- listOfFunctionDefinitions -->
     <listOfFunctionDefinitions metaid="metaexample" sboTerm="SBO:001">
       <notes>
-      <p xmlns="http://www.w3.org/1999/xhtml">This is a test p element</p>
-    </notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+        <p xmlns="http://www.w3.org/1999/xhtml">This is a test p element</p>
+      </notes>
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
       <functionDefinition id="multiply" name="multiply function" metaid="metaexample" sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+        <annotation>
+          <example xmlns="example.com">
+            <exe a="2" b="3"/>
+          </example>
+        </annotation>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <lambda>
             <bvar>
@@ -127,94 +139,76 @@
       </unitDefinition>
   </listOfUnitDefinitions>
 
-<!-- listOfCompartmentTypes -->
-    <listOfCompartmentTypes sboTerm="SBO:00100" metaid="metaexample">
-        <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-      <compartmentType id="cmp_type" name="Example of compartment group" metaid="metaexample" sboTerm="SBO:001">
-        <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-      </compartmentType>
-    </listOfCompartmentTypes>
-
-<!-- listOfSpeciesTypes -->
-    <listOfSpeciesTypes sboTerm="SBO:00100" metaid="metaexample">
-        <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-      <speciesType id="NKb_abs" name="NKb cells" metaid="metaexample" sboTerm="SBO:001">
-        <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-      </speciesType>
-    </listOfSpeciesTypes>
-
 <!-- listOfCompartments -->
     <listOfCompartments metaid="metaexample" sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-      <compartment id="Total" name="Total volume" size="100" constant="true" compartmentType="cmp_type" spatialDimensions="1" units="nd" metaid="metaexample" sboTerm="SBO:001">
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
+      <compartment
+        id="Total"
+        name="Total volume"
+        size="100"
+        constant="true"
+        spatialDimensions="1"
+        units="nd"
+        metaid="metaexample"
+        sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+        <annotation>
+          <example xmlns="example.com">
+            <exe a="2" b="3"/>
+          </example>
+        </annotation>
       </compartment>
       <compartment id="comp1" name="first compartment" size="12" outside="Total" constant="false"  spatialDimensions="3" units="l" metaid="metaexample" sboTerm="SBO:001">
       <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
       </compartment>
       <compartment id="comp2" name="second compartment" size="4.19999980926514" outside="Total" constant="true" compartmentType="cmp_type" metaid="metaexample" sboTerm="SBO:001">
       <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
       </compartment>
     </listOfCompartments>
 
 <!-- listOfSpecies -->
     <listOfSpecies metaid="metaexample" sboTerm="SBO:001">
-    <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-      <species id="A" name="A" compartment="Total" speciesType="NKb_abs" substanceUnits="mmole" initialAmount="1.898501" boundaryCondition="true" hasOnlySubstanceUnits="true" metaid="metaexample" sboTerm="SBO:001">
-    <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+      <notes>This is a test text element.</notes>
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
+      <species
+        id="A"
+        name="A"
+        compartment="Total"
+        substanceUnits="mmole"
+        initialAmount="1.898501"
+        boundaryCondition="true"
+        hasOnlySubstanceUnits="true"
+        metaid="metaexample"
+        sboTerm="SBO:001"
+        conversionFactor="s_conv">
+        <notes>This is a test text element.</notes>
+        <annotation>
+          <example xmlns="example.com">
+            <exe a="2" b="3"/>
+          </example>
+        </annotation>
       </species>
-      <species id="B" name="B" compartment="comp1" speciesType="NKb_abs" initialAmount="1.490793" substanceUnits="mmole" boundaryCondition="false" constant="true" hasOnlySubstanceUnits="false" charge="-1" spatialSizeUnits="l"/>
-      <species id="C" name="C" compartment="comp2" initialConcentration="1.300637" substanceUnits="mmole" boundaryCondition="false" constant="false"  hasOnlySubstanceUnits="true" charge="2"/>
+      <species id="B" name="B" compartment="comp1" speciesType="NKb_abs" initialAmount="1.490793" substanceUnits="mmole" boundaryCondition="false" constant="true" hasOnlySubstanceUnits="false" spatialSizeUnits="l" conversionFactor="s_conv"/>
+      <species id="C" name="C" compartment="comp2" initialConcentration="1.300637" substanceUnits="mmole" boundaryCondition="false" constant="false"  hasOnlySubstanceUnits="true"/>
       <species id="D" name="D" compartment="comp2" initialConcentration="1.234049" boundaryCondition="false" constant="true"/>
       <species id="E" name="Some new" compartment="comp1" initialConcentration="1.234049" constant="false" hasOnlySubstanceUnits="false"/>
     </listOfSpecies>
@@ -227,7 +221,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-      <parameter id="k2" name="constant of reaction" value="1.93148" units="mM_per_min" constant="true" metaid="metaexample" sboTerm="SBO:001">
+      <parameter id="k2" name="constant of reaction" value="1.93148" units="mM/min" constant="true" metaid="metaexample" sboTerm="SBO:001">
     <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -235,7 +229,7 @@
       </example>
     </annotation>
       </parameter>
-      <parameter id="k3" name="another constant of reaction" value="0" constant="true" metaid="metaexample" sboTerm="SBO:001">
+      <parameter id="k3" name="another constant of reaction" value="1.738867" constant="true" metaid="metaexample" sboTerm="SBO:001">
       <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -389,7 +383,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-     <constraint metaid="metaexample" sboTerm="SBO:001">
+     <constraint id='id1' name='testName' metaid="metaexample" sboTerm="SBO:001">
     <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -411,54 +405,78 @@
 
 <!-- listOfReactions -->
     <listOfReactions metaid="metaexample" sboTerm="SBO:001">
-    <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-      <reaction id="v0" name="reaction zero" reversible="false" fast="false" metaid="metaexample" sboTerm="SBO:001">
-    <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-        <listOfProducts metaid="metaexample" sboTerm="SBO:001">
-    <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-          <speciesReference id="A_in_v0" name="A species in v0 reaction" species="A" stoichiometry="1" metaid="metaexample" sboTerm="SBO:001">
-    <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-          </speciesReference>
-          <speciesReference id="B_in_v0" species="B" stoichiometry="2" metaid="metaexample" sboTerm="SBO:001">
-          <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-          </speciesReference>
-        </listOfProducts>
-        <kineticLaw metaid="metaexample" sboTerm="SBO:001" substanceUnit="nM" timeUnits="second">
+      <notes>This is a test text element.</notes>
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
+      <reaction
+        id="v0"
+        name="reaction zero"
+        reversible="false"
+        fast="false"
+        metaid="metaexample"
+        compartment="comp1"
+        sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <ci> v0_0 </ci>
-          </math>
-        </kineticLaw>
+        <annotation>
+          <example xmlns="example.com">
+            <exe a="2" b="3"/>
+          </example>
+        </annotation>
+        <listOfProducts metaid="metaexample" sboTerm="SBO:001">
+          <notes>This is a test text element.</notes>
+          <annotation>
+            <example xmlns="example.com">
+              <exe a="2" b="3"/>
+            </example>
+          </annotation>
+            <speciesReference
+              id="A_in_v0"
+              name="A species in v0 reaction"
+              species="A"
+              stoichiometry="1"
+              metaid="metaexample"
+              constant="true"
+              sboTerm="SBO:001">
+              <notes>This is a test text element.</notes>
+              <annotation>
+                <example xmlns="example.com">
+                  <exe a="2" b="3"/>
+                </example>
+              </annotation>
+            </speciesReference>
+            <speciesReference
+              id="B_in_v0"
+              species="B"
+              stoichiometry="2"
+              metaid="metaexample"
+              constant="false"
+              sboTerm="SBO:001">
+              <notes>This is a test text element.</notes>
+              <annotation>
+                <example xmlns="example.com">
+                  <exe a="2" b="3"/>
+                </example>
+              </annotation>
+            </speciesReference>
+          </listOfProducts>
+          <kineticLaw
+            metaid="metaexample"
+            sboTerm="SBO:001"
+            substanceUnit="nM"
+            timeUnits="second">
+            <notes>This is a test text element.</notes>
+            <annotation>
+              <example xmlns="example.com">
+                <exe a="2" b="3"/>
+              </example>
+            </annotation>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <ci> v0_0 </ci>
+            </math>
+          </kineticLaw>
       </reaction>
       <reaction id="v1" name="reaction one" reversible="false" fast="true">
         <listOfReactants metaid="metaexample" sboTerm="SBO:001">
@@ -468,7 +486,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-          <speciesReference species="A" metaid="metaexample" sboTerm="SBO:001">
+          <speciesReference id="A_in_v1" species="A" metaid="metaexample" sboTerm="SBO:001" constant="false">
           <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -493,7 +511,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-          <speciesReference species="B" stoichiometry="2" metaid="metaexample" sboTerm="SBO:001">
+          <speciesReference id="B_in_v1" species="B" stoichiometry="2" metaid="metaexample" sboTerm="SBO:001" constant="true">
           <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -509,7 +527,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-          <modifierSpeciesReference species="A" metaid="metaexample" sboTerm="SBO:001">
+          <modifierSpeciesReference species="A" metaid="metaexample" sboTerm="SBO:001" constant="false">
         <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -547,11 +565,11 @@
       </reaction>
       <reaction id="v2" name="reaction two" reversible="true" fast="false">
         <listOfReactants>
-          <speciesReference species="B" stoichiometry="2"/>
-          <speciesReference species="A" stoichiometry="1"/>
+          <speciesReference id="B_in_v2" species="B" stoichiometry="2" constant="false"/>
+          <speciesReference id="A_in_v2" species="A" stoichiometry="1" constant="true"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="C" stoichiometry="3"/>
+          <speciesReference id="C_in_v2" species="C" stoichiometry="3" constant="true"/>
         </listOfProducts>
         <kineticLaw metaid="metaexample" sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
@@ -581,7 +599,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-            <parameter id="k2" name="constant of reaction" value="0" units="mM/min" constant="true" metaid="metaexample" sboTerm="SBO:001">
+            <parameter id="k2" name="constant of reaction" value="1.93148" units="mM/min" constant="true" metaid="metaexample" sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -605,8 +623,10 @@
       </example>
     </annotation>
         </parameter>
+            <parameter id="k4" units="uM_per_s" constant="false"/>
             <parameter id="k4r" value="0.001" constant="false"/>
-            <parameter id="local_par" value="0" constant="false"/>
+            <parameter id="v0_0" constant="true"/>
+            <parameter id="someFun" value="0" constant="false"/>
           </listOfParameters>
         </kineticLaw>
       </reaction>
@@ -618,7 +638,7 @@
       </example>
     </annotation>
         <listOfReactants>
-          <speciesReference species="C" stoichiometry="3"/>
+          <speciesReference id="C_in_v3" species="C" stoichiometry="3" constant="true"/>
         </listOfReactants>
         <listOfModifiers>
           <modifierSpeciesReference species="A"/>
@@ -649,26 +669,32 @@
 
 <!-- listOfEvents -->
     <listOfEvents metaid="metaexample" sboTerm="SBO:001">
+      <notes>This is a test text element.</notes>
+      <annotation>
+        <example xmlns="example.com">
+          <exe a="2" b="3"/>
+        </example>
+      </annotation>
+      <event
+        id="event1"
+        name="event 1"
+        useValuesFromTriggerTime="true"
+        metaid="metaexample"
+        sboTerm="SBO:001"
+        timeUnit="second">
         <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-      <event id="event1" name="event 1" useValuesFromTriggerTime="true" metaid="metaexample" sboTerm="SBO:001" timeUnit="second">
-        <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
-        <trigger metaid="metaexample" sboTerm="SBO:001">
-        <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+        <annotation>
+          <example xmlns="example.com">
+            <exe a="2" b="3"/>
+          </example>
+        </annotation>
+        <trigger metaid="metaexample" sboTerm="SBO:001" initialValue="true" persistent="true">
+          <notes>This is a test text element.</notes>
+          <annotation>
+            <example xmlns="example.com">
+              <exe a="2" b="3"/>
+            </example>
+          </annotation>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <gt/>
@@ -677,42 +703,53 @@
             </apply>
           </math>
         </trigger>
+        <priority id="pr1" name="proir 1" metaid="metaexample" sboTerm="SBO:001">
+          <notes>This is priority element from event.</notes>
+          <annotation>
+            <example xmlns="example.com">
+              <exe a="2" b="3"/>
+            </example>
+          </annotation>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <cn> 5 </cn>
+          </math>
+        </priority>
         <delay metaid="metaexample" sboTerm="SBO:001">
-        <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+          <notes>This is a delay from event.</notes>
+          <annotation>
+            <example xmlns="example.com">
+              <exe a="2" b="3"/>
+            </example>
+          </annotation>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <cn> 1.2 </cn>
           </math>
         </delay>
         <listOfEventAssignments metaid="metaexample" sboTerm="SBO:001">
-        <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+          <notes>This is a test text element.</notes>
+          <annotation>
+            <example xmlns="example.com">
+              <exe a="2" b="3"/>
+            </example>
+          </annotation>
           <eventAssignment variable="S1" metaid="metaexample" sboTerm="SBO:001">
-        <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+            <notes>This is a test text element.</notes>
+            <annotation>
+              <example xmlns="example.com">
+                <exe a="2" b="3"/>
+              </example>
+            </annotation>
             <math xmlns="http://www.w3.org/1998/Math/MathML">
               <cn type="rational"> 1 <sep/> 50 </cn>
             </math>
           </eventAssignment>
           <eventAssignment variable="S4" metaid="metaexample" sboTerm="SBO:001">
-        <notes>This is a test text element.</notes>
-    <annotation>
-      <example xmlns="example.com">
-        <exe a="2" b="3"/>
-      </example>
-    </annotation>
+            <notes>This is a test text element.</notes>
+            <annotation>
+              <example xmlns="example.com">
+                <exe a="2" b="3"/>
+              </example>
+            </annotation>
             <math xmlns="http://www.w3.org/1998/Math/MathML">
               <cn type="rational"> 1 <sep/> 200 </cn>
             </math>

@@ -1,0 +1,26 @@
+sbml-element
+sbml-element-name
+sbml-attribute
+sbml-attribute-name
+sbml-attribute-value
+sbml-mixed
+sbml-sbml
+sbml-model
+sbml-annotation
+sbml-<different attributes>: sbml-id, sbml-name
+sbml-id-lost
+sbml-id-ref
+sbml-listOf
+sbml-listOf<different lists>: sbml-listOfFunctionDefinitions
+sbml-math
+
+===
+
+sv-mode-table
+sv-container
+sv-header
+sv-content
+sv-raw-xml
+sv-xhtml
+sv-hidden
+sv-mml

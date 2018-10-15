@@ -36,15 +36,7 @@
        initialAmount="0"
        substanceUnits="substance"
        hasOnlySubstanceUnits="false"/>
-  </listOfSpecies>
-  <listOfParameters>
-   <parameter id="k1"
-       name="k1"
-       value="1."/>
-  </listOfParameters>
-  <!-- <listOfInitialAssignments/> -->
-  <!-- <listOfRules/> -->
-  <!-- <listOfConstraints/> -->
+
   <listOfReactions>
    <reaction id="reaction1"
        name="reaction1"
