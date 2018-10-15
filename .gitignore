@@ -1,11 +1,15 @@
-examples/161127_IL5_13_model_final_notes.xml
-examples/for translation.xml
-drafts/
-tmp/
-._*
-.db
-.tmp
-.log
-STRUCTURE
-STRUCTURE
-structure.txt
+.DS_Store
+node_modules/
+/dist/
+/drafts
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
