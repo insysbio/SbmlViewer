@@ -14,7 +14,7 @@ liquid:
 #google_analytics: ???
 yandex_metrika: 44335438
 #Path for current release
-distPath: online/
+distPath: online
 #SEO
 facebook:
   app_id: 266737823736763
@@ -33,5 +33,3 @@ defaults:
       path: ""
     values:
       image: /assets/img/sbmlviewer_example.png
-
-
