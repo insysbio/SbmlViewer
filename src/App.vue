@@ -35,7 +35,7 @@ export default {
       ListTTParametrs: {}, // list of xslt parameters
       stateTTparametrs: {}, // list of state(checked/unchecked) of xslt parameters
       fileUrl: null, // file url, save for read file by url after resfresh
-      fileName: 'No file choosen', // file name, value of varible show beside input button
+      fileName: 'No file selected.', // file name, value of varible show beside input button
       displayContent: null, // content on display, save for transmit to model-area component
       fileContent: '' // file content, save for use after toggle xslt
     }
