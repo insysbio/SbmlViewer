@@ -157,7 +157,7 @@ export default {
       if (this.currentTTName) {
         // return this.TTList.find((x) => x.name === this.currentTTName) || this.TTList[0]
         let found = this.TTList.filter((x) => x.name === this.currentTTName)
-        return found.length || this.TTList[0]
+        return found[0] || this.TTList[0]
       } else {
         this.currentTTName = this.TTList[0].name
         return this.TTList[0]
