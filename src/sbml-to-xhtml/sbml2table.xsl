@@ -731,8 +731,8 @@ Project-page: http://sv.insysbio.com
 
 <!-- BEGIN OF idOrName mode -->
   <xsl:template match="@id" mode="idOrName">
-      <xsl:if test="$useNames='true' and count(./../@name)>0">'<xsl:value-of select="./../@name"/>'</xsl:if>  <!-- for simbio only-->
-      <xsl:if test="$useNames='true' and count(./../@name)=0">'=unnamed='</xsl:if>
+      <xsl:if test="$useNames='true' and count(./../@name)>0">[<xsl:value-of select="./../@name"/>]</xsl:if>  <!-- for simbio only-->
+      <xsl:if test="$useNames='true' and count(./../@name)=0">[no name]</xsl:if>
       <xsl:if test="not($useNames='true')"><xsl:value-of select="."/></xsl:if>
   </xsl:template>
 <!-- END OF idOrName mode -->
@@ -808,8 +808,8 @@ Project-page: http://sv.insysbio.com
   <!-- use id or names for equations and normalize space -->
   <xsl:template match="mml:ci">
     <xsl:element name="ci" namespace="http://www.w3.org/1998/Math/MathML">
-      <xsl:if test="$useNames='true' and key('idKey',normalize-space(text()))/@name">'<xsl:value-of select="key('idKey',normalize-space(text()))/@name"/>'</xsl:if>
-      <xsl:if test="$useNames='true' and not(key('idKey',normalize-space(text()))/@name)">'=unnamed='</xsl:if>
+      <xsl:if test="$useNames='true' and key('idKey',normalize-space(text()))/@name">[<xsl:value-of select="key('idKey',normalize-space(text()))/@name"/>]</xsl:if>
+      <xsl:if test="$useNames='true' and not(key('idKey',normalize-space(text()))/@name)">[no name]</xsl:if>
       <xsl:if test="not($useNames='true')"><xsl:value-of select="normalize-space(text())"/></xsl:if>
     </xsl:element>
   </xsl:template>
