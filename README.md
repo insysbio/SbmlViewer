@@ -9,7 +9,6 @@ Just play with transformation on the page http://sv.insysbio.com/online
 
 [Issues page](https://github.com/insysbio/SbmlViewer/issues)
 
-
 ## Contact
 
 dev@insysbio.com
