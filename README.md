@@ -1,9 +1,8 @@
 # SbmlViewer
 The collection of transformation from SBML files into human readable formats and tools for performing transformations.
 
-## Getting Started
-
-Just play with transformation on the page http://sv.insysbio.com/online
+See more info on the project page: 
+http://sv.insysbio.com
 
 ## Support
 
