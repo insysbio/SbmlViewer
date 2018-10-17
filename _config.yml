@@ -32,4 +32,4 @@ defaults:
   - scope:
       path: ""
     values:
-      image: /assets/img/sbmlviewer_example.png
+      image: /assets/img/sv_screen3.png
