@@ -12,7 +12,7 @@ SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlV
 * Your software cannot read some specific SBML versions or elements like <code>event</code>, <code>constraint</code> or <code>functionDefinition</code> etc. but the file includes them.
 * Your have some errors when importing SBML and are trying to check the model code.
 
-![sv scren 1](/assets/img/sv_screen1.png)
+![architec](/assets/img/architec_800.png)
 
 # Quick start
 <hr/>
@@ -38,8 +38,7 @@ To look through example just try the links
 * [BIOMD0000000588 from BioModels Database, model of the month in February 2017](http://sv.insysbio.com/{{ site.distPath }}?http://sv.insysbio.com/cases/BIOMD0000000588.xml)
 * [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sv.insysbio.com/{{ site.distPath }}?http://sv.insysbio.com/cases/BIOMD0000000439.xml)
 
-
-![sv scren 2](/assets/img/sv_screen2.png)
+![sv scren 1](/assets/img/sv_screen1.png)
 
 # Overview
 <hr/>
@@ -61,6 +60,7 @@ Version: 0.2.0
 
 <hr/>
 
+![sv scren 2](/assets/img/sv_screen2.png)
 ## Browser support
 Tested on:
 
