@@ -185,11 +185,11 @@ Project-page: http://sv.insysbio.com
         <td class="sbml-attribute-value sbml-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
         <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="mml:math"/></td>
       </tr>
-      <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
+      <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']">
       <tr class="sbml-mixed sv-hidden">
         <td colspan="4">
-          <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-          <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+          <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+          <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
         </td>
       </tr>
       </xsl:if>
@@ -223,11 +223,11 @@ Project-page: http://sv.insysbio.com
         <td class="sbml-attribute-value sbml-metaid"><xsl:apply-templates select="@metaid" mode="table"/></td>
         <td class="sbml-listOf sbml-listOfUnitDefinition"><xsl:apply-templates select="*[local-name()='listOfUnits']" mode="unitFormula"/></td>
       </tr>
-      <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
+      <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']">
       <tr class="sbml-mixed sv-hidden">
         <td colspan="4">
-          <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-          <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+          <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+          <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
         </td>
       </tr>
       </xsl:if>
@@ -263,11 +263,11 @@ Project-page: http://sv.insysbio.com
         <td class="sbml-attribute-value sbml-units"><xsl:apply-templates select="@units"/></td>
         <td class="sbml-attribute-value sbml-size"><xsl:value-of select="@size"/></td>
       </tr>
-      <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
+      <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']">
       <tr class="sbml-mixed sv-hidden">
         <td colspan="7">
-          <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-          <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+          <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+          <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
         </td>
       </tr>
       </xsl:if>
@@ -315,11 +315,11 @@ Project-page: http://sv.insysbio.com
       <td class="sbml-attribute-value sbml-conversationFactor"><xsl:value-of select="@conversionFactor"/></td>
       <td class="sbml-attribute-value sbml-constant"><xsl:value-of select="@constant"/></td>
     </tr>
-    <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
+    <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']">
     <tr class="sbml-mixed sv-hidden">
       <td colspan="11">
-        <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
       </td>
     </tr>
     </xsl:if>
@@ -357,11 +357,11 @@ Project-page: http://sv.insysbio.com
       <td class="sbml-attribute-value sbml-value"><xsl:value-of select="@value"/></td>
       <td class="sbml-attribute-value sbml-constant"><xsl:value-of select="@constant"/></td>
     </tr>
-    <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
+    <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']">
     <tr class="sbml-mixed sv-hidden">
       <td colspan="5">
-        <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
       </td>
     </tr>
     </xsl:if>
@@ -399,11 +399,11 @@ Project-page: http://sv.insysbio.com
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="mml:math"/></td>
     </tr>
-    <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
+    <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']">
     <tr class="sbml-mixed sv-hidden">
       <td colspan="3">
-        <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
       </td>
     </tr>
     </xsl:if>
@@ -441,11 +441,11 @@ Project-page: http://sv.insysbio.com
       <td class="sbml-element sbml-message"><xsl:apply-templates select="*[local-name()='message']" mode="table"/></td>
       <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="mml:math"/></td>
     </tr>
-    <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
+    <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']">
     <tr class="sbml-mixed sv-hidden">
       <td colspan="3">
-        <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
       </td>
     </tr>
     </xsl:if>
@@ -488,11 +488,11 @@ Project-page: http://sv.insysbio.com
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="mml:math"/></td>
     </tr>
-    <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
+    <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']">
     <tr class="sbml-mixed sv-hidden">
       <td colspan="4">
-        <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
       </td>
     </tr>
     </xsl:if>
@@ -530,11 +530,11 @@ Project-page: http://sv.insysbio.com
       <td class="sbml-listOf sbml-listOfModifiers"><xsl:apply-templates select="*[local-name()='listOfModifiers']" mode="reactionFormula"/></td>
       <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/></td>
     </tr>
-    <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']|*[local-name()='kineticLaw']/*[local-name()='listOfParameters']">
+    <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']|*[local-name()='kineticLaw']/*[local-name()='listOfParameters']">
     <tr class="sbml-mixed sv-hidden">
       <td colspan="6">
-        <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
         <xsl:apply-templates select="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']" mode="table"/>
       </td>
     </tr>
@@ -577,13 +577,13 @@ Project-page: http://sv.insysbio.com
       <td class="sbml-element sbml-delay sbml-math sv-mml"><xsl:apply-templates select="*[local-name()='delay']" mode="table"/></td>
       <td class="sbml-element sbml-priority"><xsl:apply-templates select="@priority"/></td>
     </tr>
-    <xsl:if test="../*[local-name()='notes']
-      |../*[local-name()='annotation']
+    <xsl:if test="./*[local-name()='notes']
+      |./*[local-name()='annotation']
       |*[local-name()='listOfEventAssignments']">
     <tr class="sbml-mixed sv-hidden">
       <td colspan="6">
-        <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
         <xsl:apply-templates select="*[local-name()='listOfEventAssignments']" mode="table"/>
       </td>
     </tr>
@@ -624,11 +624,11 @@ Project-page: http://sv.insysbio.com
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-element sbml-math sv-mml"><xsl:apply-templates select="mml:math"/></td>
     </tr>
-    <xsl:if test="../*[local-name()='notes']|../*[local-name()='annotation']">
+    <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']">
     <tr class="sbml-mixed sv-hidden">
       <td colspan="3">
-        <xsl:apply-templates select="../*[local-name()='notes']" mode="element"/>
-        <xsl:apply-templates select="../*[local-name()='annotation']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
+        <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
       </td>
     </tr>
     </xsl:if>
