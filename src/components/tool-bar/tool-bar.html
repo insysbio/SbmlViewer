@@ -1,5 +1,6 @@
 <div id='tool-bar' class="w3-top w3-card-4 w3-blue-grey">
     <div id="optionsArea">
+      <div style="float:left">
       <div class="sv-cell w3-padding w3-border-color-white">
         <input id="file" @change='onChooseFileInput' class="file" type="file" accept=".xml,.sbml"/><span id="fileName" class="w3-padding-bottom">{{ fileName }}</span>
         <!-- <p class="w3-dispay-bottomleft"><span class="w3-small w3-text-white"><a href="http://sv.insysbio.ru">SbmlViewer</a> by <a href="http://insysbio.ru/en">InSysBio</a></span></p> -->
@@ -25,14 +26,18 @@
         </div>
       </div>
 
-      <div class="w3-container sv-cell w3-padding" v-if='currentTTName'>
-        <div id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple sv-display-right" @click="onRefresh">
+      <div class="w3-container sv-cell w3-padding w3-border-left w3-border-color-white" v-if='currentTTName'>
+        <div id="refresh" class="w3-btn w3-blue-grey w3-circle w3-ripple" @click="onRefresh" style="margin-top:-5px">
           <i
             id="spinner"
             class="w3-xlarge"
             v-bind:class="{ 'w3-spin': isSpin, 'sv-icon-spinner': isSpin, 'sv-icon-refresh': !isSpin }">
           </i>
         </div>
+      </div>
+    </div>
+      <div class="w3-container sv-cell w3-padding" style="float:right; padding: 20px!important">
+        <a href="http://sv.insysbio.com">http://sv.insysbio.com</a>
       </div>
     </div>
   </div>
