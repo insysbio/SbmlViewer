@@ -228,5 +228,6 @@ function checkCorrectTransfromDocument (html) {
 <style>
 html, head {
     height: 100%;
+    overflow: hidden;
 }
 </style>

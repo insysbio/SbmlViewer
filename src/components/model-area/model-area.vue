@@ -45,6 +45,7 @@ export default {
   methods: {
     addEventListenerAnnotationElement: function () {
       this.$nextTick(() => {
+        updateContainerSize()
         // set annotation in the right part
         let annotationElements = document.querySelectorAll('.sbml-id[id]')
         for (let i = 0; i < annotationElements.length; i++) {
