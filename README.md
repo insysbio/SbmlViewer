@@ -1,7 +1,13 @@
 # SbmlViewer
+[![Website sv.insysbio.com](https://img.shields.io/website-up-down-green-red/http/sv.insysbio.com.svg)](http://sv.insysbio.com)
+[![GitHub release](https://img.shields.io/github/release/insysbio/SbmlViewer.svg)](https://github.com/insysbio/SbmlViewer/releases/)
+[![GitHub license](https://img.shields.io/github/license/insysbio/SbmlViewer.svg)](https://github.com/insysbio/SbmlViewer/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/insysbio/SbmlViewer.svg)](https://GitHub.com/insysbio/SbmlViewer/issues/)
+[![Build Status](https://travis-ci.org/insysbio/SbmlViewer.svg?branch=master)](https://travis-ci.org/insysbio/SbmlViewer)
+
 The collection of transformation from SBML files into human readable formats and tools for performing transformations.
 
-See more info on the project page: 
+See more info on the project page:
 http://sv.insysbio.com
 
 ## Support
