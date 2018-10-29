@@ -1,4 +1,3 @@
-/* eslint-disable */
 'use strict';
 const sbml2tableText = require('./sbml2table.xsl');
 const sbml2mathText = require('./sbml2math.xsl');
