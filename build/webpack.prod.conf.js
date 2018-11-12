@@ -144,7 +144,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 
          // OPTIONAL: defaults to including everything
          // can be a string, a RegExp, or an array of strings and RegExps
-        include: [/\.js$/,  /\.html$/],
+        include: [/\.js$/,  /\.html$/,  /\.css$/],
 
          // OPTIONAL: defaults to excluding nothing
          // can be a string, a RegExp, or an array of strings and RegExps
