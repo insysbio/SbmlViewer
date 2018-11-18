@@ -121,7 +121,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new ZipPlugin({
       // OPTIONAL: defaults to the Webpack output path (above)
       // can be relative (to Webpack output path) or absolute
-      //path: '',
+      path: '../',
       // OPTIONAL: defaults to the Webpack output filename (above) or,
       // if not present, the basename of the path
       filename: 'sv.zip',
