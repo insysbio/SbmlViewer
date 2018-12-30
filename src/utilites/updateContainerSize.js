@@ -1,6 +1,6 @@
 export function updateContainerSize () {
   console.log('size')
-  let newMargin = document.getElementById('optionsArea').clientHeight + 15 + 'px'
+  let newMargin = document.getElementById('tool-bar').clientHeight + 15 + 'px'
   document.getElementById('content').style.marginTop = newMargin
 
   let sideBar = document.getElementById('sidebarContent')
