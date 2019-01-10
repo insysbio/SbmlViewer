@@ -5,7 +5,7 @@ export function updateContainerSize () {
 
   let sideBar = document.getElementById('sidebarContent')
   if (sideBar) {
-    sideBar.style.top = 4 * parseInt(newMargin) + 'px'
+    sideBar.style.top = parseInt(newMargin) + 10 + 'px'
     sideBar.style.height =
       document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 7 + 'px'
   }
