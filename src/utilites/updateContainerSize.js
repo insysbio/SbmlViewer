@@ -12,6 +12,6 @@ export function updateContainerSize () {
   let mainContent = document.getElementById('mainContent')
   if (mainContent) {
     mainContent.style.height =
-        document.documentElement.clientHeight - document.getElementById('optionsArea').clientHeight - 14 + 'px'
+        document.documentElement.clientHeight - document.getElementById('tool-bar').clientHeight - 14 + 'px'
   }
 }
