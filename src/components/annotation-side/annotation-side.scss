@@ -8,10 +8,14 @@
 }
 .close-sidebar-btn {
   position: fixed;
+  right: 16px;
   top: 50%;
-  right: 23%;
+  width: 24%;
   z-index: 2;
   cursor: pointer;
+}
+.close-sidebar-btn img {
+  transform: translate(-34%, 0);
 }
 @media print {
   #sidebarContent {
