@@ -224,7 +224,6 @@ function checkCorrectTransfromDocument (html) {
 
 <style src='w3css/w3.css'></style>
 <style lang='scss' src='./assets/style/style.scss'></style>
-<style lang='scss' src='code-prettify/src/prettify.css'></style>
 <style>
 html, head {
     height: 100%;

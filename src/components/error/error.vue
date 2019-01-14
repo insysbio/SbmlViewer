@@ -1,5 +1,5 @@
 <template src="./error.html"></template>
-<style src="./error.scss"></style>
+<style lang="scss" src="./error.scss"></style>
 <script>
 export default {
   name: 'ErrorContainer',
