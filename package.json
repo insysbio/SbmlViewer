@@ -1,6 +1,6 @@
 {
   "name": "SbmlViewer",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "The collection of transformation from SBML files into human readable formats",
   "contributors": [
     "Evgeny Metelkin",
