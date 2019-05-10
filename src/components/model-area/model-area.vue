@@ -42,6 +42,19 @@ export default {
     updateContainerSize()
     window.addEventListener('resize', updateContainerSize)
   },
+  created () {
+    setTimeout(() => {
+      this.$nextTick(() => {
+        if (this.displayContent) {
+          this.addEventListenerAnnotationElement()
+          MathJax.Hub.Queue(['Typeset', MathJax.Hub])
+          prettifyAnnotation('mainContent')
+          updateContainerSize()
+          window.addEventListener('resize', updateContainerSize)
+        }
+      })
+    }, 100)
+  },
   methods: {
     addEventListenerAnnotationElement: function () {
       this.$nextTick(() => {
@@ -77,6 +90,13 @@ export default {
               .toggle('sv-hidden')
           })
         }
+        let eventTr = document.querySelectorAll('tr.sbml-event')
+        eventTr.forEach((item) => {
+          item
+            .nextSibling
+            .classList
+            .toggle('sv-hidden')
+        })
       })
     }
   },

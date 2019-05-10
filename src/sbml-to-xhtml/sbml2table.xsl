@@ -322,6 +322,7 @@ Project-page: http://sv.insysbio.com
           <th>id</th>
           <th><xsl:if test="*/@name">name</xsl:if></th>
           <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+          <th><xsl:if test="*/@constant">constant</xsl:if></th>
           <th><xsl:if test="*/@compartmentType">compartment Type</xsl:if></th>
           <th><xsl:if test="*/@outside">outside</xsl:if></th>
           <th><xsl:if test="*/@units">units</xsl:if></th>
@@ -338,6 +339,7 @@ Project-page: http://sv.insysbio.com
         <td><xsl:apply-templates select="@id" mode="link"/></td>
         <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
         <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
+        <td class="sbml-attribute-value sbml-constant"><xsl:value-of select="@constant"/></td>
         <td class="sbml-attribute-value sbml-compartment"><xsl:apply-templates select="@compartmentType"/></td>
         <td class="sbml-attribute-value sbml-outside"><xsl:apply-templates select="@outside"/></td>
         <td class="sbml-attribute-value sbml-units"><xsl:apply-templates select="@units"/></td>
@@ -366,6 +368,7 @@ Project-page: http://sv.insysbio.com
             <th>id</th>
             <th><xsl:if test="*/@name">name</xsl:if></th>
             <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+            <th><xsl:if test="*/@constant">constant</xsl:if></th>
             <th><xsl:if test="*/@speciesType">speciesType</xsl:if></th>
             <th><xsl:if test="*/@substanceUnits">substance Units</xsl:if></th>
             <th><xsl:if test="*/@hasOnlySubstanceUnits">hasOnly Substance Units</xsl:if></th>
@@ -386,6 +389,7 @@ Project-page: http://sv.insysbio.com
       <td><xsl:apply-templates select="@id" mode="link"/></td>
       <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
+      <td class="sbml-attribute-value sbml-constant"><xsl:value-of select="@constant"/></td>
       <td class="sbml-attribute-value sbml-speciesType"><xsl:apply-templates select="@speciesType"/></td>
       <td class="sbml-attribute-value sbml-substanceUnits"><xsl:apply-templates select="@substanceUnits"/></td>
       <td class="sbml-attribute-value sbml-hasOnlySubstanceUnits"><xsl:value-of select="@hasOnlySubstanceUnits"/></td>
@@ -418,6 +422,7 @@ Project-page: http://sv.insysbio.com
             <th>id</th>
             <th><xsl:if test="*/@name">name</xsl:if></th>
             <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
+            <th><xsl:if test="*/@constant">constant</xsl:if></th>
             <th><xsl:if test="*/@units">units</xsl:if></th>
             <th><xsl:if test="*/@value">value</xsl:if></th>
           </tr>
@@ -432,6 +437,7 @@ Project-page: http://sv.insysbio.com
       <td><xsl:apply-templates select="@id" mode="link"/></td>
       <td class="sbml-attribute-value sbml-name"><xsl:value-of select="@name"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
+      <td class="sbml-attribute-value sbml-constant"><xsl:value-of select="@constant"/></td>
       <td class="sbml-attribute-value sbml-units"><xsl:apply-templates select="@units"/></td>
       <td class="sbml-attribute-value sbml-value"><xsl:value-of select="@value"/></td>
     </tr>

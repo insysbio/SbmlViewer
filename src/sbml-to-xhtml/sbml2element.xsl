@@ -281,17 +281,17 @@ Project-page: http://sv.insysbio.ru
       <xsl:if test="not(key('variableKey', @id))">
         <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
               <xsl:if test="@initialConcentration">
-                <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialConcentration"/></cn>
+                <cn><xsl:value-of select="@initialConcentration"/></cn>
               </xsl:if>
               <xsl:if test="@initialAmount">
-                <apply xmlns="http://www.w3.org/1998/Math/MathML">
-                  <divide xmlns="http://www.w3.org/1998/Math/MathML"/>
-                  <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialAmount"/></cn>
-                  <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci>
+                <apply>
+                  <divide/>
+                  <cn><xsl:value-of select="@initialAmount"/></cn>
+                  <ci><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci>
                 </apply>
               </xsl:if>
               <xsl:if test="not(@initialConcentration or @initialAmount)">
-                <ci xmlns="http://www.w3.org/1998/Math/MathML">?</ci>
+                <ci>?</ci>
               </xsl:if>
         </xsl:element>
         </xsl:if>
@@ -313,17 +313,17 @@ Project-page: http://sv.insysbio.ru
     <xsl:if test="not(key('variableKey', @id))">
       <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
             <xsl:if test="@initialAmount">
-              <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialAmount"/></cn>
+              <cn><xsl:value-of select="@initialAmount"/></cn>
             </xsl:if>
             <xsl:if test="@initialConcentration">
-              <apply xmlns="http://www.w3.org/1998/Math/MathML">
-                <times xmlns="http://www.w3.org/1998/Math/MathML"/>
-                <cn xmlns="http://www.w3.org/1998/Math/MathML"><xsl:value-of select="@initialConcentration"/></cn>
-                <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci>
+              <apply>
+                <times/>
+                <cn><xsl:value-of select="@initialConcentration"/></cn>
+                <ci><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/></ci>
               </apply>
             </xsl:if>
             <xsl:if test="not(@initialConcentration or @initialAmount)">
-              <ci xmlns="http://www.w3.org/1998/Math/MathML">?</ci>
+              <ci>?</ci>
             </xsl:if>
       </xsl:element>
     </xsl:if>
@@ -351,21 +351,6 @@ Project-page: http://sv.insysbio.ru
         </math>
       </td>
     </tr>
-
-  <!--
-      <p>
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply xmlns="http://www.w3.org/1998/Math/MathML">
-            <equivalent xmlns="http://www.w3.org/1998/Math/MathML"/>
-              <apply xmlns="http://www.w3.org/1998/Math/MathML">
-                  <ci xmlns="http://www.w3.org/1998/Math/MathML"><xsl:apply-templates select="@id" mode="idOrName"/></ci>
-                  <xsl:copy-of select="mml:math/mml:lambda/mml:bvar/mml:*"/>
-              </apply>
-              <xsl:copy-of select="mml:math/mml:lambda/*[local-name()!='bvar']"/>
-          </apply>
-        </math>
-      </p>
-  -->
   </xsl:template>
 
 <!-- END OF dependencies mode -->

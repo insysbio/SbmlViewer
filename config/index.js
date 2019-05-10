@@ -45,10 +45,10 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/sv/index.html'),
+    index: process.env.OUTPUT_DEMO && path.resolve(process.env.OUTPUT_DEMO, './index.html') || path.resolve(__dirname, '../dist/sv/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist/sv'),
+    assetsRoot: process.env.OUTPUT_DEMO && path.resolve(process.env.OUTPUT_DEMO) || path.resolve(__dirname, '../dist/sv'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '',
 

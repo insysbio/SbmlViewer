@@ -13,8 +13,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ZipPlugin = require('zip-webpack-plugin');
 
 const env = require('../config/prod.env')
-
-const webpackConfig = merge(baseWebpackConfig, {
+let prodWebpackConfig = {
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -31,7 +30,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
-    path: config.build.assetsRoot,
+    path: process.env.OUTPUT_DEMO && path.resolve(process.env.OUTPUT_DEMO) || config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].js'),
     chunkFilename: utils.assetsPath('js/[id].js')
   },
@@ -98,57 +97,63 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ]),
-    new ZipPlugin({
-      // OPTIONAL: defaults to the Webpack output path (above)
-      // can be relative (to Webpack output path) or absolute
-      path: '../',
-      // OPTIONAL: defaults to the Webpack output filename (above) or,
-      // if not present, the basename of the path
-      filename: 'sv.zip',
+    ])
 
-      // OPTIONAL: defaults to 'zip'
-      // the file extension to use instead of 'zip'
-      extension: 'zip',
-
-      // OPTIONAL: defaults to the empty string
-      // the prefix for the files included in the zip file
-      //pathPrefix: 'relative/path',
-       // OPTIONAL: defaults to the identity function
-       // a function mapping asset paths to new paths
-       pathMapper: function(assetPath) {
-       // put all pngs in an `images` subdir
-         if (assetPath.endsWith('.png'))
-           return path.join(path.dirname(assetPath), 'images', path.basename(assetPath));
-        return assetPath;
-        },
-
-         // OPTIONAL: defaults to including everything
-         // can be a string, a RegExp, or an array of strings and RegExps
-        include: [/\.js$/,  /\.html$/,  /\.css$/],
-
-         // OPTIONAL: defaults to excluding nothing
-         // can be a string, a RegExp, or an array of strings and RegExps
-         // if a file matches both include and exclude, exclude takes precedence
-        //exclude: [/\.png$/, /\.html$/],
-
-         // yazl Options
-
-         // OPTIONAL: see https://github.com/thejoshwolfe/yazl#addfilerealpath-metadatapath-options
-        fileOptions: {
-         mtime: new Date(),
-         mode: 0o100664,
-         compress: true,
-         forceZip64Format: false,
-        },
-
-         // OPTIONAL: see https://github.com/thejoshwolfe/yazl#endoptions-finalsizecallback
-        zipOptions: {
-         forceZip64Format: false,
-        },
-    })
   ]
-})
+};
+
+if(!process.env.OUTPUT_DEMO) {
+  prodWebpackConfig.plugins.push(new ZipPlugin({
+    // OPTIONAL: defaults to the Webpack output path (above)
+    // can be relative (to Webpack output path) or absolute
+    path: '../',
+    // OPTIONAL: defaults to the Webpack output filename (above) or,
+    // if not present, the basename of the path
+    filename: 'sv.zip',
+
+    // OPTIONAL: defaults to 'zip'
+    // the file extension to use instead of 'zip'
+    extension: 'zip',
+
+    // OPTIONAL: defaults to the empty string
+    // the prefix for the files included in the zip file
+    //pathPrefix: 'relative/path',
+     // OPTIONAL: defaults to the identity function
+     // a function mapping asset paths to new paths
+     pathMapper: function(assetPath) {
+     // put all pngs in an `images` subdir
+       if (assetPath.endsWith('.png'))
+         return path.join(path.dirname(assetPath), 'images', path.basename(assetPath));
+      return assetPath;
+      },
+
+       // OPTIONAL: defaults to including everything
+       // can be a string, a RegExp, or an array of strings and RegExps
+      include: [/\.js$/,  /\.html$/,  /\.css$/],
+
+       // OPTIONAL: defaults to excluding nothing
+       // can be a string, a RegExp, or an array of strings and RegExps
+       // if a file matches both include and exclude, exclude takes precedence
+      //exclude: [/\.png$/, /\.html$/],
+
+       // yazl Options
+
+       // OPTIONAL: see https://github.com/thejoshwolfe/yazl#addfilerealpath-metadatapath-options
+      fileOptions: {
+       mtime: new Date(),
+       mode: 0o100664,
+       compress: true,
+       forceZip64Format: false,
+      },
+
+       // OPTIONAL: see https://github.com/thejoshwolfe/yazl#endoptions-finalsizecallback
+      zipOptions: {
+       forceZip64Format: false,
+      },
+  }))
+}
+
+const webpackConfig = merge(baseWebpackConfig, prodWebpackConfig)
 
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin')

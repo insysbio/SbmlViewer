@@ -41,6 +41,14 @@ export default {
     }
   },
   mounted () {
+    let defaultContent = document.getElementById('sv-hidden-content')
+    let c = document.createElement('div')
+
+    if (defaultContent.innerHTML !== '') {
+      c.innerHTML = defaultContent.innerHTML
+      defaultContent.innerHTML = ''
+      this.displayContent = c
+    }
     if (this.checkFileByURL()) {
       this.$root.$emit('startSpin')
       this.$nextTick(() => {
@@ -229,5 +237,8 @@ function checkCorrectTransfromDocument (html) {
 html, head {
     height: 100%;
     overflow: hidden;
+}
+#sv-hidden-content {
+  display: none;
 }
 </style>
