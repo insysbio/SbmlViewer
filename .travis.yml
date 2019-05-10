@@ -5,17 +5,27 @@ node_js:
 script:
 - npm run build
 - cp dist/sv.zip dist/SbmlViewer-offline-$TRAVIS_TAG.zip
+after_deploy:
+- echo "Sending the application to gh-pages..."
+- git config --global user.email "travis@travis-ci.org"
+- git config --global user.name "Travis CI"
+- git clone -b gh-pages --single-branch https://github.com/insysbio/SbmlViewer tmp
+- cd tmp
+- cp -rf ../dist/sv/* online
+- git add --all
+- git commit --allow-empty -m "Travis build $TRAVIS_BUILD_NUMBER"
+- git push https://${GH_TOKEN}@github.com/insysbio/SbmlViewer HEAD:gh-pages
 deploy:
-  provider: releases
-  api_key:
-    secure: IjSmOqvybqi8PsPNvDO8sco/dFxShVdyEvBTgdPaPhy+kB0GAqFtzyTDyfDdV7kpnmzZDnqKUtJeUmFY7j2WznOdOyqp4RtGLyVUuGmtAp10uKh72rbvU5ifn+Amk5Td+Qy+9t3NV5L1ZZUDqhc86Mf+C0Y8CpO/G7g8CqR7wniY7AAaN9ZNgRzh1/sKAl5Iyx5ySdVI9H8NOuP7A/mpKgfrARLvdn1cHGFYk+Ev0AOpkLrU3tucg6UlYag31Zom/GR0G0TkMDMKfaakvG2FnDj/pIfhOl4z1qZe0ox7gi44/VvNIqtHsTLz6kFzzCEpOhnxyMx4vRCMtFPWISkZEX8VGOOVZFPLvd9WxQQ/PCQGLLVs5d++P+fwD9GhBAi96V8Cpotrgi68dT6USX14tsRFgGU+KyphvZFfPPZvce6KumXBPizZ/6CbPAMRRLavmu/7KhPywnLsyYzawvZv9NCKHcGRUY5QZ0mWSPQVGYPVuzXR3boCRnkPKDLUlXtu7nN8xMvr1B0CIYoK7uJ+ZtVyaql0N1FiOiRDxxeP5meeT5qwlPm6cMsSoB/KdR7iRPRMNHjU8HTW02xVQwIm+1x0plpOyFH3f1piNgJsYzfRCgzV6FTigOCt5dR3YX4AxFv5JS0dryjnGt9lTKmAWYqdVgnF0FKDHy6h00QgQB4=
-  file: dist/SbmlViewer-offline-$TRAVIS_TAG.zip
-  skip_cleanup: true
-  overwrite: true
-  draft: false
-  on:
-    tags: true
-    repo: insysbio/SbmlViewer
-    node_js: '10'
-  name: SbmlViewer $TRAVIS_TAG
-  body: The release includes SbmlViewer offline which can be run locally. Unpack and start index file in browser. *This distributives generated automatically based on $TRAVIS_TAG.*
+  - provider: releases
+    api_key:
+      secure: IjSmOqvybqi8PsPNvDO8sco/dFxShVdyEvBTgdPaPhy+kB0GAqFtzyTDyfDdV7kpnmzZDnqKUtJeUmFY7j2WznOdOyqp4RtGLyVUuGmtAp10uKh72rbvU5ifn+Amk5Td+Qy+9t3NV5L1ZZUDqhc86Mf+C0Y8CpO/G7g8CqR7wniY7AAaN9ZNgRzh1/sKAl5Iyx5ySdVI9H8NOuP7A/mpKgfrARLvdn1cHGFYk+Ev0AOpkLrU3tucg6UlYag31Zom/GR0G0TkMDMKfaakvG2FnDj/pIfhOl4z1qZe0ox7gi44/VvNIqtHsTLz6kFzzCEpOhnxyMx4vRCMtFPWISkZEX8VGOOVZFPLvd9WxQQ/PCQGLLVs5d++P+fwD9GhBAi96V8Cpotrgi68dT6USX14tsRFgGU+KyphvZFfPPZvce6KumXBPizZ/6CbPAMRRLavmu/7KhPywnLsyYzawvZv9NCKHcGRUY5QZ0mWSPQVGYPVuzXR3boCRnkPKDLUlXtu7nN8xMvr1B0CIYoK7uJ+ZtVyaql0N1FiOiRDxxeP5meeT5qwlPm6cMsSoB/KdR7iRPRMNHjU8HTW02xVQwIm+1x0plpOyFH3f1piNgJsYzfRCgzV6FTigOCt5dR3YX4AxFv5JS0dryjnGt9lTKmAWYqdVgnF0FKDHy6h00QgQB4=
+    file: dist/SbmlViewer-offline-$TRAVIS_TAG.zip
+    skip_cleanup: true
+    overwrite: true
+    draft: true
+    on:
+      tags: true
+      repo: insysbio/SbmlViewer
+      node_js: '10'
+    name: SbmlViewer $TRAVIS_TAG
+    body: The release includes SbmlViewer offline which can be run locally. Unpack and start index file in browser. *This distributives generated automatically based on $TRAVIS_TAG.*
