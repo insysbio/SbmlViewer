@@ -107,3 +107,25 @@ td.sbml-metaid.sbml-attribute-value {
 .sv-mode-element {
   @extend .w3-container;
 }
+
+@media print {
+  body, #mainContent {
+    overflow: auto;
+  }
+  #content {
+    margin-top: 0px;
+  }
+  #content, #container, #mainContent {
+    height: 100%!important;
+    width: 620px!important;
+  }
+  table, table * {
+    max-width: 520px!important;
+  }
+  #tool-bar {
+    display: none;
+  }
+  #sidebarContent {
+    display: none;
+  }
+}
