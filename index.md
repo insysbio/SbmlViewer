@@ -45,7 +45,7 @@ To look through example just try the links
 
 ## Current release
 
-Version: 0.2.0
+Version: 0.2.5
 
 - reading SBML Level 2 Version 1-5
 - reading SBML Level 3 Version 1-2
