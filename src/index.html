@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <!-- MathJax settings -->
     <style>
-    .mo:empty::after { /*show visible times*/
+    .mo:empty + .mi::before { /*show visible times*/
+      content: '\00B7';
+    }
+    .mo:empty + .mrow::before { /*show visible times*/
       content: '\00B7';
     }
     </style>
