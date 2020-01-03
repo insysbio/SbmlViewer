@@ -180,13 +180,13 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='species' and @initialAmount]" mode="const">
     <p class="sbml-element sbml-species">
-      <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@initialAmount"/><xsl:if test="@hasOnlySunstanceUnits!='true'">/<xsl:value-of select="@compartment"/></xsl:if>
+      <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@initialAmount"/><xsl:if test="@hasOnlySubstanceUnits!='true'">/<xsl:value-of select="@compartment"/></xsl:if>
     </p>
   </xsl:template>
 
   <xsl:template match="*[local-name()='species' and @initialConcentration]" mode="const">
     <p class="sbml-element sbml-species">
-      <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@initialConcentration"/><xsl:if test="@hasOnlySunstanceUnits='true'">*<xsl:value-of select="@compartment"/></xsl:if>
+      <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@initialConcentration"/><xsl:if test="@hasOnlySubstanceUnits='true'">*<xsl:value-of select="@compartment"/></xsl:if>
     </p>
   </xsl:template>
 
