@@ -2,6 +2,7 @@
 const sbml2tableText = require('./sbml2table.xsl');
 const sbml2mathText = require('./sbml2math.xsl');
 const sbml2elementText = require('./sbml2element.xsl');
+const sbml2hetaText = require('./sbml2heta.xsl');
 
 const sbml3tableText = require('./sbml3table.xsl');
 const sbml3mathText = require('./sbml3math.xsl');
@@ -10,11 +11,21 @@ module.exports = function(parser){
   let sbml2table = parser.parseFromString(sbml2tableText, 'application/xml');
   let sbml2math = parser.parseFromString(sbml2mathText, 'application/xml');
   let sbml2element = parser.parseFromString(sbml2elementText, 'application/xml');
+  let sbml2heta = parser.parseFromString(sbml2hetaText, 'application/xml');
 
   let sbml3table = parser.parseFromString(sbml3tableText, 'application/xml');
   let sbml3math = parser.parseFromString(sbml3mathText, 'application/xml');
 
   return [
+    {
+      format: 'SBML',
+      level: '2',
+      name: 'sbml2heta',
+      xslt: sbml2heta,
+      parameters: [],
+      parameterNotes: {
+      }
+    },
     {
       format: 'SBML',
       level: '2',
