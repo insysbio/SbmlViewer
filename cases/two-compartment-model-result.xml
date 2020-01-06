@@ -11,7 +11,13 @@
         units="L"
         metaid="two_comp.c0"
         >
-        
+        <notes>
+          <body xmlns="http://www.w3.org/1999/xhtml">
+            <div>some words</div>
+            <div>another words</div>
+            <p>xxx xxxx <i>italic</i> <b>bold</b> <strong>strong word</strong> <a href="https://ddd">ref</a></p>
+          </body>
+        </notes>
       </compartment>
       <compartment
         id="c1"

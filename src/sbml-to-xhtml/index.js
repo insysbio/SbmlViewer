@@ -22,8 +22,9 @@ module.exports = function(parser){
       level: '2',
       name: 'sbml2heta',
       xslt: sbml2heta,
-      parameters: [],
+      parameters: ['compactForm'],
       parameterNotes: {
+        compactForm: 'Do not display aux property'
       }
     },
     {

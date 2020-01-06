@@ -129,3 +129,33 @@ td.sbml-metaid.sbml-attribute-value {
     display: none;
   }
 }
+
+/* Heta specific style */
+.heta-comment, .heta-notes {
+  @extend .w3-text-light-green;
+}
+.heta-class {
+  @extend .w3-text-green;
+}
+.heta-id {
+  font-weight: bold;
+}
+.heta-dict-key {
+  @extend .w3-text-cyan;
+}
+.heta-string, .heta-title {
+  @extend .w3-text-deep-orange;
+}
+.heta-boolean {
+  @extend .w3-text-blue;
+}
+.heta-debug {
+  @extend .w3-orange;
+}
+.heta-code pre {
+  padding: 16px;
+  background-color: #f6f8fa;
+  font-size: 85%;
+  /*border-color: black;*/
+  /*border-width: 3px;*/
+}
