@@ -2,6 +2,8 @@
 <style lang="scss" src="./tool-bar.scss"></style>
 <script>
 
+import { version } from '../../../package'
+
 export default {
   name: 'ToolBar',
   props: [
@@ -14,7 +16,9 @@ export default {
   data () {
     return {
       isSpin: false,
-      file: null
+      file: null,
+      version: version,
+      homepage: 'http://sv.insysbio.com'
     }
   },
   mounted () {

@@ -3,7 +3,6 @@
       <div style="float:left">
       <div class="sv-cell w3-padding w3-border-color-white">
         <input id="file" @change='onChooseFileInput' class="file" type="file" accept=".xml,.sbml"/><span id="fileName" class="w3-padding-bottom">{{ fileName }}</span>
-        <!-- <p class="w3-dispay-bottomleft"><span class="w3-small w3-text-white"><a href="http://sv.insysbio.ru">SbmlViewer</a> by <a href="http://insysbio.ru/en">InSysBio</a></span></p> -->
       </div>
 
       <div v-if="Object.keys(TTList).length !== 0" class="sv-cell w3-border-left w3-border-color-white w3-padding-left w3-padding-right">
@@ -36,8 +35,9 @@
         </div>
       </div>
     </div>
-      <div class="w3-container sv-cell w3-padding" style="float:right; padding: 20px!important">
-        <a href="http://sv.insysbio.com">http://sv.insysbio.com</a>
+      <div class="w3-container sv-cell" style="float:right;">
+        <h3 id="sv-title" style="margin: 5px 0 5px 0;">SbmlViewer v{{ version }}</h3>
+        <div class="w3-small"><a v-bind:href="homepage">{{ homepage }}</a></div>
       </div>
     </div>
   </div>
