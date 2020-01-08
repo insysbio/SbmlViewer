@@ -21,7 +21,7 @@ TODO:
   * <annotation>
   * @constant for species, compartments
   * all components
-  * transformation of base functions
+  * transformation of piecewise, piece, otherwise
   * remove empty dict
   * add properties from sbml, model, listOf as comments
 
@@ -568,34 +568,82 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="*"/>
   </xsl:template>
 
-  <xsl:template match="mml:apply[mml:times[1]]">
-    <xsl:for-each select="*[position()&gt;1]">
-      <xsl:apply-templates select="."/><xsl:if test="position()!=last()"> * </xsl:if>
-    </xsl:for-each>
+  <!-- any supported function without changes -->
+  <xsl:template match="mml:apply">
+    <xsl:value-of select="local-name(*[1])"/>
+    <xsl:apply-templates select="." mode="arguments"/>
   </xsl:template>
 
-  <xsl:template match="mml:apply[mml:divide[1]]">
-    <xsl:for-each select="*[position()&gt;1]">
-      <xsl:apply-templates select="."/><xsl:if test="position()!=last()"> / </xsl:if>
-    </xsl:for-each>
+  <!-- log -->
+  <xsl:template match="mml:apply[mml:log]">
+    <xsl:text>log10</xsl:text>
+    <xsl:apply-templates select="." mode="arguments"/>
   </xsl:template>
 
-  <xsl:template match="mml:apply[mml:minus[1]]">
-    <xsl:for-each select="*[position()&gt;1]">
-      <xsl:apply-templates select="."/>
-      <xsl:if test="position()!=last()"> - </xsl:if>
-    </xsl:for-each>
+  <!-- log_base -->
+  <xsl:template match="mml:apply[mml:log and mml:logbase]">
+    <xsl:text>log</xsl:text>
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="mml:ci|mml:cn"/>, <xsl:apply-templates select="mml:logbase/mml:ci|mml:logbase/mml:cn"/>
+    <xsl:text>)</xsl:text>
   </xsl:template>
 
-  <xsl:template match="mml:apply[mml:plus[1]]">
-    <xsl:for-each select="*[position()&gt;1]">
-      <xsl:apply-templates select="."/>
-      <xsl:if test="position()!=last()"> + </xsl:if>
-    </xsl:for-each>
+  <!-- log_base -->
+  <xsl:template match="mml:apply[mml:log and mml:logbase and mml:logbase/mml:cn and number(mml:logbase/mml:cn)=2]">
+    <xsl:text>log</xsl:text>
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="mml:ci|mml:cn"/>
+    <xsl:text>)</xsl:text>
   </xsl:template>
 
-  <xsl:template match="mml:apply[*[1][self::mml:ci]]">
-    <xsl:apply-templates select="mml:ci[1]"/>
+  <!-- power -->
+  <xsl:template match="mml:apply[mml:power]">
+    <xsl:text>pow</xsl:text>
+    <xsl:apply-templates select="." mode="arguments"/>
+  </xsl:template>
+
+  <!-- root -->
+  <xsl:template match="mml:apply[mml:power]">
+    <xsl:text>sqrt</xsl:text>
+    <xsl:apply-templates select="." mode="arguments"/>
+  </xsl:template>
+
+  <!-- max 1 -->
+  <xsl:template match="mml:apply[mml:max and count(mml:ci|mml:cn)=1]">
+    <xsl:apply-templates select="mml:ci|mml:cn"/>
+  </xsl:template>
+
+  <!-- max 2 -->
+  <xsl:template match="mml:apply[mml:max and count(mml:ci|mml:cn)=2]">
+    <xsl:text>max2</xsl:text>
+    <xsl:apply-templates select="." mode="arguments"/>
+  </xsl:template>
+
+  <!-- max 3 -->
+  <xsl:template match="mml:apply[mml:max and count(mml:ci|mml:cn)=3]">
+    <xsl:text>max3</xsl:text>
+    <xsl:apply-templates select="." mode="arguments"/>
+  </xsl:template>
+
+  <!-- min 1 -->
+  <xsl:template match="mml:apply[mml:min and count(mml:ci|mml:cn)=1]">
+    <xsl:apply-templates select="mml:ci|mml:cn"/>
+  </xsl:template>
+
+  <!-- min 2 -->
+  <xsl:template match="mml:apply[mml:min and count(mml:ci|mml:cn)=2]">
+    <xsl:text>min2</xsl:text>
+    <xsl:apply-templates select="." mode="arguments"/>
+  </xsl:template>
+
+  <!-- min 3 -->
+  <xsl:template match="mml:apply[mml:min and count(mml:ci|mml:cn)=3]">
+    <xsl:text>min3</xsl:text>
+    <xsl:apply-templates select="." mode="arguments"/>
+  </xsl:template>
+
+  <!-- function arguments -->
+  <xsl:template match="mml:apply" mode="arguments">
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
@@ -604,7 +652,38 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:text>)</xsl:text>
   </xsl:template>
 
-  <xsl:template match="mml:apply[mml:times[1] or mml:divide[1] or mml:minus[1]]/mml:apply[mml:minus[1]]">
+  <xsl:template match="mml:apply[mml:times]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/><xsl:if test="position()!=last()"> * </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply[mml:divide]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/><xsl:if test="position()!=last()"> / </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply[mml:minus]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> - </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply[mml:plus]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> + </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply[*[1][self::mml:ci]]">
+    <xsl:apply-templates select="mml:ci[1]"/>
+    <xsl:apply-templates select="." mode="arguments"/>
+  </xsl:template>
+
+  <xsl:template match="mml:apply[mml:times or mml:divide or mml:minus]/mml:apply[mml:minus]">
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
@@ -613,7 +692,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:text>)</xsl:text>
   </xsl:template>
 
-  <xsl:template match="mml:apply[mml:times[1] or mml:divide[1] or mml:minus[1]]/mml:apply[mml:plus[1]]">
+  <xsl:template match="mml:apply[mml:times or mml:divide or mml:minus]/mml:apply[mml:plus]">
     <xsl:text> (</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>

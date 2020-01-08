@@ -224,6 +224,39 @@
           <math xmlns="http://www.w3.org/1998/Math/MathML"><apply><times/><apply><times/><ci>kel</ci><ci>s1</ci></apply><ci>c1</ci></apply></math>
         </kineticLaw>
       </reaction>
+
+      <reaction
+        id="r4"
+        
+        reversible="true"
+        fast="false"
+        metaid="two_comp.r1"
+        >
+        <listOfProducts>
+          <speciesReference species="s1" stoichiometry="1"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply><plus/>
+              <apply><ci>fun</ci><ci>x</ci><ci>y</ci></apply>
+              <apply><ceiling/><ci>x</ci></apply>
+              <apply><log/><logbase><ci>base</ci></logbase><ci>y</ci></apply>
+              <apply><log/><ci>y</ci></apply>
+              <apply><log/><logbase><cn>2</cn></logbase><ci>y</ci></apply>
+              <apply><log/><logbase><cn>3</cn></logbase><ci>y</ci></apply>
+              <apply><power/><ci>x</ci><ci>y</ci></apply>
+              <apply><root/><ci>x</ci></apply>
+              <apply><max/><ci>x1</ci></apply>
+              <apply><max/><ci>x1</ci><ci>x2</ci></apply>
+              <apply><max/><ci>x1</ci><ci>x2</ci><ci>x3</ci></apply>
+              <apply><max/><ci>x1</ci><ci>x2</ci><ci>x3</ci><ci>x4</ci></apply>
+              <apply><min/><ci>x1</ci><ci>x2</ci></apply>
+              <apply><min/><ci>x1</ci><ci>x2</ci><ci>x3</ci></apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+
   </listOfReactions>
   
   <listOfRules>
