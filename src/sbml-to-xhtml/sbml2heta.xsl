@@ -18,11 +18,10 @@ limitations under the License.
 Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
-  * <annotation>
-  * @constant for species, compartments
-  * all components
+  * all components: unitDefinition, functionDefinition, initialAssignment, rate, event
   * remove empty dict
   * add properties from sbml, model, listOf as comments
+  * <annotation>
 
 Author: Evgeny Metelkin
 Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
@@ -286,7 +285,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
      mode="heta-assignment"
      >
     <span>
-      <xsl:apply-templates select="@id" mode="heta"/>
+      <xsl:apply-templates select="@id" mode="heta-sugar"/>
       <span class="heta-assignments"> .= </span>
       <span class="heta-string heta-math-expr"><xsl:value-of select="@initialAmount"/></span>
       <span class="heta-end">;
@@ -370,6 +369,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-dict"> {
 <xsl:apply-templates select="@*" mode="heta-dict-item"/>
+    <xsl:apply-templates select="." mode="heta-dict-boundary"/>
     <xsl:if test="not($compactForm='true')">
     <span class="heta-dict-key">  aux:</span>
     <span class="heta-dict"><xsl:apply-templates select="." mode="heta-dict-aux"/></span>
@@ -429,6 +429,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
       |@fast
       |@compartmentType
       |@speciesType
+      |@constant
       "
     mode="heta-dict-aux"
     >
@@ -493,14 +494,6 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 </xsl:template>
 
   <xsl:template
-    match="@boundaryCondition"
-    mode="heta-dict-item"
-    >
-    <span class="heta-dict-key">  boundary: </span>
-    <span class="heta-boolean heta-dict-value"><xsl:value-of select="."/></span>,
-</xsl:template>
-
-  <xsl:template
     match="*[local-name()='reaction']"
     mode="heta-dict-actors"
     >
@@ -516,6 +509,30 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <span class="heta-dict-value heta-array"><xsl:apply-templates select="." mode="reactionFormula"/></span>,
 </xsl:template>
 
+  <!-- no boundary as default -->
+  <xsl:template
+    match="*"
+    mode="heta-dict-boundary"
+    >
+</xsl:template>
+
+  <!-- boundary for compartment -->
+  <xsl:template
+    match="*[local-name()='compartment' and not(@constant='false')]"
+    mode="heta-dict-boundary"
+    >
+    <span class="heta-dict-key">  boundary: </span>
+    <span class="heta-boolean heta-dict-value">true</span>,
+</xsl:template>
+
+  <!-- boundary for species -->
+  <xsl:template
+    match="*[local-name()='species' and (@boundaryCondition='true' or @constant='true')]"
+    mode="heta-dict-boundary"
+    >
+    <span class="heta-dict-key">  boundary: </span>
+    <span class="heta-boolean heta-dict-value">true</span>,
+</xsl:template>
 <!-- END properties -->
 
 <!-- BEGIN reactionFormula mode -->

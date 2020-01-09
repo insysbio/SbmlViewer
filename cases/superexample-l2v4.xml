@@ -187,7 +187,7 @@
       </example>
     </annotation>
       </compartment>
-      <compartment id="comp2" name="second compartment" size="4.19999980926514" outside="Total" constant="true" compartmentType="cmp_type" metaid="metaexample" sboTerm="SBO:001">
+      <compartment id="comp2" name="second compartment" size="4.19999980926514" outside="Total" compartmentType="cmp_type" metaid="metaexample" sboTerm="SBO:001">
       <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
