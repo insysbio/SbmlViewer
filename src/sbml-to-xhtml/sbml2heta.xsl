@@ -90,13 +90,14 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- notes -->
   <xsl:template match="*[local-name()='notes']" mode="heta-sugar">
-    <span class="heta-notes">'''<xsl:apply-templates select="node()"/>'''
+    <span class="heta-notes">'''<xsl:apply-templates select="*"/>'''
 </span>
   </xsl:template>
 
   <!-- this is for notes without xhtml -->
-  <xsl:template match="*[local-name()='notes']/text()">
-    <xsl:value-of select="normalize-space(.)"/>
+  <xsl:template match="*[local-name()='notes' and not(xhtml:*) and text()]" mode="heta-sugar">
+    <span class="heta-notes">'''<xsl:value-of select="normalize-space(text())"/>'''
+</span>
   </xsl:template>
 
   <!-- id -->
@@ -794,13 +795,14 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 <!-- END MathML -->
 
 <!-- BEGIN XHTML -->
+  <!-- <xsl:strip-space elements="xhtml:body xhtml:div xhtml:pre xhtml:p" /> -->
 
   <xsl:template match="xhtml:*">
     <span class="heta-debug"><xsl:apply-templates select="node()"/></span>
   </xsl:template>
 
   <xsl:template match="xhtml:*/text()">
-    <xsl:value-of select="."/>
+    <xsl:value-of select="translate(., '&#xa;', '')"/> <!-- &#xa; new line -->
   </xsl:template>
 
   <xsl:template
@@ -841,12 +843,19 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:value-of select="@href"/>
     <xsl:text>) </xsl:text>
   </xsl:template>
-  <!-- remove first level div -->
+  <!-- remove first level -->
   <xsl:template
     match="*[local-name()='notes']/xhtml:*"
     >
     <xsl:apply-templates select="node()"/>
   </xsl:template>
+  <!--
+      <xsl:for-each select="node()">
+      <xsl:if test="(position()!=last() and position()!=1) or normalize-space()!=''">
+        <xsl:apply-templates select="."/>
+      </xsl:if>
+    </xsl:for-each>
+  -->
 
 <!-- END XHTML -->
 
