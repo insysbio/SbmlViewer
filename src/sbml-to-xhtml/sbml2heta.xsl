@@ -21,7 +21,6 @@ TODO:
   * <annotation>
   * @constant for species, compartments
   * all components
-  * transformation of piecewise, piece, otherwise
   * remove empty dict
   * add properties from sbml, model, listOf as comments
 
@@ -560,6 +559,8 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 <!-- END reactionFormula mode -->
 
 <!-- BEGIN MathML -->
+
+  <!-- unknown mml element -->
   <xsl:template match="mml:*">
     <span class="heta-debug"> { unsupported MathML } </span>
   </xsl:template>
@@ -568,7 +569,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="*"/>
   </xsl:template>
 
-  <!-- any supported function without changes -->
+  <!-- any mathml internal function without changes -->
   <xsl:template match="mml:apply">
     <xsl:value-of select="local-name(*[1])"/>
     <xsl:apply-templates select="." mode="arguments"/>
@@ -609,35 +610,35 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <!-- max 1 -->
-  <xsl:template match="mml:apply[mml:max and count(mml:ci|mml:cn)=1]">
-    <xsl:apply-templates select="mml:ci|mml:cn"/>
+  <xsl:template match="mml:apply[mml:max and count(mml:*)=2]">
+    <xsl:apply-templates select="mml:*[2]"/>
   </xsl:template>
 
   <!-- max 2 -->
-  <xsl:template match="mml:apply[mml:max and count(mml:ci|mml:cn)=2]">
+  <xsl:template match="mml:apply[mml:max and count(mml:*)=3]">
     <xsl:text>max2</xsl:text>
     <xsl:apply-templates select="." mode="arguments"/>
   </xsl:template>
 
   <!-- max 3 -->
-  <xsl:template match="mml:apply[mml:max and count(mml:ci|mml:cn)=3]">
+  <xsl:template match="mml:apply[mml:max and count(mml:*)=4]">
     <xsl:text>max3</xsl:text>
     <xsl:apply-templates select="." mode="arguments"/>
   </xsl:template>
 
   <!-- min 1 -->
-  <xsl:template match="mml:apply[mml:min and count(mml:ci|mml:cn)=1]">
-    <xsl:apply-templates select="mml:ci|mml:cn"/>
+  <xsl:template match="mml:apply[mml:min and count(mml:*)=2]">
+    <xsl:apply-templates select="mml:*[2]"/>
   </xsl:template>
 
   <!-- min 2 -->
-  <xsl:template match="mml:apply[mml:min and count(mml:ci|mml:cn)=2]">
+  <xsl:template match="mml:apply[mml:min and count(mml:*)=3]">
     <xsl:text>min2</xsl:text>
     <xsl:apply-templates select="." mode="arguments"/>
   </xsl:template>
 
   <!-- min 3 -->
-  <xsl:template match="mml:apply[mml:min and count(mml:ci|mml:cn)=3]">
+  <xsl:template match="mml:apply[mml:min and count(mml:*)=4]">
     <xsl:text>min3</xsl:text>
     <xsl:apply-templates select="." mode="arguments"/>
   </xsl:template>
@@ -652,18 +653,21 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:text>)</xsl:text>
   </xsl:template>
 
+  <!-- x*y*z -->
   <xsl:template match="mml:apply[mml:times]">
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/><xsl:if test="position()!=last()"> * </xsl:if>
     </xsl:for-each>
   </xsl:template>
 
+  <!-- x/y/z -->
   <xsl:template match="mml:apply[mml:divide]">
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/><xsl:if test="position()!=last()"> / </xsl:if>
     </xsl:for-each>
   </xsl:template>
 
+  <!-- x-y-z -->
   <xsl:template match="mml:apply[mml:minus]">
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
@@ -671,6 +675,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     </xsl:for-each>
   </xsl:template>
 
+  <!-- x+y+z -->
   <xsl:template match="mml:apply[mml:plus]">
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
@@ -678,11 +683,13 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     </xsl:for-each>
   </xsl:template>
 
+  <!-- arbitrary functions as ci fun(x, y, z) -->
   <xsl:template match="mml:apply[*[1][self::mml:ci]]">
     <xsl:apply-templates select="mml:ci[1]"/>
     <xsl:apply-templates select="." mode="arguments"/>
   </xsl:template>
 
+  <!-- a*(x-y-z) a/(x-y-z) a-(x-y-z)-->
   <xsl:template match="mml:apply[mml:times or mml:divide or mml:minus]/mml:apply[mml:minus]">
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
@@ -692,6 +699,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:text>)</xsl:text>
   </xsl:template>
 
+  <!-- a*(x+y+z) a/(x+y+z) a-(x+y+z) -->
   <xsl:template match="mml:apply[mml:times or mml:divide or mml:minus]/mml:apply[mml:plus]">
     <xsl:text> (</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
@@ -699,6 +707,53 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
       <xsl:if test="position()!=last()"> + </xsl:if>
     </xsl:for-each>
     <xsl:text>) </xsl:text>
+  </xsl:template>
+
+  <!-- peicewise with many pieces-->
+  <xsl:template match="mml:piecewise">
+    <span class="heta-debug"> { use only one piece in MathML peicewise } </span>
+  </xsl:template>
+
+  <!-- piecewise lt -->
+  <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:lt]]">
+    <xsl:text>ifg0(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>, <xsl:apply-templates select="mml:otherwise/*[1]" />
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- piecewise gt -->
+  <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:gt]]">
+    <xsl:text>ifg0(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>, <xsl:apply-templates select="mml:otherwise/*[1]" />
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- piecewise leq -->
+  <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:leq]]">
+    <xsl:text>ifge0(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>, <xsl:apply-templates select="mml:otherwise/*[1]" />
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- piecewise geq -->
+  <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:geq]]">
+    <xsl:text>ifge0(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>, <xsl:apply-templates select="mml:otherwise/*[1]" />
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- piecewise eq -->
+  <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:eq]]">
+    <xsl:text>ife0(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>, <xsl:apply-templates select="mml:otherwise/*[1]" />
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- piecewise neq -->
+  <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:neq]]">
+    <xsl:text>ife0(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>, <xsl:apply-templates select="mml:otherwise/*[1]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>
+    <xsl:text>)</xsl:text>
   </xsl:template>
 
   <xsl:template match="mml:ci">

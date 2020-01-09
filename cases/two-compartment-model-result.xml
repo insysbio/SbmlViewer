@@ -230,7 +230,7 @@
         
         reversible="true"
         fast="false"
-        metaid="two_comp.r1"
+        metaid="two_comp.r4"
         >
         <listOfProducts>
           <speciesReference species="s1" stoichiometry="1"/>
@@ -252,6 +252,53 @@
               <apply><max/><ci>x1</ci><ci>x2</ci><ci>x3</ci><ci>x4</ci></apply>
               <apply><min/><ci>x1</ci><ci>x2</ci></apply>
               <apply><min/><ci>x1</ci><ci>x2</ci><ci>x3</ci></apply>
+              <apply><min/>
+                <apply><min/><ci>x1</ci><ci>x2</ci></apply>
+                <ci>x3</ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+
+      <reaction
+        id="r5"
+        
+        reversible="true"
+        fast="false"
+        metaid="two_comp.r5"
+        >
+        <listOfProducts>
+          <speciesReference species="s1" stoichiometry="1"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply><plus/>
+                <cn>0</cn>
+                <piecewise>
+                  <piece>
+                        <cn> 0 </cn>
+                        <apply><lt/>
+                            <ci> x </ci>
+                            <cn> 0 </cn>
+                        </apply>
+                  </piece>
+                  <otherwise>
+                        <ci> x </ci>
+                  </otherwise>
+                </piecewise>
+                <piecewise>
+                  <piece>
+                        <cn> 0 </cn>
+                        <apply><neq/>
+                            <ci> x </ci>
+                            <cn> 0 </cn>
+                        </apply>
+                  </piece>
+                  <otherwise>
+                        <ci> x </ci>
+                  </otherwise>
+                </piecewise>
             </apply>
           </math>
         </kineticLaw>
