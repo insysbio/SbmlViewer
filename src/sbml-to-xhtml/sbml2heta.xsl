@@ -19,9 +19,9 @@ Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
   * all components: unitDefinition, functionDefinition, initialAssignment, rate, event
+  * <annotation>
   * remove empty dict
   * add properties from sbml, model, listOf as comments
-  * <annotation>
 
 Author: Evgeny Metelkin
 Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
@@ -363,7 +363,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
 <!-- BEGIN dictionary -->
 
-  <!-- base props -->
+  <!-- base dict -->
   <xsl:template
     match="*"
     mode="heta-dict"
@@ -371,22 +371,11 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <span class="heta-dict"> {
 <xsl:apply-templates select="@*" mode="heta-dict-item"/>
     <xsl:apply-templates select="." mode="heta-dict-boundary"/>
-    <xsl:if test="not($compactForm='true')">
-    <span class="heta-dict-key">  aux:</span>
-    <span class="heta-dict"><xsl:apply-templates select="." mode="heta-dict-aux"/></span>
-    </xsl:if>
+    <xsl:apply-templates select="." mode="heta-dict-aux"/>
     <xsl:text>}</xsl:text></span>
   </xsl:template>
 
-  <xsl:template
-    match="*"
-    mode="heta-dict-aux"
-    >
-    <span class="heta-dict"> {
-  <xsl:apply-templates select="@*" mode="heta-dict-aux"/>}
-</span>
-  </xsl:template>
-
+  <!-- reaction dict -->
   <xsl:template
     match="*[local-name()='reaction']"
     mode="heta-dict"
@@ -395,11 +384,31 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 <xsl:apply-templates select="@*" mode="heta-dict-item"/>
       <xsl:apply-templates select="." mode="heta-dict-actors"/>
       <xsl:apply-templates select="*[local-name()='listOfModifiers']" mode="heta-dict-item"/>
-      <xsl:if test="not($compactForm='true')">
-      <span class="heta-dict-key">  aux:</span>
-      <span class="heta-dict"><xsl:apply-templates select="." mode="heta-dict-aux"/></span>
-      </xsl:if>
+      <xsl:apply-templates select="." mode="heta-dict-aux"/>
       <xsl:text>}</xsl:text></span>
+  </xsl:template>
+
+  <!-- aux item -->
+  <xsl:template
+    match="*"
+    mode="heta-dict-aux"
+    >
+    <xsl:if test="$compactForm!='true'">
+    <span class="heta-dict-key">  aux: </span>
+    <span class="heta-dict">{
+  <xsl:apply-templates select="@*|*[local-name()='annotation']" mode="heta-dict-aux-item"/>}
+</span>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- annotation item -->
+  <xsl:template
+    match="*[local-name()='annotation']"
+    mode="heta-dict-aux-item"
+    >
+    <span class="heta-dict-key">  annotation: </span>
+    <span class="heta-dict-item heta-array">[<xsl:apply-templates select="*" mode="heta-dict-aux-annotation"/>]
+  </span>
   </xsl:template>
 
 <!-- END dictionary -->
@@ -411,39 +420,6 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta-dict-item"
     ><!-- all this properties -->
     </xsl:template>
-
-  <!-- skip base properties -->
-  <xsl:template
-    match="
-      @id
-      |@name
-      |@units
-      |@size
-      |@compartment
-      |@initialAmount
-      |@initialConcentration
-      |@substanceUnits
-      |@hasOnlySubstanceUnits
-      |@boundaryCondition
-      |@value
-      |@reversible
-      |@fast
-      |@compartmentType
-      |@speciesType
-      |@constant
-      "
-    mode="heta-dict-aux"
-    >
-  </xsl:template>
-
-  <xsl:template
-    match="@*"
-    mode="heta-dict-aux"
-    >
-    <xsl:text>  </xsl:text>
-    <span class="heta-dict-key"><xsl:value-of select="local-name()"/>: </span>
-    <span class="heta-dict-value"><xsl:value-of select="."/></span>,
-  </xsl:template>
 
   <xsl:template 
     match="
@@ -528,7 +504,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- boundary for species -->
   <xsl:template
-    match="*[local-name()='species' and (@boundaryCondition='true' or @constant='true')]"
+    match="*[local-name()='species' and @boundaryCondition='true']"
     mode="heta-dict-boundary"
     >
     <span class="heta-dict-key">  boundary: </span>
@@ -575,6 +551,89 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
       <xsl:if test="position()!=last()">, </xsl:if>
     </xsl:for-each>]</xsl:template>
 <!-- END reactionFormula mode -->
+
+<!-- BEGIN aux properties -->
+
+  <!-- skip base properties from aux -->
+  <xsl:template
+    match="
+      @id
+      |@name
+      |@units
+      |@size
+      |@compartment
+      |@initialAmount
+      |@initialConcentration
+      |@substanceUnits
+      |@hasOnlySubstanceUnits
+      |@boundaryCondition
+      |@value
+      |@reversible
+      |@fast
+      |@compartmentType
+      |@speciesType
+      |@constant
+      "
+    mode="heta-dict-aux-item"
+    >
+  </xsl:template>
+
+  <!-- all other prop -->
+  <xsl:template
+    match="@*"
+    mode="heta-dict-aux-item"
+    >
+    <xsl:text>  </xsl:text>
+    <span class="heta-dict-key"><xsl:value-of select="local-name()"/>: </span>
+    <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>,
+  </xsl:template>
+
+<!-- END aux properties -->
+
+<!-- BEGIN annotation properties -->
+
+  <xsl:template
+    match="*"
+    mode="heta-dict-aux-annotation"
+    >
+    <xsl:text>{</xsl:text>
+    <span class="heta-dict-key">name_</span>
+    <xsl:text>: </xsl:text>
+    <span class="heta-dict-value heta-string"> <xsl:value-of select="local-name()"/></span>
+    <span class="heta-dict-key">, uri_</span>
+    <xsl:text>: </xsl:text>
+    <span class="heta-dict-value heta-string"> <xsl:value-of select="namespace-uri()"/></span>
+    <xsl:apply-templates select="." mode="heta-dict-aux-annotation-content"/>
+    <xsl:apply-templates select="@*" mode="heta-dict-aux-annotation"/>
+    <xsl:text>}, </xsl:text>
+  </xsl:template>
+
+  <xsl:template
+    match="*"
+    mode="heta-dict-aux-annotation-content"
+    >
+  </xsl:template>
+
+  <xsl:template
+    match="*[count(*)>0]"
+    mode="heta-dict-aux-annotation-content"
+    >
+    <xsl:text>, </xsl:text>
+    <span class="heta-dict-key">content_</span><xsl:text>: </xsl:text>
+    <span class="heta-array">[<xsl:apply-templates select="*" mode="heta-dict-aux-annotation"/>]</span>
+  </xsl:template>
+
+  <xsl:template
+    match="@*"
+    mode="heta-dict-aux-annotation"
+    >
+    <xsl:text>, </xsl:text>
+    <span class="heta-dict-key"><xsl:value-of select="local-name()"/>
+    <xsl:text>: </xsl:text>
+    <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>
+  </xsl:template>
+
+<!-- END annotation properties -->
 
 <!-- BEGIN MathML -->
 
