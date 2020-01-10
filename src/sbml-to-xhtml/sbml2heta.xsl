@@ -19,7 +19,6 @@ Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
   * all components: unitDefinition, functionDefinition, initialAssignment, rate, event
-  * <annotation>
   * remove empty dict
   * add properties from sbml, model, listOf as comments
 
@@ -353,7 +352,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <span>
       <xsl:apply-templates select="@id" mode="heta-sugar"/>
       <span class="heta-assignments"> := </span>
-      <span class="heta-string heta-math-expr"> <xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/> </span>
+      <span class="heta-string heta-math-expr">
+        <xsl:apply-templates select="*[local-name()='kineticLaw']/mml:math"/>
+      </span>
       <span class="heta-end">;
 </span>
     </span>
@@ -628,7 +629,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta-dict-aux-annotation"
     >
     <xsl:text>, </xsl:text>
-    <span class="heta-dict-key"><xsl:value-of select="local-name()"/>
+    <span class="heta-dict-key"><xsl:value-of select="local-name()"/></span>
     <xsl:text>: </xsl:text>
     <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>
   </xsl:template>
