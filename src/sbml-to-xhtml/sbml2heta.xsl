@@ -268,7 +268,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <xsl:template
-    match="*[local-name()='species' and @initialConcentration and not(@hasOnlySubstanceUnits='true')]"
+    match="*[local-name()='species' and @initialConcentration and not(@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]"
     mode="heta-assignment"
     >
     <span>
@@ -281,7 +281,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <xsl:template
-    match="*[local-name()='species' and @initialAmount and @hasOnlySubstanceUnits='true']"
+    match="*[local-name()='species' and @initialAmount and (@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]"
      mode="heta-assignment"
      >
     <span>
@@ -294,7 +294,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <xsl:template
-    match="*[local-name()='species' and @initialAmount and not(@hasOnlySubstanceUnits='true')]"
+    match="*[local-name()='species' and @initialAmount and not(@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]"
     mode="heta-assignment"
     >
     <span>
@@ -307,7 +307,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <xsl:template
-    match="*[local-name()='species' and @initialConcentration and @hasOnlySubstanceUnits='true']"
+    match="*[local-name()='species' and @initialConcentration and (@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]"
     mode="heta-assignment"
     >
     <span>
@@ -372,6 +372,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <span class="heta-dict"> {
 <xsl:apply-templates select="@*" mode="heta-dict-item"/>
     <xsl:apply-templates select="." mode="heta-dict-boundary"/>
+    <xsl:apply-templates select="." mode="heta-dict-is-amount"/>
     <xsl:apply-templates select="." mode="heta-dict-aux"/>
     <xsl:text>}</xsl:text></span>
   </xsl:template>
@@ -445,11 +446,11 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="@substanceUnits"
     mode="heta-dict-item"
     >
-    <xsl:if test="not(../@hasOnlySubstanceUnits='true') and key('idKey', ../@compartment)/@units">
+    <xsl:if test="not((../@hasOnlySubstanceUnits='true') or key('idKey',../@compartment)/@spatialDimensions='0')and key('idKey', ../@compartment)/@units">
       <span class="heta-dict-key">  units: </span>
       <span class="heta-dict-value heta-string"><xsl:value-of select="."/>/<xsl:value-of select="key('idKey', ../@compartment)/@units"/></span>,
 </xsl:if>
-    <xsl:if test="../@hasOnlySubstanceUnits='true'">
+    <xsl:if test="../@hasOnlySubstanceUnits='true' or key('idKey',../@compartment)/@spatialDimensions='0'">
     <span class="heta-dict-key">  units: </span>
     <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>,
 </xsl:if>
@@ -462,15 +463,15 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <span class="heta-dict-key">  compartment: </span>
     <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>,
 </xsl:template>
-
+<!--
   <xsl:template
     match="@hasOnlySubstanceUnits"
     mode="heta-dict-item"
     >
-    <span class="heta-dict-key">  isAmount: </span>
+    <span class="heta-dict-key"> isAmount: </span>
     <span class="heta-boolean heta-dict-value"><xsl:value-of select="."/></span>,
 </xsl:template>
-
+-->
   <xsl:template
     match="*[local-name()='reaction']"
     mode="heta-dict-actors"
@@ -509,6 +510,15 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta-dict-boundary"
     >
     <span class="heta-dict-key">  boundary: </span>
+    <span class="heta-boolean heta-dict-value">true</span>,
+</xsl:template>
+
+  <!-- isAmount for species -->
+  <xsl:template
+    match="*[local-name()='species' and (@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]"
+    mode="heta-dict-is-amount"
+    >
+    <span class="heta-dict-key">  isAmount: </span>
     <span class="heta-boolean heta-dict-value">true</span>,
 </xsl:template>
 <!-- END properties -->
@@ -687,39 +697,39 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="." mode="arguments"/>
   </xsl:template>
 
-  <!-- max 1 -->
+  <!-- max 1
   <xsl:template match="mml:apply[mml:max and count(mml:*)=2]">
     <xsl:apply-templates select="mml:*[2]"/>
-  </xsl:template>
+  </xsl:template> -->
 
-  <!-- max 2 -->
+  <!-- max 2
   <xsl:template match="mml:apply[mml:max and count(mml:*)=3]">
     <xsl:text>max2</xsl:text>
     <xsl:apply-templates select="." mode="arguments"/>
-  </xsl:template>
+  </xsl:template> -->
 
-  <!-- max 3 -->
+  <!-- max 3
   <xsl:template match="mml:apply[mml:max and count(mml:*)=4]">
     <xsl:text>max3</xsl:text>
     <xsl:apply-templates select="." mode="arguments"/>
-  </xsl:template>
+  </xsl:template> -->
 
-  <!-- min 1 -->
+  <!-- min 1
   <xsl:template match="mml:apply[mml:min and count(mml:*)=2]">
     <xsl:apply-templates select="mml:*[2]"/>
-  </xsl:template>
+  </xsl:template> -->
 
-  <!-- min 2 -->
+  <!-- min 2
   <xsl:template match="mml:apply[mml:min and count(mml:*)=3]">
     <xsl:text>min2</xsl:text>
     <xsl:apply-templates select="." mode="arguments"/>
-  </xsl:template>
+  </xsl:template> -->
 
-  <!-- min 3 -->
+  <!-- min 3
   <xsl:template match="mml:apply[mml:min and count(mml:*)=4]">
     <xsl:text>min3</xsl:text>
     <xsl:apply-templates select="." mode="arguments"/>
-  </xsl:template>
+  </xsl:template> -->
 
   <!-- function arguments -->
   <xsl:template match="mml:apply" mode="arguments">
