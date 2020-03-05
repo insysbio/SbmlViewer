@@ -506,7 +506,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- boundary for species -->
   <xsl:template
-    match="*[local-name()='species' and @boundaryCondition='true']"
+    match="*[local-name()='species' and (@boundaryCondition='true' or @constant='true')]"
     mode="heta-dict-boundary"
     >
     <span class="heta-dict-key">  boundary: </span>
