@@ -8,7 +8,9 @@ import { prettifyAnnotation } from '../../utilites/prettifyAnnotation'
 const parser = new window.DOMParser()
 
 let xsltCollection = require('../../sbml-to-xhtml')(parser)
-let sbml2elementDoc = xsltCollection[2].xslt
+let sbml2elementDoc = xsltCollection
+  .find((x) => x.name === 'sbml2element')
+  .xslt
 
 export default {
   name: 'AnnotationSide',

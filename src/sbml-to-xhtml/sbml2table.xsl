@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright 2016-2018 InSysBio, LLC
+Copyright 2016-2020 InSysBio, LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -327,6 +327,7 @@ Project-page: http://sv.insysbio.com
           <th><xsl:if test="*/@outside">outside</xsl:if></th>
           <th><xsl:if test="*/@units">units</xsl:if></th>
           <th><xsl:if test="*/@size">size</xsl:if></th>
+          <th><xsl:if test="*/@spatialDimensions">spatial Dimensions</xsl:if></th>
         </tr>
         <xsl:apply-templates select="*[local-name()='compartment']" mode="table"/>
         </table>
@@ -344,6 +345,7 @@ Project-page: http://sv.insysbio.com
         <td class="sbml-attribute-value sbml-outside"><xsl:apply-templates select="@outside"/></td>
         <td class="sbml-attribute-value sbml-units"><xsl:apply-templates select="@units"/></td>
         <td class="sbml-attribute-value sbml-size"><xsl:value-of select="@size"/></td>
+        <td class="sbml-attribute-value sbml-spatialDimensions"><xsl:value-of select="@spatialDimensions"/></td>
       </tr>
       <xsl:if test="./*[local-name()='notes']|./*[local-name()='annotation']">
       <tr class="sbml-mixed sv-hidden">

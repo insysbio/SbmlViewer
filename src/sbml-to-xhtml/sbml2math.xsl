@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright 2016-2018 InSysBio, LLC
+Copyright 2016-2020 InSysBio, LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -180,13 +180,13 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='species' and @initialAmount]" mode="const">
     <p class="sbml-element sbml-species">
-      <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@initialAmount"/><xsl:if test="@hasOnlySubstanceUnits!='true'">/<xsl:value-of select="@compartment"/></xsl:if>
+      <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@initialAmount"/><xsl:if test="@hasOnlySubstanceUnits!='true' and key('idKey',@compartment)/@spatialDimensions!='0'">/<xsl:value-of select="@compartment"/></xsl:if>
     </p>
   </xsl:template>
 
   <xsl:template match="*[local-name()='species' and @initialConcentration]" mode="const">
     <p class="sbml-element sbml-species">
-      <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@initialConcentration"/><xsl:if test="@hasOnlySubstanceUnits='true'">*<xsl:value-of select="@compartment"/></xsl:if>
+      <xsl:apply-templates select="@id" mode="idOrName"/> = <xsl:value-of select="@initialConcentration"/><xsl:if test="@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0'">*<xsl:value-of select="@compartment"/></xsl:if>
     </p>
   </xsl:template>
 
@@ -258,7 +258,7 @@ Project-page: http://sv.insysbio.com
     </p>
   </xsl:template>
 
-  <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true') and not(@hasOnlySubstanceUnits='true')]" mode="diff-init">
+  <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true') and not(@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]" mode="diff-init">
     <p class="sbml-element sbml-species sv-container">
       <xsl:apply-templates select="@id" mode="idOrName"/> &#8592;
       <xsl:if test="@initialConcentration">
@@ -271,7 +271,7 @@ Project-page: http://sv.insysbio.com
     </p>
   </xsl:template>
 
-    <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true') and @hasOnlySubstanceUnits='true']" mode="diff-init">
+    <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true') and ( @hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]" mode="diff-init">
       <p class="sbml-element sbml-species sv-container">
         <xsl:apply-templates select="@id" mode="idOrName"/> &#8592;
             <xsl:if test="@initialAmount">
@@ -297,7 +297,7 @@ Project-page: http://sv.insysbio.com
 
   <xsl:template match="*[local-name()='species' and not(@boundaryCondition='true')]" mode="differential-equations">
     <p class="sbml-element sbml-species sv-container">
-      (<xsl:if test="not(@hasOnlySubstanceUnits='true')"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/> &#8901; </xsl:if>
+      (<xsl:if test="not(@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')"><xsl:apply-templates select="key('idKey',@compartment)/@id" mode="idOrName"/> &#8901; </xsl:if>
         <xsl:apply-templates select="@id" mode="idOrName"/>)' =
       <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
         <apply>

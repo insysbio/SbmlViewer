@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright 2016-2018 InSysBio, LLC
+Copyright 2016-2020 InSysBio, LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -215,7 +215,7 @@ Project-page: http://sv.insysbio.ru
       <xsl:apply-templates select="key('idKey', normalize-space(text()))" mode="searchdependencies"/>
     </xsl:for-each>
 	<!-- add compartment to search -->
-	<xsl:if test="(@hasOnlySubstanceUnits='true' and @initialConcentration) or (not(@hasOnlySubstanceUnits='true') and @initialAmount)">
+	<xsl:if test="((@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')and @initialConcentration) or (not(@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0') and @initialAmount)">
 	  <ci><xsl:value-of select="@compartment"/></ci>
       <xsl:apply-templates select="key('idKey', @compartment)" mode="searchdependencies"/>
 	</xsl:if>
@@ -270,7 +270,7 @@ Project-page: http://sv.insysbio.ru
     </tr>
   </xsl:template>
 
-  <xsl:template match="*[local-name()='species' and not(@hasOnlySubstanceUnits='true')]" mode="dependencies">
+  <xsl:template match="*[local-name()='species' and not(@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]" mode="dependencies">
     <tr>
       <td><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
       <td>
@@ -302,7 +302,7 @@ Project-page: http://sv.insysbio.ru
     </tr>
   </xsl:template>
 
-  <xsl:template match="*[local-name()='species' and @hasOnlySubstanceUnits='true']" mode="dependencies">
+  <xsl:template match="*[local-name()='species' and (@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]" mode="dependencies">
     <tr>
       <td><xsl:apply-templates select="@id"  mode="idOrNamePlus"/></td>
     <td>
