@@ -17,6 +17,7 @@ module.exports = function(parser){
   let sbml3math = parser.parseFromString(sbml3mathText, 'application/xml');
 
   return [
+    /*
     {
       format: 'SBML',
       level: '2',
@@ -27,6 +28,7 @@ module.exports = function(parser){
         compactForm: 'Do not display aux property'
       }
     },
+    */
     {
       format: 'SBML',
       level: '2',
