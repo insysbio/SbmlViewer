@@ -1,0 +1,32 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+on:
+  push:
+    branches: [ master, '*' ]
+
+name: Build and Deploy
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - name: Use Node.js 8.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 8.x
+    - run: |
+        npm ci
+        npm run build
+        # cp dist/sv.zip dist/SbmlViewer-offline-${TRAVIS_TAG}.zip
+        mkdir -p site/online
+        cp -rf dist/sv/* site/online
+      env:
+        CI: true
+
