@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright 2016-2020 InSysBio, LLC
+Copyright 2016-2021 InSysBio, LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,8 +24,6 @@ modes:
   - idOrName/idOrNamePlus
 
 Author: Evgeny Metelkin
-
-Project-page: http://sv.insysbio.ru
 -->
 <xsl:stylesheet version="1.0"
   xmlns="http://www.w3.org/1999/xhtml"

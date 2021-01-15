@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright 2016-2020 InSysBio, LLC
+Copyright 2016-2021 InSysBio, LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -395,10 +395,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*"
     mode="heta-dict-aux"
     >
-    <xsl:if test="$compactForm!='true'">
+    <xsl:if test="$compactForm!='true' and count(@*|*[local-name()='annotation'])!='0'">
     <span class="heta-dict-key">  aux: </span>
-    <span class="heta-dict">{
-  <xsl:apply-templates select="@*|*[local-name()='annotation']" mode="heta-dict-aux-item"/>}
+    <span class="heta-dict">{<xsl:apply-templates select="@spatialDimensions|@metaid|@sboTerm|@outside|@spatialSizeUnits|@charge|*[local-name()='annotation']" mode="heta-dict-aux-item"/>}
 </span>
     </xsl:if>
   </xsl:template>
@@ -408,6 +407,8 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='annotation']"
     mode="heta-dict-aux-item"
     >
+    <xsl:if test="position()=1"><xsl:text>
+  </xsl:text></xsl:if>
     <span class="heta-dict-key">  annotation: </span>
     <span class="heta-dict-item heta-array">[<xsl:apply-templates select="*" mode="heta-dict-aux-annotation"/>]
   </span>
@@ -515,6 +516,11 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- isAmount for species -->
   <xsl:template
+      match="*"
+      mode="heta-dict-is-amount"
+      >
+  </xsl:template>
+  <xsl:template
     match="*[local-name()='species' and (@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]"
     mode="heta-dict-is-amount"
     >
@@ -564,39 +570,17 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 <!-- END reactionFormula mode -->
 
 <!-- BEGIN aux properties -->
-
-  <!-- skip base properties from aux -->
-  <xsl:template
-    match="
-      @id
-      |@name
-      |@units
-      |@size
-      |@compartment
-      |@initialAmount
-      |@initialConcentration
-      |@substanceUnits
-      |@hasOnlySubstanceUnits
-      |@boundaryCondition
-      |@value
-      |@reversible
-      |@fast
-      |@compartmentType
-      |@speciesType
-      |@constant
-      "
-    mode="heta-dict-aux-item"
-    >
-  </xsl:template>
-
   <!-- all other prop -->
   <xsl:template
     match="@*"
     mode="heta-dict-aux-item"
     >
+    <xsl:if test="position()=1"><xsl:text>
+  </xsl:text></xsl:if>
     <xsl:text>  </xsl:text>
     <span class="heta-dict-key"><xsl:value-of select="local-name()"/>: </span>
-    <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>,
+    <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span><xsl:if test="position()!=last()">,</xsl:if><xsl:text>
+  </xsl:text>
   </xsl:template>
 
 <!-- END aux properties -->

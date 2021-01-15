@@ -29,5 +29,5 @@ This project is licensed under Apache-2.0 License - see the [LICENSE](LICENSE) f
 - Viktoria Tkachenko @vetedde
 - Evgeny Metelkin @metelkin
 
-© InSysBio, 2016-2020
+© InSysBio, 2016-2021
 http://insysbio.com
