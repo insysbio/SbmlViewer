@@ -66,6 +66,18 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
+    <unitDefinition id="xyz" metaid="metaexample" sboTerm="SBO:001">
+        <listOfUnits metaid="metaexample" sboTerm="SBO:001">
+          <unit kind="a"/>
+          <unit kind="b" multiplier="1"/>
+          <unit kind="c" scale="0"/>
+          <unit kind="d" multiplier="1" scale="0"/>
+          <unit kind="e" scale="2"/>
+          <unit kind="f" multiplier="1" scale="2"/>
+          <unit kind="g" multiplier="1.3"/>
+          <unit kind="h" multiplier="1.3" scale="0"/>
+        </listOfUnits>
+    </unitDefinition>
       <unitDefinition id="mM" name="mM" metaid="metaexample" sboTerm="SBO:001">
         <notes>This is a test text element.</notes>
     <annotation>

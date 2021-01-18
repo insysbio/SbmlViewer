@@ -18,8 +18,9 @@ limitations under the License.
 Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
-  * all components: unitDefinition, functionDefinition, initialAssignment, rate, event
-  * add properties from sbml, model, listOf as comments
+  * all components: functionDefinition, initialAssignment, rate, event
+  * notes from sbml, model as comments
+  * trailing spaces
 
 Author: Evgeny Metelkin
 Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
@@ -123,6 +124,19 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     </span>
   </xsl:template>
 
+  <!-- listOfUnitDefinitions -->
+  <xsl:template 
+    match="*[local-name()='listOfUnitDefinitions']"
+    mode="heta"
+    >
+    <span class="heta-block">
+      <span class="heta-comment">
+// = listOfUnitDefinitions =
+</span>
+      <xsl:apply-templates select="*[local-name()='unitDefinition']" mode="heta"/>
+    </span>
+  </xsl:template>
+
   <!-- listOfCompartments -->
   <xsl:template 
     match="*[local-name()='listOfCompartments']"
@@ -180,6 +194,15 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 <!-- BEGIN components -->
 
   <xsl:template 
+    match="*[local-name()='unitDefinition']" 
+    mode="heta"
+    >
+    <xsl:text>
+</xsl:text>
+    <xsl:apply-templates select="." mode="heta-sugar"/>
+  </xsl:template>
+
+  <xsl:template 
     match="
       *[local-name()='compartment']
       |*[local-name()='species']
@@ -193,7 +216,6 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="." mode="heta-assignment"/>
     <!--
     <xsl:apply-templates select="@compartmentType"/>
-    <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
     -->
   </xsl:template>
 
@@ -220,6 +242,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
       <span class="heta-end">;
 </span>
     </span>
+  </xsl:template>
+
+  <xsl:template match="*[local-name()='unitDefinition']" mode="heta-class">
+    <span class="heta-class"> @UnitDef</span>
   </xsl:template>
 
   <xsl:template match="*[local-name()='compartment']" mode="heta-class">
@@ -389,6 +415,19 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:text>}</xsl:text></span>
   </xsl:template>
 
+  <!-- unitDef dict -->
+  <xsl:template
+    match="*[local-name()='unitDefinition']"
+    mode="heta-dict"
+    >
+    <span class="heta-dict"> {
+<xsl:apply-templates select="@*" mode="heta-dict-item"/>
+      <xsl:apply-templates select="*[local-name()='listOfUnits']" mode="heta-dict-item"/>
+      <xsl:apply-templates select="." mode="heta-dict-aux"/>
+      <xsl:text>}</xsl:text>
+    </span>
+  </xsl:template>
+
   <!-- reaction dict -->
   <xsl:template
     match="*[local-name()='reaction']"
@@ -489,6 +528,30 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <span class="heta-boolean heta-dict-value"><xsl:value-of select="."/></span>,
 </xsl:template>
 -->
+  <xsl:template
+    match="*[local-name()='listOfUnits']"
+    mode="heta-dict-item"
+    >
+    <span class="heta-dict-key">  units: </span>
+    <span class="heta-dict-value heta-array">[<xsl:apply-templates select="*[local-name()='unit']" mode="unitFormula"/>]</span><xsl:text>,
+</xsl:text>
+</xsl:template>
+
+  <xsl:template
+    match="*[local-name()='unit']"
+    mode="unitFormula"
+    >
+    <span class="heta-array-item heta-dict"><xsl:text>{</xsl:text>
+    <span class="heta-dict-key">kind</span>: <span class="heta-dict-value heta-string"><xsl:value-of select="@kind"/></span>
+    <xsl:if test="(@multiplier and @multiplier!='1') or (@scale and @scale!='0')">, <span class="heta-dict-key">multiplier</span>: <span class="heta-dict-value heta-string">
+      <xsl:if test="not(@multiplier)">1</xsl:if><xsl:value-of select="@multiplier"/>
+      <xsl:if test="@scale and @scale!='0'">e<xsl:value-of select="@scale"/></xsl:if>
+    </span></xsl:if>
+    <xsl:if test="@exponent and @exponent!='1'">, <span class="heta-dict-key">exponent</span>: <span class="heta-dict-value heta-string"><xsl:value-of select="@exponent"/></span></xsl:if>
+    <xsl:text>}</xsl:text></span>
+    <xsl:if test="position()!=last()">, </xsl:if>
+</xsl:template>
+
   <xsl:template
     match="*[local-name()='reaction']"
     mode="heta-dict-actors"
@@ -631,6 +694,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <span class="heta-dict-key"><xsl:value-of select="name()"/></span>
     <xsl:text>: </xsl:text>
     <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>
+    <xsl:if test="position()!=last()">, </xsl:if>
   </xsl:template>
 
 <!-- END annotation properties -->
@@ -902,12 +966,14 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:value-of select="@href"/>
     <xsl:text>) </xsl:text>
   </xsl:template>
+
   <!-- remove first level -->
   <xsl:template
     match="*[local-name()='notes']/xhtml:*"
     >
     <xsl:apply-templates select="node()"/>
   </xsl:template>
+
   <!--
       <xsl:for-each select="node()">
       <xsl:if test="(position()!=last() and position()!=1) or normalize-space()!=''">
