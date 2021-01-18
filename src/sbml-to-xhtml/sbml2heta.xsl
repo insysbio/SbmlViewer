@@ -43,7 +43,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   <xsl:key name="variableKey" match="*" use="@variable"/>
 
   <!-- PARAMETERS -->
-  <xsl:param name="compactForm">false</xsl:param> <!-- do not display aux -->
+  <xsl:param name="fullForm">false</xsl:param> <!-- do not display aux -->
 
 <!-- BEGIN nothing -->
   <xsl:template match="*">
@@ -411,7 +411,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
       name="auxProp"
       select="@spatialDimensions|@metaid|@sboTerm|@outside|@spatialSizeUnits|@charge|*[local-name()='annotation']"
       />
-    <xsl:if test="$compactForm!='true' and count($auxProp)!='0'">
+    <xsl:if test="$fullForm='true' and count($auxProp)!='0'">
     <span class="heta-dict-key">  aux: </span>
     <span class="heta-dict">{<xsl:apply-templates select="$auxProp" mode="heta-dict-aux-item"/>}
 </span>
