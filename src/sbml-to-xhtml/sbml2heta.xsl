@@ -19,7 +19,6 @@ Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
   * all components: unitDefinition, functionDefinition, initialAssignment, rate, event
-  * remove empty dict
   * add properties from sbml, model, listOf as comments
 
 Author: Evgeny Metelkin
@@ -320,6 +319,19 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <xsl:template
+    match="*[local-name()='species' and (@initialAmount='0' or @initialConcentration='0')]"
+    mode="heta-assignment"
+    >
+    <span>
+      <xsl:apply-templates select="@id" mode="heta-sugar"/>
+      <span class="heta-assignments"> .= </span>
+      <span class="heta-string heta-math-expr">0</span>
+      <span class="heta-end">;
+</span>
+    </span>
+  </xsl:template>
+
+  <xsl:template
     match="*[local-name()='parameter' and @value and not(@constant='true')]"
     mode="heta-assignment"
     >
@@ -395,9 +407,13 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*"
     mode="heta-dict-aux"
     >
-    <xsl:if test="$compactForm!='true' and count(@*|*[local-name()='annotation'])!='0'">
+    <xsl:variable 
+      name="auxProp"
+      select="@spatialDimensions|@metaid|@sboTerm|@outside|@spatialSizeUnits|@charge|*[local-name()='annotation']"
+      />
+    <xsl:if test="$compactForm!='true' and count($auxProp)!='0'">
     <span class="heta-dict-key">  aux: </span>
-    <span class="heta-dict">{<xsl:apply-templates select="@spatialDimensions|@metaid|@sboTerm|@outside|@spatialSizeUnits|@charge|*[local-name()='annotation']" mode="heta-dict-aux-item"/>}
+    <span class="heta-dict">{<xsl:apply-templates select="$auxProp" mode="heta-dict-aux-item"/>}
 </span>
     </xsl:if>
   </xsl:template>
@@ -592,38 +608,27 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta-dict-aux-annotation"
     >
     <xsl:text>{</xsl:text>
-    <span class="heta-dict-key">name_</span>
-    <xsl:text>: </xsl:text>
-    <span class="heta-dict-value heta-string"> <xsl:value-of select="local-name()"/></span>
-    <span class="heta-dict-key">, uri_</span>
-    <xsl:text>: </xsl:text>
-    <span class="heta-dict-value heta-string"> <xsl:value-of select="namespace-uri()"/></span>
-    <xsl:apply-templates select="." mode="heta-dict-aux-annotation-content"/>
-    <xsl:apply-templates select="@*" mode="heta-dict-aux-annotation"/>
-    <xsl:text>}, </xsl:text>
-  </xsl:template>
-
-  <xsl:template
-    match="*"
-    mode="heta-dict-aux-annotation-content"
-    >
+    <span class="heta-dict-key">type</span>: <span class="heta-dict-value heta-string">element</span><xsl:text>, </xsl:text>
+      <span class="heta-dict-key">name</span>: <span class="heta-dict-value heta-string"><xsl:value-of select="name()"/></span><xsl:text>, </xsl:text>
+      <!--<span class="heta-dict-key">uri_</span>: <span class="heta-dict-value heta-string"><xsl:value-of select="namespace-uri()"/></span>,-->
+      <xsl:if test="count(@*)"><span class="heta-dict-key">attributes</span>: <span class="heta-array">[<xsl:apply-templates select="@*" mode="heta-dict-aux-annotation-attributes"/>]</span><xsl:if test="count(*)>0">, </xsl:if></xsl:if>
+      <xsl:apply-templates select="." mode="heta-dict-aux-annotation-elements"/>
+    <xsl:text>}</xsl:text>
   </xsl:template>
 
   <xsl:template
     match="*[count(*)>0]"
-    mode="heta-dict-aux-annotation-content"
+    mode="heta-dict-aux-annotation-elements"
     >
-    <xsl:text>, </xsl:text>
-    <span class="heta-dict-key">content_</span><xsl:text>: </xsl:text>
+    <span class="heta-dict-key">elements</span><xsl:text>: </xsl:text>
     <span class="heta-array">[<xsl:apply-templates select="*" mode="heta-dict-aux-annotation"/>]</span>
   </xsl:template>
 
   <xsl:template
     match="@*"
-    mode="heta-dict-aux-annotation"
+    mode="heta-dict-aux-annotation-attributes"
     >
-    <xsl:text>, </xsl:text>
-    <span class="heta-dict-key"><xsl:value-of select="local-name()"/></span>
+    <span class="heta-dict-key"><xsl:value-of select="name()"/></span>
     <xsl:text>: </xsl:text>
     <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>
   </xsl:template>
