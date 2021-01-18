@@ -20,7 +20,6 @@ Source files: SBML L2 V1-5
 TODO:
   * all components: functionDefinition, initialAssignment, rate, event
   * notes from sbml, model as comments
-  * trailing spaces
 
 Author: Evgeny Metelkin
 Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
@@ -117,9 +116,60 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-block">
       <span class="heta-comment">
-// = <xsl:value-of select="local-name()"/> =</span>
+// <xsl:value-of select="local-name()"/> (currently not supported)</span>
       <span class="heta-comment">
 /* not supported in current version */
+</span>
+    </span>
+  </xsl:template>
+
+  <!-- listOfFunctionDefinitions -->
+  <xsl:template 
+    match="*[local-name()='listOfFunctionDefinitions']"
+    mode="heta"
+    >
+    <span class="heta-block">
+      <span class="heta-comment">
+// <xsl:value-of select="local-name()"/> (currently not supported)</span>
+      <span class="heta-comment">
+/*
+  The original model contains the following functionDefinitions:
+<xsl:apply-templates select="*[local-name()='functionDefinition']" mode="heta"/>*/
+</span>
+    </span>
+  </xsl:template>
+
+  <!-- listOfCompartmentTypes -->
+  <xsl:template 
+    match="*[local-name()='listOfCompartmentTypes']"
+    mode="heta"
+    >
+    <span class="heta-block">
+      <span class="heta-comment">
+// <xsl:value-of select="local-name()"/> (currently not supported)</span>
+      <span class="heta-comment">
+/*
+  The original model contains the following сompartmentTypes:
+  <xsl:apply-templates select="*[local-name()='compartmentType']" mode="heta"/>
+*/
+</span>
+    </span>
+  </xsl:template>
+
+
+  <!-- listOfSpeciesTypes -->
+  <xsl:template 
+    match="*[local-name()='listOfSpeciesTypes']"
+    mode="heta"
+    >
+    <span class="heta-block">
+      <span class="heta-comment">
+// <xsl:value-of select="local-name()"/> (currently not supported)</span>
+      <span class="heta-comment">
+/*
+  The original model contains the following speciesTypes:
+  <xsl:apply-templates select="*[local-name()='speciesType']" mode="heta"/>
+*/
 </span>
     </span>
   </xsl:template>
@@ -131,7 +181,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-block">
       <span class="heta-comment">
-// = listOfUnitDefinitions =
+// listOfUnitDefinitions
 </span>
       <xsl:apply-templates select="*[local-name()='unitDefinition']" mode="heta"/>
     </span>
@@ -144,7 +194,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-block">
       <span class="heta-comment">
-// = listOfCompartments =
+// listOfCompartments
 </span>
       <xsl:apply-templates select="*[local-name()='compartment']" mode="heta"/>
     </span>
@@ -157,7 +207,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-block">
       <span class="heta-comment">
-// = listOfSpecies =
+// listOfSpecies
 </span>
       <xsl:apply-templates select="*[local-name()='species']" mode="heta"/>
     </span>
@@ -170,7 +220,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-block">
       <span class="heta-comment">
-// = listOfParameters =
+// listOfParameters
 </span>
       <xsl:apply-templates select="*[local-name()='parameter']" mode="heta"/>
     </span>
@@ -183,13 +233,39 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-block">
       <span class="heta-comment">
-// = listOfReactions =
+// listOfReactions
 </span>
       <xsl:apply-templates select="*[local-name()='reaction']" mode="heta"/>
     </span>
   </xsl:template>
 
 <!-- END listOf -->
+
+<!-- BEGIN unsupported components -->
+
+  <xsl:template 
+    match="*[local-name()='functionDefinition']" 
+    mode="heta"
+    >
+    <xsl:text>  </xsl:text><xsl:value-of select="@id"/>(...) = ...
+</xsl:template>
+
+
+  <xsl:template 
+    match="*[local-name()='compartmentType']" 
+    mode="heta"
+    >
+    <xsl:value-of select="@id"/><xsl:if test="position()!=last()">, </xsl:if>
+  </xsl:template>
+
+  <xsl:template 
+    match="*[local-name()='speciesType']" 
+    mode="heta"
+    >
+    <xsl:value-of select="@id"/><xsl:if test="position()!=last()">, </xsl:if>
+  </xsl:template>
+
+<!-- END unsupported components -->
 
 <!-- BEGIN components -->
 
