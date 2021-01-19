@@ -18,7 +18,7 @@ limitations under the License.
 Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
-  * all components: functionDefinition, initialAssignment, rate, event
+  * all components: initialAssignment, rate, event
   * notes from sbml, model as comments
 
 Author: Evgeny Metelkin
@@ -242,14 +242,28 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 <!-- END listOf -->
 
 <!-- BEGIN unsupported components -->
+<!--
+  <xsl:template 
+    match="*[local-name()='functionDefinition']" 
+    mode="heta"
+    >
+    <xsl:text>  </xsl:text><xsl:value-of select="@id"/>(<xsl:apply-templates select="mml:math/mml:lambda/mml:bvar/mml:ci" mode="heta"/>) = ...
+</xsl:template>
+
+  <xsl:template 
+    match="*[local-name()='functionDefinition']/mml:math/mml:lambda/mml:bvar/mml:ci" 
+    mode="heta"
+    >
+    <xsl:value-of select="normalize-space(text())"/><xsl:if test="position()!=last()">, </xsl:if>
+  </xsl:template>
+-->
 
   <xsl:template 
     match="*[local-name()='functionDefinition']" 
     mode="heta"
     >
-    <xsl:text>  </xsl:text><xsl:value-of select="@id"/>(...) = ...
+    <xsl:text>  </xsl:text><xsl:value-of select="@id"/><xsl:apply-templates select="mml:math"/>
 </xsl:template>
-
 
   <xsl:template 
     match="*[local-name()='compartmentType']" 
@@ -784,6 +798,20 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <xsl:template match="mml:math">
     <xsl:apply-templates select="*"/>
+  </xsl:template>
+
+  <!-- lambda -->
+  <xsl:template match="mml:lambda">
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="mml:bvar/mml:ci"/> <!-- only lambda arguments -->
+    <xsl:text>) = </xsl:text>
+    <xsl:apply-templates select="*[local-name()!='bvar']"/> <!-- exclude lambda arguments -->
+    <xsl:text>
+</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="mml:lambda/mml:bvar/mml:ci"> 
+    <xsl:value-of select="normalize-space(text())"/><xsl:if test="position()!=last()">, </xsl:if>
   </xsl:template>
 
   <!-- any mathml internal function without changes -->
