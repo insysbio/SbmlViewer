@@ -18,8 +18,7 @@ limitations under the License.
 Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
-  * all components: initialAssignment, rate, event
-  * notes from sbml, model as comments
+  * all components: rate, event
 
 Author: Evgeny Metelkin
 Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
@@ -99,7 +98,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <!-- id -->
-  <xsl:template match="@id" mode="heta-sugar">
+  <xsl:template match="@id|@symbol" mode="heta-sugar">
     <span class="heta-id"><xsl:value-of select="."/></span>
   </xsl:template>
 
@@ -239,24 +238,22 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     </span>
   </xsl:template>
 
+  <!-- listOfInitialAssignments -->
+  <xsl:template 
+    match="*[local-name()='listOfInitialAssignments']" 
+    mode="heta"
+    >
+    <span class="heta-block">
+      <span class="heta-comment">
+// listOfInitialAssignments
+</span>
+      <xsl:apply-templates select="*[local-name()='initialAssignment']" mode="heta"/>
+    </span>
+  </xsl:template>
+
 <!-- END listOf -->
 
 <!-- BEGIN unsupported components -->
-<!--
-  <xsl:template 
-    match="*[local-name()='functionDefinition']" 
-    mode="heta"
-    >
-    <xsl:text>  </xsl:text><xsl:value-of select="@id"/>(<xsl:apply-templates select="mml:math/mml:lambda/mml:bvar/mml:ci" mode="heta"/>) = ...
-</xsl:template>
-
-  <xsl:template 
-    match="*[local-name()='functionDefinition']/mml:math/mml:lambda/mml:bvar/mml:ci" 
-    mode="heta"
-    >
-    <xsl:value-of select="normalize-space(text())"/><xsl:if test="position()!=last()">, </xsl:if>
-  </xsl:template>
--->
 
   <xsl:template 
     match="*[local-name()='functionDefinition']" 
@@ -333,6 +330,15 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 </span>
     </span>
   </xsl:template>
+
+  <xsl:template 
+    match="*[local-name()='initialAssignment']" 
+    mode="heta"
+    >
+    <xsl:apply-templates select="@symbol" mode="heta-sugar"/>
+    <span class="heta-assignments"> .= </span>
+    <span class="heta-string heta-math-expr"> <xsl:apply-templates select="mml:math"/></span>;
+</xsl:template>
 
   <xsl:template match="*[local-name()='unitDefinition']" mode="heta-class">
     <span class="heta-class"> @UnitDef</span>
