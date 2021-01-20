@@ -931,9 +931,16 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <!-- root -->
-  <xsl:template match="mml:apply[mml:power]">
-    <xsl:text>sqrt</xsl:text>
+  <xsl:template match="mml:apply[mml:root]">
+    <xsl:text>nthRoot</xsl:text>
     <xsl:apply-templates select="." mode="arguments"/>
+  </xsl:template>
+
+  <!-- sqrt -->
+  <xsl:template match="mml:apply[mml:root and count(*)=2]">
+    <xsl:text>sqrt(</xsl:text>
+    <xsl:apply-templates select="*[2]"/>
+    <xsl:text>)</xsl:text>
   </xsl:template>
 
   <!-- max 1

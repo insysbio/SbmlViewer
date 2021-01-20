@@ -141,7 +141,26 @@
           </apply>
         </math>
     </assignmentRule>
-      
+   <assignmentRule variable="o1">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <plus/>
+            <apply>
+              <ln/>
+              <ci>x</ci>
+            </apply>
+            <apply>
+              <log/>
+              <ci>x</ci>
+            </apply>
+            <apply>
+              <log/>
+              <logbase><cn>3</cn></logbase>
+              <ci>x</ci>
+            </apply>
+          </apply>
+        </math>
+    </assignmentRule>
       
     </listOfRules>
     
