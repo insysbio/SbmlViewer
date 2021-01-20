@@ -670,7 +670,7 @@
         <exe a="2" b="3"/>
       </example>
     </annotation>
-      <event id="event1" name="event 1" useValuesFromTriggerTime="true" metaid="metaexample" sboTerm="SBO:001" timeUnit="second">
+      <event name="event 1" useValuesFromTriggerTime="true" metaid="metaexample" sboTerm="SBO:001" timeUnit="second">
         <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">

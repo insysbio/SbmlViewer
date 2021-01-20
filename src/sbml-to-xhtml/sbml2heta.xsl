@@ -19,7 +19,6 @@ Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
   * add <event>
-  * check function list
 
 Author: Evgeny Metelkin
 Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
@@ -281,6 +280,19 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     </span>
   </xsl:template>
 
+  <!-- listOfEvents -->
+  <xsl:template 
+    match="*[local-name()='listOfEvents']" 
+    mode="heta"
+    >
+    <span class="heta-block">
+      <span class="heta-comment">
+// listOfEvents
+</span>
+      <xsl:apply-templates select="*[local-name()='event']" mode="heta"/>
+    </span>
+  </xsl:template>
+
 <!-- END listOf -->
 
 <!-- BEGIN unsupported components -->
@@ -359,8 +371,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*" 
     mode="heta-sugar"
     >
+    <xsl:param name="forceId"/>
     <span class="heta-base">
       <xsl:apply-templates select="./*[local-name()='notes']" mode="heta-sugar"/>
+      <xsl:if test="$forceId"><span class="heta-id"><xsl:value-of select="$forceId"/></span></xsl:if>
       <xsl:apply-templates select="@id" mode="heta-sugar"/>
       <xsl:apply-templates select="." mode="heta-class"/>
       <xsl:apply-templates select="@name" mode="heta-sugar"/>
@@ -410,6 +424,30 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 </xsl:text>
   </xsl:template>
 
+  <!-- event with id -->
+  <xsl:template 
+    match="*[local-name()='event']" 
+    mode="heta"
+    >
+    <xsl:text>
+</xsl:text>
+    <xsl:variable name="eventId" select="@id"/>
+    <xsl:apply-templates select="." mode="heta-sugar"/>
+  </xsl:template>
+
+  <!-- event withouts id -->
+  <xsl:template 
+    match="*[local-name()='event' and not(@id)]" 
+    mode="heta"
+    >
+    <xsl:text>
+</xsl:text>
+    <xsl:variable name="eventId" select="generate-id()"/>
+    <xsl:apply-templates select="." mode="heta-sugar">
+      <xsl:with-param name="forceId" select="$eventId"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
   <xsl:template match="*[local-name()='unitDefinition']" mode="heta-class">
     <span class="heta-class"> @UnitDef</span>
   </xsl:template>
@@ -434,6 +472,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <span class="heta-class"> @Reaction</span>
   </xsl:template>
 
+  <xsl:template match="*[local-name()='event']" mode="heta-class">
+    <span class="heta-class"> @DSwitcher</span>
+  </xsl:template>
 <!-- END components -->
 
 <!-- BEGIN assignments -->
@@ -607,6 +648,18 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
       <xsl:text>}</xsl:text></span>
   </xsl:template>
 
+  <!-- event dict -->
+  <xsl:template
+    match="*[local-name()='event']"
+    mode="heta-dict"
+    >
+    <span class="heta-dict"> {
+<xsl:apply-templates select="@*" mode="heta-dict-item"/>
+      <xsl:apply-templates select="." mode="heta-dict-trigger"/>
+      <xsl:apply-templates select="." mode="heta-dict-aux"/>
+      <xsl:text>}</xsl:text></span>
+  </xsl:template>
+
   <!-- aux item -->
   <xsl:template
     match="*"
@@ -732,6 +785,14 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-dict-key">  modifiers: </span>
     <span class="heta-dict-value heta-array"><xsl:apply-templates select="." mode="reactionFormula"/></span>,
+</xsl:template>
+
+  <xsl:template
+    match="*[local-name()='event']"
+    mode="heta-dict-trigger"
+    >
+    <span class="heta-dict-key">  trigger: </span>
+    <span class="heta-dict-value heta-string"><xsl:apply-templates select="*[local-name()='trigger']/mml:math"/></span>,
 </xsl:template>
 
   <!-- no boundary as default -->
