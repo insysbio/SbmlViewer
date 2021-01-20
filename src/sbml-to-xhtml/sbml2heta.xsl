@@ -18,7 +18,8 @@ limitations under the License.
 Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
-  * all components: rate, event
+  * add <event>
+  * check function list
 
 Author: Evgeny Metelkin
 Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
@@ -98,7 +99,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <!-- id -->
-  <xsl:template match="@id|@symbol" mode="heta-sugar">
+  <xsl:template match="@id|@symbol|@variable" mode="heta-sugar">
     <span class="heta-id"><xsl:value-of select="."/></span>
   </xsl:template>
 
@@ -115,7 +116,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-block">
       <span class="heta-comment">
-// <xsl:value-of select="local-name()"/> (currently not supported)</span>
+// <xsl:value-of select="local-name()"/> (not supported)</span>
       <span class="heta-comment">
 /* not supported in current version */
 </span>
@@ -129,11 +130,27 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-block">
       <span class="heta-comment">
-// <xsl:value-of select="local-name()"/> (currently not supported)</span>
+// <xsl:value-of select="local-name()"/> (not supported)</span>
       <span class="heta-comment">
 /*
   The original model contains the following functionDefinitions:
 <xsl:apply-templates select="*[local-name()='functionDefinition']" mode="heta"/>*/
+</span>
+    </span>
+  </xsl:template>
+
+  <!-- listOfConstraints -->
+  <xsl:template 
+    match="*[local-name()='listOfConstraints']"
+    mode="heta"
+    >
+    <span class="heta-block">
+      <span class="heta-comment">
+// <xsl:value-of select="local-name()"/> (not supported)</span>
+      <span class="heta-comment">
+/*
+  The original model contains the following constraints:
+<xsl:apply-templates select="*[local-name()='constraint']" mode="heta"/>*/
 </span>
     </span>
   </xsl:template>
@@ -145,7 +162,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-block">
       <span class="heta-comment">
-// <xsl:value-of select="local-name()"/> (currently not supported)</span>
+// <xsl:value-of select="local-name()"/> (not supported)</span>
       <span class="heta-comment">
 /*
   The original model contains the following сompartmentTypes:
@@ -163,7 +180,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <span class="heta-block">
       <span class="heta-comment">
-// <xsl:value-of select="local-name()"/> (currently not supported)</span>
+// <xsl:value-of select="local-name()"/> (not supported)</span>
       <span class="heta-comment">
 /*
   The original model contains the following speciesTypes:
@@ -251,6 +268,19 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     </span>
   </xsl:template>
 
+  <!-- listOfRules -->
+  <xsl:template 
+    match="*[local-name()='listOfRules']" 
+    mode="heta"
+    >
+    <span class="heta-block">
+      <span class="heta-comment">
+// listOfRules
+</span>
+      <xsl:apply-templates select="*[local-name()='assignmentRule']|*[local-name()='rateRule']|*[local-name()='algebraicRule']" mode="heta"/>
+    </span>
+  </xsl:template>
+
 <!-- END listOf -->
 
 <!-- BEGIN unsupported components -->
@@ -261,6 +291,15 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <xsl:text>  </xsl:text><xsl:value-of select="@id"/><xsl:apply-templates select="mml:math"/>
 </xsl:template>
+
+  <xsl:template 
+    match="*[local-name()='constraint']" 
+    mode="heta"
+    >
+    <xsl:text>  </xsl:text><xsl:apply-templates select="mml:math"/>
+    <xsl:text>
+</xsl:text>
+  </xsl:template>
 
   <xsl:template 
     match="*[local-name()='compartmentType']" 
@@ -339,6 +378,37 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <span class="heta-assignments"> .= </span>
     <span class="heta-string heta-math-expr"> <xsl:apply-templates select="mml:math"/></span>;
 </xsl:template>
+
+  <xsl:template 
+    match="*[local-name()='assignmentRule']" 
+    mode="heta"
+    >
+    <xsl:apply-templates select="@variable" mode="heta-sugar"/>
+    <span class="heta-assignments"> := </span>
+    <span class="heta-string heta-math-expr"> <xsl:apply-templates select="mml:math"/></span>; <span class="heta-comment">// assignmentRule</span>
+    <xsl:text>
+</xsl:text>
+  </xsl:template>
+
+  <xsl:template 
+    match="*[local-name()='rateRule']" 
+    mode="heta"
+    >
+    <span class="heta-comment">// <xsl:value-of select="@variable"/>' = <xsl:apply-templates select="mml:math"/></span>
+    <span class="heta-comment"> // rateRule (not supported)</span>
+    <xsl:text>
+</xsl:text>
+  </xsl:template>
+
+  <xsl:template 
+    match="*[local-name()='algebraicRule']" 
+    mode="heta"
+    >
+    <span class="heta-comment">// 0 = <xsl:apply-templates select="mml:math"/></span>
+    <span class="heta-comment"> // algebraicRule (not supported)</span>
+    <xsl:text>
+</xsl:text>
+  </xsl:template>
 
   <xsl:template match="*[local-name()='unitDefinition']" mode="heta-class">
     <span class="heta-class"> @UnitDef</span>
@@ -826,6 +896,12 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="." mode="arguments"/>
   </xsl:template>
 
+  <!-- delay -->
+  <xsl:template match="mml:apply[mml:csymbol[@definitionURL='http://www.sbml.org/sbml/symbols/delay']]">
+    <i>delay</i>
+    <xsl:apply-templates select="." mode="arguments"/>
+  </xsl:template>
+
   <!-- log -->
   <xsl:template match="mml:apply[mml:log]">
     <xsl:text>log10</xsl:text>
@@ -1007,6 +1083,100 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:text>)</xsl:text>
   </xsl:template>
 
+  <!-- and -->
+  <xsl:template match="mml:apply[mml:and]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> &amp; </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply/mml:apply[mml:and]">
+    <xsl:text>(</xsl:text>
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> &amp; </xsl:if>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- or -->
+  <xsl:template match="mml:apply[mml:or]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> | </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <xsl:template match="mml:apply/mml:apply[mml:or]">
+    <xsl:text>(</xsl:text>
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> | </xsl:if>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- lt -->
+  <xsl:template match="mml:apply[mml:lt]">
+    <xsl:text>(</xsl:text>
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> &lt; </xsl:if>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- leq -->
+  <xsl:template match="mml:apply[mml:leq]">
+    <xsl:text>(</xsl:text>
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> &lt;= </xsl:if>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- gt -->
+  <xsl:template match="mml:apply[mml:gt]">
+    <xsl:text>(</xsl:text>
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> &gt; </xsl:if>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- geq -->
+  <xsl:template match="mml:apply[mml:geq]">
+    <xsl:text>(</xsl:text>
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> &gt;= </xsl:if>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- eq -->
+  <xsl:template match="mml:apply[mml:eq]">
+    <xsl:text>(</xsl:text>
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> == </xsl:if>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- neq -->
+  <xsl:template match="mml:apply[mml:neq]">
+    <xsl:text>(</xsl:text>
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> != </xsl:if>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
   <xsl:template match="mml:ci">
     <xsl:value-of select="normalize-space(text())"/>
   </xsl:template>
@@ -1023,6 +1193,22 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <xsl:template match="mml:csymbol[@definitionURL='http://www.sbml.org/sbml/symbols/time']">
     <xsl:text>t</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="mml:pi">
+    <xsl:text>pi</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="mml:exponentiale">
+    <xsl:text>e</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="mml:infinity">
+    <xsl:text>Infinity</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="mml:notanumber">
+    <xsl:text>NaN</xsl:text>
   </xsl:template>
 
 <!-- END MathML -->
