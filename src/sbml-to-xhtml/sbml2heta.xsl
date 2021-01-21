@@ -18,9 +18,7 @@ limitations under the License.
 Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
-  * local parameters
-  * prettify Record dict
-  * check empty modifiers
+  * local parameters not substituted in math expressions 
 
 Author: Evgeny Metelkin
 Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
@@ -643,12 +641,14 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*"
     mode="heta-dict"
     >
+    <xsl:if test="local-name()!='parameter' or @units or $fullForm='true'">
     <span class="heta-dict"> {
 <xsl:apply-templates select="@*" mode="heta-dict-item"/>
     <xsl:apply-templates select="." mode="heta-dict-boundary"/>
     <xsl:apply-templates select="." mode="heta-dict-is-amount"/>
     <xsl:apply-templates select="." mode="heta-dict-aux"/>
     <xsl:text>}</xsl:text></span>
+    </xsl:if>
   </xsl:template>
 
   <!-- unitDef dict -->
