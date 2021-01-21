@@ -66,6 +66,16 @@ module.exports = function(parser){
     {
       format: 'SBML',
       level: '3',
+      name: 'sbml3heta',
+      xslt: sbml2heta,
+      parameters: ['fullForm'],
+      parameterNotes: {
+        fullForm: 'Display aux property, i.e. not used properties from SBML.'
+      }
+    },
+    {
+      format: 'SBML',
+      level: '3',
       name: 'sbml3table',
       xslt: sbml3table,
       parameters: ['useNames', 'correctMathml', 'equationsOff'],
