@@ -350,14 +350,14 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     "
     mode="heta"
     >
-    <xsl:param name="suffix"/>
+    <xsl:param name="forceId"/>
     <xsl:text>
 </xsl:text>
     <xsl:apply-templates select="." mode="heta-sugar">
-      <xsl:with-param name="forceId" select="$suffix"/>
+      <xsl:with-param name="forceId" select="$forceId"/>
     </xsl:apply-templates>
     <xsl:apply-templates select="." mode="heta-assignment">
-      <xsl:with-param name="forceId" select="$suffix"/>
+      <xsl:with-param name="forceId" select="$forceId"/>
     </xsl:apply-templates>
     <!--
     <xsl:apply-templates select="@compartmentType"/>
@@ -373,7 +373,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="." mode="heta-sugar"/>
     <xsl:apply-templates select="." mode="heta-assignments-ode"/>
     <xsl:apply-templates select="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']/*[local-name()='parameter']" mode="heta">
-      <xsl:with-param name="suffix" select="concat('__', @id ,'_local')"/>
+      <xsl:with-param name="forceId" select="concat('__', @id ,'_local')"/>
     </xsl:apply-templates>
   </xsl:template>
 
@@ -441,10 +441,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <xsl:text>
 </xsl:text>
-    <xsl:variable name="eventId" select="@id"/>
+    <xsl:variable name="forceId" select="@id"/>
     <xsl:apply-templates select="." mode="heta-sugar"/>
     <xsl:apply-templates select="*[local-name()='listOfEventAssignments']/*[local-name()='eventAssignment']" mode="heta-event-assignment">
-      <xsl:with-param name="forceId" select="$eventId"/>
+      <xsl:with-param name="forceId" select="$forceId"/>
     </xsl:apply-templates>
   </xsl:template>
 
@@ -455,12 +455,12 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     >
     <xsl:text>
 </xsl:text>
-    <xsl:variable name="eventId" select="generate-id()"/>
+    <xsl:variable name="forceId" select="generate-id()"/>
     <xsl:apply-templates select="." mode="heta-sugar">
-      <xsl:with-param name="forceId" select="$eventId"/>
+      <xsl:with-param name="forceId" select="$forceId"/>
     </xsl:apply-templates>
     <xsl:apply-templates select="*[local-name()='listOfEventAssignments']/*[local-name()='eventAssignment']" mode="heta-event-assignment">
-      <xsl:with-param name="forceId" select="$eventId"/>
+      <xsl:with-param name="forceId" select="$forceId"/>
     </xsl:apply-templates>
   </xsl:template>
 
