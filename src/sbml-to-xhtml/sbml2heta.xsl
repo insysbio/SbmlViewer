@@ -18,7 +18,9 @@ limitations under the License.
 Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
-  * add <event>
+  * local parameters
+  * prettify Record dict
+  * check empty modifiers
 
 Author: Evgeny Metelkin
 Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
@@ -348,10 +350,15 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     "
     mode="heta"
     >
+    <xsl:param name="suffix"/>
     <xsl:text>
 </xsl:text>
-    <xsl:apply-templates select="." mode="heta-sugar"/>
-    <xsl:apply-templates select="." mode="heta-assignment"/>
+    <xsl:apply-templates select="." mode="heta-sugar">
+      <xsl:with-param name="forceId" select="$suffix"/>
+    </xsl:apply-templates>
+    <xsl:apply-templates select="." mode="heta-assignment">
+      <xsl:with-param name="forceId" select="$suffix"/>
+    </xsl:apply-templates>
     <!--
     <xsl:apply-templates select="@compartmentType"/>
     -->
@@ -365,6 +372,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 </xsl:text>
     <xsl:apply-templates select="." mode="heta-sugar"/>
     <xsl:apply-templates select="." mode="heta-assignments-ode"/>
+    <xsl:apply-templates select="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']/*[local-name()='parameter']" mode="heta">
+      <xsl:with-param name="suffix" select="concat('__', @id ,'_local')"/>
+    </xsl:apply-templates>
   </xsl:template>
 
   <xsl:template 
@@ -374,8 +384,8 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:param name="forceId"/>
     <span class="heta-base">
       <xsl:apply-templates select="./*[local-name()='notes']" mode="heta-sugar"/>
-      <xsl:if test="$forceId"><span class="heta-id"><xsl:value-of select="$forceId"/></span></xsl:if>
       <xsl:apply-templates select="@id" mode="heta-sugar"/>
+      <xsl:if test="$forceId"><span class="heta-id"><xsl:value-of select="$forceId"/></span></xsl:if>
       <xsl:apply-templates select="." mode="heta-class"/>
       <xsl:apply-templates select="@name" mode="heta-sugar"/>
       <xsl:apply-templates select="." mode="heta-dict"/>
@@ -433,6 +443,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 </xsl:text>
     <xsl:variable name="eventId" select="@id"/>
     <xsl:apply-templates select="." mode="heta-sugar"/>
+    <xsl:apply-templates select="*[local-name()='listOfEventAssignments']/*[local-name()='eventAssignment']" mode="heta-event-assignment">
+      <xsl:with-param name="forceId" select="$eventId"/>
+    </xsl:apply-templates>
   </xsl:template>
 
   <!-- event withouts id -->
@@ -446,6 +459,22 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="." mode="heta-sugar">
       <xsl:with-param name="forceId" select="$eventId"/>
     </xsl:apply-templates>
+    <xsl:apply-templates select="*[local-name()='listOfEventAssignments']/*[local-name()='eventAssignment']" mode="heta-event-assignment">
+      <xsl:with-param name="forceId" select="$eventId"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
+  <xsl:template
+    match="*[local-name()='eventAssignment']"
+    mode="heta-event-assignment"
+    >
+    <xsl:param name="forceId"/>
+    <xsl:apply-templates select="@variable" mode="heta-sugar"/>
+    <span class="heta-assignments"><xsl:text> [</xsl:text><xsl:value-of select="$forceId"/><xsl:text>]= </xsl:text></span>
+    <span class="heta-string heta-math-expr"><xsl:apply-templates select="mml:math"/></span>
+    <span class="heta-end">;</span>
+    <xsl:text>
+</xsl:text>
   </xsl:template>
 
   <xsl:template match="*[local-name()='unitDefinition']" mode="heta-class">
@@ -568,26 +597,26 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='parameter' and @value and not(@constant='true')]"
     mode="heta-assignment"
     >
-    <span>
-      <xsl:apply-templates select="@id" mode="heta-sugar"/>
-      <span class="heta-assignments"> .= </span>
-      <span class="heta-string heta-math-expr"> <xsl:value-of select="@value"/></span>
-      <span class="heta-end">;
+    <xsl:param name="forceId"/>
+    <xsl:apply-templates select="@id" mode="heta-sugar"/>
+    <xsl:if test="$forceId"><span class="heta-id"><xsl:value-of select="$forceId"/></span></xsl:if>
+    <span class="heta-assignments"> .= </span>
+    <span class="heta-string heta-math-expr"> <xsl:value-of select="@value"/></span>
+    <span class="heta-end">;
 </span>
-    </span>
   </xsl:template>
 
   <xsl:template
     match="*[local-name()='parameter' and @value and @constant='true']"
     mode="heta-assignment"
     >
-    <span>
-      <xsl:apply-templates select="@id" mode="heta-sugar"/>
-      <span class="heta-assignments"> = </span>
-      <span class="heta-string heta-math-expr"> <xsl:value-of select="@value"/></span>
-      <span class="heta-end">;
+    <xsl:param name="forceId"/>
+    <xsl:apply-templates select="@id" mode="heta-sugar"/>
+    <xsl:if test="$forceId"><span class="heta-id"><xsl:value-of select="$forceId"/></span></xsl:if>
+    <span class="heta-assignments"> = </span>
+    <span class="heta-string heta-math-expr"> <xsl:value-of select="@value"/></span>
+    <span class="heta-end">;
 </span>
-    </span>
   </xsl:template>
 
   <xsl:template 
@@ -1245,17 +1274,47 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:text>)</xsl:text>
   </xsl:template>
 
+  <!-- <ci> -->
   <xsl:template match="mml:ci">
     <xsl:value-of select="normalize-space(text())"/>
   </xsl:template>
 
+  <!-- <cn> -->
   <xsl:template match="mml:cn">
-    <xsl:value-of select="normalize-space(text())"/>
+    <xsl:value-of select="normalize-space(text()[1])"/>
   </xsl:template>
 
-  <xsl:template match="mml:cn[number(text()) &lt; 0]">
+  <xsl:template match="mml:apply/mml:cn[number(text()[1]) &lt; 0]">
     <xsl:text>(</xsl:text>
-    <xsl:value-of select="normalize-space(text())"/>
+    <xsl:value-of select="normalize-space(text()[1])"/>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="mml:cn[@type='rational']">
+    <xsl:value-of select="normalize-space(text()[1])"/>
+    <xsl:text>/</xsl:text>
+    <xsl:value-of select="normalize-space(text()[2])"/>
+  </xsl:template>
+  
+  <xsl:template match="mml:apply/mml:cn[@type='rational']">
+    <xsl:text>(</xsl:text>
+    <xsl:value-of select="normalize-space(text()[1])"/>
+    <xsl:text>/</xsl:text>
+    <xsl:value-of select="normalize-space(text()[2])"/>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="mml:cn[@type='e-notation']">
+    <xsl:value-of select="normalize-space(text()[1])"/>
+    <xsl:text>e</xsl:text>
+    <xsl:value-of select="normalize-space(text()[2])"/>
+  </xsl:template>
+  
+  <xsl:template match="mml:apply/mml:cn[number(text()[1]) &lt; 0]">
+    <xsl:text>(</xsl:text>
+    <xsl:value-of select="normalize-space(text()[1])"/>
+    <xsl:text>e</xsl:text>
+    <xsl:value-of select="normalize-space(text()[2])"/>
     <xsl:text>)</xsl:text>
   </xsl:template>
 
