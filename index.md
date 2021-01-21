@@ -1,5 +1,5 @@
 
-**SbmlViewer** is a tool for fast and easy reading biological models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
+**SbmlViewer** is a tool for fast and easy reading of biological models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
 
 SbmlViewer never uploads your files to the server and all transformations are performed locally in your browser, so it is safe and secure for your code.
 
@@ -7,7 +7,7 @@ SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlV
 
 **SbmlViewer** is helpful when:
 
-* You need to share your model in human readable and compact format with someone.
+* You need to share your model in human readable and compact format.
 * You cannot install you favorite tool to read and check some SBML file right now.
 * Your software cannot read some specific SBML versions or elements like <code>event</code>, <code>constraint</code> or <code>functionDefinition</code> etc. but the file includes them.
 * Your have some errors when importing SBML and are trying to check the model code.
@@ -19,12 +19,14 @@ SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlV
 
 [Try online](http://sv.insysbio.com/{{ site.distPath }})
 
-For models from your computer:
+**For models from your computer:**
 
 1. Open the page [http://sv.insysbio.com/{{ site.distPath }}](/{{ site.distPath }})
 2. Drug'n'drop your SBML or click on button "Choose file" and select your sbml model.
 
-For models shared on web:
+**For models shared on web:**
+
+*Some servers don't allow to use shared files in this way. In that case use the method above.*
 
 1. Copy the link of your shared model, for instance http://www.example.com/your_sbml_file.xml
 2. Add the external SBML path to SbmlViewer url followed by ? sign, like this:
@@ -43,12 +45,13 @@ To look through example just try the links
 # Overview
 <hr/>
 
-## Current release
+## Latest release
 
-Version: 0.2.5
+Version: 0.2.7
 
 - reading SBML Level 2 Version 1-5
 - reading SBML Level 3 Version 1-2
+- transformation to Heta code using **sbml2heta** or **sbml3heta**
 - creating tabular view of model with: **sbml2table** or
  **sbml3table** transformation
 - summary generation for chosen element: **sbml2element** transformation
