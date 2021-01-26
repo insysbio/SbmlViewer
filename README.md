@@ -1,4 +1,5 @@
 # SbmlViewer
+[![Heta project](https://img.shields.io/badge/%CD%B1-Heta_project-blue)](https://hetalang.github.io/)
 [![Website sv.insysbio.com](https://img.shields.io/website-up-down-green-red/http/sv.insysbio.com.svg)](http://sv.insysbio.com)
 [![GitHub release](https://img.shields.io/github/release/insysbio/SbmlViewer.svg)](https://github.com/insysbio/SbmlViewer/releases/)
 [![GitHub license](https://img.shields.io/github/license/insysbio/SbmlViewer.svg)](https://github.com/insysbio/SbmlViewer/blob/master/LICENSE)

@@ -24,7 +24,7 @@ module.exports = function(parser){
       xslt: sbml2heta,
       parameters: ['fullForm'],
       parameterNotes: {
-        fullForm: 'Display aux property, i.e. not used properties from SBML.'
+        fullForm: 'Display aux property, i.e. unused properties from SBML.'
       }
     },
     {
@@ -70,7 +70,7 @@ module.exports = function(parser){
       xslt: sbml2heta,
       parameters: ['fullForm'],
       parameterNotes: {
-        fullForm: 'Display aux property, i.e. not used properties from SBML.'
+        fullForm: 'Display aux property, i.e. unused properties from SBML.'
       }
     },
     {
