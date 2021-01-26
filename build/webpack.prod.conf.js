@@ -31,8 +31,8 @@ let prodWebpackConfig = {
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
     path: process.env.OUTPUT_DEMO && path.resolve(process.env.OUTPUT_DEMO) || config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].js'),
-    chunkFilename: utils.assetsPath('js/[id].js')
+    filename: utils.assetsPath('js/[name].[contenthash].js'),
+    chunkFilename: utils.assetsPath('js/[id].[contenthash].js')
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
