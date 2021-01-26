@@ -22,6 +22,7 @@ jobs:
           npm ci
           npm run build
           mkdir -p site/online
+          rm -rf site/online/*
           cp -rf dist/sv/* site/online
       - name: Deploy to "gh-pages"
         uses: JamesIves/github-pages-deploy-action@releases/v3
