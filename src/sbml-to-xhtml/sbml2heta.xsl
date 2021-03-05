@@ -1279,6 +1279,16 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:value-of select="normalize-space(text())"/>
   </xsl:template>
 
+  <!-- <true/> -->
+  <xsl:template match="mml:true">
+    <xsl:text>true</xsl:text>
+  </xsl:template>
+
+  <!-- <false/> -->
+  <xsl:template match="mml:false">
+    <xsl:text>false</xsl:text>
+  </xsl:template>
+
   <!-- <cn> -->
   <xsl:template match="mml:cn">
     <xsl:value-of select="normalize-space(text()[1])"/>

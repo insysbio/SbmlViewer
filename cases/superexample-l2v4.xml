@@ -780,6 +780,57 @@
           </eventAssignment>
         </listOfEventAssignments>
       </event>
+      <event id="event4"> <!-- event with single true-->
+        <trigger>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <true/>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="x1">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn> 12.2 </cn>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="event5"> <!-- event with single false -->
+        <trigger>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <false/>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="x1">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn> 12.2 </cn>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
+      <event id="event5"> <!-- event with and or operators -->
+        <trigger>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply><and/>
+              <true/>
+              <apply><or/>
+                <apply><gt/>
+                  <ci> S4 </ci>
+                  <ci> S2 </ci>
+                </apply>
+                <false/>
+              </apply>
+            </apply>
+          </math>
+        </trigger>
+        <listOfEventAssignments>
+          <eventAssignment variable="x1">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <cn> 12.2 </cn>
+            </math>
+          </eventAssignment>
+        </listOfEventAssignments>
+      </event>
     </listOfEvents>
   </model>
 </sbml>
