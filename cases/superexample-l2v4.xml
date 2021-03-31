@@ -818,7 +818,9 @@
                   <ci> S4 </ci>
                   <ci> S2 </ci>
                 </apply>
-                <false/>
+                <apply><not/>
+                  <false/>
+                </apply>
               </apply>
             </apply>
           </math>

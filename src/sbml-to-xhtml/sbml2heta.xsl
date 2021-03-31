@@ -1184,7 +1184,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   <xsl:template match="mml:apply[mml:and]">
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
-      <xsl:if test="position()!=last()"> &amp; </xsl:if>
+      <xsl:if test="position()!=last()"> and </xsl:if>
     </xsl:for-each>
   </xsl:template>
 
@@ -1192,7 +1192,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
-      <xsl:if test="position()!=last()"> &amp; </xsl:if>
+      <xsl:if test="position()!=last()"> and </xsl:if>
     </xsl:for-each>
     <xsl:text>)</xsl:text>
   </xsl:template>
@@ -1201,7 +1201,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   <xsl:template match="mml:apply[mml:or]">
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
-      <xsl:if test="position()!=last()"> | </xsl:if>
+      <xsl:if test="position()!=last()"> or </xsl:if>
     </xsl:for-each>
   </xsl:template>
   
@@ -1209,8 +1209,36 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
-      <xsl:if test="position()!=last()"> | </xsl:if>
+      <xsl:if test="position()!=last()"> or </xsl:if>
     </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- xor -->
+  <xsl:template match="mml:apply[mml:xor]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> xor </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <xsl:template match="mml:apply/mml:apply[mml:xor]">
+    <xsl:text>(</xsl:text>
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> xor </xsl:if>
+    </xsl:for-each>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+
+  <!-- not-->
+  <xsl:template match="mml:apply[mml:not]">
+    not <xsl:apply-templates select="*[position()=2]"/>
+  </xsl:template>
+
+  <xsl:template match="mml:apply/mml:apply[mml:not]">
+    <xsl:text>(</xsl:text>
+    not <xsl:apply-templates select="*[position()=2]"/>
     <xsl:text>)</xsl:text>
   </xsl:template>
 
