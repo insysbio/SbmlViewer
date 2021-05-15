@@ -132,19 +132,24 @@ td.sbml-metaid.sbml-attribute-value {
 
 /* Heta specific style */
 .heta-comment, .heta-notes {
-  @extend .w3-text-light-green;
+  color:slategray
+}
+.heta-action {
+  color: #DD4A68;
+  font-weight: bold;
 }
 .heta-class {
-  @extend .w3-text-green;
+  color: #DD4A68;
 }
 .heta-id {
   font-weight: bold;
 }
 .heta-dict-key {
-  @extend .w3-text-cyan;
+  /*@extend .w3-text-cyan;*/
+  @extend .w3-text-indigo;
 }
 .heta-string, .heta-title {
-  @extend .w3-text-deep-orange;
+  /*color: #690;*/
 }
 .heta-boolean {
   @extend .w3-text-blue;
@@ -154,9 +159,29 @@ td.sbml-metaid.sbml-attribute-value {
 }
 .heta-code pre {
   padding: 10px;
-  background-color: #f6f8fa;
-  font-size: 110%;
-  /*border-color: black;*/
-  /*border-width: 3px;*/
+  background-color: #f5f2f0;
   line-height: 130%;
+}
+
+/* Antimony specific style */
+.antimony-code pre {
+  padding: 10px;
+  background-color: #f6f8fa;
+  line-height: 130%;
+}
+.antimony-units {
+  font-style: italic;
+}
+.antimony-reserved {
+  @extend .w3-text-indigo;
+  font-weight: bold;
+}
+.antimony-comment {
+  @extend .w3-text-green;
+}
+.antimony-id {
+  font-weight: bold;
+}
+.antimony-debug {
+  @extend .w3-orange;
 }

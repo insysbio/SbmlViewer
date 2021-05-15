@@ -112,8 +112,8 @@
       </example>
     </annotation>
         <listOfUnits>
-          <unit scale="-12" kind="mole" multiplier="1" exponent="1"/>
           <unit scale="0" kind="litre" multiplier="1" exponent="-1"/>
+          <unit scale="-12" kind="mole" multiplier="1" exponent="1"/>
         </listOfUnits>
       </unitDefinition>
       <unitDefinition id="pmole" name="pmole">
@@ -202,7 +202,7 @@
       </example>
     </annotation>
       </compartment>
-      <compartment id="comp2" name="second compartment" size="4.19999980926514" outside="Total" compartmentType="cmp_type" metaid="metaexample" sboTerm="SBO:001">
+      <compartment id="comp2" name="second compartment" size="4.19999980926514" outside="Total" compartmentType="cmp_type" metaid="metaexample" sboTerm="SBO:001" units="xxx">
       <notes>This is a test text element.</notes>
     <annotation>
       <example xmlns="example.com">
@@ -231,7 +231,7 @@
       <species id="B" name="B" compartment="comp1" speciesType="NKb_abs" initialAmount="1.490793" substanceUnits="mmole" boundaryCondition="false" constant="true" hasOnlySubstanceUnits="false" charge="-1" spatialSizeUnits="l"/>
       <species id="C" name="C" compartment="comp2" initialConcentration="1.300637" substanceUnits="mmole" boundaryCondition="false" constant="false"  hasOnlySubstanceUnits="true" charge="2"/>
       <species id="D" name="D" compartment="comp2" initialConcentration="1.234049" boundaryCondition="false" constant="true"/>
-      <species id="E" name="Some new" compartment="comp1" initialConcentration="1.234049" constant="false" hasOnlySubstanceUnits="false"/>
+      <species id="E" name="Some new" compartment="comp1" initialConcentration="1.234049" constant="false" hasOnlySubstanceUnits="false" substanceUnits="mole"/>
     </listOfSpecies>
 
 <!-- listOfParameters -->

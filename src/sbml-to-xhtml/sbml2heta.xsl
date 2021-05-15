@@ -18,7 +18,8 @@ limitations under the License.
 Description: Creating representation of whole sbml into Heta format.
 Source files: SBML L2 V1-5
 TODO:
-  * local parameters not substituted in math expressions 
+  * local parameters not substituted in math expressions
+  * substitute reserved words
 
 Author: Evgeny Metelkin
 Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
@@ -39,7 +40,6 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- GLOBAL KEYS -->
   <xsl:key name="idKey" match="*" use="@id"/>
-  <xsl:key name="variableKey" match="*" use="@variable"/>
 
   <!-- PARAMETERS -->
   <xsl:param name="fullForm">false</xsl:param> <!-- do not display aux -->
@@ -66,8 +66,8 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   <!-- SBML -->
   <xsl:template match="*[local-name()='sbml']" mode="heta">
     <div class="sv-container sv-mode-heta">
-      <h3 class="sv-header">Transformation from SBML level <xsl:value-of select="@level"/> version <xsl:value-of select="@version"/> to Heta code</h3>
-      <h4 class="sv-header">More info about Heta format can be found in <a href="https://hetalang.github.io" target="blank_">https://hetalang.github.io</a></h4>
+      <h3 class="sv-header">Transformation from SBML L<xsl:value-of select="@level"/>V<xsl:value-of select="@version"/> to Heta code v0.4</h3>
+      <h4 class="sv-header">See more in <a href="https://hetalang.github.io" target="blank_">https://hetalang.github.io</a></h4>
       <div class="sv-content heta-code">
         <!--<xsl:apply-templates select="*[local-name()='notes']" mode="element"/>
         <xsl:apply-templates select="*[local-name()='annotation']" mode="element"/>-->
@@ -195,10 +195,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta"
     >
     <span class="heta-block">
-      <span class="heta-comment">
+    <span class="heta-comment">
 // listOfUnitDefinitions
 </span>
-      <xsl:apply-templates select="*[local-name()='unitDefinition']" mode="heta"/>
+    <xsl:apply-templates select="*[local-name()='unitDefinition']" mode="heta"/>
     </span>
   </xsl:template>
 
@@ -208,10 +208,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta"
     >
     <span class="heta-block">
-      <span class="heta-comment">
+    <span class="heta-comment">
 // listOfCompartments
 </span>
-      <xsl:apply-templates select="*[local-name()='compartment']" mode="heta"/>
+    <xsl:apply-templates select="*[local-name()='compartment']" mode="heta"/>
     </span>
   </xsl:template>
 
@@ -221,10 +221,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta"
     >
     <span class="heta-block">
-      <span class="heta-comment">
+    <span class="heta-comment">
 // listOfSpecies
 </span>
-      <xsl:apply-templates select="*[local-name()='species']" mode="heta"/>
+    <xsl:apply-templates select="*[local-name()='species']" mode="heta"/>
     </span>
   </xsl:template>
 
@@ -234,10 +234,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta"
     >
     <span class="heta-block">
-      <span class="heta-comment">
+    <span class="heta-comment">
 // listOfParameters
 </span>
-      <xsl:apply-templates select="*[local-name()='parameter']" mode="heta"/>
+    <xsl:apply-templates select="*[local-name()='parameter']" mode="heta"/>
     </span>
   </xsl:template>
 
@@ -247,10 +247,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta"
     >
     <span class="heta-block">
-      <span class="heta-comment">
+    <span class="heta-comment">
 // listOfReactions
 </span>
-      <xsl:apply-templates select="*[local-name()='reaction']" mode="heta"/>
+    <xsl:apply-templates select="*[local-name()='reaction']" mode="heta"/>
     </span>
   </xsl:template>
 
@@ -260,10 +260,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta"
     >
     <span class="heta-block">
-      <span class="heta-comment">
+    <span class="heta-comment">
 // listOfInitialAssignments
 </span>
-      <xsl:apply-templates select="*[local-name()='initialAssignment']" mode="heta"/>
+    <xsl:apply-templates select="*[local-name()='initialAssignment']" mode="heta"/>
     </span>
   </xsl:template>
 
@@ -273,10 +273,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta"
     >
     <span class="heta-block">
-      <span class="heta-comment">
+    <span class="heta-comment">
 // listOfRules
 </span>
-      <xsl:apply-templates select="*[local-name()='assignmentRule']|*[local-name()='rateRule']|*[local-name()='algebraicRule']" mode="heta"/>
+    <xsl:apply-templates select="*[local-name()='assignmentRule']|*[local-name()='rateRule']|*[local-name()='algebraicRule']" mode="heta"/>
     </span>
   </xsl:template>
 
@@ -286,10 +286,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta"
     >
     <span class="heta-block">
-      <span class="heta-comment">
+    <span class="heta-comment">
 // listOfEvents
 </span>
-      <xsl:apply-templates select="*[local-name()='event']" mode="heta"/>
+    <xsl:apply-templates select="*[local-name()='event']" mode="heta"/>
     </span>
   </xsl:template>
 
@@ -301,7 +301,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='functionDefinition']" 
     mode="heta"
     >
-    <xsl:text>  </xsl:text><xsl:value-of select="@id"/><xsl:apply-templates select="mml:math"/>
+    <xsl:text>  </xsl:text
+    ><xsl:value-of select="@id"/>
+    <xsl:apply-templates select="mml:math"/>
 </xsl:template>
 
   <xsl:template 
@@ -338,6 +340,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:text>
 </xsl:text>
     <xsl:apply-templates select="." mode="heta-sugar"/>
+    <xsl:apply-templates select="." mode="heta-annotation"/>
   </xsl:template>
 
   <xsl:template 
@@ -357,6 +360,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="." mode="heta-assignment">
       <xsl:with-param name="forceId" select="$forceId"/>
     </xsl:apply-templates>
+    <xsl:apply-templates select="." mode="heta-annotation"/>
     <!--
     <xsl:apply-templates select="@compartmentType"/>
     -->
@@ -371,8 +375,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="." mode="heta-sugar"/>
     <xsl:apply-templates select="." mode="heta-assignments-ode"/>
     <xsl:apply-templates select="*[local-name()='kineticLaw']/*[local-name()='listOfParameters']/*[local-name()='parameter']" mode="heta">
-      <xsl:with-param name="forceId" select="concat('__', @id ,'_local')"/>
+      <xsl:with-param name="forceId" select="concat('_', @id, '_')"/>
     </xsl:apply-templates>
+    <xsl:apply-templates select="." mode="heta-annotation"/>
   </xsl:template>
 
   <xsl:template 
@@ -393,9 +398,35 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <xsl:template 
+    match="*" 
+    mode="heta-annotation"
+    >
+    <xsl:param name="forceId"/>
+    <xsl:variable 
+      name="auxProp"
+      select="@spatialDimensions|@metaid|@sboTerm|@outside|@spatialSizeUnits|@charge|*[local-name()='annotation']"
+      />
+    <xsl:if test="$fullForm='true' and count($auxProp)!='0'">
+      <span class="heta-base">
+      <xsl:apply-templates select="@id" mode="heta-sugar"/>
+      <xsl:if test="$forceId"><span class="heta-id"><xsl:value-of select="$forceId"/></span></xsl:if>
+      <xsl:text> {</xsl:text>
+      <span class="heta-dict-key">aux: </span>
+      <span class="heta-dict">{<xsl:apply-templates select="$auxProp" mode="heta-dict-aux-item"/>
+}</span>
+      <xsl:text>}</xsl:text>
+      <span class="heta-end">;
+</span>
+      </span>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template 
     match="*[local-name()='initialAssignment']" 
     mode="heta"
     >
+    <xsl:text>
+</xsl:text>
     <xsl:apply-templates select="@symbol" mode="heta-sugar"/>
     <span class="heta-assignments"> .= </span>
     <span class="heta-string heta-math-expr"> <xsl:apply-templates select="mml:math"/></span>;
@@ -405,6 +436,8 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='assignmentRule']" 
     mode="heta"
     >
+    <xsl:text>
+</xsl:text>
     <xsl:apply-templates select="@variable" mode="heta-sugar"/>
     <span class="heta-assignments"> := </span>
     <span class="heta-string heta-math-expr"> <xsl:apply-templates select="mml:math"/></span>; <span class="heta-comment">// assignmentRule</span>
@@ -444,6 +477,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="*[local-name()='listOfEventAssignments']/*[local-name()='eventAssignment']" mode="heta-event-assignment">
       <xsl:with-param name="forceId" select="$forceId"/>
     </xsl:apply-templates>
+    <xsl:apply-templates select="." mode="heta-annotation"/>
   </xsl:template>
 
   <!-- event withouts id -->
@@ -458,6 +492,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
       <xsl:with-param name="forceId" select="$forceId"/>
     </xsl:apply-templates>
     <xsl:apply-templates select="*[local-name()='listOfEventAssignments']/*[local-name()='eventAssignment']" mode="heta-event-assignment">
+      <xsl:with-param name="forceId" select="$forceId"/>
+    </xsl:apply-templates>
+    <xsl:apply-templates select="." mode="heta-annotation">
       <xsl:with-param name="forceId" select="$forceId"/>
     </xsl:apply-templates>
   </xsl:template>
@@ -476,7 +513,7 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   </xsl:template>
 
   <xsl:template match="*[local-name()='unitDefinition']" mode="heta-class">
-    <span class="heta-class"> @UnitDef</span>
+    <span class="heta-action"> #defineUnit</span>
   </xsl:template>
 
   <xsl:template match="*[local-name()='compartment']" mode="heta-class">
@@ -641,13 +678,14 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*"
     mode="heta-dict"
     >
-    <xsl:if test="local-name()!='parameter' or @units or $fullForm='true'">
-    <span class="heta-dict"> {
-<xsl:apply-templates select="@*" mode="heta-dict-item"/>
-    <xsl:apply-templates select="." mode="heta-dict-boundary"/>
-    <xsl:apply-templates select="." mode="heta-dict-is-amount"/>
-    <xsl:apply-templates select="." mode="heta-dict-aux"/>
-    <xsl:text>}</xsl:text></span>
+    <xsl:if test="local-name()!='parameter' or @units">
+      <span class="heta-dict">
+      <xsl:text> {</xsl:text> 
+      <xsl:apply-templates select="@*" mode="heta-dict-item"/>
+      <xsl:apply-templates select="." mode="heta-dict-boundary"/>
+      <xsl:apply-templates select="." mode="heta-dict-is-amount"/>
+      <xsl:text> }</xsl:text>
+      </span>
     </xsl:if>
   </xsl:template>
 
@@ -656,11 +694,11 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='unitDefinition']"
     mode="heta-dict"
     >
-    <span class="heta-dict"> {
-<xsl:apply-templates select="@*" mode="heta-dict-item"/>
-      <xsl:apply-templates select="*[local-name()='listOfUnits']" mode="heta-dict-item"/>
-      <xsl:apply-templates select="." mode="heta-dict-aux"/>
-      <xsl:text>}</xsl:text>
+    <span class="heta-dict">
+    <xsl:text> {</xsl:text>
+    <xsl:apply-templates select="@*" mode="heta-dict-item"/>
+    <xsl:apply-templates select="*[local-name()='listOfUnits']" mode="heta-dict-item"/>
+    <xsl:text> }</xsl:text>
     </span>
   </xsl:template>
 
@@ -669,12 +707,13 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='reaction']"
     mode="heta-dict"
     >
-    <span class="heta-dict"> {
-<xsl:apply-templates select="@*" mode="heta-dict-item"/>
-      <xsl:apply-templates select="." mode="heta-dict-actors"/>
-      <xsl:apply-templates select="*[local-name()='listOfModifiers']" mode="heta-dict-item"/>
-      <xsl:apply-templates select="." mode="heta-dict-aux"/>
-      <xsl:text>}</xsl:text></span>
+    <span class="heta-dict">
+    <xsl:text> {</xsl:text>
+    <xsl:apply-templates select="@*" mode="heta-dict-item"/>
+    <xsl:apply-templates select="." mode="heta-dict-actors"/>
+    <xsl:apply-templates select="*[local-name()='listOfModifiers']" mode="heta-dict-item"/>
+    <xsl:text> }</xsl:text>
+    </span>
   </xsl:template>
 
   <!-- event dict -->
@@ -682,27 +721,12 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='event']"
     mode="heta-dict"
     >
-    <span class="heta-dict"> {
-<xsl:apply-templates select="@*" mode="heta-dict-item"/>
-      <xsl:apply-templates select="." mode="heta-dict-trigger"/>
-      <xsl:apply-templates select="." mode="heta-dict-aux"/>
-      <xsl:text>}</xsl:text></span>
-  </xsl:template>
-
-  <!-- aux item -->
-  <xsl:template
-    match="*"
-    mode="heta-dict-aux"
-    >
-    <xsl:variable 
-      name="auxProp"
-      select="@spatialDimensions|@metaid|@sboTerm|@outside|@spatialSizeUnits|@charge|*[local-name()='annotation']"
-      />
-    <xsl:if test="$fullForm='true' and count($auxProp)!='0'">
-    <span class="heta-dict-key">  aux: </span>
-    <span class="heta-dict">{<xsl:apply-templates select="$auxProp" mode="heta-dict-aux-item"/>}
-</span>
-    </xsl:if>
+    <span class="heta-dict">
+    <xsl:text> {</xsl:text>
+    <xsl:apply-templates select="@*" mode="heta-dict-item"/>
+    <xsl:apply-templates select="." mode="heta-dict-trigger"/>
+    <xsl:text> }</xsl:text>
+    </span>
   </xsl:template>
 
   <!-- annotation item -->
@@ -710,11 +734,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='annotation']"
     mode="heta-dict-aux-item"
     >
-    <xsl:if test="position()=1"><xsl:text>
-  </xsl:text></xsl:if>
-    <span class="heta-dict-key">  annotation: </span>
-    <span class="heta-dict-item heta-array">[<xsl:apply-templates select="*" mode="heta-dict-aux-annotation"/>]
-  </span>
+    <xsl:text>
+  </xsl:text>
+    <span class="heta-dict-key">annotation: </span>
+    <span class="heta-dict-item heta-array">[<xsl:apply-templates select="*" mode="heta-dict-aux-annotation"/>]</span>
   </xsl:template>
 
 <!-- END dictionary -->
@@ -734,16 +757,18 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
       "
     mode="heta-dict-item"
     >
-    <span class="heta-dict-key">  tags: </span>
-    <span class="heta-array heta-dict-value">[<span class="heta-string"><xsl:value-of select="."/></span>]</span>,
+    <span class="heta-dict-key"> tags: </span>
+    <span class="heta-array heta-dict-value">[<span class="heta-string"><xsl:value-of select="."/></span>]</span>
+    <xsl:text>,</xsl:text>
 </xsl:template>
 
   <xsl:template 
     match="@units"
     mode="heta-dict-item"
     >
-    <span class="heta-dict-key">  units: </span>
-    <span class="heta-string heta-dict-value"><xsl:value-of select="."/></span>,
+    <span class="heta-dict-key"> units: </span>
+    <span class="heta-string heta-dict-value"><xsl:value-of select="."/></span>
+    <xsl:text>,</xsl:text>
 </xsl:template>
 
   <xsl:template 
@@ -751,21 +776,24 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     mode="heta-dict-item"
     >
     <xsl:if test="not((../@hasOnlySubstanceUnits='true') or key('idKey',../@compartment)/@spatialDimensions='0')and key('idKey', ../@compartment)/@units">
-      <span class="heta-dict-key">  units: </span>
-      <span class="heta-dict-value heta-string"><xsl:value-of select="."/>/<xsl:value-of select="key('idKey', ../@compartment)/@units"/></span>,
-</xsl:if>
+      <span class="heta-dict-key"> units: </span>
+      <span class="heta-dict-value heta-string"><xsl:value-of select="."/>/<xsl:value-of select="key('idKey', ../@compartment)/@units"/></span>
+      <xsl:text>,</xsl:text>
+    </xsl:if>
     <xsl:if test="../@hasOnlySubstanceUnits='true' or key('idKey',../@compartment)/@spatialDimensions='0'">
-    <span class="heta-dict-key">  units: </span>
-    <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>,
-</xsl:if>
-</xsl:template>
+      <span class="heta-dict-key"> units: </span>
+      <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>
+      <xsl:text>,</xsl:text>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:template
     match="@compartment"
     mode="heta-dict-item"
     >
-    <span class="heta-dict-key">  compartment: </span>
-    <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>,
+    <span class="heta-dict-key"> compartment: </span>
+    <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>
+    <xsl:text>,</xsl:text>
 </xsl:template>
 <!--
   <xsl:template
@@ -780,48 +808,75 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='listOfUnits']"
     mode="heta-dict-item"
     >
-    <span class="heta-dict-key">  units: </span>
-    <span class="heta-dict-value heta-array">[<xsl:apply-templates select="*[local-name()='unit']" mode="unitFormula"/>]</span><xsl:text>,
-</xsl:text>
-</xsl:template>
+    <span class="heta-dict-key"> units: </span>
+    <span class="heta-string heta-dict-value">
+      <xsl:apply-templates select="*[local-name()='unit']" mode="unitFormula"/>
+    </span>
+    <xsl:text>,</xsl:text>
+  </xsl:template>
 
   <xsl:template
     match="*[local-name()='unit']"
     mode="unitFormula"
     >
-    <span class="heta-array-item heta-dict"><xsl:text>{</xsl:text>
-    <span class="heta-dict-key">kind</span>: <span class="heta-dict-value heta-string"><xsl:value-of select="@kind"/></span>
-    <xsl:if test="(@multiplier and @multiplier!='1') or (@scale and @scale!='0')">, <span class="heta-dict-key">multiplier</span>: <span class="heta-dict-value heta-string">
-      <xsl:if test="not(@multiplier)">1</xsl:if><xsl:value-of select="@multiplier"/>
-      <xsl:if test="@scale and @scale!='0'">e<xsl:value-of select="@scale"/></xsl:if>
-    </span></xsl:if>
-    <xsl:if test="@exponent and @exponent!='1'">, <span class="heta-dict-key">exponent</span>: <span class="heta-dict-value heta-string"><xsl:value-of select="@exponent"/></span></xsl:if>
-    <xsl:text>}</xsl:text></span>
-    <xsl:if test="position()!=last()">, </xsl:if>
-</xsl:template>
+    <xsl:if test="position()!=1"> * </xsl:if>
+    <xsl:apply-templates select="." mode="unitFormulaBase"/>
+    <xsl:if test="@exponent and @exponent!='1' and @exponent!='-1'">^<xsl:value-of select="format-number(number(@exponent),'0;0')"/></xsl:if>
+  </xsl:template>
+
+  <xsl:template
+    match="*[local-name()='unit' and @exponent and (@exponent &lt; 0)]"
+    mode="unitFormula"
+    >
+    <xsl:if test="position()=1">1</xsl:if>
+    <xsl:text> / </xsl:text>
+    <xsl:apply-templates select="." mode="unitFormulaBase"/>
+    <xsl:if test="@exponent and @exponent!='1' and @exponent!='-1'">^<xsl:value-of select="format-number(number(@exponent),'0;0')"/></xsl:if>
+  </xsl:template>
+
+  <xsl:template
+    match="*[local-name()='unit']"
+    mode="unitFormulaBase"
+    >    
+      <xsl:if test="(not(@multiplier) or @multiplier='1') and (not(@scale) or @scale='0')">
+        <xsl:value-of select="@kind"/>
+      </xsl:if>
+      <xsl:if test="(@multiplier and @multiplier!='1') or (@scale and @scale!='0')">
+        <xsl:text>(</xsl:text>
+        <xsl:if test="not(@multiplier)">1</xsl:if><xsl:value-of select="@multiplier"/>
+        <xsl:text>e</xsl:text>
+        <xsl:if test="not(@scale)">0</xsl:if><xsl:value-of select="@scale"/>
+        <xsl:text> </xsl:text>
+        <xsl:value-of select="@kind"/>
+        <xsl:text>)</xsl:text>
+      </xsl:if>
+  </xsl:template>
 
   <xsl:template
     match="*[local-name()='reaction']"
     mode="heta-dict-actors"
     >
-    <span class="heta-dict-key">  actors: </span>
-    <span class="heta-dict-value heta-string"><xsl:apply-templates select="." mode="reactionFormula"/></span>,
+    <span class="heta-dict-key"> actors: </span>
+    <span class="heta-dict-value heta-string"><xsl:apply-templates select="." mode="reactionFormula"/></span>
+    <xsl:text>,</xsl:text>
 </xsl:template>
 
   <xsl:template
     match="*[local-name()='listOfModifiers']"
     mode="heta-dict-item"
     >
-    <span class="heta-dict-key">  modifiers: </span>
-    <span class="heta-dict-value heta-array"><xsl:apply-templates select="." mode="reactionFormula"/></span>,
+    <span class="heta-dict-key"> modifiers: </span>
+    <span class="heta-dict-value heta-array"><xsl:apply-templates select="." mode="reactionFormula"/></span>
+    <xsl:text>,</xsl:text>
 </xsl:template>
 
   <xsl:template
     match="*[local-name()='event']"
     mode="heta-dict-trigger"
     >
-    <span class="heta-dict-key">  trigger: </span>
-    <span class="heta-dict-value heta-string"><xsl:apply-templates select="*[local-name()='trigger']/mml:math"/></span>,
+    <span class="heta-dict-key"> trigger: </span>
+    <span class="heta-dict-value heta-string"><xsl:apply-templates select="*[local-name()='trigger']/mml:math"/></span>
+    <xsl:text>,</xsl:text>
 </xsl:template>
 
   <!-- no boundary as default -->
@@ -836,8 +891,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='compartment' and not(@constant='false')]"
     mode="heta-dict-boundary"
     >
-    <span class="heta-dict-key">  boundary: </span>
-    <span class="heta-boolean heta-dict-value">true</span>,
+    <span class="heta-dict-key"> boundary: </span>
+    <span class="heta-boolean heta-dict-value">true</span>
+    <xsl:text>,</xsl:text>
 </xsl:template>
 
   <!-- boundary for species -->
@@ -845,8 +901,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='species' and (@boundaryCondition='true' or @constant='true')]"
     mode="heta-dict-boundary"
     >
-    <span class="heta-dict-key">  boundary: </span>
-    <span class="heta-boolean heta-dict-value">true</span>,
+    <span class="heta-dict-key"> boundary: </span>
+    <span class="heta-boolean heta-dict-value">true</span>
+    <xsl:text>,</xsl:text>
 </xsl:template>
 
   <!-- isAmount for species -->
@@ -859,8 +916,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="*[local-name()='species' and (@hasOnlySubstanceUnits='true' or key('idKey',@compartment)/@spatialDimensions='0')]"
     mode="heta-dict-is-amount"
     >
-    <span class="heta-dict-key">  isAmount: </span>
-    <span class="heta-boolean heta-dict-value">true</span>,
+    <span class="heta-dict-key"> isAmount: </span>
+    <span class="heta-boolean heta-dict-value">true</span>
+    <xsl:text>,</xsl:text>
 </xsl:template>
 <!-- END properties -->
 
@@ -898,10 +956,14 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   <xsl:template 
     match="*[local-name()='listOfModifiers']"
     mode="reactionFormula"
-    >[<xsl:for-each select="*[local-name()='modifierSpeciesReference']">
-    <span class="heta-array-item heta-string"><xsl:value-of select="@species"/></span>
+    >
+    <xsl:text>[</xsl:text>
+    <xsl:for-each select="*[local-name()='modifierSpeciesReference']">
+      <span class="heta-array-item heta-string"><xsl:value-of select="@species"/></span>
       <xsl:if test="position()!=last()">, </xsl:if>
-    </xsl:for-each>]</xsl:template>
+    </xsl:for-each>
+    <xsl:text>]</xsl:text>
+  </xsl:template>
 <!-- END reactionFormula mode -->
 
 <!-- BEGIN aux properties -->
@@ -910,12 +972,14 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     match="@*"
     mode="heta-dict-aux-item"
     >
-    <xsl:if test="position()=1"><xsl:text>
-  </xsl:text></xsl:if>
-    <xsl:text>  </xsl:text>
-    <span class="heta-dict-key"><xsl:value-of select="local-name()"/>: </span>
-    <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span><xsl:if test="position()!=last()">,</xsl:if><xsl:text>
+    <xsl:text>
   </xsl:text>
+    <span class="heta-dict-key"><xsl:value-of select="local-name()"/></span>
+    <xsl:text>: </xsl:text>
+    <span class="heta-dict-value heta-string"><xsl:value-of select="."/></span>
+    <xsl:if test="position()!=last()">
+      <xsl:text>,</xsl:text>
+    </xsl:if>
   </xsl:template>
 
 <!-- END aux properties -->
@@ -1125,12 +1189,12 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- a*(x+y+z) a/(x+y+z) a-(x+y+z) -->
   <xsl:template match="mml:apply[mml:times or mml:divide or mml:minus]/mml:apply[mml:plus]">
-    <xsl:text> (</xsl:text>
+    <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
       <xsl:if test="position()!=last()"> + </xsl:if>
     </xsl:for-each>
-    <xsl:text>) </xsl:text>
+    <xsl:text>)</xsl:text>
   </xsl:template>
 
   <!-- peicewise with many pieces-->
@@ -1140,43 +1204,43 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- piecewise lt -->
   <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:lt]]">
-    <xsl:text>ifg0(</xsl:text>
-    <xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>, <xsl:apply-templates select="mml:otherwise/*[1]" />
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/> &lt; <xsl:apply-templates select="mml:piece/mml:apply/*[3]"/> ? <xsl:apply-templates select="mml:piece/*[1]"/> : <xsl:apply-templates select="mml:otherwise/*[1]" />
     <xsl:text>)</xsl:text>
   </xsl:template>
 
   <!-- piecewise gt -->
   <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:gt]]">
-    <xsl:text>ifg0(</xsl:text>
-    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>, <xsl:apply-templates select="mml:otherwise/*[1]" />
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/> &gt; <xsl:apply-templates select="mml:piece/mml:apply/*[3]"/> ? <xsl:apply-templates select="mml:piece/*[1]"/> : <xsl:apply-templates select="mml:otherwise/*[1]" />
     <xsl:text>)</xsl:text>
   </xsl:template>
 
   <!-- piecewise leq -->
   <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:leq]]">
-    <xsl:text>ifge0(</xsl:text>
-    <xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>, <xsl:apply-templates select="mml:otherwise/*[1]" />
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/> &lt;= <xsl:apply-templates select="mml:piece/mml:apply/*[3]"/> ? <xsl:apply-templates select="mml:piece/*[1]"/> : <xsl:apply-templates select="mml:otherwise/*[1]" />
     <xsl:text>)</xsl:text>
   </xsl:template>
 
   <!-- piecewise geq -->
   <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:geq]]">
-    <xsl:text>ifge0(</xsl:text>
-    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>, <xsl:apply-templates select="mml:otherwise/*[1]" />
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/> &gt;= <xsl:apply-templates select="mml:piece/mml:apply/*[3]"/> ? <xsl:apply-templates select="mml:piece/*[1]"/> : <xsl:apply-templates select="mml:otherwise/*[1]" />
     <xsl:text>)</xsl:text>
   </xsl:template>
 
   <!-- piecewise eq -->
   <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:eq]]">
-    <xsl:text>ife0(</xsl:text>
-    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>, <xsl:apply-templates select="mml:otherwise/*[1]" />
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/> == <xsl:apply-templates select="mml:piece/mml:apply/*[3]"/> ? <xsl:apply-templates select="mml:piece/*[1]"/> : <xsl:apply-templates select="mml:otherwise/*[1]" />
     <xsl:text>)</xsl:text>
   </xsl:template>
 
   <!-- piecewise neq -->
   <xsl:template match="mml:piecewise[count(mml:piece)=1][mml:piece/mml:apply/*[1][self::mml:neq]]">
-    <xsl:text>ife0(</xsl:text>
-    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/>-<xsl:apply-templates select="mml:piece/mml:apply/*[3]"/>, <xsl:apply-templates select="mml:otherwise/*[1]"/>, <xsl:apply-templates select="mml:piece/*[1]"/>
+    <xsl:text>(</xsl:text>
+    <xsl:apply-templates select="mml:piece/mml:apply/*[2]"/> != <xsl:apply-templates select="mml:piece/mml:apply/*[3]"/> ? <xsl:apply-templates select="mml:otherwise/*[1]"/> : <xsl:apply-templates select="mml:piece/*[1]"/>
     <xsl:text>)</xsl:text>
   </xsl:template>
 
@@ -1233,17 +1297,25 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- not-->
   <xsl:template match="mml:apply[mml:not]">
-    not <xsl:apply-templates select="*[position()=2]"/>
+    <xsl:text>not </xsl:text>
+    <xsl:apply-templates select="*[position()=2]"/>
   </xsl:template>
 
   <xsl:template match="mml:apply/mml:apply[mml:not]">
-    <xsl:text>(</xsl:text>
-    not <xsl:apply-templates select="*[position()=2]"/>
+    <xsl:text>(not </xsl:text>
+    <xsl:apply-templates select="*[position()=2]"/>
     <xsl:text>)</xsl:text>
   </xsl:template>
 
   <!-- lt -->
   <xsl:template match="mml:apply[mml:lt]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> &lt; </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply/mml:apply[mml:lt]">
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
@@ -1254,6 +1326,13 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- leq -->
   <xsl:template match="mml:apply[mml:leq]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> &lt;= </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply/mml:apply[mml:leq]">
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
@@ -1264,6 +1343,13 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- gt -->
   <xsl:template match="mml:apply[mml:gt]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> &gt; </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply/mml:apply[mml:gt]">
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
@@ -1274,6 +1360,13 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- geq -->
   <xsl:template match="mml:apply[mml:geq]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> &gt;= </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply/mml:apply[mml:geq]">
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
@@ -1284,6 +1377,13 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- eq -->
   <xsl:template match="mml:apply[mml:eq]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> == </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply/mml:apply[mml:eq]">
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
@@ -1294,6 +1394,13 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <!-- neq -->
   <xsl:template match="mml:apply[mml:neq]">
+    <xsl:for-each select="*[position()&gt;1]">
+      <xsl:apply-templates select="."/>
+      <xsl:if test="position()!=last()"> != </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="mml:apply/mml:apply[mml:neq]">
     <xsl:text>(</xsl:text>
     <xsl:for-each select="*[position()&gt;1]">
       <xsl:apply-templates select="."/>
@@ -1382,7 +1489,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   <!-- <xsl:strip-space elements="xhtml:body xhtml:div xhtml:pre xhtml:p" /> -->
 
   <xsl:template match="xhtml:*">
-    <span class="heta-debug"><xsl:apply-templates select="node()"/></span>
+    <span class="heta-debug">
+      <xsl:apply-templates select="node()"/>
+    </span>
   </xsl:template>
 
   <xsl:template match="xhtml:*/text()">
@@ -1406,7 +1515,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
   <xsl:template
     match="xhtml:i"
     >
-    <xsl:text>*</xsl:text><xsl:apply-templates select="node()"/><xsl:text>*</xsl:text>
+    <xsl:text>*</xsl:text>
+    <xsl:apply-templates select="node()"/>
+    <xsl:text>*</xsl:text>
   </xsl:template>
 
   <xsl:template
@@ -1415,7 +1526,9 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
       |xhtml:strong
       "
     >
-    <xsl:text>**</xsl:text><xsl:apply-templates select="node()"/><xsl:text>**</xsl:text>
+    <xsl:text>**</xsl:text>
+    <xsl:apply-templates select="node()"/>
+    <xsl:text>**</xsl:text>
   </xsl:template>
 
   <xsl:template
