@@ -42,7 +42,7 @@ To look through example just try the links
 
 ![sv scren 1](/assets/img/sv_screen1.png)
 
-##S Features list
+## Features list
 
 - reading SBML Level 2 Version 1-5
 - reading SBML Level 3 Version 1-2
