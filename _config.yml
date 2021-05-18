@@ -6,7 +6,7 @@ gems:
 safe: false
 title: "SbmlViewer"
 description: "The collection of transformations from SBML files into human readable formats"
-logo: /assets/img/logo_isb.png
+logo: /assets/img/logo-insysbio.png
 url: http://sv.insysbio.com
 liquid:
   error_mode: warn
