@@ -1,6 +1,6 @@
 {
   "name": "sbmlviewer",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "The collection of transformation from SBML files into human readable formats",
   "contributors": [
     "Evgeny Metelkin",
@@ -74,7 +74,7 @@
     "vue-loader": "^15.9.5",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.12",
-    "webpack": "^4.44.2",
+    "webpack": "^4.46.0",
     "webpack-bundle-analyzer": "^3.9.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
@@ -83,8 +83,8 @@
     "zip-webpack-plugin": "^3.0.0"
   },
   "engines": {
-    "node": "^8.0.0",
-    "npm": ">= 5.0.0"
+    "node": "^12.20.0",
+    "npm": ">= 6.14.8"
   },
   "browserslist": [
     "> 1%",
