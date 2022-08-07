@@ -13,10 +13,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Use Node.js 8.x
+      - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
-          node-version: 8.x
+          node-version: 12.x
       - name: Build SV app
         run: |
           npm ci
