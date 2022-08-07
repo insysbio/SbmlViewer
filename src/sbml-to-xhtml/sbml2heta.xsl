@@ -122,22 +122,6 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     </span>
   </xsl:template>
 
-  <!-- listOfFunctionDefinitions -->
-  <xsl:template 
-    match="*[local-name()='listOfFunctionDefinitions']"
-    mode="heta"
-    >
-    <span class="heta-block">
-      <span class="heta-comment">
-// <xsl:value-of select="local-name()"/> (not supported)</span>
-      <span class="heta-comment">
-/*
-  The original model contains the following functionDefinitions:
-<xsl:apply-templates select="*[local-name()='functionDefinition']" mode="heta"/>*/
-</span>
-    </span>
-  </xsl:template>
-
   <!-- listOfConstraints -->
   <xsl:template 
     match="*[local-name()='listOfConstraints']"
@@ -199,6 +183,20 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 // listOfUnitDefinitions
 </span>
     <xsl:apply-templates select="*[local-name()='unitDefinition']" mode="heta"/>
+    </span>
+  </xsl:template>
+
+
+  <!-- listOfFunctionDefinitions -->
+  <xsl:template 
+    match="*[local-name()='listOfFunctionDefinitions']"
+    mode="heta"
+    >
+    <span class="heta-block">
+    <span class="heta-comment">
+// listOfFunctionDefinitions
+</span>
+    <xsl:apply-templates select="*[local-name()='functionDefinition']" mode="heta"/>
     </span>
   </xsl:template>
 
@@ -298,15 +296,6 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 <!-- BEGIN unsupported components -->
 
   <xsl:template 
-    match="*[local-name()='functionDefinition']" 
-    mode="heta"
-    >
-    <xsl:text>  </xsl:text
-    ><xsl:value-of select="@id"/>
-    <xsl:apply-templates select="mml:math"/>
-</xsl:template>
-
-  <xsl:template 
     match="*[local-name()='constraint']" 
     mode="heta"
     >
@@ -342,6 +331,20 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     <xsl:apply-templates select="." mode="heta-sugar"/>
     <xsl:apply-templates select="." mode="heta-annotation"/>
   </xsl:template>
+
+
+  <xsl:template 
+    match="*[local-name()='functionDefinition']" 
+    mode="heta"
+    >
+    <xsl:text>
+</xsl:text>
+    <xsl:apply-templates select="." mode="heta-sugar"/>
+    <xsl:apply-templates select="." mode="heta-annotation"/>
+<!--    <xsl:text>  </xsl:text
+    ><xsl:value-of select="@id"/>
+    <xsl:apply-templates select="mml:math"/>-->
+</xsl:template>
 
   <xsl:template 
     match="
@@ -514,6 +517,10 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
 
   <xsl:template match="*[local-name()='unitDefinition']" mode="heta-class">
     <span class="heta-action"> #defineUnit</span>
+  </xsl:template>
+
+  <xsl:template match="*[local-name()='functionDefinition']" mode="heta-class">
+    <span class="heta-action"> #defineFunction</span>
   </xsl:template>
 
   <xsl:template match="*[local-name()='compartment']" mode="heta-class">
@@ -702,6 +709,19 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
     </span>
   </xsl:template>
 
+  <!-- functionDef dict -->
+  <xsl:template
+    match="*[local-name()='functionDefinition']"
+    mode="heta-dict"
+    >
+    <span class="heta-dict">
+    <xsl:text> {</xsl:text>
+    <xsl:apply-templates select="mml:math" mode="heta-dict-arguments"/>
+    <xsl:apply-templates select="mml:math" mode="heta-dict-math"/>
+    <xsl:text> }</xsl:text>
+    </span>
+  </xsl:template>
+
   <!-- reaction dict -->
   <xsl:template
     match="*[local-name()='reaction']"
@@ -850,6 +870,30 @@ Project-page: https://sv.insysbio.com, https://hetalang.insysbio.com
         <xsl:value-of select="@kind"/>
         <xsl:text>)</xsl:text>
       </xsl:if>
+  </xsl:template>
+
+  <xsl:template 
+    match="mml:math"
+    mode="heta-dict-arguments"
+    >
+    <span class="heta-dict-key"> arguments: </span>
+    <span class="heta-array heta-dict-value">
+      <xsl:text>[</xsl:text>
+      <xsl:apply-templates select="mml:lambda/mml:bvar/mml:ci"/>
+      <xsl:text>]</xsl:text>
+    </span>
+    <xsl:text>,</xsl:text>
+  </xsl:template>
+
+  <xsl:template 
+    match="mml:math"
+    mode="heta-dict-math"
+    >
+    <span class="heta-dict-key"> math: </span>
+    <span class="heta-array heta-dict-value">
+      <xsl:apply-templates select="mml:lambda/*[local-name()!='bvar']"/>
+    </span>
+    <xsl:text>,</xsl:text>
   </xsl:template>
 
   <xsl:template
