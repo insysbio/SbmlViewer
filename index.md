@@ -17,28 +17,28 @@ SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlV
 ## Quick start
 <hr/>
 
-[Try online](http://sv.insysbio.com/{{ site.distPath }})
+[Try online](https://sv.insysbio.com/{{ site.distPath }})
 
 **For models from your computer:**
 
-1. Open the page [http://sv.insysbio.com/{{ site.distPath }}](/{{ site.distPath }})
+1. Open the page [https://sv.insysbio.com/{{ site.distPath }}](/{{ site.distPath }})
 2. Drug'n'drop your SBML or click on button "Choose file" and select your sbml model.
 
 **For models shared on web:**
 
 *Some servers don't allow to use shared files in this way. In that case download the file and use the method above.*
 
-1. Copy the link of your shared model, for instance http://www.example.com/your_sbml_file.xml
+1. Copy the link of your shared model, for instance https://www.example.com/your_sbml_file.xml
 2. Add the external SBML path to SbmlViewer url followed by ? sign, like this:
- `http://sv.insysbio.com/{{ site.distPath }}?http://www.example.com/external_sbml_file.xml`
+ `https://sv.insysbio.com/{{ site.distPath }}?https://www.example.com/external_sbml_file.xml`
 3. The full url above can be shared, sent or embedded to web page if you wish.
 
 ## Examples
 To look through example just try the links
-* [test 00001 from SBML Test Suite Database](http://sv.insysbio.com/{{ site.distPath }}?http://sv.insysbio.com/cases/00001-sbml-l2v1.xml)
-* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](http://sv.insysbio.com/{{ site.distPath }}?http://sv.insysbio.com/cases/BIOMD0000000512.xml)
-* [BIOMD0000000588 from BioModels Database, model of the month in February 2017](http://sv.insysbio.com/{{ site.distPath }}?http://sv.insysbio.com/cases/BIOMD0000000588.xml)
-* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](http://sv.insysbio.com/{{ site.distPath }}?http://sv.insysbio.com/cases/BIOMD0000000439.xml)
+* [test 00001 from SBML Test Suite Database](https://sv.insysbio.com/{{ site.distPath }}?https://sv.insysbio.com/cases/00001-sbml-l2v1.xml)
+* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](https://sv.insysbio.com/{{ site.distPath }}?https://sv.insysbio.com/cases/BIOMD0000000512.xml)
+* [BIOMD0000000588 from BioModels Database, model of the month in February 2017](https://sv.insysbio.com/{{ site.distPath }}?https://sv.insysbio.com/cases/BIOMD0000000588.xml)
+* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](https://sv.insysbio.com/{{ site.distPath }}?https://sv.insysbio.com/cases/BIOMD0000000439.xml)
 
 ![sv scren 1](/assets/img/sv_screen1.png)
 
@@ -83,4 +83,4 @@ Apache 2.0
 
 ## About SBML
 
-SBML is a free and open interchange format for computer models of biological processes maintained by [SBML community](http://sbml.org/). It is used in many modeling application and can store model structure, math and annotation of elements. SBML is XML based format and designed basically for machine reading and writing.
+SBML is a free and open interchange format for computer models of biological processes maintained by [SBML community](https://sbml.org/). It is used in many modeling application and can store model structure, math and annotation of elements. SBML is XML based format and designed basically for machine reading and writing.
