@@ -1,6 +1,6 @@
 # SbmlViewer
 [![Heta project](https://img.shields.io/badge/%CD%B1-Heta_project-blue)](https://hetalang.github.io/)
-[![Website sv.insysbio.com](https://img.shields.io/website-up-down-green-red/http/sv.insysbio.com.svg)](http://sv.insysbio.com)
+[![Website sv.insysbio.com](https://img.shields.io/website-up-down-green-red/https/sv.insysbio.com.svg)](https://sv.insysbio.com)
 [![GitHub release](https://img.shields.io/github/release/insysbio/SbmlViewer.svg)](https://github.com/insysbio/SbmlViewer/releases/)
 [![GitHub license](https://img.shields.io/github/license/insysbio/SbmlViewer.svg)](https://github.com/insysbio/SbmlViewer/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/insysbio/SbmlViewer.svg)](https://GitHub.com/insysbio/SbmlViewer/issues/)
@@ -11,7 +11,7 @@
 The collection of transformation from SBML files into human readable formats and tools for performing transformations.
 
 See more info on the project page:
-http://sv.insysbio.com
+https://sv.insysbio.com
 
 ## Support
 
@@ -30,5 +30,5 @@ This project is licensed under Apache-2.0 License - see the [LICENSE](LICENSE) f
 - Viktoria Tkachenko @vetedde
 - Evgeny Metelkin @metelkin
 
-© InSysBio, 2016-2022
-http://insysbio.com
+© InSysBio, 2016-2025
+https://insysbio.com

@@ -18,7 +18,7 @@ export default {
       isSpin: false,
       file: null,
       version: version,
-      homepage: 'http://sv.insysbio.com'
+      homepage: 'https://sv.insysbio.com'
     }
   },
   mounted () {

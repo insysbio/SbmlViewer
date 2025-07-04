@@ -26,7 +26,7 @@ modes:
   - element
 
 Author: Evgeny Metelkin
-Project-page: http://sv.insysbio.com
+Project-page: https://sv.insysbio.com
 -->
 <xsl:stylesheet version="1.0"
   xmlns="http://www.w3.org/1999/xhtml"
