@@ -5,7 +5,7 @@ on:
   push:
     branches: [ master, '*' ]
 
-name: Build and Deploy
+name: Build check
 
 jobs:
   build:
