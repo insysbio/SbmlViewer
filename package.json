@@ -22,7 +22,7 @@
   "dependencies": {
     "code-prettify": "^0.1.0",
     "pretty-data": "^0.40.0",
-    "sass": "^1.69.5",
+    "sass": "^1.89.2",
     "vue": "^2.7.16",
     "w3css": "^2.7.0",
     "xml-escape": "^1.1.0"
@@ -45,7 +45,7 @@
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^2.2.1",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^3.0.1",
@@ -58,7 +58,7 @@
     "node-notifier": "^8.0.2",
     "optimize-css-assets-webpack-plugin": "^5.0.8",
     "ora": "^1.2.0",
-    "portfinder": "^1.0.32",
+    "portfinder": "^1.0.37",
     "postcss-import": "^11.0.0",
     "postcss-loader": "^3.0.0",
     "postcss-url": "^7.2.1",
@@ -82,7 +82,8 @@
     "zip-webpack-plugin": "^3.0.0"
   },
   "engines": {
-    "node": "^12.20.0"
+    "node": "^12.20.0",
+    "npm": "6.14.16"
   },
   "browserslist": [
     "> 1%",

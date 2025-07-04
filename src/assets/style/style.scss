@@ -1,4 +1,5 @@
-@import '~w3css/w3';
+/*@import '~w3css/w3';*/
+@use 'w3css/w3' as *;
 
 .sv-sbml-container {
   @extend .w3-container!optional;
