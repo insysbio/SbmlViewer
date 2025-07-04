@@ -7,7 +7,7 @@ safe: false
 title: "SbmlViewer"
 description: "The collection of transformations from SBML files into human readable formats"
 logo: /assets/img/logo-insysbio.png
-url: http://sv.insysbio.com
+url: https://sv.insysbio.com
 liquid:
   error_mode: warn
 #statistics
