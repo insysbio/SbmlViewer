@@ -11,8 +11,7 @@ url: https://sv.insysbio.com
 liquid:
   error_mode: warn
 #statistics
-google_analytics: UA-149749027-2
-yandex_metrika: 44335438
+google_analytics: G-8VK4HVMKNW
 #Path for current release
 distPath: online
 #SEO
