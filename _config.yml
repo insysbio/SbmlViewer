@@ -1,4 +1,4 @@
-#Doc http://jekyllrb.com/docs/configuration/
+#Doc https://jekyllrb.com/docs/configuration/
 gems:
   - jekyll-mentions
   - jekyll-seo-tag
@@ -26,7 +26,7 @@ social:
     - https://www.linkedin.com/insysbio
     - https://github.com/insysbio
     - https://twitter.com/insysbio
-    - https://insysbio.com/en
+    - https://insysbio.com
 defaults:
   - scope:
       path: ""
