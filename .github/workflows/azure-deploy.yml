@@ -27,9 +27,8 @@ jobs:
         run: |
           bundle install
           bundle exec jekyll build \
-            --destination ../_site \
-            --url "https://sv.insysbio.com"
-
+            --destination ../_site
+            
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
