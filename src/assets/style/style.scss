@@ -186,3 +186,12 @@ td.sbml-metaid.sbml-attribute-value {
 .antimony-debug {
   @extend .w3-orange;
 }
+
+/* MathJax specific style */
+
+.mo:empty + .mi::before { /*show visible times*/
+  content: '\00B7';
+}
+.mo:empty + .mrow::before { /*show visible times*/
+  content: '\00B7';
+}

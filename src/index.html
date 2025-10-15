@@ -5,37 +5,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8VK4HVMKNW"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-8VK4HVMKNW');
-    </script>
+    <script src="/assets/js/gtag-init.js"></script>
   <!-- MathJax settings -->
-    <style>
-    .mo:empty + .mi::before { /*show visible times*/
-      content: '\00B7';
-    }
-    .mo:empty + .mrow::before { /*show visible times*/
-      content: '\00B7';
-    }
-    </style>
-   <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        jax: ["input/MathML", "output/HTML-CSS"],
-        extensions: ["mml2jax.js", "MathML/content-mathml.js", "MathZoom.js"],
-        menuSettings: { zoom: "Click" },
-        CommonHTML: {linebreaks: { automatic: true, width: "container" }},
-        "HTML-CSS": {
-          linebreaks: { automatic: true, width: "container" },
-          EqnChunk: 1,
-          EqnChunkFactor: 1,
-          EqnChunkDelay: 1
-        },
-        SVG: { linebreaks: { automatic: true, width: "container" } }
-      });
-      </script>
+   <script type="text/x-mathjax-config" src="/assets/js/mathjax-config.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
     <!-- END of MathJax settings -->
     <title>SbmlViewer</title>
