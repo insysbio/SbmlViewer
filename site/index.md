@@ -1,4 +1,6 @@
-
+---
+canonical_url: https://sv.insysbio.com/
+---
 **SbmlViewer** is a tool for fast and easy reading of biological models written in SBML format. It allows looking through model components and equations even if you have no modeling software installed. It is as simple as reading a web page in your web browser.
 
 SbmlViewer never uploads your files to the server and all transformations are performed locally in your browser, so it is safe and secure for your code.
@@ -21,7 +23,7 @@ SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlV
 
 **For models from your computer:**
 
-1. Open the page [https://sv.insysbio.com/{{ site.distPath }}](./{{ site.distPath }})
+1. Open the page <https://sv.insysbio.com/{{ site.distPath }}>
 2. Drug'n'drop your SBML or click on button "Choose file" and select your sbml model.
 
 **For models shared on web:**
