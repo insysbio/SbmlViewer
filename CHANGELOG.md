@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.5
+
+- Deploy to Azure Static Web Apps + secure headers update
+- Include step content to master branch
+
 ## 0.3.4
 
 - Update GA property ID
