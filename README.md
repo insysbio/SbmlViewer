@@ -4,7 +4,7 @@
 [![GitHub release](https://img.shields.io/github/release/insysbio/SbmlViewer.svg)](https://github.com/insysbio/SbmlViewer/releases/)
 [![GitHub license](https://img.shields.io/github/license/insysbio/SbmlViewer.svg)](https://github.com/insysbio/SbmlViewer/blob/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/insysbio/SbmlViewer.svg)](https://GitHub.com/insysbio/SbmlViewer/issues/)
-[![Build and Deploy](https://github.com/insysbio/SbmlViewer/actions/workflows/nodejs.yml/badge.svg)](https://github.com/insysbio/SbmlViewer/actions/workflows/nodejs.yml)
+[![Build and Deploy to Pages](https://github.com/insysbio/SbmlViewer/actions/workflows/pages-deploy.yml/badge.svg)](https://github.com/insysbio/SbmlViewer/actions/workflows/pages-deploy.yml)
 [![DOI:10.13140/RG.2.2.25331.37921](https://zenodo.org/badge/DOI/10.13140/RG.2.2.25331.37921.svg)](https://doi.org/10.13140/RG.2.2.25331.37921)
 
 
