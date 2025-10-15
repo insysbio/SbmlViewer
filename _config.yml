@@ -3,6 +3,7 @@ gems:
   - jekyll-mentions
   - jekyll-seo-tag
   - jekyll-sitemap
+encoding: "utf-8"
 safe: false
 title: "SbmlViewer"
 description: "The collection of transformations from SBML files into human readable formats"
@@ -13,7 +14,7 @@ liquid:
 #statistics
 google_analytics: G-8VK4HVMKNW
 #Path for current release
-distPath: online
+distPath: online/
 #SEO
 facebook:
   app_id: 266737823736763
