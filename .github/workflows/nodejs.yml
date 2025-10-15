@@ -9,24 +9,22 @@ name: Build check
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
+
     - name: Checkout
       uses: actions/checkout@v4
       with:
         persist-credentials: false
-    - name: Use Node.js 12.x
+
+    - name: Use Node.js 18.x
       uses: actions/setup-node@v3
       with:
-        node-version: 12.x
-    - run: |
+        node-version: 18.x
+
+    - name: Install dependencies and build - just to tests that it works
+      run: |
         npm ci
         npm run build
-        # cp dist/sv.zip dist/SbmlViewer-offline-${TRAVIS_TAG}.zip
-        mkdir -p site/online
-        cp -rf dist/sv/* site/online
       env:
         CI: true
-
