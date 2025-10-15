@@ -3,6 +3,7 @@ on:
     # Sequence of patterns matched against refs/tags
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  workflow_dispatch:      # Manual trigger from GitHub UI
 
 name: Deploy to Azure Static Web Apps
 
@@ -24,3 +25,13 @@ jobs:
         run: |
           npm ci
           npm run build
+          mkdir -p site/online
+          # rm -rf site/online/*
+          cp -rf dist/sv/* site/online
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_TOKEN }}
+          app_location: "."
+          output_location: "site"
