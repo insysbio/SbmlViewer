@@ -17,11 +17,11 @@ SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlV
 ## Quick start
 <hr/>
 
-[Try online](https://sv.insysbio.com/{{ site.distPath }})
+[Try online](./{{ site.distPath }})
 
 **For models from your computer:**
 
-1. Open the page [https://sv.insysbio.com/{{ site.distPath }}](/{{ site.distPath }})
+1. Open the page [https://sv.insysbio.com/{{ site.distPath }}](./{{ site.distPath }})
 2. Drug'n'drop your SBML or click on button "Choose file" and select your sbml model.
 
 **For models shared on web:**
@@ -35,10 +35,10 @@ SbmlViewer is open project located on [GitHub](https://github.com/insysbio/SbmlV
 
 ## Examples
 To look through example just try the links
-* [test 00001 from SBML Test Suite Database](https://sv.insysbio.com/{{ site.distPath }}?https://sv.insysbio.com/cases/00001-sbml-l2v1.xml)
-* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](https://sv.insysbio.com/{{ site.distPath }}?https://sv.insysbio.com/cases/BIOMD0000000512.xml)
-* [BIOMD0000000588 from BioModels Database, model of the month in February 2017](https://sv.insysbio.com/{{ site.distPath }}?https://sv.insysbio.com/cases/BIOMD0000000588.xml)
-* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](https://sv.insysbio.com/{{ site.distPath }}?https://sv.insysbio.com/cases/BIOMD0000000439.xml)
+* [test 00001 from SBML Test Suite Database](./{{ site.distPath }}?https://sv.insysbio.com/cases/00001-sbml-l2v1.xml)
+* [BIOMD0000000512 from BioModels Database, model of the month in January 2016](./{{ site.distPath }}?https://sv.insysbio.com/cases/BIOMD0000000512.xml)
+* [BIOMD0000000588 from BioModels Database, model of the month in February 2017](./{{ site.distPath }}?https://sv.insysbio.com/cases/BIOMD0000000588.xml)
+* [BIOMD0000000439 from BioModels Database, model of the month in October 2016](./{{ site.distPath }}?https://sv.insysbio.com/cases/BIOMD0000000439.xml)
 
 ![sv scren 1](/assets/img/sv_screen1.png)
 
