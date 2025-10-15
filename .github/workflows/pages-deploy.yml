@@ -5,7 +5,7 @@ on:
   push:
     branches: [ master, '*' ]
 
-name: Build check
+name: Build and Deploy to Pages
 
 jobs:
   build:
@@ -22,9 +22,21 @@ jobs:
       with:
         node-version: 18.x
 
-    - name: Install dependencies and build - just to tests that it works
+    - name: Install dependencies and build
       run: |
         npm ci
         npm run build
+          mkdir -p site/online
+          rm -rf site/online/*
+          cp -rf dist/sv/* site/online
+
+    - name: Deploy to "gh-pages"
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages # The branch the action should deploy to.
+        folder: site # The folder the action should deploy.
+        clean: false
+
       env:
         CI: true
