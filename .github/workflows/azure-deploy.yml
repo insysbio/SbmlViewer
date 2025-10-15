@@ -16,6 +16,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Install Jekyll
+        run: |
+          gem install bundler jekyll
+          bundle install
+          jekyll build --source site --destination _site
+
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
@@ -25,14 +36,13 @@ jobs:
         run: |
           npm ci
           npm run build
-          mkdir -p site/online
-          # rm -rf site/online/*
-          cp -rf dist/sv/* site/online
+          mkdir -p _site/online
+          cp -rf dist/sv/* _site/online
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_TOKEN }}
-          output_location: site
+          output_location: _site
           skip_app_build: true
           action: "upload"
