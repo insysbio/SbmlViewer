@@ -40,6 +40,7 @@ jobs:
           npm run build
           mkdir -p _site/online
           cp -rf dist/sv/* _site/online
+          cp -rf src/assets/js/* _site/online/static/js # temp solution
 
       - name: Copy Azure config
         run: |
