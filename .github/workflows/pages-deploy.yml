@@ -29,6 +29,7 @@ jobs:
         mkdir -p site/online
         rm -rf site/online/*
         cp -rf dist/sv/* site/online
+        cp -rf src/assets/js/* site/online/static/js # temp solution
 
     - name: Deploy to "gh-pages"
       uses: JamesIves/github-pages-deploy-action@v4
