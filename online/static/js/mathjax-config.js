@@ -1,4 +1,4 @@
-MathJax.Hub.Config({
+window.MathJax = {
     jax: ["input/MathML", "output/HTML-CSS"],
     extensions: ["mml2jax.js", "MathML/content-mathml.js", "MathZoom.js"],
     menuSettings: { zoom: "Click" },
@@ -10,4 +10,4 @@ MathJax.Hub.Config({
         EqnChunkDelay: 1
     },
     SVG: { linebreaks: { automatic: true, width: "container" } }
-});
+};
