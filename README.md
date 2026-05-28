@@ -10,8 +10,12 @@
 
 The collection of transformation from SBML files into human readable formats and tools for performing transformations.
 
-See more info on the project page:
+See more info on the demo page:
 https://sv.insysbio.com
+
+Alternative link:
+
+https://insysbio.github.io/SbmlViewer/
 
 ## Support
 

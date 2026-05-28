@@ -75,12 +75,16 @@ export default {
         let annotationContainerArray = document.querySelectorAll('tr.sv-hidden')
         for (let i = 0; i < annotationContainerArray.length; i++) {
           let annotationContainer = annotationContainerArray[i]
+          let annotationHeader = annotationContainer.previousElementSibling
 
           // set button for notes and annotation
+          if (!annotationHeader || !annotationHeader.firstElementChild) {
+            continue
+          }
+
           let button = document.createElement('i')
           button.setAttribute('class', 'sv-hide-button sv-info-symbol')
-          annotationContainer
-            .previousSibling
+          annotationHeader
             .firstElementChild
             .appendChild(button)
 
@@ -92,8 +96,13 @@ export default {
         }
         let eventTr = document.querySelectorAll('tr.sbml-event')
         eventTr.forEach((item) => {
+          let eventDetails = item.nextElementSibling
+          if (!eventDetails) {
+            return
+          }
+
           item
-            .nextSibling
+            .nextElementSibling
             .classList
             .toggle('sv-hidden')
         })
