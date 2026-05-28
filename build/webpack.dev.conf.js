@@ -66,7 +66,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       },
       {
         from: path.resolve(__dirname, '../src/assets/js'),
-        to: 'assets/js',
+        to: 'static/js',
         ignore: ['.*']
       }
     ])
