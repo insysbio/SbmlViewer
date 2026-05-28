@@ -43,9 +43,7 @@ let prodWebpackConfig = {
 
     new UglifyJsPlugin({
       uglifyOptions: {
-        compress: {
-          warnings: false
-        }
+        compress: {}
       },
       sourceMap: config.build.productionSourceMap,
       parallel: true
