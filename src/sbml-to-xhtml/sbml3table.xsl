@@ -559,6 +559,8 @@ Project-page: https://sv.insysbio.com
             <th><xsl:if test="*/@name">sboTerm</xsl:if></th>
             <th><xsl:if test="*/@metaid">metaid</xsl:if></th>
             <th><xsl:if test="*/@useValuesFromTriggerTime">useValuesFrom TriggerTime</xsl:if></th>
+            <th><xsl:if test="*[local-name()='event']/*[local-name()='trigger']/@persistent">persistent</xsl:if></th>
+            <th><xsl:if test="*[local-name()='event']/*[local-name()='trigger']/@initialValue">initialValue</xsl:if></th>
             <th>trigger</th>
             <th>delay</th>
             <th>priority</th>
@@ -576,6 +578,8 @@ Project-page: https://sv.insysbio.com
       <td class="sbml-attribute-value sbml-sboTerm"><xsl:value-of select="@sboTerm"/></td>
       <td class="sbml-attribute-value sbml-metaid"><xsl:value-of select="@metaid"/></td>
       <td class="sbml-attribute-value sbml-useValuesFromTriggerTime"><xsl:value-of select="@useValuesFromTriggerTime"/></td>
+      <td class="sbml-attribute-value sbml-persistent"><xsl:value-of select="*[local-name()='trigger']/@persistent"/></td>
+      <td class="sbml-attribute-value sbml-initialValue"><xsl:value-of select="*[local-name()='trigger']/@initialValue"/></td>
       <td class="sbml-element sbml-trigger sbml-math sv-mml"><xsl:apply-templates select="*[local-name()='trigger']" mode="table"/></td>
       <td class="sbml-element sbml-delay sbml-math sv-mml"><xsl:apply-templates select="*[local-name()='delay']" mode="table"/></td>
       <td class="sbml-element sbml-priority"><xsl:apply-templates select="@priority"/></td>
@@ -584,7 +588,7 @@ Project-page: https://sv.insysbio.com
       |./*[local-name()='annotation']
       |*[local-name()='listOfEventAssignments']">
     <tr class="sbml-mixed sv-hidden">
-      <td colspan="8">
+      <td colspan="10">
         <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
         <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
         <xsl:apply-templates select="*[local-name()='listOfEventAssignments']" mode="table"/>
