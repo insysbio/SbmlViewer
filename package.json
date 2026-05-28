@@ -22,7 +22,7 @@
   "dependencies": {
     "code-prettify": "^0.1.0",
     "pretty-data": "^0.40.0",
-    "sass": "^1.89.2",
+    "sass": "^1.100.0",
     "vue": "^2.7.16",
     "w3css": "^2.7.0",
     "xml-escape": "^1.1.0"
