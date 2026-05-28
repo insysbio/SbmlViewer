@@ -8,9 +8,9 @@
 [![DOI:10.13140/RG.2.2.25331.37921](https://zenodo.org/badge/DOI/10.13140/RG.2.2.25331.37921.svg)](https://doi.org/10.13140/RG.2.2.25331.37921)
 
 
-The collection of transformation from SBML files into human readable formats and tools for performing transformations.
+The collection of transformations from SBML files into human-readable formats and tools for performing transformations.
 
-See more info on the demo page:
+See more information on the demo page:
 https://sv.insysbio.com
 
 Alternative link:
@@ -34,5 +34,5 @@ This project is licensed under Apache-2.0 License - see the [LICENSE](LICENSE) f
 - Viktoria Tkachenko @vetedde
 - Evgeny Metelkin @metelkin
 
-© InSysBio, 2016-2025
+© InSysBio, 2016-2026
 https://insysbio.com
