@@ -1,43 +1,49 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 name: Build and Deploy to Pages
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20.x
+          cache: npm
+          cache-dependency-path: package-lock.json
 
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.x
+      - name: Install dependencies and build
+        env:
+          CI: true
+        run: |
+          npm ci
+          npm run build
+          mkdir -p site/online
+          rm -rf site/online/*
+          cp -rf dist/sv/* site/online
+          cp -rf src/assets/js/* site/online/static/js # temp solution
 
-    - name: Install dependencies and build
-      run: |
-        npm ci
-        npm run build
-        mkdir -p site/online
-        rm -rf site/online/*
-        cp -rf dist/sv/* site/online
-        cp -rf src/assets/js/* site/online/static/js # temp solution
-
-    - name: Deploy to "gh-pages"
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        branch: gh-pages # The branch the action should deploy to.
-        folder: site # The folder the action should deploy.
-        clean: false
-
-      env:
-        CI: true
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: site
+          clean: false
