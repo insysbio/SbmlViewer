@@ -97,12 +97,11 @@ export default {
         let eventTr = document.querySelectorAll('tr.sbml-event')
         eventTr.forEach((item) => {
           let eventDetails = item.nextElementSibling
-          if (!eventDetails) {
+          if (!eventDetails || !eventDetails.classList.contains('sbml-mixed')) {
             return
           }
 
-          item
-            .nextElementSibling
+          eventDetails
             .classList
             .toggle('sv-hidden')
         })

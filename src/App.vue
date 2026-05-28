@@ -83,6 +83,14 @@ export default {
       this.ListTTParametrs = {}
 
       this.readFile(file, (content) => {
+        if (this.hasXmlParseError(content)) {
+          this.fileContent = ''
+          this.displayContent = null
+          this.$root.$emit('onThrowError', 'Incorrect XML')
+          this.$root.$emit('stopSpin')
+          return
+        }
+
         this.fileContent = content
         if (this.getTTData(content)) {
           this.setDataForDisplay(content)
@@ -150,6 +158,14 @@ export default {
         this.fileUrl = null
         return false
       }
+    },
+    hasXmlParseError: function (fileContent) {
+      if (!fileContent || !fileContent.documentElement) {
+        return true
+      }
+
+      return fileContent.documentElement.nodeName === 'parsererror' ||
+        fileContent.getElementsByTagName('parsererror').length !== 0
     },
     getListTT: function (fileContent) {
       let SBMLElement = fileContent.getElementsByTagName('sbml')

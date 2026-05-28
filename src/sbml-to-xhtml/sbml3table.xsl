@@ -584,7 +584,7 @@ Project-page: https://sv.insysbio.com
       |./*[local-name()='annotation']
       |*[local-name()='listOfEventAssignments']">
     <tr class="sbml-mixed sv-hidden">
-      <td colspan="6">
+      <td colspan="8">
         <xsl:apply-templates select="./*[local-name()='notes']" mode="element"/>
         <xsl:apply-templates select="./*[local-name()='annotation']" mode="element"/>
         <xsl:apply-templates select="*[local-name()='listOfEventAssignments']" mode="table"/>

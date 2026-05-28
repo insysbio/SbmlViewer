@@ -1,6 +1,6 @@
 {
   "Incorrect XML": {
-    "message": "Unclear problems with file"
+    "message": "Invalid XML or malformed MathML in the file"
   },
   "Incorrect level": {
     "message": "Unsupported file content"
