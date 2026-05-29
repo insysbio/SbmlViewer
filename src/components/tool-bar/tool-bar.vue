@@ -56,9 +56,10 @@ export default {
       this.stateTTparametrs[paramName] = !this.stateTTparametrs[paramName]
     },
     onSelectTT: function (event) {
+      const selectedTT = event.target.value
       this.isSpin = true
       this.$nextTick(() => {
-        this.$emit('onChangeTT', event.target.value)
+        this.$emit('onChangeTT', selectedTT)
       })
     },
     dragNdropInit: function () {

@@ -9,7 +9,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
 const ZipPlugin = require('zip-webpack-plugin');
 
 const env = require('../config/prod.env')
@@ -27,12 +26,7 @@ let prodWebpackConfig = {
     moduleIds: 'deterministic',
     concatenateModules: true,
     minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          compress: {}
-        },
-        parallel: true
-      }),
+      '...',
       new CssMinimizerPlugin()
     ],
     runtimeChunk: false,

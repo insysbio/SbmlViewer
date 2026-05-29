@@ -246,7 +246,6 @@ function checkCorrectTransfromDocument (html) {
 
 </script>
 
-<style src='w3css/w3.css'></style>
 <style lang='scss' src='./assets/style/style.scss'></style>
 <style lang='css' src='code-prettify/src/prettify.css'></style>
 <style>

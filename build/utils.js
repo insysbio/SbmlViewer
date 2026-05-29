@@ -52,7 +52,6 @@ exports.cssLoaders = function (options) {
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
-    less: generateLoaders('less'),
     sass: generateLoaders('sass', {
       implementation: sass,
       sassOptions: {
@@ -65,9 +64,7 @@ exports.cssLoaders = function (options) {
       sassOptions: {
         silenceDeprecations: ['legacy-js-api']
       }
-    }),
-    stylus: generateLoaders('stylus'),
-    styl: generateLoaders('stylus')
+    })
   }
 }
 
