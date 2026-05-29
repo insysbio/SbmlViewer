@@ -6,7 +6,7 @@ import packageInfo from '../../../package.json'
 
 export default {
   name: 'ToolBar',
-  emits: ['onOpenFile', 'onChangeTT'],
+  emits: ['onOpenFile', 'onChangeTT', 'onChangeTTParam'],
   props: [
     'TTList',
     'ListTTParametrs',
@@ -54,6 +54,10 @@ export default {
     },
     toogleParam: function (paramName) {
       this.stateTTparametrs[paramName] = !this.stateTTparametrs[paramName]
+      this.isSpin = true
+      this.$nextTick(() => {
+        this.$emit('onChangeTTParam')
+      })
     },
     onSelectTT: function (event) {
       const selectedTT = event.target.value

@@ -3,6 +3,7 @@
   <ToolBar
     @onOpenFile="loadFile"
     @onChangeTT="toogleTT"
+    @onChangeTTParam="updateCurrentTransform"
     v-bind:fileName = 'fileName'
     v-bind:currentTTName='currentTTName'
     v-bind:TTList='TTList'
@@ -221,6 +222,12 @@ export default {
     toogleTT: function (newTTName) {
       this.currentTTName = newTTName
       if (this.getTTData(this.fileContent)) {
+        this.setDataForDisplay(this.fileContent)
+      }
+      this.$bus.emit('stopSpin')
+    },
+    updateCurrentTransform: function () {
+      if (this.fileContent && this.currentTTName) {
         this.setDataForDisplay(this.fileContent)
       }
       this.$bus.emit('stopSpin')
