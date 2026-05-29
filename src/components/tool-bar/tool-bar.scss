@@ -18,8 +18,42 @@
 }
 
 .file {
-  color:transparent;
-  width:140px;
+  color: transparent;
+  width: 140px;
+}
+
+.file::file-selector-button,
+#transformationType {
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 4px;
+  color: #2f4652;
+  font: inherit;
+  line-height: 1.2;
+  min-height: 32px;
+}
+
+.file::file-selector-button {
+  cursor: pointer;
+  margin-right: 8px;
+  padding: 6px 12px;
+}
+
+#transformationType {
+  cursor: pointer;
+  min-width: 150px;
+  padding: 5px 28px 5px 10px;
+}
+
+.file::file-selector-button:hover,
+#transformationType:hover {
+  background: #f3f8fa;
+}
+
+.file::file-selector-button:focus-visible,
+#transformationType:focus-visible {
+  outline: 2px solid #dff;
+  outline-offset: 2px;
 }
 .noteOptions {
   position: absolute;
