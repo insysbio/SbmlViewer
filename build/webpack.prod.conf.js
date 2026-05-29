@@ -3,13 +3,13 @@ const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const ZipPlugin = require('zip-webpack-plugin');
 
 const env = require('../config/prod.env')
@@ -21,15 +21,29 @@ let prodWebpackConfig = {
       usePostCSS: true
     })
   },
-  mode: 'development',
+  mode: 'production',
   optimization: {
-    minimize: false,
+    minimize: true,
+    moduleIds: 'deterministic',
+    concatenateModules: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {}
+        },
+        parallel: true
+      }),
+      new CssMinimizerPlugin()
+    ],
     runtimeChunk: false,
     splitChunks: {
-        chunks: "all"
-      }
-},
+      chunks: 'all'
+    }
+  },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
+  performance: {
+    hints: false
+  },
   output: {
     path: process.env.OUTPUT_DEMO && path.resolve(process.env.OUTPUT_DEMO) || config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[contenthash].js'),
@@ -41,28 +55,14 @@ let prodWebpackConfig = {
       'process.env': env
     }),
 
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        compress: {}
-      },
-      sourceMap: config.build.productionSourceMap,
-      parallel: true
-    }),
     // extract css into its own file
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].css'),
       // Setting the following option to `false` will not extract CSS from codesplit chunks.
       // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
       // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
       // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
-      allChunks: true,
-    }),
-    // Compress extracted CSS. We are using this plugin so that possible
-    // duplicated CSS from different components can be deduped.
-    new OptimizeCSSPlugin({
-      cssProcessorOptions: config.build.productionSourceMap
-        ? { safe: true, map: { inline: false } }
-        : { safe: true }
+      chunkFilename: utils.assetsPath('css/[id].css')
     }),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
@@ -81,27 +81,28 @@ let prodWebpackConfig = {
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       //chunksSortMode: 'dependency'
     }),
-    // keep module.id stable when vendor modules does not change
-    new webpack.HashedModuleIdsPlugin(),
-    // enable scope hoisting
-    new webpack.optimize.ModuleConcatenationPlugin(),
-
     // This instance extracts shared chunks from code splitted chunks and bundles them
     // in a separate chunk, similar to the vendor chunk
     // see: https://webpack.js.org/plugins/commons-chunk-plugin/#extra-async-commons-chunk
     // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
-        ignore: ['.*']
-      },
-      {
-        from: path.resolve(__dirname, '../src/assets/js'),
-        to: 'static/js',
-        ignore: ['.*']
-      }
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '../static'),
+          to: config.build.assetsSubDirectory,
+          globOptions: {
+            ignore: ['**/.*']
+          }
+        },
+        {
+          from: path.resolve(__dirname, '../src/assets/js'),
+          to: 'static/js',
+          globOptions: {
+            ignore: ['**/.*']
+          }
+        }
+      ]
+    })
 
   ]
 };

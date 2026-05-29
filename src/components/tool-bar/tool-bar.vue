@@ -2,7 +2,7 @@
 <style lang="scss" src="./tool-bar.scss"></style>
 <script>
 
-import { version } from '../../../package'
+import packageInfo from '../../../package.json'
 
 export default {
   name: 'ToolBar',
@@ -18,7 +18,7 @@ export default {
     return {
       isSpin: false,
       file: null,
-      version: version,
+      version: packageInfo.version,
       homepage: 'https://sv.insysbio.com'
     }
   },
