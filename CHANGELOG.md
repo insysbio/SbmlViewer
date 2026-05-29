@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.3.7
+
+- Recalculate the current transformation automatically when transformation options are changed
+- Remove trailing commas from generated Heta dictionaries
+- Migrate to Vue 3.5 and update related dependencies
+- Migrate to Webpack 5 and update related dependencies
+
 ## 0.3.6
 
 - Fix MathJax/static asset loading in development and production builds
