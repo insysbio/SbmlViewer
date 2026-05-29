@@ -142,6 +142,10 @@ export default {
         let docHTML = docDom && docDom.children[0].outerHTML
 
         if (docDom && checkCorrectTransfromDocument(docHTML)) {
+          if (this.currentTT.name.indexOf('heta') !== -1) {
+            removeTrailingCommasFromHetaDicts(docDom.children[0])
+          }
+
           this.$bus.emit('resetContent')
           this.displayContent = docDom.children[0]
         } else {
@@ -248,6 +252,32 @@ function checkCorrectTransfromDocument (html) {
     return false
   } else {
     return true
+  }
+}
+
+function removeTrailingCommasFromHetaDicts (root) {
+  let dicts = root.querySelectorAll('.heta-dict')
+
+  for (let i = 0; i < dicts.length; i++) {
+    removeTrailingCommaFromDict(dicts[i])
+  }
+}
+
+function removeTrailingCommaFromDict (dict) {
+  let lastTextNode = null
+
+  for (let node = dict.firstChild; node; node = node.nextSibling) {
+    if (node.nodeType === 3) {
+      node.nodeValue = node.nodeValue.replace(/,\s*(?=})/g, '')
+
+      if (node.nodeValue.indexOf('}') !== -1 && lastTextNode) {
+        lastTextNode.nodeValue = lastTextNode.nodeValue.replace(/,\s*$/, '')
+      }
+
+      if (node.nodeValue.trim() !== '') {
+        lastTextNode = node
+      }
+    }
   }
 }
 
