@@ -6,6 +6,7 @@ import { version } from '../../../package'
 
 export default {
   name: 'ToolBar',
+  emits: ['onOpenFile', 'onChangeTT'],
   props: [
     'TTList',
     'ListTTParametrs',
@@ -22,10 +23,10 @@ export default {
     }
   },
   mounted () {
-    this.$root.$on('startSpin', () => {
+    this.$bus.on('startSpin', () => {
       this.isSpin = true
     })
-    this.$root.$on('stopSpin', () => {
+    this.$bus.on('stopSpin', () => {
       this.isSpin = false
     })
     this.dragNdropInit()
@@ -54,10 +55,10 @@ export default {
     toogleParam: function (paramName) {
       this.stateTTparametrs[paramName] = !this.stateTTparametrs[paramName]
     },
-    onSelectTT: function () {
+    onSelectTT: function (event) {
       this.isSpin = true
       this.$nextTick(() => {
-        this.$emit('onChangeTT', this.currentTTName)
+        this.$emit('onChangeTT', event.target.value)
       })
     },
     dragNdropInit: function () {

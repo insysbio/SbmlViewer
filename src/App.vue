@@ -50,7 +50,7 @@ export default {
       this.displayContent = c
     }
     if (this.checkFileByURL()) {
-      this.$root.$emit('startSpin')
+      this.$bus.emit('startSpin')
       this.$nextTick(() => {
         this.loadFile()
       })
@@ -72,7 +72,7 @@ export default {
         this.fileUrl = null
       }
 
-      this.$root.$emit('onClearErr')
+      this.$bus.emit('onClearErr')
 
       // save parameters for refresh and clean TT
       if (!(isRefresh)) {
@@ -86,8 +86,8 @@ export default {
         if (this.hasXmlParseError(content)) {
           this.fileContent = ''
           this.displayContent = null
-          this.$root.$emit('onThrowError', 'Incorrect XML')
-          this.$root.$emit('stopSpin')
+          this.$bus.emit('onThrowError', 'Incorrect XML')
+          this.$bus.emit('stopSpin')
           return
         }
 
@@ -95,7 +95,7 @@ export default {
         if (this.getTTData(content)) {
           this.setDataForDisplay(content)
         }
-        this.$root.$emit('stopSpin')
+        this.$bus.emit('stopSpin')
       })
     },
     readFile: function (file, callback) {
@@ -110,13 +110,13 @@ export default {
             callback(xmlhttp.responseXML)
           }
 
-          if (xmlhttp.status !== 200 && xmlhttp.status !== 0) { this.$root.$emit('onThrowError', 'Can not read file') }
+          if (xmlhttp.status !== 200 && xmlhttp.status !== 0) { this.$bus.emit('onThrowError', 'Can not read file') }
         }
       } else { // read file from COMPUTER
         this.fileName = file.name
         readXmlUpload(file, (err, result) => {
           if (err) {
-            this.$root.$emit('onThrowError', 'Can not read file')
+            this.$bus.emit('onThrowError', 'Can not read file')
           }
           callback(result)
         })
@@ -130,7 +130,7 @@ export default {
         this.setStateTTParametrs()
         return true
       } else {
-        this.$root.$emit('onThrowError', 'Incorrect level')
+        this.$bus.emit('onThrowError', 'Incorrect level')
         return false
       }
     },
@@ -141,10 +141,10 @@ export default {
         let docHTML = docDom && docDom.children[0].outerHTML
 
         if (docDom && checkCorrectTransfromDocument(docHTML)) {
-          this.$root.$emit('resetContent')
+          this.$bus.emit('resetContent')
           this.displayContent = docDom.children[0]
         } else {
-          this.$root.$emit('onThrowError', 'Incorrect XML')
+          this.$bus.emit('onThrowError', 'Incorrect XML')
           return false
         }
       })
@@ -173,7 +173,7 @@ export default {
       if (level) {
         return xsltCollection.filter((x) => x.level === level && x.name !== 'sbml2element' && x.name !== 'sbml3element')
       } else {
-        this.$root.$emit('onThrowError', 'Incorrect level')
+        this.$bus.emit('onThrowError', 'Incorrect level')
         return {}
       }
     },
@@ -213,7 +213,7 @@ export default {
 
         return xsltProcessor.transformToFragment(transformDoc, document)
       } catch (err) { // if transfrom not success
-        this.$root.$emit('onThrowError', 'Fail transform document')
+        this.$bus.emit('onThrowError', 'Fail transform document')
         console.log(err)
         return null
       }
@@ -223,7 +223,7 @@ export default {
       if (this.getTTData(this.fileContent)) {
         this.setDataForDisplay(this.fileContent)
       }
-      this.$root.$emit('stopSpin')
+      this.$bus.emit('stopSpin')
     }
   },
   watch: {

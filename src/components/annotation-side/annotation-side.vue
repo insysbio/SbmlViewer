@@ -2,7 +2,6 @@
 <style lang="scss" src="./annotation-side.scss"></style>
 <script>
 /* global window MathJax */
-import '../../directives/dom'
 
 import { prettifyAnnotation } from '../../utilites/prettifyAnnotation'
 const parser = new window.DOMParser()
@@ -14,6 +13,7 @@ let sbml2elementDoc = xsltCollection
 
 export default {
   name: 'AnnotationSide',
+  emits: ['closeAnnotation'],
   props: ['fileContent'],
   data () {
     return {
@@ -24,7 +24,7 @@ export default {
   mounted () {
     this.xsltProcessor = new XSLTProcessor()
     this.xsltProcessor.importStylesheet(sbml2elementDoc.firstElementChild)
-    this.$root.$on('onOpenAnnotation', this.openAnnotation)
+    this.$bus.on('onOpenAnnotation', this.openAnnotation)
     let isEdge = navigator.userAgent.search('Edge') !== -1
     this.xsltProcessor.setParameter(null, 'isEdge', isEdge)
   },

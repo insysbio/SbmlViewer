@@ -5,8 +5,6 @@
 import AnnotationSide from '../annotation-side/annotation-side.vue'
 import ErrorContainer from '../error/error.vue'
 
-import '../../directives/dom'
-
 import 'code-prettify'
 import { updateContainerSize } from '../../utilites/updateContainerSize'
 import { prettifyAnnotation } from '../../utilites/prettifyAnnotation'
@@ -27,7 +25,7 @@ export default {
     ErrorContainer
   },
   mounted () {
-    this.$root.$on('resetContent', () => {
+    this.$bus.on('resetContent', () => {
       this.isSideOpen = false
       // add addons after render component
       setTimeout(() => {
@@ -68,7 +66,7 @@ export default {
               .getElementById('mainContent')
               .firstElementChild
 
-            this.$root.$emit('onOpenAnnotation', e.target.id, contentNode)
+            this.$bus.emit('onOpenAnnotation', e.target.id, contentNode)
           })
         }
 

@@ -7,8 +7,8 @@
 
       <div v-if="Object.keys(TTList).length !== 0" class="sv-cell w3-border-left w3-border-color-white w3-padding-left w3-padding-right">
         <!-- <h4>Transformation type:</h4> -->
-        <select id="transformationType" v-model="currentTTName" @change='onSelectTT'>
-          <option v-for="(type, i) in TTList" v-bind:value='type.name'>{{ type.name }}</option>
+        <select id="transformationType" :value="currentTTName" @change='onSelectTT'>
+          <option v-for="(type, i) in TTList" v-bind:value='type.name' :key="type.name">{{ type.name }}</option>
         </select>
       </div>
 

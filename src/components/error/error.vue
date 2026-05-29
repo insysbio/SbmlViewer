@@ -10,10 +10,10 @@ export default {
     }
   },
   mounted () {
-    this.$root.$on('onThrowError', (errStatus) => {
+    this.$bus.on('onThrowError', (errStatus) => {
       this.displayErr(this.errorDictionary[errStatus].message)
     })
-    this.$root.$on('onClearErr', this.clear)
+    this.$bus.on('onClearErr', this.clear)
   },
   methods: {
     displayErr: function (errMess) {
