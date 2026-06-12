@@ -722,38 +722,38 @@ Project-page: https://sv.insysbio.com
 <!-- BEGIN OF mml: part, =TO DO= include $correctMathml switcher, correction of SimBiology specific functions -->
   <!-- correct for max function -->
   <xsl:template match="mml:apply[*[1][self::mml:ci][normalize-space(text())='max'][following-sibling::mml:ci]]">
-    <xsl:copy>
+    <xsl:element name="apply" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:copy-of select="@*"/>
       <xsl:element name="max" namespace="http://www.w3.org/1998/Math/MathML"/>
       <xsl:apply-templates select="*[position()&gt;1]"/>
-    </xsl:copy>
+    </xsl:element>
   </xsl:template>
 
   <!-- exclude vertcat inside max -->
   <xsl:template match="mml:apply[*[1][self::mml:ci][normalize-space(text())='max'][following-sibling::mml:apply]]">
-    <xsl:copy>
+    <xsl:element name="apply" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:copy-of select="@*"/>
       <xsl:element name="max" namespace="http://www.w3.org/1998/Math/MathML"/>
       <xsl:apply-templates select="*[2]/*[position()&gt;1]"/>
-    </xsl:copy>
+    </xsl:element>
   </xsl:template>
 
   <!-- correct for min function -->
   <xsl:template match="mml:apply[*[1][self::mml:ci][normalize-space(text())='min'][following-sibling::mml:ci]]">
-    <xsl:copy>
+    <xsl:element name="apply" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:copy-of select="@*"/>
       <xsl:element name="min" namespace="http://www.w3.org/1998/Math/MathML"/>
       <xsl:apply-templates select="*[position()&gt;1]"/>
-    </xsl:copy>
+    </xsl:element>
   </xsl:template>
 
   <!-- exclude vertcat inside min -->
   <xsl:template match="mml:apply[*[1][self::mml:ci][normalize-space(text())='min'][following-sibling::mml:apply]]">
-    <xsl:copy>
+    <xsl:element name="apply" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:copy-of select="@*"/>
       <xsl:element name="min" namespace="http://www.w3.org/1998/Math/MathML"/>
       <xsl:apply-templates select="*[2]/*[position()&gt;1]"/>
-    </xsl:copy>
+    </xsl:element>
   </xsl:template>
 
   <!-- use id or names for equations and normalize space -->
@@ -784,18 +784,18 @@ Project-page: https://sv.insysbio.com
   <xsl:template match="mml:math">
     <xsl:if test="$equationsOff='true'"><span class="sv-hidden">Equations are hidden</span></xsl:if>
     <xsl:if test="not($equationsOff='true')">
-      <xsl:copy>
+      <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
-    </xsl:copy>
+    </xsl:element>
     </xsl:if>
   </xsl:template>
 
   <xsl:template match="mml:*">
-    <xsl:copy>
+    <xsl:element name="{local-name()}" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
-    </xsl:copy>
+    </xsl:element>
   </xsl:template>
 
   <xsl:template match="mml:lambda">

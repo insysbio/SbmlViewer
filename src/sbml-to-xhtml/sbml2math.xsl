@@ -441,18 +441,18 @@ Project-page: https://sv.insysbio.com
   <xsl:template match="mml:math">
     <xsl:if test="$equationsOff='true'">= Equations are hidden =</xsl:if>
     <xsl:if test="not($equationsOff='true')">
-      <xsl:copy>
+      <xsl:element name="math" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
-    </xsl:copy>
+    </xsl:element>
     </xsl:if>
   </xsl:template>
 
   <xsl:template match="mml:*">
-    <xsl:copy>
+    <xsl:element name="{local-name()}" namespace="http://www.w3.org/1998/Math/MathML">
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates/>
-    </xsl:copy>
+    </xsl:element>
   </xsl:template>
 
 </xsl:stylesheet>
