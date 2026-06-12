@@ -4,6 +4,10 @@ window.MathJax = {
     menuSettings: { zoom: "Click" },
     CommonHTML: {linebreaks: { automatic: true, width: "container" }},
     "HTML-CSS": {
+        availableFonts: [],
+        preferredFont: null,
+        webFont: null,
+        imageFont: "TeX",
         linebreaks: { automatic: true, width: "container" },
         EqnChunk: 1,
         EqnChunkFactor: 1,
