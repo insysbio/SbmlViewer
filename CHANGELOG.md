@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.9
+
+- Turn off MathJax font configuration
+
 ## 0.3.8
 
 - Fix MathML rendering inconsistencies for SBML inputs that use different namespace styles
