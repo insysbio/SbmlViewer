@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.8
+
+- Fix MathML rendering inconsistencies for SBML inputs that use different namespace styles
+- Normalize MathML element emission in SBML 2/3 XSL transforms to avoid prefix-dependent formula rendering
+- Reduce intermittent MathJax click-to-zoom runtime failures (`Error: restart`) by hardening MathJax font fallback configuration
+
 ## 0.3.7
 
 - Recalculate the current transformation automatically when transformation options are changed
