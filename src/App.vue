@@ -173,8 +173,14 @@ export default {
         fileContent.getElementsByTagName('parsererror').length !== 0
     },
     getListTT: function (fileContent) {
-      let SBMLElement = fileContent.getElementsByTagName('sbml')
-      let level = SBMLElement && SBMLElement[0] && SBMLElement[0].getAttribute('level')
+      // XML namespace prefixes are arbitrary.  For example, both <sbml> and
+      // <ns0:sbml xmlns:ns0=".../core"> identify the same SBML element.
+      // Do not use the qualified name here: getElementsByTagName('sbml')
+      // misses the latter form.
+      const SBMLElement = fileContent.documentElement
+      const isSBML = SBMLElement && SBMLElement.localName === 'sbml' &&
+        /^http:\/\/www\.sbml\.org\/sbml\//.test(SBMLElement.namespaceURI || '')
+      const level = isSBML && SBMLElement.getAttribute('level')
       if (level) {
         return xsltCollection.filter((x) => x.level === level && x.name !== 'sbml2element' && x.name !== 'sbml3element')
       } else {
