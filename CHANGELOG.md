@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.10
+
+- Accept SBML documents whose core elements use namespace prefixes (for example, `ns0:sbml`)
+- security updates
+
 ## 0.3.9
 
 - Turn off MathJax font configuration
