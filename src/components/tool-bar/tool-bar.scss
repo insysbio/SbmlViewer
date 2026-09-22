@@ -22,6 +22,44 @@
   width: 140px;
 }
 
+#optionsArea {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.toolbar-controls {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.toolbar-brand {
+  flex: 0 0 auto;
+}
+
+#fileName {
+  display: inline-block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  #optionsArea {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .toolbar-controls {
+    flex-wrap: wrap;
+  }
+}
+
 .file::file-selector-button,
 #transformationType {
   background: #ffffff;

@@ -8,9 +8,4 @@ export function updateContainerSize () {
     sideBar.style.height =
       document.documentElement.clientHeight - document.getElementById('tool-bar').clientHeight + 'px'
   }
-  let mainContent = document.getElementById('mainContent')
-  if (mainContent) {
-    mainContent.style.height =
-        document.documentElement.clientHeight - document.getElementById('tool-bar').clientHeight + 'px'
-  }
 }

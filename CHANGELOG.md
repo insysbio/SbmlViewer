@@ -4,7 +4,9 @@
 
 - Accept SBML documents whose core elements use namespace prefixes (for example, `ns0:sbml`)
 - security updates
-- Restore vertical scrolling in production builds
+- Restore browser vertical scrolling for long models
+- Truncate long file names in the toolbar while keeping the full name in a tooltip
+- Keep toolbar controls and application title aligned on one row on wide screens
 
 ## 0.3.9
 

@@ -1,8 +1,8 @@
 <div id='tool-bar' class="w3-top w3-card-4 w3-blue-grey">
     <div id="optionsArea">
-      <div style="float:left">
+      <div class="toolbar-controls">
       <div class="sv-cell w3-padding w3-border-color-white">
-        <input id="file" @change='onChooseFileInput' class="file" type="file" accept=".xml,.sbml"/><span id="fileName" class="w3-padding-bottom">{{ fileName }}</span>
+        <input id="file" @change='onChooseFileInput' class="file" type="file" accept=".xml,.sbml"/><span id="fileName" class="w3-padding-bottom" :title="fileName">{{ fileName }}</span>
       </div>
 
       <div v-if="Object.keys(TTList).length !== 0" class="sv-cell w3-border-left w3-border-color-white w3-padding-left w3-padding-right">
@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-      <div class="w3-container sv-cell" style="float:right;">
+      <div class="toolbar-brand w3-container sv-cell">
         <h3 id="sv-title" style="margin: 5px 0 5px 0;">SbmlViewer v{{ version }}</h3>
         <div class="w3-small"><a v-bind:href="homepage">{{ homepage }}</a></div>
       </div>
