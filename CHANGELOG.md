@@ -4,6 +4,7 @@
 
 - Accept SBML documents whose core elements use namespace prefixes (for example, `ns0:sbml`)
 - security updates
+- Restore vertical scrolling in production builds
 
 ## 0.3.9
 

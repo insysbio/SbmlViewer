@@ -294,7 +294,7 @@ function removeTrailingCommaFromDict (dict) {
 <style>
 html, head {
     height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 #sv-hidden-content {
   display: none;
